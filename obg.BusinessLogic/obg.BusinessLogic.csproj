@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Logics\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\obg.BusinessLogic.Interface\obg.BusinessLogic.Interface.csproj" />
+    <ProjectReference Include="..\obg.DataAccess.Interface\obg.DataAccess.Interface.csproj" />
+    <ProjectReference Include="..\obg.Domain\obg.Domain.csproj" />
+    <ProjectReference Include="..\obg.Exceptions\obg.Exceptions.csproj" />
+  </ItemGroup>
+
+</Project>

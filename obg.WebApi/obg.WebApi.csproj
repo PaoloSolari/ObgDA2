@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\obg.BusinessLogic.Interface\obg.BusinessLogic.Interface.csproj" />
+    <ProjectReference Include="..\obg.Domain\obg.Domain.csproj" />
+    <ProjectReference Include="..\obg.Exceptions\obg.Exceptions.csproj" />
+  </ItemGroup>
+
+
+</Project>
