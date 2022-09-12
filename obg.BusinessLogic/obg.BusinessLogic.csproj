@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Logics\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\obg.BusinessLogic.Interface\obg.BusinessLogic.Interface.csproj" />
     <ProjectReference Include="..\obg.DataAccess.Interface\obg.DataAccess.Interface.csproj" />
     <ProjectReference Include="..\obg.Domain\obg.Domain.csproj" />
