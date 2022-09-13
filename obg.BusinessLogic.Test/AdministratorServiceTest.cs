@@ -28,24 +28,22 @@ namespace obg.BusinessLogic.Test
             service = new AdministratorService(mock.Object);
             validAdministrator1 = new Administrator()
             {
-                Id = 1,
                 Name = "Paolo",
                 Code = "aabbcc",
                 Email = "ps@gmail.com",
                 Password = "password123.",
                 Address = "addressPS",
-                Role = RoleUser.Owner,
+                Role = RoleUser.Administrator,
                 RegisterDate = "12/09/2022"
             };
             validAdministrator2 = new Administrator()
             {
-                Id = 1,
                 Name = "Gabriel",
                 Code = "xxyyzz",
                 Email = "gj@gmail.com",
                 Password = "password123.",
                 Address = "address",
-                Role = RoleUser.Owner,
+                Role = RoleUser.Administrator,
                 RegisterDate = "12/09/2022"
             };
             nullAdministrator = null;
@@ -65,7 +63,7 @@ namespace obg.BusinessLogic.Test
         public void InsertAdministratorNull()
         {
             service.InsertAdministrator(nullAdministrator);
-            mock.VerifyAll();
+            //mock.VerifyAll();
         }
 
         // Name no null.
@@ -75,7 +73,7 @@ namespace obg.BusinessLogic.Test
         {
             validAdministrator1.Name = null;
             service.InsertAdministrator(validAdministrator1);
-            mock.VerifyAll();
+            //mock.VerifyAll();
         }
 
         // Name no vacío.
@@ -85,7 +83,7 @@ namespace obg.BusinessLogic.Test
         {
             validAdministrator1.Name = "";
             service.InsertAdministrator(validAdministrator1);
-            mock.VerifyAll();
+            //mock.VerifyAll();
         }
 
         // Name único.
@@ -96,7 +94,7 @@ namespace obg.BusinessLogic.Test
             service.InsertAdministrator(validAdministrator1);
             validAdministrator2.Name = "Paolo";
             service.InsertAdministrator(validAdministrator2);
-            mock.VerifyAll();
+            //mock.VerifyAll();
         }
 
         // Name de máximo 20 caracteres.
@@ -106,7 +104,7 @@ namespace obg.BusinessLogic.Test
         {
             validAdministrator1.Name = "#aaabbbccc$aaabbbcccD";
             service.InsertAdministrator(validAdministrator1);
-            mock.VerifyAll();
+            //mock.VerifyAll();
         }
 
         // Code no null.
@@ -116,7 +114,7 @@ namespace obg.BusinessLogic.Test
         {
             validAdministrator1.Code = null;
             service.InsertAdministrator(validAdministrator1);
-            mock.VerifyAll();
+            //mock.VerifyAll();
         }
 
         // Code no vacío.
@@ -126,7 +124,7 @@ namespace obg.BusinessLogic.Test
         {
             validAdministrator1.Code = "";
             service.InsertAdministrator(validAdministrator1);
-            mock.VerifyAll();
+            //mock.VerifyAll();
         }
 
         // Code único.
@@ -137,7 +135,7 @@ namespace obg.BusinessLogic.Test
             service.InsertAdministrator(validAdministrator1);
             validAdministrator2.Code = "aabbcc";
             service.InsertAdministrator(validAdministrator2);
-            mock.VerifyAll();
+            //mock.VerifyAll();
         }
 
         // Email no null
@@ -147,7 +145,7 @@ namespace obg.BusinessLogic.Test
         {
             validAdministrator1.Email = null;
             service.InsertAdministrator(validAdministrator1);
-            mock.VerifyAll();
+            //mock.VerifyAll();
         }
 
         // Email no vacío
@@ -157,7 +155,7 @@ namespace obg.BusinessLogic.Test
         {
             validAdministrator1.Email = "";
             service.InsertAdministrator(validAdministrator1);
-            mock.VerifyAll();
+            //mock.VerifyAll();
         }
 
         // Email único.
@@ -168,7 +166,7 @@ namespace obg.BusinessLogic.Test
             service.InsertAdministrator(validAdministrator1);
             validAdministrator2.Email = "ps@gmail.com";
             service.InsertAdministrator(validAdministrator2);
-            mock.VerifyAll();
+            //mock.VerifyAll();
         }
 
         // Email no format (@)
@@ -178,7 +176,7 @@ namespace obg.BusinessLogic.Test
         {
             validAdministrator1.Email = "psgmail.com";
             service.InsertAdministrator(validAdministrator1);
-            mock.VerifyAll();
+            //mock.VerifyAll();
         }
 
         // Password mínimo 8 caracteres
@@ -188,7 +186,6 @@ namespace obg.BusinessLogic.Test
         {
             validAdministrator1.Password = "aab#bcc";
             service.InsertAdministrator(validAdministrator1);
-            mock.VerifyAll();
         }
 
         // Password al menos un caracter especial.
@@ -198,8 +195,41 @@ namespace obg.BusinessLogic.Test
         {
             validAdministrator1.Password = "aabbccdd";
             service.InsertAdministrator(validAdministrator1);
-            mock.VerifyAll();
+            //mock.VerifyAll();
         }
 
+        [ExpectedException(typeof(AdministratorException))]
+        [TestMethod]
+        public void InsertAdministratorWrongAddress_Null()
+        {
+            validAdministrator1.Address = null;
+            service.InsertAdministrator(validAdministrator1);
+            //mock.VerifyAll();
+        }
+
+        [TestMethod]
+        public void GetAdministratorRole_OK()
+        {
+            Assert.AreEqual(validAdministrator1.Role, RoleUser.Administrator);
+            //mock.VerifyAll();
+        }
+
+        [ExpectedException(typeof(AdministratorException))]
+        [TestMethod]
+        public void InsertAdministratorWrongRegisterDate_Null()
+        {
+            validAdministrator1.RegisterDate = null;
+            service.InsertAdministrator(validAdministrator1);
+            //mock.VerifyAll();
+        }
+
+        [ExpectedException(typeof(AdministratorException))]
+        [TestMethod]
+        public void InsertAdministratorWrongRegisterDate_Empty()
+        {
+            validAdministrator1.RegisterDate = "";
+            service.InsertAdministrator(validAdministrator1);
+            //mock.VerifyAll();
+        }
     } 
 } 

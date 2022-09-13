@@ -65,6 +65,14 @@ namespace obg.BusinessLogic.Logics
             {
                 throw new AdministratorException("Contraseña con formato inválida.");
             }
+            if (administrator.Address == null || administrator.Address.Length == 0)
+            {
+                throw new AdministratorException("Dirección inválida.");
+            }
+            if (administrator.RegisterDate == null || administrator.RegisterDate.Length == 0)
+            {
+                throw new AdministratorException("Fecha de registro inválida.");
+            }
             return true;
         }
 
