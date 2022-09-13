@@ -5,17 +5,15 @@ using System.Text;
 
 namespace obg.Domain.Entities
 {
-    public class Administrator
+    public class Administrator : User
     {
-        public string Name { get; set; }
-        public string Code { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public string Address { get; set; }
-        public RoleUser Role { get; set; }
-        public string RegisterDate { get; set; }
+        public List<Pharmacy> Pharmacies;
 
-        public Administrator(){ }
+        public Administrator(string name, string code, string email, string password, string address, RoleUser role, string registerDate, List<Pharmacy> pharmacies) : base (name, code, email, password, address, role, registerDate)
+        {
+            Pharmacies = pharmacies;
+        }
+
 
     }
 }
