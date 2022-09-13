@@ -14,40 +14,19 @@ namespace obg.BusinessLogic.Test
     public class AdministratorServiceTest
     {
         private Mock<IAdministratorManagement> mock;
-        //private Mock<MainSystem> mock;
         private Administrator validAdministrator1;
         private Administrator validAdministrator2;
         private Administrator nullAdministrator;
         private AdministratorService service;
-        private IEnumerable<Administrator> administrators;
 
         [TestInitialize]
         public void InitTest()
         {
             mock = new Mock<IAdministratorManagement>(MockBehavior.Strict);
             service = new AdministratorService(mock.Object);
-            validAdministrator1 = new Administrator()
-            {
-                Name = "Paolo",
-                Code = "aabbcc",
-                Email = "ps@gmail.com",
-                Password = "password123.",
-                Address = "addressPS",
-                Role = RoleUser.Administrator,
-                RegisterDate = "12/09/2022"
-            };
-            validAdministrator2 = new Administrator()
-            {
-                Name = "Gabriel",
-                Code = "xxyyzz",
-                Email = "gj@gmail.com",
-                Password = "password123.",
-                Address = "address",
-                Role = RoleUser.Administrator,
-                RegisterDate = "12/09/2022"
-            };
+            validAdministrator1 = new Administrator("Paolo", "aabbcc", "ps@gmail.com", "password123.", "addressPS", RoleUser.Administrator, "12/09/2022", null);
+            validAdministrator2 = new Administrator("Gabriel", "xxyyzz", "gj@gmail.com", "password123.", "address", RoleUser.Administrator, "12/09/2022", null);
             nullAdministrator = null;
-            administrators = new List<Administrator>() { validAdministrator1 };
         }
 
         [TestMethod]
@@ -58,7 +37,7 @@ namespace obg.BusinessLogic.Test
         }
 
         // Administrator no null.
-        [ExpectedException(typeof(AdministratorException))]
+        [ExpectedException(typeof(UserException))]
         [TestMethod]
         public void InsertAdministratorNull()
         {
@@ -67,7 +46,7 @@ namespace obg.BusinessLogic.Test
         }
 
         // Name no null.
-        [ExpectedException(typeof(AdministratorException))]
+        [ExpectedException(typeof(UserException))]
         [TestMethod]
         public void InsertAdministratorNullName()
         {
@@ -77,7 +56,7 @@ namespace obg.BusinessLogic.Test
         }
 
         // Name no vacío.
-        [ExpectedException(typeof(AdministratorException))]
+        [ExpectedException(typeof(UserException))]
         [TestMethod]
         public void InsertAdministratorEmptyName()
         {
@@ -87,7 +66,7 @@ namespace obg.BusinessLogic.Test
         }
 
         // Name único.
-        [ExpectedException(typeof(AdministratorException))]
+        [ExpectedException(typeof(UserException))]
         [TestMethod]
         public void InsertAdministratorWrong_TwoWithSameNames()
         {
@@ -98,7 +77,7 @@ namespace obg.BusinessLogic.Test
         }
 
         // Name de máximo 20 caracteres.
-        [ExpectedException(typeof(AdministratorException))]
+        [ExpectedException(typeof(UserException))]
         [TestMethod]
         public void InsertAdministratorWrongName_More20chars()
         {
@@ -108,7 +87,7 @@ namespace obg.BusinessLogic.Test
         }
 
         // Code no null.
-        [ExpectedException(typeof(AdministratorException))]
+        [ExpectedException(typeof(UserException))]
         [TestMethod]
         public void InsertAdministratorNullCode()
         {
@@ -118,7 +97,7 @@ namespace obg.BusinessLogic.Test
         }
 
         // Code no vacío.
-        [ExpectedException(typeof(AdministratorException))]
+        [ExpectedException(typeof(UserException))]
         [TestMethod]
         public void InsertAdministratorEmptyCode()
         {
@@ -128,7 +107,7 @@ namespace obg.BusinessLogic.Test
         }
 
         // Code único.
-        [ExpectedException(typeof(AdministratorException))]
+        [ExpectedException(typeof(UserException))]
         [TestMethod]
         public void InsertAdministratorWrong_TwoWithSameCodes()
         {
@@ -139,7 +118,7 @@ namespace obg.BusinessLogic.Test
         }
 
         // Email no null
-        [ExpectedException(typeof(AdministratorException))]
+        [ExpectedException(typeof(UserException))]
         [TestMethod]
         public void InsertAdministratorNullEmail()
         {
@@ -149,7 +128,7 @@ namespace obg.BusinessLogic.Test
         }
 
         // Email no vacío
-        [ExpectedException(typeof(AdministratorException))]
+        [ExpectedException(typeof(UserException))]
         [TestMethod]
         public void InsertAdministratorEmptyEmail()
         {
@@ -159,7 +138,7 @@ namespace obg.BusinessLogic.Test
         }
 
         // Email único.
-        [ExpectedException(typeof(AdministratorException))]
+        [ExpectedException(typeof(UserException))]
         [TestMethod]
         public void InsertAdministratorWrong_TwoWithSameEmails()
         {
@@ -170,7 +149,7 @@ namespace obg.BusinessLogic.Test
         }
 
         // Email no format (@)
-        [ExpectedException(typeof(AdministratorException))]
+        [ExpectedException(typeof(UserException))]
         [TestMethod]
         public void InsertAdministratorWrongEmail()
         {
@@ -180,7 +159,7 @@ namespace obg.BusinessLogic.Test
         }
 
         // Password mínimo 8 caracteres
-        [ExpectedException(typeof(AdministratorException))]
+        [ExpectedException(typeof(UserException))]
         [TestMethod]
         public void InsertAdministratorWrongPassword_Less8Chars()
         {
@@ -189,7 +168,7 @@ namespace obg.BusinessLogic.Test
         }
 
         // Password al menos un caracter especial.
-        [ExpectedException(typeof(AdministratorException))]
+        [ExpectedException(typeof(UserException))]
         [TestMethod]
         public void InsertAdministratorWrongPassword_NoSpecialChar()
         {
@@ -198,7 +177,7 @@ namespace obg.BusinessLogic.Test
             //mock.VerifyAll();
         }
 
-        [ExpectedException(typeof(AdministratorException))]
+        [ExpectedException(typeof(UserException))]
         [TestMethod]
         public void InsertAdministratorWrongAddress_Null()
         {
@@ -214,7 +193,7 @@ namespace obg.BusinessLogic.Test
             //mock.VerifyAll();
         }
 
-        [ExpectedException(typeof(AdministratorException))]
+        [ExpectedException(typeof(UserException))]
         [TestMethod]
         public void InsertAdministratorWrongRegisterDate_Null()
         {
@@ -223,7 +202,7 @@ namespace obg.BusinessLogic.Test
             //mock.VerifyAll();
         }
 
-        [ExpectedException(typeof(AdministratorException))]
+        [ExpectedException(typeof(UserException))]
         [TestMethod]
         public void InsertAdministratorWrongRegisterDate_Empty()
         {
@@ -231,5 +210,6 @@ namespace obg.BusinessLogic.Test
             service.InsertAdministrator(validAdministrator1);
             //mock.VerifyAll();
         }
+
     } 
 } 
