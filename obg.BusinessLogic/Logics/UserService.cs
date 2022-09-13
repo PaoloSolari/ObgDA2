@@ -19,7 +19,7 @@ namespace obg.BusinessLogic.Logics
         {
             if (user == null)
             {
-                throw new UserException("Administrador inválido.");
+                throw new UserException("Usuario inválido.");
             }
             if (user.Name == null || user.Name.Length == 0 || user.Name.Length > 20)
             {
