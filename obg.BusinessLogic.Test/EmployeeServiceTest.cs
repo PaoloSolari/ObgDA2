@@ -139,7 +139,7 @@ namespace obg.BusinessLogic.Test
 
         [ExpectedException(typeof(UserException))]
         [TestMethod]
-        public void InsertEmployeeWrong_EmailNoFormat()
+        public void InsertEmployeeWrong_EmailHasNoFormat()
         {
             validEmployee1.Email = "psgmail.com";
             service.InsertEmployee(validEmployee1);
@@ -157,7 +157,7 @@ namespace obg.BusinessLogic.Test
 
         [ExpectedException(typeof(UserException))]
         [TestMethod]
-        public void InsertEmployeeWrong_PasswordNoSpecialChar()
+        public void InsertEmployeeWrong_PasswordHasNoSpecialChar()
         {
             validEmployee1.Password = "aabbccdd";
             service.InsertEmployee(validEmployee1);
@@ -206,23 +206,14 @@ namespace obg.BusinessLogic.Test
         {
             validEmployee1.RegisterDate = "";
             service.InsertEmployee(validEmployee1);
-            //mock.VerifyAll();
         }
 
         [ExpectedException(typeof(UserException))]
         [TestMethod]
-        public void InsertEmployeeWrong_PharmacyNull()
+        public void InsertEmployeeWrong_NullPharmacy()
         {
             validEmployee1.Pharmacy = null;
             service.InsertEmployee(validEmployee1);
-            //mock.VerifyAll();
-        }
-
-        [TestMethod]
-        public void GetEmployeeRole_OK()
-        {
-            Assert.AreEqual(validEmployee1.Role, RoleUser.Employee);
-            //mock.VerifyAll();
         }
 
     }

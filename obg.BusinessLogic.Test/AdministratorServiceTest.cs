@@ -36,179 +36,158 @@ namespace obg.BusinessLogic.Test
             mock.VerifyAll();
         }
 
-        // Administrator no null.
         [ExpectedException(typeof(UserException))]
         [TestMethod]
-        public void InsertAdministratorNull()
+        public void InsertAdministrator_NullAdminstrator()
         {
             service.InsertAdministrator(nullAdministrator);
-            //mock.VerifyAll();
         }
 
-        // Name no null.
         [ExpectedException(typeof(UserException))]
         [TestMethod]
-        public void InsertAdministratorNullName()
+        public void InsertAdministratorWrong_NullName()
         {
             validAdministrator1.Name = null;
             service.InsertAdministrator(validAdministrator1);
-            //mock.VerifyAll();
         }
 
-        // Name no vacío.
         [ExpectedException(typeof(UserException))]
         [TestMethod]
-        public void InsertAdministratorEmptyName()
+        public void InsertAdministratorWrong_EmptyName()
         {
             validAdministrator1.Name = "";
             service.InsertAdministrator(validAdministrator1);
-            //mock.VerifyAll();
         }
 
-        // Name único.
         [ExpectedException(typeof(UserException))]
         [TestMethod]
-        public void InsertAdministratorWrong_TwoWithSameNames()
+        public void InsertAdministratorWrong_RepeatedName()
         {
             service.InsertAdministrator(validAdministrator1);
             validAdministrator2.Name = "Paolo";
             service.InsertAdministrator(validAdministrator2);
-            //mock.VerifyAll();
         }
 
-        // Name de máximo 20 caracteres.
         [ExpectedException(typeof(UserException))]
         [TestMethod]
-        public void InsertAdministratorWrongName_More20chars()
+        public void InsertAdministratorWrong_NameHasMore20chars()
         {
             validAdministrator1.Name = "#aaabbbccc$aaabbbcccD";
             service.InsertAdministrator(validAdministrator1);
-            //mock.VerifyAll();
         }
 
-        // Code no null.
         [ExpectedException(typeof(UserException))]
         [TestMethod]
-        public void InsertAdministratorNullCode()
+        public void InsertAdministratorWrong_NullCode()
         {
             validAdministrator1.Code = null;
             service.InsertAdministrator(validAdministrator1);
-            //mock.VerifyAll();
         }
 
-        // Code no vacío.
         [ExpectedException(typeof(UserException))]
         [TestMethod]
-        public void InsertAdministratorEmptyCode()
+        public void InsertAdministratorWrong_EmptyCode()
         {
             validAdministrator1.Code = "";
             service.InsertAdministrator(validAdministrator1);
-            //mock.VerifyAll();
         }
 
-        // Code único.
         [ExpectedException(typeof(UserException))]
         [TestMethod]
-        public void InsertAdministratorWrong_TwoWithSameCodes()
+        public void InsertAdministratorWrong_RepeatedCode()
         {
             service.InsertAdministrator(validAdministrator1);
             validAdministrator2.Code = "aabbcc";
             service.InsertAdministrator(validAdministrator2);
-            //mock.VerifyAll();
         }
 
-        // Email no null
         [ExpectedException(typeof(UserException))]
         [TestMethod]
-        public void InsertAdministratorNullEmail()
+        public void InsertAdministratorWrong_NullEmail()
         {
             validAdministrator1.Email = null;
             service.InsertAdministrator(validAdministrator1);
-            //mock.VerifyAll();
         }
 
-        // Email no vacío
         [ExpectedException(typeof(UserException))]
         [TestMethod]
-        public void InsertAdministratorEmptyEmail()
+        public void InsertAdministratorWrong_EmptyEmail()
         {
             validAdministrator1.Email = "";
             service.InsertAdministrator(validAdministrator1);
-            //mock.VerifyAll();
         }
 
-        // Email único.
         [ExpectedException(typeof(UserException))]
         [TestMethod]
-        public void InsertAdministratorWrong_TwoWithSameEmails()
+        public void InsertAdministratorWrong_RepeatedEmail()
         {
             service.InsertAdministrator(validAdministrator1);
             validAdministrator2.Email = "ps@gmail.com";
             service.InsertAdministrator(validAdministrator2);
-            //mock.VerifyAll();
         }
 
-        // Email no format (@)
         [ExpectedException(typeof(UserException))]
         [TestMethod]
-        public void InsertAdministratorWrongEmail()
+        public void InsertAdministratorWrong_EmailHasNoFormat()
         {
             validAdministrator1.Email = "psgmail.com";
             service.InsertAdministrator(validAdministrator1);
-            //mock.VerifyAll();
         }
 
-        // Password mínimo 8 caracteres
         [ExpectedException(typeof(UserException))]
         [TestMethod]
-        public void InsertAdministratorWrongPassword_Less8Chars()
+        public void InsertAdministratorWrong_PasswordHasLess8Chars()
         {
             validAdministrator1.Password = "aab#bcc";
             service.InsertAdministrator(validAdministrator1);
         }
 
-        // Password al menos un caracter especial.
         [ExpectedException(typeof(UserException))]
         [TestMethod]
-        public void InsertAdministratorWrongPassword_NoSpecialChar()
+        public void InsertAdministratorWrong_PasswordHasNoSpecialChar()
         {
             validAdministrator1.Password = "aabbccdd";
             service.InsertAdministrator(validAdministrator1);
-            //mock.VerifyAll();
         }
 
         [ExpectedException(typeof(UserException))]
         [TestMethod]
-        public void InsertAdministratorWrongAddress_Null()
+        public void InsertAdministratorWrong_NullAddress()
         {
             validAdministrator1.Address = null;
             service.InsertAdministrator(validAdministrator1);
-            //mock.VerifyAll();
-        }
-
-        [TestMethod]
-        public void GetAdministratorRole_OK()
-        {
-            Assert.AreEqual(validAdministrator1.Role, RoleUser.Administrator);
-            //mock.VerifyAll();
         }
 
         [ExpectedException(typeof(UserException))]
         [TestMethod]
-        public void InsertAdministratorWrongRegisterDate_Null()
+        public void InsertAdministratorWrong_RoleIncorrectEmployee()
+        {
+            validAdministrator1.Role = RoleUser.Employee;
+            service.InsertAdministrator(validAdministrator1);
+        }
+
+        [ExpectedException(typeof(UserException))]
+        [TestMethod]
+        public void InsertAdministratorWrong_RoleIncorrectOwner()
+        {
+            validAdministrator1.Role = RoleUser.Owner;
+            service.InsertAdministrator(validAdministrator1);
+        }
+
+        [ExpectedException(typeof(UserException))]
+        [TestMethod]
+        public void InsertAdministratorWrong_NullRegisterDate()
         {
             validAdministrator1.RegisterDate = null;
             service.InsertAdministrator(validAdministrator1);
-            //mock.VerifyAll();
         }
 
         [ExpectedException(typeof(UserException))]
         [TestMethod]
-        public void InsertAdministratorWrongRegisterDate_Empty()
+        public void InsertAdministratorWrong_EmptyRegisterDate()
         {
             validAdministrator1.RegisterDate = "";
             service.InsertAdministrator(validAdministrator1);
-            //mock.VerifyAll();
         }
 
     } 

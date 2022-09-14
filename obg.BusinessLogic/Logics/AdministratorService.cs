@@ -23,7 +23,7 @@ namespace obg.BusinessLogic.Logics
         {
             if (IsUserValid(administrator))
             {
-                // Se agreaga el Administrator a la DB.
+                // Se agreaga el Administrator a la DB: _administratorManagement.InsertEmployee(employee);
                 fakeDB.Add(administrator);
             }
             return administrator;
