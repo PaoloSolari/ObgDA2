@@ -1,5 +1,6 @@
 ﻿using obg.DataAccess.Interface.Interfaces;
 using obg.Domain.Entities;
+using obg.Domain.Enums;
 using obg.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -21,13 +22,22 @@ namespace obg.BusinessLogic.Logics
 
         public Administrator InsertAdministrator(Administrator administrator)
         {
-            if (IsUserValid(administrator))
+            if (IsUserValid(administrator) && IsAAdministrator(administrator))
             {
-                // Se agreaga el Administrator a la DB.
+                // Se agreaga el Administrator a la DB: _administratorManagement.InsertEmployee(employee);
                 fakeDB.Add(administrator);
             }
             return administrator;
         }
-        
+
+        private bool IsAAdministrator(Administrator administrator)
+        {
+            if (administrator.Role != RoleUser.Administrator)
+            {
+                throw new UserException("El admnistrador tiene asignado un rol incorrecto.");
+            }
+            return true;
+        }
+
     }
 }
