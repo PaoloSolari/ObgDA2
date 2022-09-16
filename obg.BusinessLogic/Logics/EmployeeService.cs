@@ -27,7 +27,7 @@ namespace obg.BusinessLogic.Logics
             return employee;
         }
 
-        public bool HasAPharmacy(Employee employee)
+        private bool HasAPharmacy(Employee employee)
         {
             if(employee.Pharmacy == null)
             {
@@ -36,7 +36,7 @@ namespace obg.BusinessLogic.Logics
             return true; ;
         }
 
-        public bool IsAEmployee(Employee employee)
+        private bool IsAEmployee(Employee employee)
         {
             if(employee.Role != RoleUser.Employee)
             {
