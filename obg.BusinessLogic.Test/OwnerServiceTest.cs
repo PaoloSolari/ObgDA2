@@ -16,16 +16,20 @@ namespace obg.BusinessLogic.Test
         private Owner validOwner2;
         private Owner nullOwner;
         private OwnerService service;
-        private Pharmacy pharmacy;
+        private Pharmacy pharmacy1;
+        private Pharmacy pharmacy2;
 
         [TestInitialize]
         public void InitTest()
         {
             mock = new Mock<IOwnerManagement>(MockBehavior.Strict);
             service = new OwnerService(mock.Object);
-
-            validOwner1 = new Owner("Paolo", "aabbcc", "ps@gmail.com", "password123.", "addressPS", RoleUser.Owner, "12/09/2022", null);
-            validOwner2 = new Owner("Gabriel", "xxyyzz", "gj@gmail.com", "password123.", "address", RoleUser.Owner, "12/09/2022", null);
+            pharmacy1 = new Pharmacy("San Roque", "aaaa", null);
+            pharmacy2 = new Pharmacy("Farmacity", "aaaa", null);
+            validOwner1 = new Owner("Paolo", "aabbcc", "ps@gmail.com", "password123.", "addressPS", RoleUser.Owner, "12/09/2022", pharmacy1);
+            validOwner2 = new Owner("Gabriel", "xxyyzz", "gj@gmail.com", "password123.", "address", RoleUser.Owner, "12/09/2022", pharmacy2);
+            pharmacy1.Owner = validOwner1;
+            pharmacy2.Owner = validOwner2;
             nullOwner = null;
         }
 
@@ -45,7 +49,7 @@ namespace obg.BusinessLogic.Test
 
         [ExpectedException(typeof(UserException))]
         [TestMethod]
-        public void InserlOwnerWrong_NullName()
+        public void InsertOwnerWrong_NullName()
         {
             validOwner1.Name = null;
             service.InsertOwner(validOwner1);
