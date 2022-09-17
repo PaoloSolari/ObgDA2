@@ -15,10 +15,10 @@ namespace obg.Domain.Entities
         public RoleUser Role { get; set; }
         public string RegisterDate { get; set; }
 
-        public User(string name, string code, string email, string password, string address, RoleUser role, string registerDate)
+        public User(string name, string email, string password, string address, RoleUser role, string registerDate)
         {
             Name = name;
-            Code = code;
+            Code = new Guid().ToString().Substring(0, 5);
             Email = email;
             Password = password;
             Address = address;

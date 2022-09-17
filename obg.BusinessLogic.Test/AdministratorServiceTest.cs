@@ -25,8 +25,8 @@ namespace obg.BusinessLogic.Test
             mock = new Mock<IAdministratorManagement>(MockBehavior.Strict);
             service = new AdministratorService(mock.Object);
 
-            validAdministrator1 = new Administrator("Paolo", "aabbcc", "ps@gmail.com", "password123.", "addressPS", RoleUser.Administrator, "12/09/2022", null);
-            validAdministrator2 = new Administrator("Gabriel", "xxyyzz", "gj@gmail.com", "password123.", "address", RoleUser.Administrator, "12/09/2022", null);
+            validAdministrator1 = new Administrator("Paolo", "ps@gmail.com", "password123.", "addressPS", RoleUser.Administrator, "12/09/2022", null);
+            validAdministrator2 = new Administrator("Gabriel", "gj@gmail.com", "password123.", "address", RoleUser.Administrator, "12/09/2022", null);
             nullAdministrator = null;
         }
 
@@ -98,7 +98,7 @@ namespace obg.BusinessLogic.Test
         public void InsertAdministratorWrong_RepeatedCode()
         {
             service.InsertAdministrator(validAdministrator1);
-            validAdministrator2.Code = "aabbcc";
+            validAdministrator2.Code = validAdministrator1.Code;
             service.InsertAdministrator(validAdministrator2);
         }
 

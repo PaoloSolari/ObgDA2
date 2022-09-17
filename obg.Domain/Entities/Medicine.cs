@@ -5,7 +5,7 @@ namespace obg.Domain.Entities
 {
     public class Medicine
     {
-        public Guid Code { get; set; }
+        public string Code { get; set; }
         public string Name { get; set; }
         public string SymtompsItTreats { get; set; }
         public PresentationMedicine Presentation { get; set; }
@@ -17,7 +17,7 @@ namespace obg.Domain.Entities
 
         public Medicine(string name, string symtompsItTreats, PresentationMedicine presentation, int quantity, string unit, double price, bool prescription, bool isActive)
         {
-            Code = new Guid();
+            Code = new Guid().ToString().Substring(0,4);
             Name = name;
             SymtompsItTreats = symtompsItTreats;
             Presentation = presentation;
