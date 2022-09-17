@@ -16,6 +16,8 @@ namespace obg.BusinessLogic.Test
         private Mock<IEmployeeManagement> mock;
         private Employee validEmployee1;
         private Employee validEmployee2;
+        private Pharmacy pharmacy1;
+        private Pharmacy pharmacy2;
         private Employee nullEmployee;
         private EmployeeService service;
 
@@ -24,9 +26,12 @@ namespace obg.BusinessLogic.Test
         {
             mock = new Mock<IEmployeeManagement>(MockBehavior.Strict);
             service = new EmployeeService(mock.Object);
-
-            validEmployee1 = new Employee("Rodrigo", "jijiji", "rp@gmail.com", "$$$aaa123.", "addressPS", RoleUser.Employee, "13/09/2022", null, null);
-            validEmployee2 = new Employee("Lucas", "nolozzz", "lr@gmail.com", "###bbb123.", "address", RoleUser.Employee, "13/09/2022", null, null);
+            pharmacy1 = new Pharmacy("San Roque", "aaaa", null);
+            pharmacy2 = new Pharmacy("Farmacity", "aaaa", null);
+            validEmployee1 = new Employee("Rodrigo", "jijiji", "rp@gmail.com", "$$$aaa123.", "addressPS", RoleUser.Employee, "13/09/2022", pharmacy1, null);
+            validEmployee2 = new Employee("Lucas", "nolozzz", "lr@gmail.com", "###bbb123.", "address", RoleUser.Employee, "13/09/2022", pharmacy2, null);
+            pharmacy1.AddEmployee(validEmployee1);
+            pharmacy2.AddEmployee(validEmployee2);
             nullEmployee = null;
         }
 
