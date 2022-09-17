@@ -28,8 +28,8 @@ namespace obg.BusinessLogic.Test
             service = new EmployeeService(mock.Object);
             pharmacy1 = new Pharmacy("San Roque", "aaaa", null);
             pharmacy2 = new Pharmacy("Farmacity", "aaaa", null);
-            validEmployee1 = new Employee("Rodrigo", "jijiji", "rp@gmail.com", "$$$aaa123.", "addressPS", RoleUser.Employee, "13/09/2022", pharmacy1, null);
-            validEmployee2 = new Employee("Lucas", "nolozzz", "lr@gmail.com", "###bbb123.", "address", RoleUser.Employee, "13/09/2022", pharmacy2, null);
+            validEmployee1 = new Employee("Rodrigo", "rp@gmail.com", "$$$aaa123.", "addressPS", RoleUser.Employee, "13/09/2022", pharmacy1, null);
+            validEmployee2 = new Employee("Lucas", "lr@gmail.com", "###bbb123.", "address", RoleUser.Employee, "13/09/2022", pharmacy2, null);
             pharmacy1.AddEmployee(validEmployee1);
             pharmacy2.AddEmployee(validEmployee2);
             nullEmployee = null;
@@ -103,7 +103,7 @@ namespace obg.BusinessLogic.Test
         public void InsertEmployeeWrong_RepeatedCode()
         {
             service.InsertEmployee(validEmployee1);
-            validEmployee2.Code = "jijiji";
+            validEmployee2.Code = validEmployee1.Code;
             service.InsertEmployee(validEmployee2);
         }
 

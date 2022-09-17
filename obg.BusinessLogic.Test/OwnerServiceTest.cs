@@ -26,8 +26,8 @@ namespace obg.BusinessLogic.Test
             service = new OwnerService(mock.Object);
             pharmacy1 = new Pharmacy("San Roque", "aaaa", null);
             pharmacy2 = new Pharmacy("Farmacity", "aaaa", null);
-            validOwner1 = new Owner("Paolo", "aabbcc", "ps@gmail.com", "password123.", "addressPS", RoleUser.Owner, "12/09/2022", pharmacy1);
-            validOwner2 = new Owner("Gabriel", "xxyyzz", "gj@gmail.com", "password123.", "address", RoleUser.Owner, "12/09/2022", pharmacy2);
+            validOwner1 = new Owner("Paolo", "ps@gmail.com", "password123.", "addressPS", RoleUser.Owner, "12/09/2022", pharmacy1);
+            validOwner2 = new Owner("Gabriel", "gj@gmail.com", "password123.", "address", RoleUser.Owner, "12/09/2022", pharmacy2);
             pharmacy1.Owner = validOwner1;
             pharmacy2.Owner = validOwner2;
             nullOwner = null;
@@ -101,7 +101,7 @@ namespace obg.BusinessLogic.Test
         public void InsertOwnerWrong_RepeatedCode()
         {
             service.InsertOwner(validOwner1);
-            validOwner2.Code = "aabbcc";
+            validOwner2.Code = validOwner1.Code;
             service.InsertOwner(validOwner2);
         }
 
