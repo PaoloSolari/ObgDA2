@@ -20,14 +20,14 @@ namespace obg.BusinessLogic.Logics
 
         public void InsertPharmacy(Pharmacy pharmacy)
         {
-            if (isPharmacyValid(pharmacy) && !IsNameRegistered(pharmacy.Name))
+            if (IsPharmacyValid(pharmacy) && !IsNameRegistered(pharmacy.Name))
             {
                 // Se agreaga la Pharmacy a la DB: _pharmacyManagement.InsertPharmacy(pharmacy);
                 fakeDB.Add(pharmacy);
             }
         }
 
-        private bool isPharmacyValid(Pharmacy pharmacy)
+        private bool IsPharmacyValid(Pharmacy pharmacy)
         {
             if (pharmacy == null) throw new PharmacyException("Farmacia inválida.");
             if (pharmacy.Name == null || pharmacy.Name.Length < 1 || pharmacy.Name.Length > 50) throw new PharmacyException("Nombre inválido.");
