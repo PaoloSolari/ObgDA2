@@ -39,7 +39,7 @@ namespace obg.BusinessLogic.Test
 
         [ExpectedException(typeof(MedicineException))]
         [TestMethod]
-        public void InsertMedicineWrong_NullPharmacy()
+        public void InsertMedicineWrong_NullMedicine()
         {
             service.InsertMedicine(nullMedicine);
         }
