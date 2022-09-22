@@ -10,7 +10,6 @@ namespace obg.BusinessLogic.Logics
 {
     public class DemandService
     {
-        protected List<Demand> fakeDB = new List<Demand>();
         private readonly IDemandManagement _demandManagement;
 
         public DemandService(IDemandManagement demandManagement)
@@ -22,15 +21,21 @@ namespace obg.BusinessLogic.Logics
         {
             if (IsDemandValid(demand))
             {
-                // Se agreaga la Demand a la DB: _demandManagement.InsertDemand(demand);
-                fakeDB.Add(demand);
+                // Se agrega la Demand a la DB: _demandManagement.InsertDemand(demand);
+                FakeDB.Demands.Add(demand);
             }
         }
 
         private bool IsDemandValid(Demand demand)
         {
-            if (demand == null) throw new DemandException("Solicitud inválida.");
-            if (demand.Petitions == null || demand.Petitions.Count == 0) throw new DemandException("Solicitud inválida.");
+            if (demand == null)
+            {
+                throw new DemandException("Solicitud inválida.");
+            }
+            if (demand.Petitions == null || demand.Petitions.Count == 0)
+            {
+                throw new DemandException("Solicitud inválida.");
+            }
             return true;
         }
     }

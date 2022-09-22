@@ -27,11 +27,11 @@ namespace obg.BusinessLogic.Test
         {
             mock = new Mock<IPurchaseManagement>(MockBehavior.Strict);
             service = new PurchaseService(mock.Object);
-            validPurchaseLine1 = new PurchaseLine("aaaaa", 2);
-            validPurchaseLine2 = new PurchaseLine("bbbbb", 3);
-            validPurchase1 = new Purchase(100, "email@email.com");
+            validPurchaseLine1 = new PurchaseLine(1, "aaaaa", 2);
+            validPurchaseLine2 = new PurchaseLine(2, "bbbbb", 3);
+            validPurchase1 = new Purchase(1, 100, "email@email.com");
             validPurchase1.PurchaseLines.Add(validPurchaseLine1);
-            validPurchase2 = new Purchase(200, "email@gmail.com");
+            validPurchase2 = new Purchase(2, 200, "email@gmail.com");
             validPurchase2.PurchaseLines.Add(validPurchaseLine2);
             nullPurchase = null;
         }

@@ -28,7 +28,7 @@ namespace obg.BusinessLogic.Test
         {
             mock = new Mock<IDemandManagement>(MockBehavior.Strict);
             service = new DemandService(mock.Object);
-            validPetition1 = new Petition("aaaaa", 5);
+            validPetition1 = new Petition(1, "aaaaa", 5);
             nullPetitionList = null;
             emptyPetitionList = new List<Petition>();
             validDemand1 = new Demand(1, DemandStatus.Accepted);

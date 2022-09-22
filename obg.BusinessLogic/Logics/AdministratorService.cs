@@ -24,8 +24,9 @@ namespace obg.BusinessLogic.Logics
         {
             if (IsUserValid(administrator) && IsAAdministrator(administrator))
             {
-                // Se agreaga el Administrator a la DB: _administratorManagement.InsertEmployee(employee);
-                fakeDB.Add(administrator);
+                // Se agrega el Administrator a la DB: _administratorManagement.InsertEmployee(employee);
+                FakeDB.Administrators.Add(administrator);
+                FakeDB.Users.Add(administrator);
             }
             return administrator;
         }

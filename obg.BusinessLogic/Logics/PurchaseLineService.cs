@@ -9,7 +9,6 @@ namespace obg.BusinessLogic.Logics
 {
     public class PurchaseLineService
     {
-        protected List<PurchaseLine> fakeDB = new List<PurchaseLine>();
         private readonly IPurchaseLineManagement _purchaseLineManagement;
 
         public PurchaseLineService(IPurchaseLineManagement purchaseLineManagement)
@@ -21,16 +20,25 @@ namespace obg.BusinessLogic.Logics
         {
             if (IsPurchaseLineValid(purchaseLine))// && !IsCodeRegistered(medicine.Name))
             {
-                // Se agreaga la PurchaseLine a la DB: _purchaseLineManagement.InsertMedicine(purchaseLine);
-                fakeDB.Add(purchaseLine);
+                // Se agrega la PurchaseLine a la DB: _purchaseLineManagement.InsertMedicine(purchaseLine);
+                FakeDB.PurchaseLines.Add(purchaseLine);
             }
         }
 
         private bool IsPurchaseLineValid(PurchaseLine purchaseLine)
         {
-            if (purchaseLine == null) throw new PurchaseLineException("Linea de compra inválida.");
-            if (purchaseLine.MedicineCode == null || purchaseLine.MedicineCode.Length < 1) throw new PurchaseLineException("Código de medicamento inválido");
-            if (purchaseLine.MedicineQuantity < 1) throw new PurchaseLineException("La cantidad del medicamento a comprar no puede ser menor a 1");
+            if (purchaseLine == null)
+            {
+                throw new PurchaseLineException("Linea de compra inválida.");
+            }
+            if (purchaseLine.MedicineCode == null || purchaseLine.MedicineCode.Length < 1)
+            {
+                throw new PurchaseLineException("Código de medicamento inválido");
+            }
+            if (purchaseLine.MedicineQuantity < 1)
+            {
+                throw new PurchaseLineException("La cantidad del medicamento a comprar no puede ser menor a 1");
+            }
             return true;
         }
     }

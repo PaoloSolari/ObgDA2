@@ -11,8 +11,6 @@ namespace obg.BusinessLogic.Logics
 {
     public class UserService
     {
-        protected List<User> fakeDB = new List<User>();
-
         public UserService() { }
 
         protected bool IsUserValid(User user)
@@ -66,7 +64,7 @@ namespace obg.BusinessLogic.Logics
 
         private bool IsNameRegistered(string name)
         {
-            foreach (User user in this.fakeDB)
+            foreach (User user in FakeDB.Users)
             {
                 if (name.Equals(user.Name))
                 {
@@ -78,7 +76,7 @@ namespace obg.BusinessLogic.Logics
 
         private bool IsCodeRegistered(string code)
         {
-            foreach (User user in this.fakeDB)
+            foreach (User user in FakeDB.Users)
             {
                 if (code.Equals(user.Code))
                 {
@@ -90,7 +88,7 @@ namespace obg.BusinessLogic.Logics
 
         private bool IsEmailRegistered(string email)
         {
-            foreach (User user in this.fakeDB)
+            foreach (User user in FakeDB.Users)
             {
                 if (email.Equals(user.Email))
                 {

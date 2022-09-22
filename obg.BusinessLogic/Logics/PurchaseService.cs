@@ -9,7 +9,6 @@ namespace obg.BusinessLogic.Logics
 {
     public class PurchaseService
     {
-        protected List<Purchase> fakeDB = new List<Purchase>();
         private readonly IPurchaseManagement _purchaseManagement;
 
         public PurchaseService(IPurchaseManagement purchaseManagement)
@@ -21,18 +20,29 @@ namespace obg.BusinessLogic.Logics
         {
             if (IsPurchaseValid(purchase))// && !IsCodeRegistered(medicine.Name))
             {
-                // Se agreaga la Purchase a la DB: _purchaseManagement.InsertPurchase(purchase);
-                fakeDB.Add(purchase);
+                // Se agrega la Purchase a la DB: _purchaseManagement.InsertPurchase(purchase);
+                FakeDB.Purchases.Add(purchase);
             }
         }
 
         private bool IsPurchaseValid(Purchase purchase)
         {
-            if (purchase == null) throw new PurchaseException("Compra inválida.");
-            if (purchase.PurchaseLines == null || purchase.PurchaseLines.Count == 0) throw new PurchaseException("Compra inválida.");
-            if (purchase.Amount < 0) throw new PurchaseException("Monto inválido.");
-            if (purchase.BuyerEmail == null || purchase.BuyerEmail.Length < 1) throw new PurchaseException("Email inválido.");
-
+            if (purchase == null)
+            {
+                throw new PurchaseException("Compra inválida.");
+            }
+            if (purchase.PurchaseLines == null || purchase.PurchaseLines.Count == 0)
+            {
+                throw new PurchaseException("Compra inválida.");
+            }
+            if (purchase.Amount < 0)
+            {
+                throw new PurchaseException("Monto inválido.");
+            }
+            if (purchase.BuyerEmail == null || purchase.BuyerEmail.Length < 1)
+            {
+                throw new PurchaseException("Email inválido.");
+            }
             return true;
         }
     }

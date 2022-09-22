@@ -29,8 +29,8 @@ namespace obg.BusinessLogic.Test
             service = new InvitationService(mock.Object);
             nullPharmacy = null;
             validPharmacy1 = new Pharmacy("San Roque", "aaaa", null);
-            validInvitation1 = new Invitation(validPharmacy1, RoleUser.Employee, "Paolo", "123456");
-            validInvitation2 = new Invitation(validPharmacy1, RoleUser.Owner, "Gabriel", "135791");
+            validInvitation1 = new Invitation(1, validPharmacy1, RoleUser.Employee, "Paolo", "123456");
+            validInvitation2 = new Invitation(2, validPharmacy1, RoleUser.Owner, "Gabriel", "135791");
             nullInvitation = null;
         }
 

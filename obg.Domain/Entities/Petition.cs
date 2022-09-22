@@ -6,12 +6,14 @@ namespace obg.Domain.Entities
 {
     public class Petition
     {
+        public int IdPetition { get; set; }
         public string MedicineCode { get; set; }
         public int NewQuantity { get; set; }
-        public Petition(string medicineCode, int newQuantity)
+        public Petition(int idPetition, string medicineCode, int newQuantity)
         {
+            IdPetition = idPetition;
             MedicineCode = medicineCode;
-            this.NewQuantity = newQuantity;
+            NewQuantity = newQuantity;
         }
     }
 }

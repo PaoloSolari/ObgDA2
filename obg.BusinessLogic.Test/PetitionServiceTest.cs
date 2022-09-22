@@ -24,8 +24,8 @@ namespace obg.BusinessLogic.Test
         {
             mock = new Mock<IPetitionManagement>(MockBehavior.Strict);
             service = new PetitionService(mock.Object);
-            validPetition1 = new Petition("aaaaa", 5);
-            validPetition2 = new Petition("bbbbb", 10);
+            validPetition1 = new Petition(1, "aaaaa", 5);
+            validPetition2 = new Petition(2, "bbbbb", 10);
             nullPetition = null;
         }
 

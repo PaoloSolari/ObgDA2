@@ -24,8 +24,8 @@ namespace obg.BusinessLogic.Test
         {
             mock = new Mock<IPurchaseLineManagement>(MockBehavior.Strict);
             service = new PurchaseLineService(mock.Object);
-            validPurchaseLine1 = new PurchaseLine("aaaaa", 2);
-            validPurchaseLine2 = new PurchaseLine("bbbbb", 3);
+            validPurchaseLine1 = new PurchaseLine(1, "aaaaa", 2);
+            validPurchaseLine2 = new PurchaseLine(2, "bbbbb", 3);
             nullPurchaseLine = null;
         }
 

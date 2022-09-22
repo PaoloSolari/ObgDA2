@@ -21,8 +21,9 @@ namespace obg.BusinessLogic.Logics
         {
             if (IsUserValid(owner) && HasAPharmacy(owner) && IsAOwner(owner))
             {
-                // Se agreaga el Owner a la DB: _ownerManagement.InsertOwner(owner);
-                fakeDB.Add(owner);
+                // Se agrega el Owner a la DB: _ownerManagement.InsertOwner(owner);
+                FakeDB.Owners.Add(owner);
+                FakeDB.Users.Add(owner);
             }
             return owner;
         }
