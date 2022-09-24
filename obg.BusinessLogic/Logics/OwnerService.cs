@@ -34,7 +34,7 @@ namespace obg.BusinessLogic.Logics
             {
                 throw new UserException("El dueño no tiene una farmacia asignada.");
             }
-            return true; ;
+            return true;
         }
 
         private bool IsAOwner(Owner owner)

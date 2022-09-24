@@ -31,14 +31,14 @@ namespace obg.BusinessLogic.Logics
             {
                 throw new MedicineException("Medicamento inválido.");
             }
-            //if (medicine.Code == null || medicine.Code.Length < 1)
-            //{
-            //    throw new MedicineException("Código inválido.");
-            //}
-            //if (IsCodeRegistered(medicine.Code))
-            //{
-            //    throw new MedicineException("Un medicamento con ese código ya fue registrado");
-            //}
+            if (medicine.Code == null || medicine.Code.Length < 1)
+            {
+                throw new MedicineException("Código inválido.");
+            }
+            if (IsCodeRegistered(medicine.Code))
+            {
+                throw new MedicineException("Un medicamento con ese código ya fue registrado");
+            }
             if (medicine.Name == null || medicine.Name.Length < 1)
             {
                 throw new MedicineException("Nombre inválido.");
@@ -61,5 +61,18 @@ namespace obg.BusinessLogic.Logics
             }
             return true;
         }
+
+        private bool IsCodeRegistered(string code)
+        {
+            foreach (Medicine medicine in FakeDB.Medicines)
+            {
+                if (code.Equals(medicine.Code))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
     }
 }

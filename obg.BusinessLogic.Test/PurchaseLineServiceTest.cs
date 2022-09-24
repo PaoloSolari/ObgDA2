@@ -3,6 +3,7 @@ using Moq;
 using obg.BusinessLogic.Logics;
 using obg.DataAccess.Interface.Interfaces;
 using obg.Domain.Entities;
+using obg.Domain.Enums;
 using obg.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,8 @@ namespace obg.BusinessLogic.Test
     {
         private Mock<IPurchaseLineManagement> mock;
         private PurchaseLineService service;
+
+        private Medicine validMedicine;
         private PurchaseLine validPurchaseLine1;
         private PurchaseLine validPurchaseLine2;
         private PurchaseLine nullPurchaseLine;
@@ -24,8 +27,11 @@ namespace obg.BusinessLogic.Test
         {
             mock = new Mock<IPurchaseLineManagement>(MockBehavior.Strict);
             service = new PurchaseLineService(mock.Object);
-            validPurchaseLine1 = new PurchaseLine(1, "aaaaa", 2);
-            validPurchaseLine2 = new PurchaseLine(2, "bbbbb", 3);
+
+            validMedicine = new Medicine("GDY3AA", "Remedio", "Dolores", PresentationMedicine.Capsulas, 10, "25g", 300, false, true);
+            FakeDB.Medicines.Add(validMedicine);
+            validPurchaseLine1 = new PurchaseLine("HUDTGY", validMedicine.Code, 2);
+            validPurchaseLine2 = new PurchaseLine("LJUAHl", validMedicine.Code, 3);
             nullPurchaseLine = null;
         }
 
@@ -45,6 +51,31 @@ namespace obg.BusinessLogic.Test
 
         [ExpectedException(typeof(PurchaseLineException))]
         [TestMethod]
+        public void InsertPurchaseLineWrong_NullIdPurchaseLine()
+        {
+            validPurchaseLine1.IdPurchaseLine = null;
+            service.InsertPurchaseLine(validPurchaseLine1);
+        }
+
+        [ExpectedException(typeof(PurchaseLineException))]
+        [TestMethod]
+        public void InsertPurchaseLineWrong_EmptyIdPurchaseLine()
+        {
+            validPurchaseLine1.IdPurchaseLine = "";
+            service.InsertPurchaseLine(validPurchaseLine1);
+        }
+
+        [ExpectedException(typeof(PurchaseLineException))]
+        [TestMethod]
+        public void InsertPurchaseLineWrong_RepeatedIdPurchaseLine()
+        {
+            service.InsertPurchaseLine(validPurchaseLine1);
+            validPurchaseLine2.IdPurchaseLine = "HUDTGY";
+            service.InsertPurchaseLine(validPurchaseLine1);
+        }
+
+        [ExpectedException(typeof(PurchaseLineException))]
+        [TestMethod]
         public void InsertPurchaseLineWrong_NullMedicineCode()
         {
             validPurchaseLine1.MedicineCode = null;
@@ -53,9 +84,17 @@ namespace obg.BusinessLogic.Test
 
         [ExpectedException(typeof(PurchaseLineException))]
         [TestMethod]
-        public void InsertPurchaseLineWrong_EmptyName()
+        public void InsertPurchaseLineWrong_EmptyMedicineCode()
         {
             validPurchaseLine1.MedicineCode = "";
+            service.InsertPurchaseLine(validPurchaseLine1);
+        }
+
+        [ExpectedException(typeof(PurchaseLineException))]
+        [TestMethod]
+        public void InsertPurchaseLineWrong_InexistMedicineCode()
+        {
+            validPurchaseLine1.MedicineCode = "..."; // Nos aseguramos de no introducirlo nunca.
             service.InsertPurchaseLine(validPurchaseLine1);
         }
 

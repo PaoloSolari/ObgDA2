@@ -27,7 +27,7 @@ namespace obg.BusinessLogic.Logics
             {
                 throw new UserException("El nombre ya fue registrado.");
             }
-            if (user.Code == null || user.Code.Length == 0)
+            if(user.Code.ToString("D6").Length != 6)
             {
                 throw new UserException("Código inválido.");
             }
@@ -74,7 +74,7 @@ namespace obg.BusinessLogic.Logics
             return false;
         }
 
-        private bool IsCodeRegistered(string code)
+        private bool IsCodeRegistered(int code)
         {
             foreach (User user in FakeDB.Users)
             {

@@ -32,11 +32,31 @@ namespace obg.BusinessLogic.Logics
             {
                 throw new DemandException("Solicitud inválida.");
             }
+            if (demand.IdDemand == null || demand.IdDemand.Length < 1)
+            {
+                throw new DemandException("Identificador inválido.");
+            }
+            if (IsIdDemandRegistered(demand.IdDemand))
+            {
+                throw new DemandException("Ya existe una solicitud con el mismo identificador");
+            }
             if (demand.Petitions == null || demand.Petitions.Count == 0)
             {
                 throw new DemandException("Solicitud inválida.");
             }
             return true;
+        }
+
+        public bool IsIdDemandRegistered(string idDemand)
+        {
+            foreach (Demand demand in FakeDB.Demands)
+            {
+                if (demand.IdDemand.Equals(idDemand))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

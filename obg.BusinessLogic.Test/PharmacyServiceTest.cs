@@ -16,6 +16,7 @@ namespace obg.BusinessLogic.Test
     {
         private Mock<IPharmacyManagement> mock;
         private PharmacyService service;
+
         private Pharmacy validPharmacy1;
         private Pharmacy validPharmacy2;
         private Pharmacy nullPharmacy;
@@ -25,8 +26,9 @@ namespace obg.BusinessLogic.Test
         {
             mock = new Mock<IPharmacyManagement>(MockBehavior.Strict);
             service = new PharmacyService(mock.Object);
-            validPharmacy1 = new Pharmacy("San Roque", "aaaa", null);
-            validPharmacy2 = new Pharmacy("Farmacity", "aaaa", null);
+
+            validPharmacy1 = new Pharmacy("FarmaUy", "Gaboto", null, null, null);
+            validPharmacy2 = new Pharmacy("FarmaArg", "Tristan", null, null, null);
             nullPharmacy = null;
         }
 
@@ -85,6 +87,13 @@ namespace obg.BusinessLogic.Test
             service.InsertPharmacy(validPharmacy1);
         }
 
+        [ExpectedException(typeof(PharmacyException))]
+        [TestMethod]
+        public void InsertPharmacyWrong_EmptyAddress()
+        {
+            validPharmacy1.Address = "";
+            service.InsertPharmacy(validPharmacy1);
+        }
 
     }
 }

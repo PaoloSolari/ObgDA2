@@ -14,22 +14,28 @@ namespace obg.BusinessLogic.Test
     public class EmployeeServiceTest
     {
         private Mock<IEmployeeManagement> mock;
-        private Employee validEmployee1;
-        private Employee validEmployee2;
+        private EmployeeService service;
+
+        private List<Employee> employeesFromPharmacy1;
+        private List<Employee> employeesFromPharmacy2;
         private Pharmacy pharmacy1;
         private Pharmacy pharmacy2;
+        private Employee validEmployee1;
+        private Employee validEmployee2;
         private Employee nullEmployee;
-        private EmployeeService service;
 
         [TestInitialize]
         public void InitTest()
         {
             mock = new Mock<IEmployeeManagement>(MockBehavior.Strict);
             service = new EmployeeService(mock.Object);
-            pharmacy1 = new Pharmacy("San Roque", "aaaa", null);
-            pharmacy2 = new Pharmacy("Farmacity", "aaaa", null);
-            validEmployee1 = new Employee("Rodrigo", "rp@gmail.com", "$$$aaa123.", "addressPS", RoleUser.Employee, "13/09/2022", pharmacy1, null);
-            validEmployee2 = new Employee("Lucas", "lr@gmail.com", "###bbb123.", "address", RoleUser.Employee, "13/09/2022", pharmacy2, null);
+
+            employeesFromPharmacy1 = new List<Employee>();
+            employeesFromPharmacy2 = new List<Employee>();
+            pharmacy1 = new Pharmacy("San Roque", "18 de Julio", null, employeesFromPharmacy1, null);
+            pharmacy2 = new Pharmacy("Farmacity", "25 de Agosto", null, employeesFromPharmacy2, null);
+            validEmployee1 = new Employee("Rodrigo", 000101, "r@gmail.com", "$$$aaa123.", "addressR", RoleUser.Employee, "13/09/2022", pharmacy1, null);
+            validEmployee2 = new Employee("Lucas", 000102, "l@gmail.com", "###bbb123.", "addressL", RoleUser.Employee, "13/09/2022", pharmacy2, null);
             pharmacy1.AddEmployee(validEmployee1);
             pharmacy2.AddEmployee(validEmployee2);
             nullEmployee = null;
@@ -84,17 +90,17 @@ namespace obg.BusinessLogic.Test
 
         [ExpectedException(typeof(UserException))]
         [TestMethod]
-        public void InsertEmployeeWrong_NullCode()
+        public void InsertEmployeeWrong_CodeHasLess6Digits()
         {
-            validEmployee1.Code = null;
+            validEmployee1.Code = 55555;
             service.InsertEmployee(validEmployee1);
         }
 
         [ExpectedException(typeof(UserException))]
         [TestMethod]
-        public void InsertEmployeeWrong_EmptyCode()
+        public void InsertEmployeeWrong_CodeHasMore6Digits()
         {
-            validEmployee1.Code = "";
+            validEmployee1.Code = 7777777;
             service.InsertEmployee(validEmployee1);
         }
 
@@ -128,7 +134,7 @@ namespace obg.BusinessLogic.Test
         public void InsertEmployeeWrong_RepeatedEmail()
         {
             service.InsertEmployee(validEmployee1);
-            validEmployee2.Email = "rp@gmail.com";
+            validEmployee2.Email = "r@gmail.com";
             service.InsertEmployee(validEmployee2);
         }
 

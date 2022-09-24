@@ -7,13 +7,13 @@ namespace obg.Domain.Entities
 {
     public class Invitation
     {
-        public int IdInvitation { get; set; }
+        public string IdInvitation { get; set; }
         public Pharmacy Pharmacy { get; set; }
         public RoleUser UserRole { get; set; }
         public string UserName { get; set; }
-        public string UserCode { get; set; }
+        public int UserCode { get; set; }
 
-        public Invitation(int idInvitation, Pharmacy pharmacy, RoleUser userRole, string userName, string userCode)
+        public Invitation(string idInvitation, Pharmacy pharmacy, RoleUser userRole, string userName, int userCode)
         {
             IdInvitation = idInvitation;
             Pharmacy = pharmacy;

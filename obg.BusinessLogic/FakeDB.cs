@@ -7,16 +7,16 @@ namespace obg.BusinessLogic
 {
     public static class FakeDB
     {
-        public static List<Pharmacy> Pharmacies { get; set; }
-        public static List<Medicine> Medicines { get; set; }
-        public static List<User> Users { get; set; }
-        public static List<Administrator> Administrators { get; set; }
-        public static List<Owner> Owners { get; set; }
-        public static List<Employee> Employees { get; set; }
-        public static List<Invitation> Invitations { get; set; }
-        public static List<Demand> Demands { get; set; }
-        public static List<Petition> Petitions { get; set; }
-        public static List<Purchase> Purchases { get; set; }
-        public static List<PurchaseLine> PurchaseLines { get; set; }
+        public static List<Pharmacy> Pharmacies = new List<Pharmacy>();
+        public static List<Medicine> Medicines = new List<Medicine>();
+        public static List<User> Users = new List<User>();
+        public static List<Administrator> Administrators = new List<Administrator>();
+        public static List<Owner> Owners = new List<Owner>();
+        public static List<Employee> Employees = new List<Employee>();
+        public static List<Invitation> Invitations = new List<Invitation>();
+        public static List<Demand> Demands = new List<Demand>();
+        public static List<Petition> Petitions = new List<Petition>();
+        public static List<Purchase> Purchases = new List<Purchase>();
+        public static List<PurchaseLine> PurchaseLines = new List<PurchaseLine>();
     }
 }

@@ -19,7 +19,7 @@ namespace obg.BusinessLogic.Logics
 
         public void InsertPharmacy(Pharmacy pharmacy)
         {
-            if (IsPharmacyValid(pharmacy) && !IsNameRegistered(pharmacy.Name))
+            if (IsPharmacyValid(pharmacy))
             {
                 // Se agrega la Pharmacy a la DB: _pharmacyManagement.InsertPharmacy(pharmacy);
                 FakeDB.Pharmacies.Add(pharmacy);
@@ -36,13 +36,13 @@ namespace obg.BusinessLogic.Logics
             {
                 throw new PharmacyException("Nombre inválido.");
             }
-            if (pharmacy.Address == null || pharmacy.Address.Length < 1)
-            {
-                throw new PharmacyException("Dirección inválida.");
-            }
             if (IsNameRegistered(pharmacy.Name))
             {
                 throw new PharmacyException("El nombre ya está registrado");
+            }
+            if (pharmacy.Address == null || pharmacy.Address.Length < 1)
+            {
+                throw new PharmacyException("Dirección inválida.");
             }
             return true;
         }

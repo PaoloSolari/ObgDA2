@@ -16,6 +16,7 @@ namespace obg.BusinessLogic.Test
     {
         private Mock<IMedicineManagement> mock;
         private MedicineService service;
+
         private Medicine validMedicine1;
         private Medicine validMedicine2;
         private Medicine nullMedicine;
@@ -25,8 +26,9 @@ namespace obg.BusinessLogic.Test
         {
             mock = new Mock<IMedicineManagement>(MockBehavior.Strict);
             service = new MedicineService(mock.Object);
-            validMedicine1 = new Medicine("Paracetamol", "aaaa", PresentationMedicine.Capsulas, 0, "1mg", 200, false, true);
-            validMedicine2 = new Medicine("Ibuprofeno", "aaaa", PresentationMedicine.Comprimidos, 0, "0.5mg", 100, false, true);
+
+            validMedicine1 = new Medicine("XXCCAA", "Paracetamol", "Dolor de cabeza", PresentationMedicine.Capsulas, 0, "1mg", 200, false, true);
+            validMedicine2 = new Medicine("XF45GG", "Ibuprofeno", "Dolor de estómago", PresentationMedicine.Comprimidos, 0, "0.5mg", 100, false, true);
             nullMedicine = null;
         }
 
@@ -42,6 +44,31 @@ namespace obg.BusinessLogic.Test
         public void InsertMedicineWrong_NullMedicine()
         {
             service.InsertMedicine(nullMedicine);
+        }
+
+        [ExpectedException(typeof(MedicineException))]
+        [TestMethod]
+        public void InsertMedicineWrong_NullCode()
+        {
+            validMedicine1.Code = null;
+            service.InsertMedicine(validMedicine1);
+        }
+
+        [ExpectedException(typeof(MedicineException))]
+        [TestMethod]
+        public void InsertMedicineWrong_EmptyCode()
+        {
+            validMedicine1.Code = "";
+            service.InsertMedicine(validMedicine1);
+        }
+
+        [ExpectedException(typeof(MedicineException))]
+        [TestMethod]
+        public void InsertMedicineWrong_RepeatedCode()
+        {
+            service.InsertMedicine(validMedicine1);
+            validMedicine2.Name = "XXCCAA";
+            service.InsertMedicine(validMedicine1);
         }
 
         [ExpectedException(typeof(MedicineException))]
@@ -64,7 +91,7 @@ namespace obg.BusinessLogic.Test
         [TestMethod]
         public void InsertMedicineWrong_NullSymtompsItTreats()
         {
-            validMedicine1.SymtompsItTreats = "";
+            validMedicine1.SymtompsItTreats = null;
             service.InsertMedicine(validMedicine1);
         }
 
