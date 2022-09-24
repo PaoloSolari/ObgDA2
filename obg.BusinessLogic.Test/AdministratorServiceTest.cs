@@ -14,10 +14,11 @@ namespace obg.BusinessLogic.Test
     public class AdministratorServiceTest
     {
         private Mock<IAdministratorManagement> mock;
+        private AdministratorService service;
+        
         private Administrator validAdministrator1;
         private Administrator validAdministrator2;
         private Administrator nullAdministrator;
-        private AdministratorService service;
 
         [TestInitialize]
         public void InitTest()
@@ -25,8 +26,8 @@ namespace obg.BusinessLogic.Test
             mock = new Mock<IAdministratorManagement>(MockBehavior.Strict);
             service = new AdministratorService(mock.Object);
 
-            validAdministrator1 = new Administrator("Paolo", "ps@gmail.com", "password123.", "addressPS", RoleUser.Administrator, "12/09/2022", null);
-            validAdministrator2 = new Administrator("Gabriel", "gj@gmail.com", "password123.", "address", RoleUser.Administrator, "12/09/2022", null);
+            validAdministrator1 = new Administrator("Paolo", 000001, "ps@gmail.com", "password123.", "addressPS", RoleUser.Administrator, "12/09/2022", null);
+            validAdministrator2 = new Administrator("Gabriel", 000002, "gj@gmail.com", "password123.", "addressGJ", RoleUser.Administrator, "12/09/2022", null);
             nullAdministrator = null;
         }
 
@@ -79,17 +80,17 @@ namespace obg.BusinessLogic.Test
 
         [ExpectedException(typeof(UserException))]
         [TestMethod]
-        public void InsertAdministratorWrong_NullCode()
+        public void InsertAdministratorWrong_CodeHasLess6Digits()
         {
-            validAdministrator1.Code = null;
+            validAdministrator1.Code = 55555;
             service.InsertAdministrator(validAdministrator1);
         }
 
         [ExpectedException(typeof(UserException))]
         [TestMethod]
-        public void InsertAdministratorWrong_EmptyCode()
+        public void InsertAdministratorWrong_CodeHasMore6Digits()
         {
-            validAdministrator1.Code = "";
+            validAdministrator1.Code = 7777777;
             service.InsertAdministrator(validAdministrator1);
         }
 

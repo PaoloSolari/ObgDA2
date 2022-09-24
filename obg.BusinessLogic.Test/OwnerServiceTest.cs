@@ -12,22 +12,24 @@ namespace obg.BusinessLogic.Test
     public class OwnerServiceTest
     {
         private Mock<IOwnerManagement> mock;
+        private OwnerService service;
+
+        private Pharmacy pharmacy1;
+        private Pharmacy pharmacy2;
         private Owner validOwner1;
         private Owner validOwner2;
         private Owner nullOwner;
-        private OwnerService service;
-        private Pharmacy pharmacy1;
-        private Pharmacy pharmacy2;
 
         [TestInitialize]
         public void InitTest()
         {
             mock = new Mock<IOwnerManagement>(MockBehavior.Strict);
             service = new OwnerService(mock.Object);
-            pharmacy1 = new Pharmacy("San Roque", "aaaa", null);
-            pharmacy2 = new Pharmacy("Farmacity", "aaaa", null);
-            validOwner1 = new Owner("Paolo", "ps@gmail.com", "password123.", "addressPS", RoleUser.Owner, "12/09/2022", pharmacy1);
-            validOwner2 = new Owner("Gabriel", "gj@gmail.com", "password123.", "address", RoleUser.Owner, "12/09/2022", pharmacy2);
+
+            pharmacy1 = new Pharmacy("Farmashop", "18 de Julio", null, null, null);
+            pharmacy2 = new Pharmacy("FarmaciaLibre", "25 de Agosto", null, null, null);
+            validOwner1 = new Owner("Pedro", 000011, "p@gmail.com", "password123.", "addressP", RoleUser.Owner, "12/09/2022", pharmacy1);
+            validOwner2 = new Owner("Juan", 000012, "j@gmail.com", "password123.", "addressJ", RoleUser.Owner, "12/09/2022", pharmacy2);
             pharmacy1.Owner = validOwner1;
             pharmacy2.Owner = validOwner2;
             nullOwner = null;
@@ -68,7 +70,7 @@ namespace obg.BusinessLogic.Test
         public void InsertOwnerWrong_RepeatedName()
         {
             service.InsertOwner(validOwner1);
-            validOwner2.Name = "Paolo";
+            validOwner2.Name = "Pedro";
             service.InsertOwner(validOwner2);
         }
 
@@ -82,17 +84,17 @@ namespace obg.BusinessLogic.Test
 
         [ExpectedException(typeof(UserException))]
         [TestMethod]
-        public void InsertOwnerWrong_NullCode()
+        public void InsertOwnerWrong_CodeHasLess6Digits()
         {
-            validOwner1.Code = null;
+            validOwner1.Code = 55555;
             service.InsertOwner(validOwner1);
         }
 
         [ExpectedException(typeof(UserException))]
         [TestMethod]
-        public void InsertOwnerWrong_EmptyCode()
+        public void InsertOwnerWrong_CodeHasMore6Digits()
         {
-            validOwner1.Code = "";
+            validOwner1.Code = 7777777;
             service.InsertOwner(validOwner1);
         }
 
@@ -127,7 +129,7 @@ namespace obg.BusinessLogic.Test
         public void InsertOwnerWrong_RepeatedEmail()
         {
             service.InsertOwner(validOwner1);
-            validOwner2.Email = "ps@gmail.com";
+            validOwner2.Email = "p@gmail.com";
             service.InsertOwner(validOwner2);
         }
 

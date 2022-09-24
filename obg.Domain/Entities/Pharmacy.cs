@@ -14,18 +14,18 @@ namespace obg.Domain.Entities
         public List<Employee> Employees { get; set; }
         public List<Medicine> Medicines { get; set; }
 
-        public Pharmacy(string name, string address, Owner owner)
+        public Pharmacy(string name, string address, Owner owner, List<Employee> employees, List<Medicine> medicines)
         {
             Name = name;
             Address = address;
             Owner = owner;
-            Employees = new List<Employee>();
-            Medicines = new List<Medicine>();
+            Employees = employees;
+            Medicines = medicines;
         }
 
         public void AddEmployee(Employee employee)
         {
-            this.Employees.Add(employee);
+            Employees.Add(employee);
         }
     }
 }

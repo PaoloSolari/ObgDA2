@@ -16,25 +16,31 @@ namespace obg.BusinessLogic.Test
     {
         private Mock<IDemandManagement> mock;
         private DemandService service;
+
+        private List<Petition> petitionsFromValidDemand1;
+        private List<Petition> petitionsFromValidDemand2;
+        private List<Petition> emptyPetitions;
+        private List<Petition> nullPetitions;
+        private Petition validPetition;
         private Demand validDemand1;
         private Demand validDemand2;
         private Demand nullDemand;
-        private Petition validPetition1;
-        private List<Petition> nullPetitionList;
-        private List<Petition> emptyPetitionList;
 
         [TestInitialize]
         public void InitTest()
         {
             mock = new Mock<IDemandManagement>(MockBehavior.Strict);
             service = new DemandService(mock.Object);
-            validPetition1 = new Petition("aaaaa", 5);
-            nullPetitionList = null;
-            emptyPetitionList = new List<Petition>();
-            validDemand1 = new Demand(1, DemandStatus.Accepted);
-            validDemand2 = new Demand(2, DemandStatus.InProgress);
-            validDemand1.Petitions.Add(validPetition1);
-            validDemand2.Petitions.Add(validPetition1);
+            
+            petitionsFromValidDemand1= new List<Petition>();
+            petitionsFromValidDemand2= new List<Petition>();
+            emptyPetitions = new List<Petition>();
+            nullPetitions = null;
+            validPetition = new Petition("XFXCCC", "DDFFFF", 5);
+            petitionsFromValidDemand1.Add(validPetition);
+            petitionsFromValidDemand2.Add(validPetition);
+            validDemand1 = new Demand("AAHHGG", DemandStatus.Accepted, petitionsFromValidDemand1);
+            validDemand2 = new Demand("4HIGUF", DemandStatus.InProgress, petitionsFromValidDemand2);
             nullDemand = null;
         }
 
@@ -54,9 +60,34 @@ namespace obg.BusinessLogic.Test
 
         [ExpectedException(typeof(DemandException))]
         [TestMethod]
+        public void InsertDemandWrong_NullIdDemand()
+        {
+            validDemand1.IdDemand = null;
+            service.InsertDemand(validDemand1);
+        }
+
+        [ExpectedException(typeof(DemandException))]
+        [TestMethod]
+        public void InsertDemandWrong_EmptyIdDemand()
+        {
+            validDemand1.IdDemand = "";
+            service.InsertDemand(validDemand1);
+        }
+
+        [ExpectedException(typeof(DemandException))]
+        [TestMethod]
+        public void InsertDemandWrong_RepeatedIdDemand()
+        {
+            service.InsertDemand(validDemand1);
+            validDemand2.IdDemand = "AAHHGG";
+            service.InsertDemand(validDemand1);
+        }
+
+        [ExpectedException(typeof(DemandException))]
+        [TestMethod]
         public void InsertDemandWrong_NullPetitionList()
         {
-            validDemand1.Petitions = nullPetitionList;
+            validDemand1.Petitions = nullPetitions;
             service.InsertDemand(validDemand1);
         }
 
@@ -64,7 +95,7 @@ namespace obg.BusinessLogic.Test
         [TestMethod]
         public void InsertDemandWrong_EmptyPetitionList()
         {
-            validDemand1.Petitions = emptyPetitionList;
+            validDemand1.Petitions = emptyPetitions;
             service.InsertDemand(validDemand1);
         }
     }

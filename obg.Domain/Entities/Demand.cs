@@ -7,14 +7,14 @@ namespace obg.Domain.Entities
 {
     public class Demand
     {
-        public int IdDemand { get; set; }
+        public string IdDemand { get; set; }
         public DemandStatus Status { get; set; }
         public List<Petition> Petitions { get; set; }
-        public Demand(int idDemand, DemandStatus status)
+        public Demand(string idDemand, DemandStatus status, List<Petition> petitions)
         {
             IdDemand = idDemand;
             Status = status;
-            Petitions = new List<Petition>();
+            Petitions = petitions;
         }
     }
 }

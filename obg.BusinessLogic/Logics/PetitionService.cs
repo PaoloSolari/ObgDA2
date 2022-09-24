@@ -10,7 +10,6 @@ namespace obg.BusinessLogic.Logics
 {
     public class PetitionService
     {
-        protected List<Petition> fakeDB = new List<Petition>();
         private readonly IPetitionManagement _petitionManagement;
 
         public PetitionService(IPetitionManagement petitionManagement)
@@ -22,18 +21,63 @@ namespace obg.BusinessLogic.Logics
         {
             if (IsPetitionValid(petition))
             {
-                // Se agreaga la Petition a la DB: _petitionManagement.InsertPetition(petition);
-                fakeDB.Add(petition);
+                // Se agrega la Petition a la DB: _petitionManagement.InsertPetition(petition);
+                FakeDB.Petitions.Add(petition);
             }
         }
 
         private bool IsPetitionValid(Petition petition)
         {
-            if (petition == null) throw new PetitionException("Petición inválida.");
-            if (petition.MedicineCode == null || petition.MedicineCode.Length == 0) throw new PetitionException("Código inválido.");
-            if (petition.NewQuantity < 1) throw new PetitionException("La cantidad no puede ser menor a 1");
-
+            if (petition == null)
+            {
+                throw new PetitionException("Petición inválida.");
+            }
+            if (petition.IdPetition == null || petition.IdPetition.Length < 1)
+            {
+                throw new PetitionException("Identificador inválido.");
+            }
+            if (IsIdPetitionRegistered(petition.IdPetition))
+            {
+                throw new PetitionException("Ya existe una petitición con el mismo identificador");
+            }
+            if (petition.MedicineCode == null || petition.MedicineCode.Length == 0)
+            {
+                throw new PetitionException("Código inválido.");
+            }
+            if (!IsMedicineCodeOk(petition.MedicineCode))
+            {
+                throw new PetitionException("El medicamento no existe.");
+            }
+            if (petition.NewQuantity < 1)
+            {
+                throw new PetitionException("La cantidad no puede ser menor a 1");
+            }
             return true;
+        }
+
+        public bool IsIdPetitionRegistered(string idPetition)
+        {
+            foreach (Petition petition in FakeDB.Petitions)
+            {
+                if (petition.IdPetition.Equals(idPetition))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private bool IsMedicineCodeOk(string medicineCode)
+        {
+            // Se chequea que la medicina de la petición exista en la DB.
+            foreach (Medicine medicine in FakeDB.Medicines)
+            {
+                if (medicine.Code.Equals(medicineCode))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

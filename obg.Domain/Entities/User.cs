@@ -8,17 +8,17 @@ namespace obg.Domain.Entities
     public class User
     {
         public string Name { get; set; }
-        public string Code { get; set; }
+        public int Code { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
         public string Address { get; set; }
         public RoleUser Role { get; set; }
         public string RegisterDate { get; set; }
 
-        public User(string name, string email, string password, string address, RoleUser role, string registerDate)
+        public User(string name, int code, string email, string password, string address, RoleUser role, string registerDate)
         {
             Name = name;
-            Code = new Guid().ToString().Substring(0, 5);
+            Code = code;
             Email = email;
             Password = password;
             Address = address;

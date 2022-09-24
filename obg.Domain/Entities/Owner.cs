@@ -8,7 +8,7 @@ namespace obg.Domain.Entities
     public class Owner : User
     {
         public Pharmacy Pharmacy;
-        public Owner(string name, string email, string password, string address, RoleUser role, string registerDate, Pharmacy pharmacy) : base(name, email, password, address, role, registerDate)
+        public Owner(string name, int code, string email, string password, string address, RoleUser role, string registerDate, Pharmacy pharmacy) : base(name, code, email, password, address, role, registerDate)
         {
             Pharmacy = pharmacy;
         }

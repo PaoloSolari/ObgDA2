@@ -3,6 +3,7 @@ using Moq;
 using obg.BusinessLogic.Logics;
 using obg.DataAccess.Interface.Interfaces;
 using obg.Domain.Entities;
+using obg.Domain.Enums;
 using obg.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -15,11 +16,14 @@ namespace obg.BusinessLogic.Test
     {
         private Mock<IPurchaseManagement> mock;
         private PurchaseService service;
-        private Purchase validPurchase1;
-        private Purchase validPurchase2;
+
+        private List<PurchaseLine> purchaseLinesFromValidPurchase1;
+        private List<PurchaseLine> purchaseLinesFromValidPurchase2;
+        private List<PurchaseLine> emptyPurchaseLines;
         private PurchaseLine validPurchaseLine1;
         private PurchaseLine validPurchaseLine2;
-        private List<PurchaseLine> emptyPurchaseLines;
+        private Purchase validPurchase1;
+        private Purchase validPurchase2;
         private Purchase nullPurchase;
 
         [TestInitialize]
@@ -27,12 +31,16 @@ namespace obg.BusinessLogic.Test
         {
             mock = new Mock<IPurchaseManagement>(MockBehavior.Strict);
             service = new PurchaseService(mock.Object);
-            validPurchaseLine1 = new PurchaseLine("aaaaa", 2);
-            validPurchaseLine2 = new PurchaseLine("bbbbb", 3);
-            validPurchase1 = new Purchase(100, "email@email.com");
-            validPurchase1.PurchaseLines.Add(validPurchaseLine1);
-            validPurchase2 = new Purchase(200, "email@gmail.com");
-            validPurchase2.PurchaseLines.Add(validPurchaseLine2);
+
+            purchaseLinesFromValidPurchase1 = new List<PurchaseLine>();
+            purchaseLinesFromValidPurchase2 = new List<PurchaseLine>();
+            emptyPurchaseLines = new List<PurchaseLine>();
+            validPurchaseLine1 = new PurchaseLine("JUKILA", "AQGTSR", 2);
+            validPurchaseLine2 = new PurchaseLine("LJIHAY", "JAU7AS", 3);
+            purchaseLinesFromValidPurchase1.Add(validPurchaseLine1);
+            purchaseLinesFromValidPurchase2.Add(validPurchaseLine2);
+            validPurchase1 = new Purchase("MANMAN", purchaseLinesFromValidPurchase1, 100, "email@email.com");
+            validPurchase2 = new Purchase("KILIJO", purchaseLinesFromValidPurchase2, 200, "email@gmail.com");
             nullPurchase = null;
         }
 
@@ -48,6 +56,31 @@ namespace obg.BusinessLogic.Test
         public void InsertPurchaseWrong_NullPurchase()
         {
             service.InsertPurchase(nullPurchase);
+        }
+
+        [ExpectedException(typeof(PurchaseException))]
+        [TestMethod]
+        public void InsertPurchaseWrong_NullIdPurchase()
+        {
+            validPurchase1.IdPurchase = null;
+            service.InsertPurchase(validPurchase1);
+        }
+
+        [ExpectedException(typeof(PurchaseException))]
+        [TestMethod]
+        public void InsertPurchaseWrong_EmptyIdPurchase()
+        {
+            validPurchase1.IdPurchase = "";
+            service.InsertPurchase(validPurchase1);
+        }
+
+        [ExpectedException(typeof(PurchaseException))]
+        [TestMethod]
+        public void InsertPurchaseWrong_RepeatedIdPurchase()
+        {
+            service.InsertPurchase(validPurchase1);
+            validPurchase2.IdPurchase = "MANMAN";
+            service.InsertPurchase(validPurchase1);
         }
 
         [ExpectedException(typeof(PurchaseException))]
@@ -76,7 +109,7 @@ namespace obg.BusinessLogic.Test
 
         [ExpectedException(typeof(PurchaseException))]
         [TestMethod]
-        public void InsertPurchaseLineWrong_NullEmail()
+        public void InsertPurchaseWrong_NullEmail()
         {
             validPurchase1.BuyerEmail = null;
             service.InsertPurchase(validPurchase1);
@@ -84,10 +117,19 @@ namespace obg.BusinessLogic.Test
 
         [ExpectedException(typeof(PurchaseException))]
         [TestMethod]
-        public void InsertPurchaseLineWrong_EmptyEmail()
+        public void InsertPurchaseWrong_EmptyEmail()
         {
             validPurchase1.BuyerEmail = "";
             service.InsertPurchase(validPurchase1);
         }
+
+        [ExpectedException(typeof(PurchaseException))]
+        [TestMethod]
+        public void InsertPurchaseWrong_EmailHasNoFormat()
+        {
+            validPurchase1.BuyerEmail = "psgmail.com";
+            service.InsertPurchase(validPurchase1);
+        }
+
     }
 }

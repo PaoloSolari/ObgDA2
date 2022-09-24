@@ -10,7 +10,6 @@ namespace obg.BusinessLogic.Logics
 {
     public class PharmacyService
     {
-        protected List<Pharmacy> fakeDB = new List<Pharmacy>();
         private readonly IPharmacyManagement _pharmacyManagement;
 
         public PharmacyService(IPharmacyManagement pharmacyManagement) 
@@ -20,26 +19,37 @@ namespace obg.BusinessLogic.Logics
 
         public void InsertPharmacy(Pharmacy pharmacy)
         {
-            if (IsPharmacyValid(pharmacy) && !IsNameRegistered(pharmacy.Name))
+            if (IsPharmacyValid(pharmacy))
             {
-                // Se agreaga la Pharmacy a la DB: _pharmacyManagement.InsertPharmacy(pharmacy);
-                fakeDB.Add(pharmacy);
+                // Se agrega la Pharmacy a la DB: _pharmacyManagement.InsertPharmacy(pharmacy);
+                FakeDB.Pharmacies.Add(pharmacy);
             }
         }
 
         private bool IsPharmacyValid(Pharmacy pharmacy)
         {
-            if (pharmacy == null) throw new PharmacyException("Farmacia inválida.");
-            if (pharmacy.Name == null || pharmacy.Name.Length < 1 || pharmacy.Name.Length > 50) throw new PharmacyException("Nombre inválido.");
-            if (pharmacy.Address == null || pharmacy.Address.Length < 1) throw new PharmacyException("Dirección inválida.");
-            if (IsNameRegistered(pharmacy.Name)) throw new PharmacyException("El nombre ya está registrado");
- 
+            if (pharmacy == null)
+            {
+                throw new PharmacyException("Farmacia inválida.");
+            }
+            if (pharmacy.Name == null || pharmacy.Name.Length < 1 || pharmacy.Name.Length > 50)
+            {
+                throw new PharmacyException("Nombre inválido.");
+            }
+            if (IsNameRegistered(pharmacy.Name))
+            {
+                throw new PharmacyException("El nombre ya está registrado");
+            }
+            if (pharmacy.Address == null || pharmacy.Address.Length < 1)
+            {
+                throw new PharmacyException("Dirección inválida.");
+            }
             return true;
         }
 
         private bool IsNameRegistered(string name)
         {
-            foreach (Pharmacy pharmacy in this.fakeDB)
+            foreach (Pharmacy pharmacy in FakeDB.Pharmacies)
             {
                 if (name.Equals(pharmacy.Name))
                 {

@@ -11,8 +11,6 @@ namespace obg.BusinessLogic.Logics
 {
     public class UserService
     {
-        protected List<User> fakeDB = new List<User>();
-
         public UserService() { }
 
         protected bool IsUserValid(User user)
@@ -29,7 +27,7 @@ namespace obg.BusinessLogic.Logics
             {
                 throw new UserException("El nombre ya fue registrado.");
             }
-            if (user.Code == null || user.Code.Length == 0)
+            if(user.Code.ToString("D6").Length != 6)
             {
                 throw new UserException("Código inválido.");
             }
@@ -66,7 +64,7 @@ namespace obg.BusinessLogic.Logics
 
         private bool IsNameRegistered(string name)
         {
-            foreach (User user in this.fakeDB)
+            foreach (User user in FakeDB.Users)
             {
                 if (name.Equals(user.Name))
                 {
@@ -76,9 +74,9 @@ namespace obg.BusinessLogic.Logics
             return false;
         }
 
-        private bool IsCodeRegistered(string code)
+        private bool IsCodeRegistered(int code)
         {
-            foreach (User user in this.fakeDB)
+            foreach (User user in FakeDB.Users)
             {
                 if (code.Equals(user.Code))
                 {
@@ -90,7 +88,7 @@ namespace obg.BusinessLogic.Logics
 
         private bool IsEmailRegistered(string email)
         {
-            foreach (User user in this.fakeDB)
+            foreach (User user in FakeDB.Users)
             {
                 if (email.Equals(user.Email))
                 {

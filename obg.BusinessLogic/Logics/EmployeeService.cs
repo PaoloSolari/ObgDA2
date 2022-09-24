@@ -21,8 +21,9 @@ namespace obg.BusinessLogic.Logics
         {
             if (IsUserValid(employee) && HasAPharmacy(employee) && IsAEmployee(employee))
             {
-                // Se agreaga el Employee a la DB: _employeeManagement.InsertEmployee(employee);
-                fakeDB.Add(employee);
+                // Se agrega el Employee a la DB: _employeeManagement.InsertEmployee(employee);
+                FakeDB.Employees.Add(employee);
+                FakeDB.Users.Add(employee);
             }
             return employee;
         }
