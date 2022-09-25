@@ -8,6 +8,7 @@ namespace obg.Domain.Entities
 {
     public class Pharmacy
     {
+        public int Id { get; set; } 
         public string Name { get; set; }
         public string Address { get; set; }
         public Owner Owner { get; set; }
@@ -23,9 +24,27 @@ namespace obg.Domain.Entities
             Medicines = new List<Medicine>();
         }
 
+        public Pharmacy()
+        {
+        }
+
         public void AddEmployee(Employee employee)
         {
             this.Employees.Add(employee);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+            Pharmacy pharmacy = obj as Pharmacy;
+            if (pharmacy == null)
+            {
+                return false;
+            }
+            return this.Id == pharmacy.Id;
         }
     }
 }

@@ -1,32 +1,73 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using obg.BusinessLogic.Interface.Interfaces;
+using obg.Domain.Entities;
+using obg.Exceptions;
+using System;
 using System.Collections.Generic;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace obg.WebApi.Controllers
 {
-    [Route("[controller]")]
+    
     [ApiController]
+    [Route("[controller]")]
     public class PharmacyController : ControllerBase
     {
+        private readonly IPharmacyService pharmacyService;
+        public PharmacyController(IPharmacyService pharmacyService)
+        {
+            this.pharmacyService = pharmacyService;
+        }
         // GET: <PharmacyController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult GetPharmacies()
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                return Ok(pharmacyService.GetPharmacies());
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Algo salió mal.");
+            }
+
         }
 
         // GET <PharmacyController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult GetPharmacyById([FromRoute] int id)
         {
-            return "value";
+            try
+            {
+                return Ok(pharmacyService.GetPharmacyById(id));
+            }
+            catch (PharmacyException exception)
+            {
+                return NotFound(exception.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Algo salió mal.");
+            }
         }
 
         // POST api/<PharmacyController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult PostPharmacy([FromBody] Pharmacy pharmacy)
         {
+            try
+            {
+                return Ok(pharmacyService.InsertPharmacy(pharmacy));
+            }
+            catch (PharmacyException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Algo salió mal.");
+            }
         }
 
         // PUT api/<PharmacyController>/5

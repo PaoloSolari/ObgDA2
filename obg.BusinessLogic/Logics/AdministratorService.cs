@@ -1,4 +1,5 @@
-﻿using obg.DataAccess.Interface.Interfaces;
+﻿using obg.BusinessLogic.Interface.Interfaces;
+using obg.DataAccess.Interface.Interfaces;
 using obg.Domain.Entities;
 using obg.Domain.Enums;
 using obg.Exceptions;
@@ -11,14 +12,19 @@ using System.Text.RegularExpressions;
 
 namespace obg.BusinessLogic.Logics
 {
-    public class AdministratorService : UserService
+    public class AdministratorService : UserService, IAdministratorService
     {
-        private readonly IAdministratorManagement _administratorManagement;
+        //private readonly IAdministratorManagement _administratorManagement;
 
-        public AdministratorService(IAdministratorManagement administratorManagement)
-        {
-            _administratorManagement = administratorManagement;
-        }
+        //public AdministratorService(IAdministratorManagement administratorManagement)
+        //{
+        //    _administratorManagement = administratorManagement;
+        //}
+
+        //public AdministratorService()
+        //{
+
+        //}
 
         public Administrator InsertAdministrator(Administrator administrator)
         {
@@ -38,6 +44,32 @@ namespace obg.BusinessLogic.Logics
             }
             return true;
         }
+
+        public IEnumerable<User> GetAdministrators()
+        {
+            //return _pharmacyManagement.GetPharmacies();
+
+            return fakeDB;
+        }
+
+
+        //public Administrator GetAdministratorById(int id)
+        //{
+
+        //    Administrator auxAdministrator = null;
+        //    foreach (Administrator administrator in fakeDB)
+        //    {
+        //        if (administrator.Id == id)
+        //        {
+        //            auxAdministrator = administrator;
+        //        }
+        //    }
+        //    if (auxAdministrator == null)
+        //    {
+        //        throw new UserException("La farmacia no existe.");
+        //    }
+        //    return auxAdministrator;
+        //}
 
     }
 }
