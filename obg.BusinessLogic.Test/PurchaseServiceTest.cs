@@ -44,6 +44,12 @@ namespace obg.BusinessLogic.Test
             nullPurchase = null;
         }
 
+        [TestCleanup]
+        public void ResetDBs()
+        {
+            FakeDB.Purchases.Clear();
+        }
+
         [TestMethod]
         public void InsertPurchaseOK()
         {
@@ -80,7 +86,7 @@ namespace obg.BusinessLogic.Test
         {
             service.InsertPurchase(validPurchase1);
             validPurchase2.IdPurchase = "MANMAN";
-            service.InsertPurchase(validPurchase1);
+            service.InsertPurchase(validPurchase2);
         }
 
         [ExpectedException(typeof(PurchaseException))]

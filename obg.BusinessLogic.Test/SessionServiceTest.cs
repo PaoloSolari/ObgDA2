@@ -18,7 +18,8 @@ namespace obg.BusinessLogic.Test
         private Mock<ISessionManagement> mock;
         private SessionService service;
 
-        private Owner validOwner;
+        private Administrator validAdministrator1;
+        private Administrator validAdministrator2;
         private Session validSession1;
         private Session validSession2;
         private Session nullSession;
@@ -29,13 +30,24 @@ namespace obg.BusinessLogic.Test
             mock = new Mock<ISessionManagement>(MockBehavior.Strict);
             service = new SessionService(mock.Object);
 
-            validOwner = new Owner("Juan Perez", 234567, "ghj@gmail.com", ".$dfdffaaa33", "18 de Julio", RoleUser.Administrator, "24/09/2021", null);
-            FakeDB.Users.Add(validOwner);
-            //FakeDB.Administrators.Add(validAdministrator);
-            //validSession1 = new Session("AABBCC", "Francisco", "4de12a");
-            validSession1 = new Session("AABBCC", validOwner.Name, "4de12a");
-            validSession2 = new Session("XXYYZZ", "Esteban", "FRR664");
+            validAdministrator1 = new Administrator("Juan Perez", 234567, "gssasaj@gmail.com", ".$dfdffaaa33", "18 de Julio", RoleUser.Administrator, "24/09/2021", null);
+            FakeDB.Users.Add(validAdministrator1);
+            FakeDB.Administrators.Add(validAdministrator1);
+            validAdministrator2 = new Administrator("José Luis", 266567, "jssssa@gmail.com", ".$dfdffaaa33", "25 de Agosto", RoleUser.Administrator, "24/09/2021", null);
+            FakeDB.Users.Add(validAdministrator2);
+            FakeDB.Administrators.Add(validAdministrator2);
+
+            validSession1 = new Session("DDIQDS", validAdministrator1.Name, "4de12a");
+            validSession2 = new Session("XXYYZZ", validAdministrator2.Name, "FRR664");
             nullSession = null;
+        }
+
+        [TestCleanup]
+        public void ResetDBs()
+        {
+            FakeDB.Users.Clear();
+            FakeDB.Administrators.Clear();
+            FakeDB.Sessions.Clear();
         }
 
         [TestMethod]
@@ -73,8 +85,8 @@ namespace obg.BusinessLogic.Test
         public void InsertSessionWrong_RepeatedIdSession()
         {
             service.InsertSession(validSession1);
-            validSession2.IdSession = "AABBCC";
-            service.InsertSession(validSession1);
+            validSession2.IdSession = "DDIQDS";
+            service.InsertSession(validSession2);
         }
 
         [ExpectedException(typeof(SessionException))]
@@ -111,16 +123,6 @@ namespace obg.BusinessLogic.Test
 
         [ExpectedException(typeof(SessionException))]
         [TestMethod]
-        public void InsertSessionWrong_LoggedUserName()
-        {
-            service.InsertSession(validSession1);
-            validSession2.UserName = "Francisco";
-            service.InsertSession(validSession2);
-        }
-
-
-        [ExpectedException(typeof(SessionException))]
-        [TestMethod]
         public void InsertSessionWrong_NullToken()
         {
             validSession1.Token = null;
@@ -132,6 +134,14 @@ namespace obg.BusinessLogic.Test
         public void InsertSessionWrong_EmptyToken()
         {
             validSession1.Token = "";
+            service.InsertSession(validSession1);
+        }
+
+        [ExpectedException(typeof(SessionException))]
+        [TestMethod]
+        public void InsertSessionWrong_LoggedToken()
+        {
+            service.InsertSession(validSession1);
             service.InsertSession(validSession1);
         }
 

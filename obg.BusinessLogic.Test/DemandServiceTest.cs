@@ -44,6 +44,12 @@ namespace obg.BusinessLogic.Test
             nullDemand = null;
         }
 
+        [TestCleanup]
+        public void ResetDBs()
+        {
+            FakeDB.Demands.Clear();
+        }
+
         [TestMethod]
         public void InsertDemandOK()
         {
@@ -80,7 +86,7 @@ namespace obg.BusinessLogic.Test
         {
             service.InsertDemand(validDemand1);
             validDemand2.IdDemand = "AAHHGG";
-            service.InsertDemand(validDemand1);
+            service.InsertDemand(validDemand2);
         }
 
         [ExpectedException(typeof(DemandException))]

@@ -35,6 +35,13 @@ namespace obg.BusinessLogic.Test
             nullPetition = null;
         }
 
+        [TestCleanup]
+        public void ResetDBs()
+        {
+            FakeDB.Petitions.Clear();
+            FakeDB.Medicines.Clear();
+        }
+
         [TestMethod]
         public void InsertPetitionOK()
         {
@@ -71,7 +78,7 @@ namespace obg.BusinessLogic.Test
         {
             service.InsertPetition(validPetition1);
             validPetition2.IdPetition = "UUUWWW";
-            service.InsertPetition(validPetition1);
+            service.InsertPetition(validPetition2);
         }
 
         [ExpectedException(typeof(PetitionException))]

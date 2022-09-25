@@ -68,7 +68,7 @@ namespace obg.BusinessLogic.Test
         {
             service.InsertMedicine(validMedicine1);
             validMedicine2.Name = "XXCCAA";
-            service.InsertMedicine(validMedicine1);
+            service.InsertMedicine(validMedicine2);
         }
 
         [ExpectedException(typeof(MedicineException))]

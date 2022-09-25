@@ -35,6 +35,13 @@ namespace obg.BusinessLogic.Test
             nullPurchaseLine = null;
         }
 
+        [TestCleanup]
+        public void ResetDBs()
+        {
+            FakeDB.PurchaseLines.Clear();
+            FakeDB.Medicines.Clear();
+        }
+
         [TestMethod]
         public void InsertPurchaseLineOK()
         {
@@ -71,7 +78,7 @@ namespace obg.BusinessLogic.Test
         {
             service.InsertPurchaseLine(validPurchaseLine1);
             validPurchaseLine2.IdPurchaseLine = "HUDTGY";
-            service.InsertPurchaseLine(validPurchaseLine1);
+            service.InsertPurchaseLine(validPurchaseLine2);
         }
 
         [ExpectedException(typeof(PurchaseLineException))]

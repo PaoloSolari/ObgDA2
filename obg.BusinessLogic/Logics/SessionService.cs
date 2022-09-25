@@ -47,11 +47,11 @@ namespace obg.BusinessLogic.Logics
             {
                 throw new SessionException("El usuario no existe.");
             }
-            if (IsNameLogged(session.UserName))
+            if (IsNameLogged(session))
             {
                 throw new SessionException("El usuario ya fue logueado.");
             }
-            if(session.Token == null || session.Token.Length < 1)
+            if (session.Token == null || session.Token.Length < 1)
             {
                 throw new SessionException("Token inválido.");
             }
@@ -83,11 +83,11 @@ namespace obg.BusinessLogic.Logics
             return false;
         }
 
-        private bool IsNameLogged(string name)
+        private bool IsNameLogged(Session session)
         {
-            foreach (Session session in FakeDB.Sessions)
+            foreach (Session sessionDB in FakeDB.Sessions)
             {
-                if (name.Equals(session.UserName))
+                if (session.Token.Equals(sessionDB.Token))
                 {
                     return true;
                 }
