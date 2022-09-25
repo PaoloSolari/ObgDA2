@@ -37,7 +37,7 @@ namespace obg.WebApi.Test
             var result = api.GetOwners();
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
-            var body = objectResult.Value as IEnumerable<Administrator>;
+            var body = objectResult.Value as IEnumerable<Owner>;
 
             mock.VerifyAll();
             Assert.AreEqual(200, statusCode);
