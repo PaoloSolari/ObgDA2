@@ -7,6 +7,6 @@ namespace obg.DataAccess.Interface.Interfaces
 {
     public interface IMedicineManagement
     {
-        public void InsertMedicine(Medicine medicine);
+        void InsertMedicine(Medicine medicine);
     }
 }

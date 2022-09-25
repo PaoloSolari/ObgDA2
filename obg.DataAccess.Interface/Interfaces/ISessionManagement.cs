@@ -5,8 +5,8 @@ using System.Text;
 
 namespace obg.DataAccess.Interface.Interfaces
 {
-    public interface IInvitationManagement
+    public interface ISessionManagement
     {
-        void InsertInvitation(Invitation invitation);
+        void InsertSession(Session session);
     }
 }

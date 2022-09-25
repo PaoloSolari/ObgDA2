@@ -16,6 +16,7 @@ namespace obg.BusinessLogic.Test
     {
         private Mock<IInvitationManagement> mock;
         private InvitationService service;
+
         private Invitation validInvitation1;
         private Invitation validInvitation2;
         private Pharmacy validPharmacy1;
@@ -27,6 +28,7 @@ namespace obg.BusinessLogic.Test
         {
             mock = new Mock<IInvitationManagement>(MockBehavior.Strict);
             service = new InvitationService(mock.Object);
+
             validPharmacy1 = new Pharmacy("San Roque", "Ejido", null, null, null);
             nullPharmacy = null;
             validInvitation1 = new Invitation("GGHHJJ", validPharmacy1, RoleUser.Employee, "José", 998911);
@@ -70,7 +72,7 @@ namespace obg.BusinessLogic.Test
         {
             service.InsertInvitation(validInvitation1);
             validInvitation2.IdInvitation = "GGHHJJ";
-            service.InsertInvitation(validInvitation1);
+            service.InsertInvitation(validInvitation2);
         }
 
         [ExpectedException(typeof(InvitationException))]
