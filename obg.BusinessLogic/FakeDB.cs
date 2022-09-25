@@ -18,5 +18,6 @@ namespace obg.BusinessLogic
         public static List<Petition> Petitions = new List<Petition>();
         public static List<Purchase> Purchases = new List<Purchase>();
         public static List<PurchaseLine> PurchaseLines = new List<PurchaseLine>();
+        public static List<Session> Sessions = new List<Session>();
     }
 }

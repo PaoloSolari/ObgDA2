@@ -7,6 +7,6 @@ namespace obg.DataAccess.Interface.Interfaces
 {
     public interface IPetitionManagement
     {
-        public void InsertPetition(Petition petition);
+        void InsertPetition(Petition petition);
     }
 }

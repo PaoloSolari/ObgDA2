@@ -7,6 +7,6 @@ namespace obg.DataAccess.Interface.Interfaces
 {
     public interface IPurchaseLineManagement
     {
-        public void InsertPurchaseLine(PurchaseLine purchaseLine);
+        void InsertPurchaseLine(PurchaseLine purchaseLine);
     }
 }
