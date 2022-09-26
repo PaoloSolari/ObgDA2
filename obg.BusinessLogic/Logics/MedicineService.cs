@@ -10,12 +10,12 @@ namespace obg.BusinessLogic.Logics
     public class MedicineService
     {
         protected List<Medicine> fakeDB = new List<Medicine>();
-        private readonly IMedicineManagement _medicineManagement;
+        //private readonly IMedicineManagement _medicineManagement;
 
-        public MedicineService(IMedicineManagement medicineManagement)
-        {
-            _medicineManagement = medicineManagement;
-        }
+        //public MedicineService(IMedicineManagement medicineManagement)
+        //{
+        //    _medicineManagement = medicineManagement;
+        //}
 
         public void InsertMedicine(Medicine medicine)
         {
@@ -38,6 +38,28 @@ namespace obg.BusinessLogic.Logics
             if (medicine.Price < 0) throw new MedicineException("El precio no puede ser menor a cero.");
 
             return true;
+        }
+
+        public IEnumerable<Medicine> GetMedicines()
+        {
+            return fakeDB;
+        }
+        public Medicine GetMedicineByCode(string code)
+        {
+
+            Medicine auxMedicine = null;
+            foreach (Medicine medicine in fakeDB)
+            {
+                if (medicine.Code.Equals(code))
+                {
+                    auxMedicine = medicine;
+                }
+            }
+            if (auxMedicine == null)
+            {
+                throw new MedicineException("El medicamento no existe.");
+            }
+            return auxMedicine;
         }
     }
 }
