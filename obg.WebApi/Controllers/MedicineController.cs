@@ -4,79 +4,110 @@ using obg.BusinessLogic.Interface.Interfaces;
 using obg.Domain.Entities;
 using obg.Exceptions;
 using System;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace obg.WebApi.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
-}
-public class MedicineController : ControllerBase, IMedicineService
-{
-    private readonly IMedicineService medicineService;
-    public MedicineController(IMedicineService medicineService)
+    [Route("[controller]")]
+    public class MedicineController : ControllerBase
     {
-        this.medicineService = medicineService;
-    }
-    // GET: <PharmacyController>
-    [HttpGet]
-    public IActionResult GetMedicines()
-    {
-        try
+        private readonly IMedicineService medicineService;
+        public MedicineController(IMedicineService medicineService)
         {
-            return Ok(medicineService.GetMedicines());
+            this.medicineService = medicineService;
         }
-        catch (Exception)
+        // GET: <PharmacyController>
+        [HttpGet]
+        public IActionResult GetMedicines()
         {
-            return StatusCode(500, "Algo salió mal.");
+            try
+            {
+                return Ok(medicineService.GetMedicines());
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Algo salió mal.");
+            }
+
         }
 
-    }
+        // GET <PharmacyController>/5
+        //[HttpGet("{code}")]
+        //public IActionResult GetMedicineByCode([FromRoute] string code)
+        //{
+        //    try
+        //    {
+        //        return Ok(medicineService.GetMedicineByCode(code));
+        //    }
+        //    catch (MedicineException exception)
+        //    {
+        //        return NotFound(exception.Message);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return StatusCode(500, "Algo salió mal.");
+        //    }
+        //}
 
-    // GET <PharmacyController>/5
-    [HttpGet("{id}")]
-    public IActionResult GetMedicineById([FromRoute] int id)
-    {
-        try
+        [HttpGet("{medicineName}")]
+        public IActionResult GetMedicineByMedicineName([FromRoute] string medicineName)
         {
-            return Ok(medicineService.GetMedicineById(id));
+            try
+            {
+                return Ok(medicineService.GetMedicineByMedicineName(medicineName));
+            }
+            catch (MedicineException exception)
+            {
+                return NotFound(exception.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Algo salió mal.");
+            }
         }
-        catch (MedicineException exception)
-        {
-            return NotFound(exception.Message);
-        }
-        catch (Exception)
-        {
-            return StatusCode(500, "Algo salió mal.");
-        }
-    }
 
-    // POST api/<PharmacyController>
-    [HttpPost]
-    public IActionResult PostMedicine([FromBody] Medicine medicine)
-    {
-        try
+        // POST api/<PharmacyController>
+        [HttpPost]
+        public IActionResult PostMedicine([FromBody] Medicine medicine)
         {
-            return Ok(medicineService.InsertMedicine(medicine));
+            try
+            {
+                return Ok(medicineService.InsertMedicine(medicine));
+            }
+            catch (MedicineException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Algo salió mal.");
+            }
         }
-        catch (MedicineException exception)
-        {
-            return BadRequest(exception.Message);
-        }
-        catch (Exception)
-        {
-            return StatusCode(500, "Algo salió mal.");
-        }
-    }
 
-    // PUT api/<PharmacyController>/5
-    [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value)
-    {
-    }
+        // PUT api/<PharmacyController>/5
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody] string value)
+        {
+        }
 
-    // DELETE api/<PharmacyController>/5
-    [HttpDelete("{id}")]
-    public void Delete(int id)
-    {
+        // DELETE api/<PharmacyController>/5
+        [HttpDelete("{id}")]
+        public IActionResult DeleteMedicine(string code)
+        {
+            try
+            {
+                medicineService.DeleteMedicine(code);
+                return Ok();
+            }
+            catch (MedicineException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Algo salió mal.");
+            }
+        }
     }
 }
