@@ -1,44 +1,42 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using obg.BusinessLogic.Interface.Interfaces;
+using obg.Domain.Entities;
+using obg.Exceptions;
+using System;
 using System.Collections.Generic;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace obg.WebApi.Controllers
 {
-    [Route("[controller]")]
+    
     [ApiController]
+    [Route("[controller]")]
     public class PharmacyController : ControllerBase
     {
-        // GET: <PharmacyController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly IPharmacyService pharmacyService;
+        public PharmacyController(IPharmacyService pharmacyService)
         {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET <PharmacyController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
+            this.pharmacyService = pharmacyService;
         }
 
         // POST api/<PharmacyController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult PostPharmacy([FromBody] Pharmacy pharmacy)
         {
-        }
-
-        // PUT api/<PharmacyController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<PharmacyController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            try
+            {
+                pharmacyService.InsertPharmacy(pharmacy);
+                return Ok("Nombre de farmacia: " + pharmacy.Name);
+            }
+            catch (PharmacyException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Error interno.");
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using obg.DataAccess.Interface.Interfaces;
+﻿using obg.BusinessLogic.Interface.Interfaces;
+using obg.DataAccess.Interface.Interfaces;
 using obg.Domain.Entities;
 using obg.Exceptions;
 using System;
@@ -8,22 +9,24 @@ using System.Text;
 
 namespace obg.BusinessLogic.Logics
 {
-    public class PurchaseService
+    public class PurchaseService : IPurchaseService
     {
-        private readonly IPurchaseManagement _purchaseManagement;
+        protected List<Purchase> fakeDB = new List<Purchase>();
+        //private readonly IPurchaseManagement _purchaseManagement;
 
-        public PurchaseService(IPurchaseManagement purchaseManagement)
-        {
-            _purchaseManagement = purchaseManagement;
-        }
+        //public PurchaseService(IPurchaseManagement purchaseManagement)
+        //{
+        //    _purchaseManagement = purchaseManagement;
+        //}
 
-        public void InsertPurchase(Purchase purchase)
+        public Purchase InsertPurchase(Purchase purchase)
         {
             if (IsPurchaseValid(purchase))// && !IsCodeRegistered(medicine.Name))
             {
                 // Se agrega la Purchase a la DB: _purchaseManagement.InsertPurchase(purchase);
                 FakeDB.Purchases.Add(purchase);
             }
+            return purchase;
         }
 
         private bool IsPurchaseValid(Purchase purchase)

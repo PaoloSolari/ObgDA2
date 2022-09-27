@@ -15,5 +15,9 @@ namespace obg.Domain.Entities
             MedicineCode = medicineCode;
             NewQuantity = newQuantity;
         }
+        public Petition()
+        {
+
+        }
     }
 }

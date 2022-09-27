@@ -8,5 +8,6 @@ namespace obg.DataAccess.Interface.Interfaces
     public interface IPharmacyManagement
     {
         void InsertPharmacy(Pharmacy pharmacy);
+        IEnumerable<Pharmacy> GetPharmacies();
     }
 }

@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using obg.BusinessLogic.Logics;
 using obg.Exceptions;
+using obg.BusinessLogic.Interface.Interfaces;
 
 namespace obg.BusinessLogic.Test
 {
@@ -24,6 +25,7 @@ namespace obg.BusinessLogic.Test
         public void InitTest()
         {
             mock = new Mock<IAdministratorManagement>(MockBehavior.Strict);
+
             service = new AdministratorService(mock.Object);
 
             validAdministrator1 = new Administrator("Paolo", 000001, "ps@gmail.com", "password123.", "addressPS", RoleUser.Administrator, "12/09/2022", null);

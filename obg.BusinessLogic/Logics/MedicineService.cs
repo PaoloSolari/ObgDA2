@@ -1,5 +1,7 @@
-﻿using obg.DataAccess.Interface.Interfaces;
+﻿using obg.BusinessLogic.Interface.Interfaces;
+using obg.DataAccess.Interface.Interfaces;
 using obg.Domain.Entities;
+using obg.Domain.Enums;
 using obg.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -7,22 +9,37 @@ using System.Text;
 
 namespace obg.BusinessLogic.Logics
 {
-    public class MedicineService
+    public class MedicineService : IMedicineService
     {
-        private readonly IMedicineManagement _medicineManagement;
+        protected List<Medicine> fakeDB = new List<Medicine>();
+        protected Medicine validMedicine1;
+        protected Medicine validMedicine2;
 
-        public MedicineService(IMedicineManagement medicineManagement)
+        //private readonly IMedicineManagement _medicineManagement;
+
+        //public MedicineService(IMedicineManagement medicineManagement)
+        //{
+        //    _medicineManagement = medicineManagement;
+        //}
+
+        public MedicineService()
         {
-            _medicineManagement = medicineManagement;
+            validMedicine1 = new Medicine("Paracetamol", "aaaa", PresentationMedicine.Capsulas, 0, "1mg", 200, false, true);
+            validMedicine2 = new Medicine("Ibuprofeno", "aaaa", PresentationMedicine.Comprimidos, 0, "0.5mg", 100, false, true);
+
+            fakeDB.Add(validMedicine1);
+            fakeDB.Add(validMedicine2);
+
         }
 
-        public void InsertMedicine(Medicine medicine)
+        public Medicine InsertMedicine(Medicine medicine)
         {
             if (IsMedicineValid(medicine))// && !IsCodeRegistered(medicine.Name))
             {
                 // Se agreaga la Medicine a la DB: _medicineManagement.InsertMedicine(medicine);
                 FakeDB.Medicines.Add(medicine);
             }
+            return medicine;
         }
 
         public bool IsMedicineValid(Medicine medicine)
@@ -74,5 +91,56 @@ namespace obg.BusinessLogic.Logics
             return false;
         }
 
+        public IEnumerable<Medicine> GetMedicines()
+        {
+            return fakeDB;
+        }
+        public Medicine GetMedicineByCode(string code)
+        {
+
+            Medicine auxMedicine = null;
+            foreach (Medicine medicine in fakeDB)
+            {
+                if (medicine.Code.Equals(code))
+                {
+                    auxMedicine = medicine;
+                }
+            }
+            if (auxMedicine == null)
+            {
+                throw new MedicineException("El medicamento no existe.");
+            }
+            return auxMedicine;
+        }
+
+        public void DeleteMedicine(string code)
+        {
+            Medicine medicineToDelete = this.GetMedicineByCode(code);
+            if (medicineToDelete == null)
+            {
+                throw new MedicineException("El medicamento no existe");
+            }
+            fakeDB.Remove(medicineToDelete);
+        }
+
+        public IEnumerable<Medicine> GetMedicineByMedicineName(string medicineName)
+        {
+            List <Medicine> medicinesFiltered = new List<Medicine>();
+            foreach(Medicine medicine in fakeDB)
+            {
+                if (medicine.Name.Equals(medicineName))
+                {
+                    medicinesFiltered.Add(medicine);
+                }
+            }
+            if(medicinesFiltered.Count > 0)
+            {
+                return medicinesFiltered;
+            } 
+            else
+            {
+                throw new MedicineException("El medicamento no existe");
+            }
+        }
     }
 }

@@ -1,29 +1,41 @@
-﻿using obg.DataAccess.Interface.Interfaces;
+﻿using obg.BusinessLogic.Interface.Interfaces;
+using obg.DataAccess.Interface.Interfaces;
 using obg.Domain.Entities;
 using obg.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 
 namespace obg.BusinessLogic.Logics
 {
-    public class PharmacyService
+    public class PharmacyService: IPharmacyService
     {
-        private readonly IPharmacyManagement _pharmacyManagement;
+        protected List<Pharmacy> fakeDB = new List<Pharmacy>();
+        Pharmacy validPharmacy = new Pharmacy("San Roque", "San Roque", null);
 
-        public PharmacyService(IPharmacyManagement pharmacyManagement) 
-        { 
-            _pharmacyManagement = pharmacyManagement;
+        //private readonly IPharmacyManagement _pharmacyManagement;
+
+        //public PharmacyService(IPharmacyManagement pharmacymanagement)
+        //{
+        //    _pharmacyManagement = pharmacymanagement;
+        //}
+
+        public PharmacyService()
+        {
+            fakeDB.Add(validPharmacy);
+
         }
 
-        public void InsertPharmacy(Pharmacy pharmacy)
+        public Pharmacy InsertPharmacy(Pharmacy pharmacy)
         {
             if (IsPharmacyValid(pharmacy))
             {
                 // Se agrega la Pharmacy a la DB: _pharmacyManagement.InsertPharmacy(pharmacy);
                 FakeDB.Pharmacies.Add(pharmacy);
             }
+            return pharmacy;
         }
 
         private bool IsPharmacyValid(Pharmacy pharmacy)

@@ -1,28 +1,32 @@
-﻿using obg.DataAccess.Interface.Interfaces;
+﻿using obg.BusinessLogic.Interface.Interfaces;
+using obg.DataAccess.Interface.Interfaces;
 using obg.Domain.Entities;
 using obg.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Text;
 
 namespace obg.BusinessLogic.Logics
 {
-    public class InvitationService
+    public class InvitationService : IInvitationService
     {
-        private readonly IInvitationManagement _invitationManagement;
+        protected List<Invitation> fakeDB = new List<Invitation>();
+        //private readonly IInvitationManagement _invitationManagement;
 
-        public InvitationService(IInvitationManagement invitationManagement)
-        {
-            _invitationManagement = invitationManagement;
-        }
+        //public InvitationService(IInvitationManagement invitationManagement)
+        //{
+        //    _invitationManagement = invitationManagement;
+        //}
 
-        public void InsertInvitation(Invitation invitation)
+        public Invitation InsertInvitation(Invitation invitation)
         {
             if (IsInvitationValid(invitation))
             {
                 // Se agrega la Invitation a la DB: _invitationManagement.InsertInvitation(invitation);
                 FakeDB.Invitations.Add(invitation);
             }
+            return invitation;
         }
 
         private bool IsInvitationValid(Invitation invitation)

@@ -25,6 +25,8 @@ namespace obg.Domain.Entities
             Role = role;
             RegisterDate = registerDate;
         }
+
+        public User() { }
     }
 
 }
