@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Reflection.Emit;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using obg.Domain.Entities;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace obg.DataAccess.Context
 {
@@ -54,6 +56,9 @@ namespace obg.DataAccess.Context
                     .SetBasePath(directory)
                     .AddJsonFile("appsettings.json")
                     .Build();
+                    //.SetBasePath(Migrations.Current.InstalledLocation.Path);
+                    //.SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location))
+                    //.AddJsonFile("C:/Users/gabri/OneDrive/Ort/Courses/Design/Obligatorio/obg/Migrations")
 
                 var connectionString = configuration.GetConnectionString(@"Context");
 
