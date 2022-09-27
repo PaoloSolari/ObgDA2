@@ -25,7 +25,7 @@ namespace obg.WebApi.Controllers
             try
             {
                 invitationService.InsertInvitation(invitation);
-                return Ok("Código de invitación: " + invitation.InvitationCode);
+                return Ok("Código de invitación: " + invitation.UserCode);
             }
             catch (InvitationException exception)
             {
