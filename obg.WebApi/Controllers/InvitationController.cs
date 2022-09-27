@@ -24,7 +24,8 @@ namespace obg.WebApi.Controllers
         {
             try
             {
-                return Ok(invitationService.InsertInvitation(invitation));
+                invitationService.InsertInvitation(invitation);
+                return Ok("Código de invitación: " + invitation.InvitationCode);
             }
             catch (InvitationException exception)
             {
@@ -32,7 +33,7 @@ namespace obg.WebApi.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(500, "Algo salió mal.");
+                return StatusCode(500, "Error interno.");
             }
         }
 

@@ -11,6 +11,7 @@ namespace obg.Domain.Entities
         public RoleUser UserRole { get; set; }
         public string UserName { get; set; }
         public string UserCode { get; set; }
+        public string InvitationCode { get; set; }
 
         public Invitation(Pharmacy pharmacy, RoleUser userRole, string userName, string userCode)
         {
@@ -18,6 +19,7 @@ namespace obg.Domain.Entities
             UserRole = userRole;
             UserName = userName;
             UserCode = userCode;
+            InvitationCode = new Guid().ToString().Substring(0, 6);
         }
 
         public Invitation() { }

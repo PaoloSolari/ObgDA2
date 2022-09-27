@@ -46,7 +46,7 @@ namespace obg.WebApi.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(500, "Algo salió mal.");
+                return StatusCode(500, "Error interno.");
             }
         }
 
@@ -56,15 +56,16 @@ namespace obg.WebApi.Controllers
             try
             {
                 administrator.Name = name;
-                return Ok(administratorService.UpdateAdministrator(administrator));
+                administratorService.UpdateAdministrator(administrator);
+                return Ok("Usuario identificado. Ingrese email, contraseña y dirección.");
             }
             catch (UserException exception)
             {
                 return BadRequest(exception.Message);
             }
-            catch (NotFoundException exception)
+            catch (NotFoundException)
             {
-                return NotFound(exception.Message);
+                return NotFound("No existe el usuario");
             }
             catch (Exception e)
             {

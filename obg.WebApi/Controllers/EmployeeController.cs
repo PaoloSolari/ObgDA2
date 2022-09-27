@@ -27,7 +27,7 @@ namespace obg.WebApi.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(500, "Algo salió mal.");
+                return StatusCode(500, "Error interno.");
             }
 
 
@@ -39,7 +39,8 @@ namespace obg.WebApi.Controllers
         {
             try
             {
-                return Ok(employeeService.InsertEmployee(employee));
+                employeeService.InsertEmployee(employee);
+                return Ok("Nombre de usuario: " + employee.Name + "Código de usuario: " + employee.Code);
             }
             catch (UserException exception)
             {
@@ -47,7 +48,7 @@ namespace obg.WebApi.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(500, "Algo salió mal.");
+                return StatusCode(500, "Error interno.");
             }
         }
 
@@ -57,19 +58,20 @@ namespace obg.WebApi.Controllers
             try
             {
                 employee.Name = name;
-                return Ok(employeeService.UpdateEmployee(employee));
+                employeeService.UpdateEmployee(employee);
+                return Ok("Usuario identificado. Ingrese email, contraseña y dirección.");
             }
             catch (UserException exception)
             {
                 return BadRequest(exception.Message);
             }
-            catch (NotFoundException exception)
+            catch (NotFoundException)
             {
-                return NotFound(exception.Message);
+                return NotFound("No existe el usuario");
             }
-            catch (Exception e)
+            catch (Exception )
             {
-                return StatusCode(500, e.Message);
+                return StatusCode(500, "Erorr interno.");
             }
         }
     }

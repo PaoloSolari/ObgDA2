@@ -57,15 +57,16 @@ namespace obg.WebApi.Controllers
             try
             {
                 owner.Name = name;
-                return Ok(ownerService.UpdateOwner(owner));
+                ownerService.UpdateOwner(owner);
+                return Ok("Usuario identificado. Ingrese email, contraseña y dirección.");
             }
             catch (UserException exception)
             {
                 return BadRequest(exception.Message);
             }
-            catch (NotFoundException exception)
+            catch (NotFoundException)
             {
-                return NotFound(exception.Message);
+                return NotFound("No existe el usuario.");
             }
             catch (Exception e)
             {
