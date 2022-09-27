@@ -4,6 +4,7 @@ using Moq;
 using obg.BusinessLogic.Interface.Interfaces;
 using obg.Domain.Entities;
 using obg.Domain.Enums;
+using obg.Exceptions;
 using obg.WebApi.Controllers;
 using System;
 using System.Collections.Generic;
@@ -44,6 +45,109 @@ namespace obg.WebApi.Test
             mock.VerifyAll();
             Assert.AreEqual(200, statusCode);
             Assert.IsTrue(body.SequenceEqual(employees));
+        }
+
+        [TestMethod]
+        public void GetEmployeesFail()
+        {
+            mock.Setup(x => x.GetEmployees()).Throws(new Exception());
+
+            var result = api.GetEmployees();
+            var objectResult = result as ObjectResult;
+            var statusCode = objectResult.StatusCode;
+
+            mock.VerifyAll();
+            Assert.AreEqual(500, statusCode);
+        }
+
+        [TestMethod]
+        public void PostEmployeeBadRequest()
+        {
+            mock.Setup(x => x.InsertEmployee(It.IsAny<Employee>())).Throws(new UserException());
+            var result = api.PostEmployee(It.IsAny<Employee>());
+            var objectResult = result as ObjectResult;
+            var statusCode = objectResult.StatusCode;
+
+            mock.VerifyAll();
+            Assert.AreEqual(400, statusCode);
+        }
+
+        [TestMethod]
+        public void PostEmployeeFail()
+        {
+            mock.Setup(x => x.InsertEmployee(It.IsAny<Employee>())).Throws(new Exception());
+            var result = api.PostEmployee(It.IsAny<Employee>());
+            var objectResult = result as ObjectResult;
+            var statusCode = objectResult.StatusCode;
+
+            mock.VerifyAll();
+            Assert.AreEqual(500, statusCode);
+        }
+
+        [TestMethod]
+        public void PostEmployeeOk()
+        {
+            mock.Setup(x => x.InsertEmployee(It.IsAny<Employee>())).Returns(validEmployee);
+            var result = api.PostEmployee(It.IsAny<Employee>());
+            var objectResult = result as ObjectResult;
+            var statusCode = objectResult.StatusCode;
+            var body = objectResult.Value as Employee;
+
+            mock.VerifyAll();
+            Assert.AreEqual(200, statusCode);
+            Assert.IsTrue(validEmployee.Equals(body));
+        }
+
+        [TestMethod]
+        public void PutEmployeeBadRequest()
+        {
+            mock.Setup(x => x.UpdateEmployee(validEmployee)).Throws(new UserException());
+            var result = api.PutEmployee(validEmployee.Name, validEmployee);
+            var objectResult = result as ObjectResult;
+            var statusCode = objectResult.StatusCode;
+
+            mock.VerifyAll();
+            Assert.AreEqual(400, statusCode);
+        }
+
+        [TestMethod]
+        public void PutEmployeeNotFound()
+        {
+            mock.Setup(x => x.UpdateEmployee(validEmployee)).Throws(new NotFoundException());
+            var result = api.PutEmployee(validEmployee.Name, validEmployee);
+            var objectResult = result as ObjectResult;
+            var statusCode = objectResult.StatusCode;
+
+            mock.VerifyAll();
+            Assert.AreEqual(404, statusCode);
+        }
+
+        [TestMethod]
+        public void PutEmployeeFail()
+        {
+            mock.Setup(x => x.UpdateEmployee(validEmployee)).Throws(new Exception());
+            var result = api.PutEmployee(validEmployee.Name, validEmployee);
+            var objectResult = result as ObjectResult;
+            var statusCode = objectResult.StatusCode;
+
+            mock.VerifyAll();
+            Assert.AreEqual(500, statusCode);
+        }
+
+        [TestMethod]
+        public void PutEmployeeOk()
+        {
+            var validEmployeeModified = validEmployee;
+            validEmployeeModified.Password = "new password";
+            mock.Setup(x => x.UpdateEmployee(validEmployeeModified)).Returns(validEmployeeModified);
+            var result = api.PutEmployee(validEmployee.Name, validEmployeeModified);
+            var objectResult = result as ObjectResult;
+            var statusCode = objectResult.StatusCode;
+            var body = objectResult.Value as Employee;
+
+            mock.VerifyAll();
+            Assert.AreEqual(200, statusCode);
+            Assert.IsTrue(validEmployeeModified.Password.Equals(body.Password));
         }
     }
 }

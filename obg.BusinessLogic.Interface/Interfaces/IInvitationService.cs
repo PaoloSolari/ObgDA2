@@ -5,8 +5,9 @@ using System.Text;
 
 namespace obg.BusinessLogic.Interface.Interfaces
 {
-    public interface IPharmacyService
+    public interface IInvitationService
     {
-        Pharmacy InsertPharmacy(Pharmacy pharmacy);
+        Invitation InsertInvitation(Invitation invitation);
+
     }
 }

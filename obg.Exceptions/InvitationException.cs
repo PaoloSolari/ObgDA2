@@ -7,6 +7,10 @@ namespace obg.Exceptions
     [Serializable]
     public class InvitationException : Exception
     {
+        public InvitationException()
+        {
+        }
+
         public InvitationException(string message) : base(message) { }
 
     }

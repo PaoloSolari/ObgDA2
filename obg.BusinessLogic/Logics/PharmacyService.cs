@@ -60,30 +60,5 @@ namespace obg.BusinessLogic.Logics
             return false;
         }
 
-        public IEnumerable<Pharmacy> GetPharmacies()
-        {
-            //return _pharmacyManagement.GetPharmacies();
-
-            return fakeDB;
-        }
-
-        public Pharmacy GetPharmacyById(int id)
-        {
-
-            Pharmacy auxPharmacy = null;
-            foreach(Pharmacy pharmacy in fakeDB)
-            {
-                if(pharmacy.Id == id)
-                {
-                    auxPharmacy = pharmacy;
-                }
-            }
-            if(auxPharmacy == null)
-            {
-                throw new PharmacyException("La farmacia no existe.");
-            }
-            return auxPharmacy;
-        }
-
     }
 }

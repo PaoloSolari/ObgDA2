@@ -9,5 +9,6 @@ namespace obg.BusinessLogic.Interface.Interfaces
     {
         IEnumerable<User> GetEmployees();
         Employee InsertEmployee(Employee employee);
+        Employee UpdateEmployee(Employee employee);
     }
 }

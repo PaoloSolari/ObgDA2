@@ -53,24 +53,29 @@ namespace obg.BusinessLogic.Logics
             return fakeDB;
         }
 
+        public Owner UpdateOwner(Owner ownerToUpdate)
+        {
+            Owner Owner = GetOwnerByName(ownerToUpdate.Name);
+            return Owner;
+        }
 
-        //public Administrator GetAdministratorById(int id)
-        //{
 
-        //    Administrator auxAdministrator = null;
-        //    foreach (Administrator administrator in fakeDB)
-        //    {
-        //        if (administrator.Id == id)
-        //        {
-        //            auxAdministrator = administrator;
-        //        }
-        //    }
-        //    if (auxAdministrator == null)
-        //    {
-        //        throw new UserException("La farmacia no existe.");
-        //    }
-        //    return auxAdministrator;
-        //}
+        public Owner GetOwnerByName(string name)
+        {
 
+            Owner auxOwner = null;
+            foreach (Owner Owner in fakeDB)
+            {
+                if (Owner.Name.Equals(name))
+                {
+                    auxOwner = Owner;
+                }
+            }
+            if (auxOwner == null)
+            {
+                throw new UserException("El administrador no existe.");
+            }
+            return auxOwner;
+        }
     }
 }

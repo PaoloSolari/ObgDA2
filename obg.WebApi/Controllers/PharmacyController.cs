@@ -19,38 +19,6 @@ namespace obg.WebApi.Controllers
         {
             this.pharmacyService = pharmacyService;
         }
-        // GET: <PharmacyController>
-        [HttpGet]
-        public IActionResult GetPharmacies()
-        {
-            try
-            {
-                return Ok(pharmacyService.GetPharmacies());
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, "Algo salió mal.");
-            }
-
-        }
-
-        // GET <PharmacyController>/5
-        [HttpGet("{id}")]
-        public IActionResult GetPharmacyById([FromRoute] int id)
-        {
-            try
-            {
-                return Ok(pharmacyService.GetPharmacyById(id));
-            }
-            catch (PharmacyException exception)
-            {
-                return NotFound(exception.Message);
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, "Algo salió mal.");
-            }
-        }
 
         // POST api/<PharmacyController>
         [HttpPost]
@@ -58,7 +26,8 @@ namespace obg.WebApi.Controllers
         {
             try
             {
-                return Ok(pharmacyService.InsertPharmacy(pharmacy));
+                pharmacyService.InsertPharmacy(pharmacy);
+                return Ok(pharmacy.Name);
             }
             catch (PharmacyException exception)
             {
@@ -68,18 +37,6 @@ namespace obg.WebApi.Controllers
             {
                 return StatusCode(500, "Algo salió mal.");
             }
-        }
-
-        // PUT api/<PharmacyController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<PharmacyController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using obg.BusinessLogic.Interface.Interfaces;
+using obg.BusinessLogic.Logics;
 using obg.Domain.Entities;
 using obg.Exceptions;
 using System;
@@ -28,27 +29,7 @@ namespace obg.WebApi.Controllers
             {
                 return StatusCode(500, "Algo salió mal.");
             }
-
-        
         }
-
-        // GET <AdministratorController>/5
-        //[HttpGet("{id}")]
-        //public IActionResult GetAdministratorById([FromRoute] int id)
-        //{
-        //    try
-        //    {
-        //        return Ok(administratorService.GetAdministratorById(id));
-        //    }
-        //    catch (UserException exception)
-        //    {
-        //        return NotFound(exception.Message);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return StatusCode(500, "Algo salió mal.");
-        //    }
-        //}
 
         // POST api/<AdministratorController>
         [HttpPost]
@@ -56,7 +37,8 @@ namespace obg.WebApi.Controllers
         {
             try
             {
-                return Ok(administratorService.InsertAdministrator(administrator));
+                administratorService.InsertAdministrator(administrator);
+                return Ok("Administrador creado correctamente.");
             }
             catch (UserException exception)
             {
@@ -65,6 +47,28 @@ namespace obg.WebApi.Controllers
             catch (Exception)
             {
                 return StatusCode(500, "Algo salió mal.");
+            }
+        }
+
+        [HttpPut("{name}")]
+        public IActionResult PutAdministrator([FromRoute] string name, [FromBody] Administrator administrator)
+        {
+            try
+            {
+                administrator.Name = name;
+                return Ok(administratorService.UpdateAdministrator(administrator));
+            }
+            catch (UserException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch (NotFoundException exception)
+            {
+                return NotFound(exception.Message);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
             }
         }
     }

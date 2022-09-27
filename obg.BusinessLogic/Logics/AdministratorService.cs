@@ -21,10 +21,12 @@ namespace obg.BusinessLogic.Logics
         //    _administratorManagement = administratorManagement;
         //}
 
-        //public AdministratorService()
-        //{
-
-        //}
+        public AdministratorService()
+        {
+                        validAdministrator = new Administrator("Paolo", "ps@gmail.com", "password123.", "addressPS", RoleUser.Administrator, "12/09/2022", null);
+            fakeDB.Add(validAdministrator);
+        }
+        private Administrator validAdministrator;
 
         public Administrator InsertAdministrator(Administrator administrator)
         {
@@ -52,24 +54,31 @@ namespace obg.BusinessLogic.Logics
             return fakeDB;
         }
 
+        public Administrator UpdateAdministrator(Administrator administratorToUpdate)
+        {
 
-        //public Administrator GetAdministratorById(int id)
-        //{
+            Administrator administrator = GetAdministratorByName(administratorToUpdate.Name);
+            return administrator;
+        }
 
-        //    Administrator auxAdministrator = null;
-        //    foreach (Administrator administrator in fakeDB)
-        //    {
-        //        if (administrator.Id == id)
-        //        {
-        //            auxAdministrator = administrator;
-        //        }
-        //    }
-        //    if (auxAdministrator == null)
-        //    {
-        //        throw new UserException("La farmacia no existe.");
-        //    }
-        //    return auxAdministrator;
-        //}
+
+        public Administrator GetAdministratorByName(string name)
+        {
+
+            Administrator auxAdministrator = null;
+            foreach (Administrator administrator in fakeDB)
+            {
+                if (administrator.Name.Equals(name))
+                {
+                    auxAdministrator = administrator;
+                }
+            }
+            if (auxAdministrator == null)
+            {
+                throw new UserException("El administrador no existe.");
+            }
+            return auxAdministrator;
+        }
 
     }
 }

@@ -33,24 +33,6 @@ namespace obg.WebApi.Controllers
 
         }
 
-        // GET <AdministratorController>/5
-        //[HttpGet("{id}")]
-        //public IActionResult GetAdministratorById([FromRoute] int id)
-        //{
-        //    try
-        //    {
-        //        return Ok(administratorService.GetAdministratorById(id));
-        //    }
-        //    catch (UserException exception)
-        //    {
-        //        return NotFound(exception.Message);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return StatusCode(500, "Algo salió mal.");
-        //    }
-        //}
-
         // POST api/<EmployeeController>
         [HttpPost]
         public IActionResult PostEmployee([FromBody] Employee employee)
@@ -66,6 +48,28 @@ namespace obg.WebApi.Controllers
             catch (Exception)
             {
                 return StatusCode(500, "Algo salió mal.");
+            }
+        }
+
+        [HttpPut("{name}")]
+        public IActionResult PutEmployee([FromRoute] string name, [FromBody] Employee employee)
+        {
+            try
+            {
+                employee.Name = name;
+                return Ok(employeeService.UpdateEmployee(employee));
+            }
+            catch (UserException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch (NotFoundException exception)
+            {
+                return NotFound(exception.Message);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
             }
         }
     }

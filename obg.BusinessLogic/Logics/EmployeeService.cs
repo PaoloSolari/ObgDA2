@@ -51,5 +51,29 @@ namespace obg.BusinessLogic.Logics
             return fakeDB;
         }
 
+        public Employee UpdateEmployee(Employee employeeToUpdate)
+        {
+            Employee employee = GetEmployeeByName(employeeToUpdate.Name);
+            return employee;
+        }
+
+        public Employee GetEmployeeByName(string name)
+        {
+
+            Employee auxEmployee = null;
+            foreach (Employee employee in fakeDB)
+            {
+                if (employee.Name.Equals(name))
+                {
+                    auxEmployee = employee;
+                }
+            }
+            if (auxEmployee == null)
+            {
+                throw new UserException("El administrador no existe.");
+            }
+            return auxEmployee;
+        }
+
     }
 }

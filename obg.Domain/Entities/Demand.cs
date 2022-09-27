@@ -16,5 +16,11 @@ namespace obg.Domain.Entities
             Status = status;
             Petitions = new List<Petition>();
         }
+
+        public Demand()
+        {
+            //Petitions = new List<Petition>();
+
+        }
     }
 }

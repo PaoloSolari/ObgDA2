@@ -17,7 +17,7 @@ namespace obg.WebApi.Controllers
         {
             this.medicineService = medicineService;
         }
-        // GET: <PharmacyController>
+
         [HttpGet]
         public IActionResult GetMedicines()
         {
@@ -31,24 +31,6 @@ namespace obg.WebApi.Controllers
             }
 
         }
-
-        // GET <PharmacyController>/5
-        //[HttpGet("{code}")]
-        //public IActionResult GetMedicineByCode([FromRoute] string code)
-        //{
-        //    try
-        //    {
-        //        return Ok(medicineService.GetMedicineByCode(code));
-        //    }
-        //    catch (MedicineException exception)
-        //    {
-        //        return NotFound(exception.Message);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return StatusCode(500, "Algo salió mal.");
-        //    }
-        //}
 
         [HttpGet("{medicineName}")]
         public IActionResult GetMedicineByMedicineName([FromRoute] string medicineName)
@@ -67,7 +49,6 @@ namespace obg.WebApi.Controllers
             }
         }
 
-        // POST api/<PharmacyController>
         [HttpPost]
         public IActionResult PostMedicine([FromBody] Medicine medicine)
         {
@@ -85,13 +66,6 @@ namespace obg.WebApi.Controllers
             }
         }
 
-        // PUT api/<PharmacyController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<PharmacyController>/5
         [HttpDelete("{id}")]
         public IActionResult DeleteMedicine(string code)
         {

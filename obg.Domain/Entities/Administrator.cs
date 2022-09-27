@@ -14,6 +14,6 @@ namespace obg.Domain.Entities
             Pharmacies = pharmacies;
         }
 
-
+        public Administrator() { }
     }
 }

@@ -19,5 +19,7 @@ namespace obg.Domain.Entities
             UserName = userName;
             UserCode = userCode;
         }
+
+        public Invitation() { }
     }
 }

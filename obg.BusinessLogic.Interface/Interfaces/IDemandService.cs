@@ -5,8 +5,10 @@ using System.Text;
 
 namespace obg.BusinessLogic.Interface.Interfaces
 {
-    public interface IPharmacyService
+    public interface IDemandService
     {
-        Pharmacy InsertPharmacy(Pharmacy pharmacy);
+        IEnumerable<Demand> GetDemands();
+        Demand InsertDemand(Demand demand);
+        Demand UpdateDemand(Demand demand);
     }
 }

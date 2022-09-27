@@ -8,22 +8,22 @@ using System;
 
 namespace obg.WebApi.Controllers
 {
-    [ApiController]
     [Route("[controller]")]
-    public class OwnerController : ControllerBase
+    [ApiController]
+    public class DemandController : ControllerBase
     {
-        private readonly IOwnerService ownerService;
-        public OwnerController(IOwnerService ownerService)
+        private readonly IDemandService demandService;
+        public DemandController(IDemandService demandService)
         {
-            this.ownerService = ownerService;
+            this.demandService = demandService;
         }
-        // GET: <OwnerController>
+        // GET: <DemandController>
         [HttpGet]
-        public IActionResult GetOwners()
+        public IActionResult GetDemands()
         {
             try
             {
-                return Ok(ownerService.GetOwners());
+                return Ok(demandService.GetDemands());
             }
             catch (Exception)
             {
@@ -33,15 +33,15 @@ namespace obg.WebApi.Controllers
 
         }
 
-        // POST api/<OwnerController>
+        // POST api/<DemandController>
         [HttpPost]
-        public IActionResult PostOwner([FromBody] Owner owner)
+        public IActionResult PostDemand([FromBody] Demand demand)
         {
             try
             {
-                return Ok(ownerService.InsertOwner(owner));
+                return Ok(demandService.InsertDemand(demand));
             }
-            catch (UserException exception)
+            catch (DemandException exception)
             {
                 return BadRequest(exception.Message);
             }
@@ -51,15 +51,15 @@ namespace obg.WebApi.Controllers
             }
         }
 
-        [HttpPut("{name}")]
-        public IActionResult PutOwner([FromRoute] string name, [FromBody] Owner owner)
+        [HttpPut("{id}")]
+        public IActionResult PutDemand([FromRoute] int id, [FromBody] Demand demand)
         {
             try
             {
-                owner.Name = name;
-                return Ok(ownerService.UpdateOwner(owner));
+                demand.IdDemand = id;
+                return Ok(demandService.UpdateDemand(demand));
             }
-            catch (UserException exception)
+            catch (DemandException exception)
             {
                 return BadRequest(exception.Message);
             }

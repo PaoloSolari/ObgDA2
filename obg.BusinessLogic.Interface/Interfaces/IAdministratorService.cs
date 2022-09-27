@@ -9,5 +9,6 @@ namespace obg.BusinessLogic.Interface.Interfaces
     {
         IEnumerable<User> GetAdministrators();
         Administrator InsertAdministrator(Administrator administrator);
+        Administrator UpdateAdministrator(Administrator administrator);
     }
 }

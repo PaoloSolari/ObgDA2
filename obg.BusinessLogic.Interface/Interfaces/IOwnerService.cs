@@ -11,5 +11,6 @@ namespace obg.BusinessLogic.Interface.Interfaces
         //Owner GetOwnerById(int id);
         Owner InsertOwner(Owner owner);
         IEnumerable<User> GetOwners();
+        Owner UpdateOwner(Owner owner);
     }
 }

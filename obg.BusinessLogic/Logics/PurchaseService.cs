@@ -37,10 +37,5 @@ namespace obg.BusinessLogic.Logics
 
             return true;
         }
-
-        public IEnumerable<Purchase> GetPurchases()
-        {
-            return fakeDB;
-        }
     }
 }

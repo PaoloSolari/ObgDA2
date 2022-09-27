@@ -10,23 +10,23 @@ namespace obg.WebApi.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class PurchaseController : ControllerBase
+    public class InvitationController : ControllerBase
     {
-        private readonly IPurchaseService purchaseService;
-        public PurchaseController(IPurchaseService purchaseService)
+
+        private readonly IInvitationService invitationService;
+        public InvitationController(IInvitationService invitationService)
         {
-            this.purchaseService = purchaseService;
+            this.invitationService = invitationService;
         }
 
-        // POST api/<AdministratorController>
         [HttpPost]
-        public IActionResult PostPurchase([FromBody] Purchase purchase)
+        public IActionResult PostInvitation([FromBody] Invitation invitation)
         {
             try
             {
-                return Ok(purchaseService.InsertPurchase(purchase));
+                return Ok(invitationService.InsertInvitation(invitation));
             }
-            catch (UserException exception)
+            catch (InvitationException exception)
             {
                 return BadRequest(exception.Message);
             }
@@ -35,5 +35,6 @@ namespace obg.WebApi.Controllers
                 return StatusCode(500, "Algo salió mal.");
             }
         }
+
     }
 }
