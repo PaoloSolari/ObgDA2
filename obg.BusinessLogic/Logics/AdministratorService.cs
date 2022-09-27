@@ -23,8 +23,8 @@ namespace obg.BusinessLogic.Logics
 
         public AdministratorService()
         {
-                        validAdministrator = new Administrator("Paolo", "ps@gmail.com", "password123.", "addressPS", RoleUser.Administrator, "12/09/2022", null);
-            fakeDB.Add(validAdministrator);
+            //validAdministrator = new Administrator("Paolo", 123456, "ps@gmail.com", "password123.", "addressPS", RoleUser.Administrator, "12/09/2022", null);
+            //fakeDB.Add(validAdministrator);
         }
         private Administrator validAdministrator;
 
@@ -52,7 +52,7 @@ namespace obg.BusinessLogic.Logics
         {
             //return _pharmacyManagement.GetPharmacies();
 
-            return fakeDB;
+            return FakeDB.Administrators;
         }
 
         public Administrator UpdateAdministrator(Administrator administratorToUpdate)
@@ -67,7 +67,7 @@ namespace obg.BusinessLogic.Logics
         {
 
             Administrator auxAdministrator = null;
-            foreach (Administrator administrator in fakeDB)
+            foreach (Administrator administrator in FakeDB.Administrators)
             {
                 if (administrator.Name.Equals(name))
                 {

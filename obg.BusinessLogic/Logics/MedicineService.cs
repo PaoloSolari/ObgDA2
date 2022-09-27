@@ -24,11 +24,11 @@ namespace obg.BusinessLogic.Logics
 
         public MedicineService()
         {
-            validMedicine1 = new Medicine("Paracetamol", "aaaa", PresentationMedicine.Capsulas, 0, "1mg", 200, false, true);
-            validMedicine2 = new Medicine("Ibuprofeno", "aaaa", PresentationMedicine.Comprimidos, 0, "0.5mg", 100, false, true);
+            //validMedicine1 = new Medicine("Paracetamol", "aaaa", PresentationMedicine.Capsulas, 0, "1mg", 200, false, true);
+            //validMedicine2 = new Medicine("Ibuprofeno", "aaaa", PresentationMedicine.Comprimidos, 0, "0.5mg", 100, false, true);
 
-            fakeDB.Add(validMedicine1);
-            fakeDB.Add(validMedicine2);
+            //fakeDB.Add(validMedicine1);
+            //fakeDB.Add(validMedicine2);
 
         }
 
@@ -99,7 +99,7 @@ namespace obg.BusinessLogic.Logics
         {
 
             Medicine auxMedicine = null;
-            foreach (Medicine medicine in fakeDB)
+            foreach (Medicine medicine in FakeDB.Medicines)
             {
                 if (medicine.Code.Equals(code))
                 {
@@ -126,7 +126,7 @@ namespace obg.BusinessLogic.Logics
         public IEnumerable<Medicine> GetMedicineByMedicineName(string medicineName)
         {
             List <Medicine> medicinesFiltered = new List<Medicine>();
-            foreach(Medicine medicine in fakeDB)
+            foreach(Medicine medicine in FakeDB.Medicines)
             {
                 if (medicine.Name.Equals(medicineName))
                 {

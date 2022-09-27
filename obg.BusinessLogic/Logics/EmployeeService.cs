@@ -49,7 +49,7 @@ namespace obg.BusinessLogic.Logics
 
         public IEnumerable<User> GetEmployees()
         {
-            return fakeDB;
+            return FakeDB.Employees;
         }
 
         public Employee UpdateEmployee(Employee employeeToUpdate)
@@ -62,7 +62,7 @@ namespace obg.BusinessLogic.Logics
         {
 
             Employee auxEmployee = null;
-            foreach (Employee employee in fakeDB)
+            foreach (Employee employee in FakeDB.Employees)
             {
                 if (employee.Name.Equals(name))
                 {

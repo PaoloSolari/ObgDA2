@@ -51,7 +51,7 @@ namespace obg.BusinessLogic.Logics
         {
             //return _pharmacyManagement.GetPharmacies();
 
-            return fakeDB;
+            return FakeDB.Owners;
         }
 
         public Owner UpdateOwner(Owner ownerToUpdate)
@@ -65,7 +65,7 @@ namespace obg.BusinessLogic.Logics
         {
 
             Owner auxOwner = null;
-            foreach (Owner Owner in fakeDB)
+            foreach (Owner Owner in FakeDB.Owners)
             {
                 if (Owner.Name.Equals(name))
                 {

@@ -26,13 +26,13 @@ namespace obg.BusinessLogic.Logics
 
         public DemandService()
         {
-            validDemand = new Demand(2, DemandStatus.InProgress);
-            validDemand2 = new Demand(1, DemandStatus.Rejected);
-            validPetition1 = new Petition("aaaaa", 5);
-            validDemand.Petitions.Add(validPetition1);
-            validDemand2.Petitions.Add(validPetition1);
-            fakeDB.Add(validDemand);
-            fakeDB.Add(validDemand2);
+            //validDemand = new Demand(2, DemandStatus.InProgress);
+            //validDemand2 = new Demand(1, DemandStatus.Rejected);
+            //validPetition1 = new Petition("aaaaa", 5);
+            //validDemand.Petitions.Add(validPetition1);
+            //validDemand2.Petitions.Add(validPetition1);
+            //fakeDB.Add(validDemand);
+            //fakeDB.Add(validDemand2);
         }
         public Demand InsertDemand(Demand demand)
         {
@@ -75,10 +75,12 @@ namespace obg.BusinessLogic.Logics
                 }
             }
             return false;
+        }
+
         public IEnumerable<Demand> GetDemands()
         {
             List<Demand> demandsInProgress = new List<Demand>();
-            foreach(Demand demand in fakeDB)
+            foreach(Demand demand in FakeDB.Demands)
             {
                 if(demand.Status.Equals(DemandStatus.InProgress))
                 {
@@ -98,13 +100,13 @@ namespace obg.BusinessLogic.Logics
             return demand;
         }
 
-        public Demand GetDemandById(int id)
+        public Demand GetDemandById(string id)
         {
 
             Demand auxDemand = null;
-            foreach (Demand demand in fakeDB)
+            foreach (Demand demand in FakeDB.Demands)
             {
-                if (demand.IdDemand == id)
+                if (demand.IdDemand.Equals(id))
                 {
                     auxDemand = demand;
                 }
