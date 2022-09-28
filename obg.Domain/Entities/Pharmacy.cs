@@ -1,6 +1,7 @@
 ﻿using obg.Domain.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Text;
 
@@ -8,6 +9,8 @@ namespace obg.Domain.Entities
 {
     public class Pharmacy
     {
+
+        [Key] public int Id { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
         public Owner Owner { get; set; }
