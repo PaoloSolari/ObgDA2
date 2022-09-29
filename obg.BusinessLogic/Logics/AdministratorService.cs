@@ -14,19 +14,18 @@ namespace obg.BusinessLogic.Logics
 {
     public class AdministratorService : UserService, IAdministratorService
     {
-        //private readonly IAdministratorManagement _administratorManagement;
+        private readonly IAdministratorManagement _administratorManagement;
 
-        //public AdministratorService(IAdministratorManagement administratorManagement)
-        //{
-        //    _administratorManagement = administratorManagement;
-        //}
+        public AdministratorService(IAdministratorManagement administratorManagement)
+        {
+            _administratorManagement = administratorManagement;
+        }
 
         public AdministratorService()
         {
             //validAdministrator = new Administrator("Paolo", 123456, "ps@gmail.com", "password123.", "addressPS", RoleUser.Administrator, "12/09/2022", null);
             //fakeDB.Add(validAdministrator);
         }
-        private Administrator validAdministrator;
 
         public Administrator InsertAdministrator(Administrator administrator)
         {

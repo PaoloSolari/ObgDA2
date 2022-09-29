@@ -17,12 +17,12 @@ namespace obg.BusinessLogic.Logics
         Demand validDemand2;
         private Petition validPetition1;
 
-        //private readonly IDemandManagement _demandManagement;
+        private readonly IDemandManagement _demandManagement;
 
-        //public DemandService(IDemandManagement demandManagement)
-        //{
-        //    _demandManagement = demandManagement;
-        //}
+        public DemandService(IDemandManagement demandManagement)
+        {
+            _demandManagement = demandManagement;
+        }
 
         public DemandService()
         {

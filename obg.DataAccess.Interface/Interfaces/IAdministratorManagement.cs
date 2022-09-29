@@ -8,6 +8,5 @@ namespace obg.DataAccess.Interface.Interfaces
     public interface IAdministratorManagement
     {
         void InsertAdministratorInDB(Administrator administrator);
-
     }
 }

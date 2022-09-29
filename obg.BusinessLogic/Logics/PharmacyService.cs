@@ -13,14 +13,14 @@ namespace obg.BusinessLogic.Logics
     public class PharmacyService: IPharmacyService
     {
         protected List<Pharmacy> fakeDB = new List<Pharmacy>();
-        //Pharmacy validPharmacy = new Pharmacy("San Roque", "San Roque", null);
+        Pharmacy validPharmacy = new Pharmacy("San Roque", "San Roque", null);
 
-        //private readonly IPharmacyManagement _pharmacyManagement;
+        private readonly IPharmacyManagement _pharmacyManagement;
 
-        //public PharmacyService(IPharmacyManagement pharmacymanagement)
-        //{
-        //    _pharmacyManagement = pharmacymanagement;
-        //}
+        public PharmacyService(IPharmacyManagement pharmacymanagement)
+        {
+            _pharmacyManagement = pharmacymanagement;
+        }
 
         public PharmacyService()
         {

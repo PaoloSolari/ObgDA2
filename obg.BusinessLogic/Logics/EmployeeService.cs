@@ -11,12 +11,12 @@ namespace obg.BusinessLogic.Logics
 {
     public class EmployeeService : UserService, IEmployeeService
     {
-        //private readonly IEmployeeManagement _employeeManagement;
+        private readonly IEmployeeManagement _employeeManagement;
 
-        //public EmployeeService(IEmployeeManagement employeeManagement)
-        //{
-        //    _employeeManagement = employeeManagement;
-        //}
+        public EmployeeService(IEmployeeManagement employeeManagement)
+        {
+            _employeeManagement = employeeManagement;
+        }
 
         public Employee InsertEmployee(Employee employee)
         {
