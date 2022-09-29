@@ -9,6 +9,7 @@ namespace obg.Domain.Entities
     {
         public List<Pharmacy> Pharmacies { get; set; }
 
+        public Administrator() { }
         public Administrator(string name, int code, string email, string password, string address, RoleUser role, string registerDate, List<Pharmacy> pharmacies) : base (name, code, email, password, address, role, registerDate)
         {
             Pharmacies = pharmacies;

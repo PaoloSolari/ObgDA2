@@ -9,14 +9,13 @@ namespace obg.Domain.Entities
 {
     public class Pharmacy
     {
-
-        [Key] public int Id { get; set; }
-        public string Name { get; set; }
+        [Key] public string Name { get; set; }
         public string Address { get; set; }
         public Owner Owner { get; set; }
         public List<Employee> Employees { get; set; }
         public List<Medicine> Medicines { get; set; }
 
+        public Pharmacy() { }
         public Pharmacy(string name, string address, Owner owner, List<Employee> employees, List<Medicine> medicines)
         {
             Name = name;

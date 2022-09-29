@@ -8,7 +8,7 @@ using obg.DataAccess.Context;
 
 namespace obg.DataAccess.Migrations
 {
-    [DbContext(typeof(obgContext))]
+    [DbContext(typeof(ObgContext))]
     [Migration("20220928120217_FirstMigration")]
     partial class FirstMigration
     {

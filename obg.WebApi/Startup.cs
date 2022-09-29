@@ -27,7 +27,7 @@ namespace obg.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             var connection = @"Server=.\SQLEXPRESS; Database=ObgDA2; Integrated Security=True; Trusted_Connection=True; MultipleActiveResultSets=True";
-            services.AddDbContext<obgContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<ObgContext>(options => options.UseSqlServer(connection));
             services.AddControllers();
 
         }

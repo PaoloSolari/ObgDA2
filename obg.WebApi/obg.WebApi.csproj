@@ -5,7 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.17" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\obg.BusinessLogic.Interface\obg.BusinessLogic.Interface.csproj" />
+    <ProjectReference Include="..\obg.DataAccess\obg.DataAccess.csproj" />
     <ProjectReference Include="..\obg.Domain\obg.Domain.csproj" />
     <ProjectReference Include="..\obg.Exceptions\obg.Exceptions.csproj" />
   </ItemGroup>
