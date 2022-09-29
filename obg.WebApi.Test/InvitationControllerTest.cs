@@ -25,7 +25,7 @@ namespace obg.WebApi.Test
         {
             mock = new Mock<IInvitationService>(MockBehavior.Strict);
             api = new InvitationController(mock.Object);
-            validPharmacy = new Pharmacy("San Roque", "aaaa", null, null, null);
+            validPharmacy = new Pharmacy("San Roque", "aaaa", null);
             validInvitation = new Invitation("CCCCCC", validPharmacy, RoleUser.Employee, "Paolo", 123456);
         }
 

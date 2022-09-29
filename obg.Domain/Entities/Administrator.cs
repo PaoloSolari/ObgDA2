@@ -15,6 +15,5 @@ namespace obg.Domain.Entities
             Pharmacies = new List<Pharmacy>();
         }
 
-        public Administrator() { }
     }
 }

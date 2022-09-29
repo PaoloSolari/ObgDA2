@@ -30,10 +30,10 @@ namespace obg.BusinessLogic.Test
             mock = new Mock<ISessionManagement>(MockBehavior.Strict);
             service = new SessionService(mock.Object);
 
-            validAdministrator1 = new Administrator("Juan Perez", 234567, "gssasaj@gmail.com", ".$dfdffaaa33", "18 de Julio", RoleUser.Administrator, "24/09/2021", null);
+            validAdministrator1 = new Administrator("Juan Perez", 234567, "gssasaj@gmail.com", ".$dfdffaaa33", "18 de Julio", RoleUser.Administrator, "24/09/2021");
             FakeDB.Users.Add(validAdministrator1);
             FakeDB.Administrators.Add(validAdministrator1);
-            validAdministrator2 = new Administrator("José Luis", 266567, "jssssa@gmail.com", ".$dfdffaaa33", "25 de Agosto", RoleUser.Administrator, "24/09/2021", null);
+            validAdministrator2 = new Administrator("José Luis", 266567, "jssssa@gmail.com", ".$dfdffaaa33", "25 de Agosto", RoleUser.Administrator, "24/09/2021");
             FakeDB.Users.Add(validAdministrator2);
             FakeDB.Administrators.Add(validAdministrator2);
 

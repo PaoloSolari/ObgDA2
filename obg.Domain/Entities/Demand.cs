@@ -20,10 +20,5 @@ namespace obg.Domain.Entities
             Petitions = new List<Petition>();
         }
 
-        public Demand()
-        {
-            //Petitions = new List<Petition>();
-
-        }
     }
 }

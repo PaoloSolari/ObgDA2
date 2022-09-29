@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using obg.DataAccess.Context;
 
 namespace obg.DataAccess.Migrations
 {
     [DbContext(typeof(ObgContext))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20220929213803_ThirdMigrationHerency")]
+    partial class ThirdMigrationHerency
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

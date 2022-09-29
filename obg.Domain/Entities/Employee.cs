@@ -8,13 +8,13 @@ namespace obg.Domain.Entities
     public class Employee : User
     {
         public Pharmacy Pharmacy;
-        public List<Demand> Demands;
+        public List<Demand> Demands { get; set; }
 
         public Employee() { }
-        public Employee(string name, int code, string email, string password, string address, RoleUser role, string registerDate, Pharmacy pharmacy, List<Demand> demands) : base(name, code, email, password, address, role, registerDate)
+        public Employee(string name, int code, string email, string password, string address, RoleUser role, string registerDate, Pharmacy pharmacy) : base(name, code, email, password, address, role, registerDate)
         {
             Pharmacy = pharmacy;
-            Demands = demands;
+            Demands = new List<Demand>();
         }
     }
 }

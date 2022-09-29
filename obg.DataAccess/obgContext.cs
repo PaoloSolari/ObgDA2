@@ -33,9 +33,9 @@ namespace obg.DataAccess.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasKey(u => u.Name);
-            //modelBuilder.Entity<Administrator>().HasKey(a => a.Name);
-            //modelBuilder.Entity<Owner>().HasKey(o => o.Name);
-            //modelBuilder.Entity<Employee>().HasKey(e => e.Name);
+            modelBuilder.Entity<Administrator>().ToTable("Administrators");
+            modelBuilder.Entity<Owner>().ToTable("Owners");
+            modelBuilder.Entity<Employee>().ToTable("Employees");
             modelBuilder.Entity<Pharmacy>().HasKey(p => p.Name);
             modelBuilder.Entity<Medicine>().HasKey(m => m.Code);
             modelBuilder.Entity<Invitation>().HasKey(i => i.IdInvitation);
