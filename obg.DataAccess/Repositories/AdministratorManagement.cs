@@ -1,4 +1,5 @@
-﻿using obg.DataAccess.Interface.Interfaces;
+﻿using obg.DataAccess.Context;
+using obg.DataAccess.Interface.Interfaces;
 using obg.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -8,9 +9,16 @@ namespace obg.DataAccess.Repositories
 {
     public class AdministratorManagement : IAdministratorManagement
     {
-        public void InsertAdministratorInDB(Administrator administrator)
+        private ObgContext ObgContext { get; set; }
+        public AdministratorManagement(ObgContext obgContext)
         {
-            throw new NotImplementedException();
+            this.ObgContext = obgContext;
+        }
+
+        public void InsertAdministrator(Administrator administrator)
+        {
+            ObgContext.Administrators.Add(administrator);
+            ObgContext.SaveChanges();
         }
     }
 }

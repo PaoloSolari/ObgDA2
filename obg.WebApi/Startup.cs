@@ -15,7 +15,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using obg.DataAccess.Repositories;
-using obg.DataAccess;
 
 namespace obg.WebApi
 {

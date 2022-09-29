@@ -40,10 +40,10 @@ namespace obg.DataAccess.Test
       
             pharmacyManagement.InsertPharmacy(pharmacy);
 
-            Pharmacy pharamacyInDatabase = context.Pharmacies.Where<Pharmacy>(p => p.Name == pharmacy.Name).AsNoTracking().FirstOrDefault();
+            Pharmacy pharmacyInDatabase = context.Pharmacies.Where<Pharmacy>(p => p.Name == pharmacy.Name).AsNoTracking().FirstOrDefault();
 
-            Assert.IsNotNull(pharamacyInDatabase);
-            Assert.AreEqual(pharamacyInDatabase.Name, pharmacy.Name);
+            Assert.IsNotNull(pharmacyInDatabase);
+            Assert.AreEqual(pharmacyInDatabase.Name, pharmacy.Name);
         }
 
         [TestMethod]
