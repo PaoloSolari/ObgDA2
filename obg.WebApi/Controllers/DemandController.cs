@@ -52,7 +52,7 @@ namespace obg.WebApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult PutDemand([FromRoute] int id, [FromBody] Demand demand)
+        public IActionResult PutDemand([FromRoute] string id, [FromBody] Demand demand)
         {
             try
             {

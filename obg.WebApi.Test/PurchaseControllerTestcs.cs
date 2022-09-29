@@ -21,6 +21,7 @@ namespace obg.WebApi.Test
         private Purchase validPurchase;
         private PurchaseLine validPurchaseLine;
         private IEnumerable<Purchase> purchases;
+        private List<PurchaseLine> purchaseLines;
 
 
         [TestInitialize]
@@ -28,8 +29,8 @@ namespace obg.WebApi.Test
         {
             mock = new Mock<IPurchaseService>(MockBehavior.Strict);
             api = new PurchaseController(mock.Object);
-            validPurchaseLine = new PurchaseLine("aaaaa", 2);
-            validPurchase = new Purchase(100, "email@email.com");
+            validPurchaseLine = new PurchaseLine("bbbbb", "aaaaa", 2);
+            validPurchase = new Purchase("111111", 100, "email@email.com");
             validPurchase.PurchaseLines.Add(validPurchaseLine);
             purchases = new List<Purchase>() { validPurchase };
         }

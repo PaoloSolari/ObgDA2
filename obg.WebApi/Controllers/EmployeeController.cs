@@ -39,8 +39,8 @@ namespace obg.WebApi.Controllers
         {
             try
             {
-                employeeService.InsertEmployee(employee);
-                return Ok("Nombre de usuario: " + employee.Name + "Código de usuario: " + employee.Code);
+                
+                return Ok(employeeService.InsertEmployee(employee));
             }
             catch (UserException exception)
             {
@@ -58,8 +58,7 @@ namespace obg.WebApi.Controllers
             try
             {
                 employee.Name = name;
-                employeeService.UpdateEmployee(employee);
-                return Ok("Usuario identificado. Ingrese email, contraseña y dirección.");
+                return Ok(employeeService.UpdateEmployee(employee));
             }
             catch (UserException exception)
             {

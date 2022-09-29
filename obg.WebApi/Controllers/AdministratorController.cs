@@ -37,8 +37,8 @@ namespace obg.WebApi.Controllers
         {
             try
             {
-                administratorService.InsertAdministrator(administrator);
-                return Ok("Administrador creado correctamente.");
+                ;
+                return Ok(administratorService.InsertAdministrator(administrator));
             }
             catch (UserException exception)
             {
@@ -56,8 +56,7 @@ namespace obg.WebApi.Controllers
             try
             {
                 administrator.Name = name;
-                administratorService.UpdateAdministrator(administrator);
-                return Ok("Usuario identificado. Ingrese email, contraseña y dirección.");
+                return Ok(administratorService.UpdateAdministrator(administrator));
             }
             catch (UserException exception)
             {

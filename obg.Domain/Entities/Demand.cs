@@ -10,11 +10,11 @@ namespace obg.Domain.Entities
         public string IdDemand { get; set; }
         public DemandStatus Status { get; set; }
         public List<Petition> Petitions { get; set; }
-        public Demand(string idDemand, DemandStatus status, List<Petition> petitions)
+        public Demand(string idDemand, DemandStatus status)
         {
             IdDemand = idDemand;
             Status = status;
-            Petitions = petitions;
+            Petitions = new List<Petition>();
         }
 
         public Demand()

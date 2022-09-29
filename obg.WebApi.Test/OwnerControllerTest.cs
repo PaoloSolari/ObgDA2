@@ -26,7 +26,7 @@ namespace obg.WebApi.Test
         {
             mock = new Mock<IOwnerService>(MockBehavior.Strict);
             api = new OwnerController(mock.Object);
-            validOwner = new Owner("Paolo", "ps@gmail.com", "password123.", "addressPS", RoleUser.Owner, "12/09/2022", null);
+            validOwner = new Owner("Paolo", 123456, "ps@gmail.com", "password123.", "addressPS", RoleUser.Owner, "12/09/2022", null);
             owners = new List<Owner>() { validOwner };
         }
 
