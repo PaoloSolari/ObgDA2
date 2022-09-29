@@ -8,13 +8,14 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using obg.BusinessLogic.Interface.Interfaces;
 using obg.BusinessLogic.Logics;
-using obg.DataAccess;
 using obg.DataAccess.Interface.Interfaces;
 using obg.DataAccess.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using obg.DataAccess.Repositories;
+using obg.DataAccess;
 
 namespace obg.WebApi
 {
@@ -34,25 +35,32 @@ namespace obg.WebApi
             services.AddDbContext<ObgContext>(options => options.UseSqlServer(connection));
             services.AddControllers();
             services.AddScoped<IPharmacyService, PharmacyService>();
+            services.AddScoped<IPharmacyManagement, PharmacyManagement>();
             services.AddScoped<IAdministratorService, AdministratorService>();
+            services.AddScoped<IAdministratorManagement, AdministratorManagement>();
             services.AddScoped<IOwnerService, OwnerService>();
+            services.AddScoped<IOwnerManagement, OwnerManagement>();
             services.AddScoped<IEmployeeService, EmployeeService>();
+            services.AddScoped<IEmployeeManagement, EmployeeManagement>();
             services.AddScoped<IMedicineService, MedicineService>();
+            services.AddScoped<IMedicineManagement, MedicineManagement>();
             services.AddScoped<IPurchaseService, PurchaseService>();
+            services.AddScoped<IPurchaseManagement, PurchaseManagement>();
             services.AddScoped<IDemandService, DemandService>();
+            services.AddScoped<IDemandManagement, DemandManagement>();
             services.AddScoped<IInvitationService, InvitationService>();
-
-
-            //services.AddScoped<IPharmacyManagement, PharmacyManagement>();
+            services.AddScoped<IInvitationManagement, InvitationManagement>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DbContext db)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            db.Database.EnsureCreated();
 
             app.UseHttpsRedirection();
 

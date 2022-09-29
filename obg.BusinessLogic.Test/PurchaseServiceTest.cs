@@ -41,6 +41,8 @@ namespace obg.BusinessLogic.Test
             purchaseLinesFromValidPurchase2.Add(validPurchaseLine2);
             validPurchase1 = new Purchase("MANMAN", 100, "email@email.com");
             validPurchase2 = new Purchase("KILIJO", 200, "email@gmail.com");
+            validPurchase1.PurchaseLines = purchaseLinesFromValidPurchase1;
+            validPurchase2.PurchaseLines = purchaseLinesFromValidPurchase2;
             nullPurchase = null;
         }
 

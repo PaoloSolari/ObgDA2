@@ -11,12 +11,12 @@ namespace obg.BusinessLogic.Logics
 {
     public class OwnerService : UserService, IOwnerService
     {
-        //private readonly IOwnerManagement _ownerManagement;
+        private readonly IOwnerManagement _ownerManagement;
 
-        //public OwnerService(IOwnerManagement ownerManagement)
-        //{
-        //    _ownerManagement = ownerManagement;
-        //}
+        public OwnerService(IOwnerManagement ownerManagement)
+        {
+            _ownerManagement = ownerManagement;
+        }
 
         public Owner InsertOwner(Owner owner)
         {

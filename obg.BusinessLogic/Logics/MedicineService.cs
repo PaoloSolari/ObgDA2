@@ -15,12 +15,12 @@ namespace obg.BusinessLogic.Logics
         protected Medicine validMedicine1;
         protected Medicine validMedicine2;
 
-        //private readonly IMedicineManagement _medicineManagement;
+        private readonly IMedicineManagement _medicineManagement;
 
-        //public MedicineService(IMedicineManagement medicineManagement)
-        //{
-        //    _medicineManagement = medicineManagement;
-        //}
+        public MedicineService(IMedicineManagement medicineManagement)
+        {
+            _medicineManagement = medicineManagement;
+        }
 
         public MedicineService()
         {

@@ -11,6 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\obg.BusinessLogic.Interface\obg.BusinessLogic.Interface.csproj" />
     <ProjectReference Include="..\obg.BusinessLogic\obg.BusinessLogic.csproj" />
+    <ProjectReference Include="..\obg.DataAccess.Interface\obg.DataAccess.Interface.csproj" />
     <ProjectReference Include="..\obg.DataAccess\obg.DataAccess.csproj" />
     <ProjectReference Include="..\obg.Domain\obg.Domain.csproj" />
     <ProjectReference Include="..\obg.Exceptions\obg.Exceptions.csproj" />

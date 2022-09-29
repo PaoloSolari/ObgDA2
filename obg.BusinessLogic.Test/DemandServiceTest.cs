@@ -37,10 +37,15 @@ namespace obg.BusinessLogic.Test
             emptyPetitions = new List<Petition>();
             nullPetitions = null;
             validPetition = new Petition("XFXCCC", "DDFFFF", 5);
+
             petitionsFromValidDemand1.Add(validPetition);
             petitionsFromValidDemand2.Add(validPetition);
+
             validDemand1 = new Demand("AAHHGG", DemandStatus.Accepted);
+            validDemand1.Petitions = petitionsFromValidDemand1;
+            
             validDemand2 = new Demand("4HIGUF", DemandStatus.InProgress);
+            validDemand2.Petitions = petitionsFromValidDemand2;
             nullDemand = null;
         }
 

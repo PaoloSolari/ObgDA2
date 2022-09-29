@@ -12,12 +12,12 @@ namespace obg.BusinessLogic.Logics
     public class InvitationService : IInvitationService
     {
         protected List<Invitation> fakeDB = new List<Invitation>();
-        //private readonly IInvitationManagement _invitationManagement;
+        private readonly IInvitationManagement _invitationManagement;
 
-        //public InvitationService(IInvitationManagement invitationManagement)
-        //{
-        //    _invitationManagement = invitationManagement;
-        //}
+        public InvitationService(IInvitationManagement invitationManagement)
+        {
+            _invitationManagement = invitationManagement;
+        }
 
         public Invitation InsertInvitation(Invitation invitation)
         {
