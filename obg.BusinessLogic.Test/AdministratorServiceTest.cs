@@ -28,8 +28,8 @@ namespace obg.BusinessLogic.Test
 
             service = new AdministratorService(mock.Object);
 
-            validAdministrator1 = new Administrator("Paolo", 000001, "ps@gmail.com", "password123.", "addressPS", RoleUser.Administrator, "12/09/2022", null);
-            validAdministrator2 = new Administrator("Gabriel", 000002, "gj@gmail.com", "password123.", "addressGJ", RoleUser.Administrator, "12/09/2022", null);
+            validAdministrator1 = new Administrator("Paolo", 000001, "ps@gmail.com", "password123.", "addressPS", RoleUser.Administrator, "12/09/2022");
+            validAdministrator2 = new Administrator("Gabriel", 000002, "gj@gmail.com", "password123.", "addressGJ", RoleUser.Administrator, "12/09/2022");
             nullAdministrator = null;
         }
 

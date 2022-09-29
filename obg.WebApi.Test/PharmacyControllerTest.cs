@@ -25,7 +25,7 @@ namespace obg.WebApi.Test
         {
             mock = new Mock<IPharmacyService>(MockBehavior.Strict);
             api = new PharmacyController(mock.Object);
-            validPharmacy = new Pharmacy("San Roque", "San Roque", null, null, null);
+            validPharmacy = new Pharmacy("San Roque", "San Roque", null);
             pharmacies = new List<Pharmacy>() { validPharmacy };
         }
 

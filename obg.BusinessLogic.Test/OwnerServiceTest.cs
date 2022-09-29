@@ -26,8 +26,8 @@ namespace obg.BusinessLogic.Test
             mock = new Mock<IOwnerManagement>(MockBehavior.Strict);
             service = new OwnerService(mock.Object);
 
-            pharmacy1 = new Pharmacy("Farmashop", "18 de Julio", null, null, null);
-            pharmacy2 = new Pharmacy("FarmaciaLibre", "25 de Agosto", null, null, null);
+            pharmacy1 = new Pharmacy("Farmashop", "18 de Julio", null);
+            pharmacy2 = new Pharmacy("FarmaciaLibre", "25 de Agosto", null);
             validOwner1 = new Owner("Pedro", 000011, "p@gmail.com", "password123.", "addressP", RoleUser.Owner, "12/09/2022", pharmacy1);
             validOwner2 = new Owner("Juan", 000012, "j@gmail.com", "password123.", "addressJ", RoleUser.Owner, "12/09/2022", pharmacy2);
             pharmacy1.Owner = validOwner1;

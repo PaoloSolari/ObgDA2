@@ -27,8 +27,8 @@ namespace obg.BusinessLogic.Test
             mock = new Mock<IPharmacyManagement>(MockBehavior.Strict);
             service = new PharmacyService(mock.Object);
 
-            validPharmacy1 = new Pharmacy("FarmaUy", "Gaboto", null, null, null);
-            validPharmacy2 = new Pharmacy("FarmaArg", "Tristan", null, null, null);
+            validPharmacy1 = new Pharmacy("FarmaUy", "Gaboto", null);
+            validPharmacy2 = new Pharmacy("FarmaArg", "Tristan", null);
             nullPharmacy = null;
         }
 

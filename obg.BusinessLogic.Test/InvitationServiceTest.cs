@@ -29,7 +29,7 @@ namespace obg.BusinessLogic.Test
             mock = new Mock<IInvitationManagement>(MockBehavior.Strict);
             service = new InvitationService(mock.Object);
 
-            validPharmacy1 = new Pharmacy("San Roque", "Ejido", null, null, null);
+            validPharmacy1 = new Pharmacy("San Roque", "Ejido", null);
             nullPharmacy = null;
             validInvitation1 = new Invitation("GGHHJJ", validPharmacy1, RoleUser.Employee, "José", 998911);
             validInvitation2 = new Invitation("AAANNN", validPharmacy1, RoleUser.Owner, "Camilo", 223344);

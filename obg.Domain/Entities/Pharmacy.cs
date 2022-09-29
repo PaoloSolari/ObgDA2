@@ -16,18 +16,13 @@ namespace obg.Domain.Entities
         public List<Medicine> Medicines { get; set; }
 
         public Pharmacy() { }
-        public Pharmacy(string name, string address, Owner owner, List<Employee> employees, List<Medicine> medicines)
+        public Pharmacy(string name, string address, Owner owner)
         {
             Name = name;
             Address = address;
             Owner = owner;
-            Employees = employees;
-            Medicines = medicines;
-        }
-
-        public Pharmacy()
-        {
-
+            Employees = new List<Employee>();
+            Medicines = new List<Medicine>();
         }
 
         public void AddEmployee(Employee employee)
@@ -46,7 +41,7 @@ namespace obg.Domain.Entities
             {
                 return false;
             }
-            return this.Id == pharmacy.Id;
+            return this.Name == pharmacy.Name;
         }
     }
 }

@@ -29,7 +29,6 @@ namespace obg.Domain.Entities
             RegisterDate = registerDate;
         }
 
-        public User() { }
     }
 
 }

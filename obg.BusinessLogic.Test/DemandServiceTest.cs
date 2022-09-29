@@ -39,8 +39,8 @@ namespace obg.BusinessLogic.Test
             validPetition = new Petition("XFXCCC", "DDFFFF", 5);
             petitionsFromValidDemand1.Add(validPetition);
             petitionsFromValidDemand2.Add(validPetition);
-            validDemand1 = new Demand("AAHHGG", DemandStatus.Accepted, petitionsFromValidDemand1);
-            validDemand2 = new Demand("4HIGUF", DemandStatus.InProgress, petitionsFromValidDemand2);
+            validDemand1 = new Demand("AAHHGG", DemandStatus.Accepted);
+            validDemand2 = new Demand("4HIGUF", DemandStatus.InProgress);
             nullDemand = null;
         }
 
