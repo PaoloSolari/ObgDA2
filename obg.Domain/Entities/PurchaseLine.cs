@@ -1,11 +1,14 @@
-﻿namespace obg.Domain.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace obg.Domain.Entities
 {
     public class PurchaseLine
     {
-        public string IdPurchaseLine { get; set; }
+        [Key] public string IdPurchaseLine { get; set; }
         public string MedicineCode { get; set; }
         public int MedicineQuantity { get; set; } 
 
+        public PurchaseLine() { }
         public PurchaseLine(string idPurchaseLine, string medicineCode, int medicineQuantity)
         {
             IdPurchaseLine = idPurchaseLine;

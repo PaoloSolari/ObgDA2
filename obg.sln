@@ -9,19 +9,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "obg.BusinessLogic", "obg.Bu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "obg.WebApi", "obg.WebApi\obg.WebApi.csproj", "{591F9BF2-A7F9-4132-9EAC-E3996A44EC92}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "obg.BusinessLogic.Interface", "obg.BusinessLogic.Interface\obg.BusinessLogic.Interface.csproj", "{24B6B168-57AE-4EBA-9D06-B8EAD5CAC287}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "obg.BusinessLogic.Interface", "obg.BusinessLogic.Interface\obg.BusinessLogic.Interface.csproj", "{24B6B168-57AE-4EBA-9D06-B8EAD5CAC287}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "obg.DataAccess", "obg.DataAccess\obg.DataAccess.csproj", "{6F3BAFC6-7C78-40A8-803F-7DFB94730F08}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "obg.DataAccess", "obg.DataAccess\obg.DataAccess.csproj", "{6F3BAFC6-7C78-40A8-803F-7DFB94730F08}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "obg.DataAccess.Interface", "obg.DataAccess.Interface\obg.DataAccess.Interface.csproj", "{23F41829-5D84-4DBA-A0A2-C4AEAC41F59C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "obg.DataAccess.Interface", "obg.DataAccess.Interface\obg.DataAccess.Interface.csproj", "{23F41829-5D84-4DBA-A0A2-C4AEAC41F59C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "obg.WebApi.Test", "obg.WebApi.Test\obg.WebApi.Test.csproj", "{713CE3A2-C65D-4DFD-AE6E-6BB75E7CBEC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "obg.WebApi.Test", "obg.WebApi.Test\obg.WebApi.Test.csproj", "{713CE3A2-C65D-4DFD-AE6E-6BB75E7CBEC0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "obg.BusinessLogic.Test", "obg.BusinessLogic.Test\obg.BusinessLogic.Test.csproj", "{95188040-B544-44EE-817D-ABCD6BBF2F01}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "obg.BusinessLogic.Test", "obg.BusinessLogic.Test\obg.BusinessLogic.Test.csproj", "{95188040-B544-44EE-817D-ABCD6BBF2F01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "obg.DataAccess.Test", "obg.DataAccess.Test\obg.DataAccess.Test.csproj", "{4E910BAF-1C47-403A-9ECC-DB7DAC61D5D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "obg.DataAccess.Test", "obg.DataAccess.Test\obg.DataAccess.Test.csproj", "{4E910BAF-1C47-403A-9ECC-DB7DAC61D5D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "obg.Exceptions", "obg.Exceptions\obg.Exceptions.csproj", "{8A961AC1-8951-401B-BB7E-4A8C51D97BAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "obg.Exceptions", "obg.Exceptions\obg.Exceptions.csproj", "{8A961AC1-8951-401B-BB7E-4A8C51D97BAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Migrations", "Migrations\Migrations.csproj", "{2DB54278-C9C2-4B8A-BF39-7803FF0203E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{8A961AC1-8951-401B-BB7E-4A8C51D97BAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A961AC1-8951-401B-BB7E-4A8C51D97BAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A961AC1-8951-401B-BB7E-4A8C51D97BAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DB54278-C9C2-4B8A-BF39-7803FF0203E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DB54278-C9C2-4B8A-BF39-7803FF0203E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DB54278-C9C2-4B8A-BF39-7803FF0203E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DB54278-C9C2-4B8A-BF39-7803FF0203E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

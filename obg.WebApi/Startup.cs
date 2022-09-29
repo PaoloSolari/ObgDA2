@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -9,6 +10,7 @@ using obg.BusinessLogic.Interface.Interfaces;
 using obg.BusinessLogic.Logics;
 using obg.DataAccess;
 using obg.DataAccess.Interface.Interfaces;
+using obg.DataAccess.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +30,8 @@ namespace obg.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connection = @"Server=.\SQLEXPRESS; Database=ObgDA2; Integrated Security=True; Trusted_Connection=True; MultipleActiveResultSets=True";
+            services.AddDbContext<ObgContext>(options => options.UseSqlServer(connection));
             services.AddControllers();
             services.AddScoped<IPharmacyService, PharmacyService>();
             services.AddScoped<IAdministratorService, AdministratorService>();
