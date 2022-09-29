@@ -57,8 +57,7 @@ namespace obg.WebApi.Controllers
             try
             {
                 owner.Name = name;
-                ownerService.UpdateOwner(owner);
-                return Ok("Usuario identificado. Ingrese email, contraseña y dirección.");
+                return Ok(ownerService.UpdateOwner(owner));
             }
             catch (UserException exception)
             {

@@ -26,7 +26,7 @@ namespace obg.WebApi.Test
         {
             mock = new Mock<IAdministratorService>(MockBehavior.Strict);
             api = new AdministratorController(mock.Object);
-            validAdministrator = new Administrator("Paolo", "ps@gmail.com", "password123.", "addressPS", RoleUser.Administrator, "12/09/2022", null);
+            validAdministrator = new Administrator("Paolo", 123456, "ps@gmail.com", "password123.", "addressPS", RoleUser.Administrator, "12/09/2022");
             administrators = new List<Administrator>() { validAdministrator };
         }
 
@@ -90,7 +90,6 @@ namespace obg.WebApi.Test
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
             var body = objectResult.Value as Administrator;
-
             mock.VerifyAll();
             Assert.AreEqual(200, statusCode);
             Assert.IsTrue(validAdministrator.Equals(body));

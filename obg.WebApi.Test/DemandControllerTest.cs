@@ -21,6 +21,7 @@ namespace obg.WebApi.Test
         private DemandController api;
         private Demand validDemand;
         private Petition validPetition;
+        //private List<Petition> petitions;
         private IEnumerable<Demand> demands;
 
         [TestInitialize]
@@ -28,8 +29,9 @@ namespace obg.WebApi.Test
         {
             mock = new Mock<IDemandService>(MockBehavior.Strict);
             api = new DemandController(mock.Object);
-            validPetition = new Petition("aaaaa", 5);
-            validDemand = new Demand(1, DemandStatus.InProgress);
+            validPetition = new Petition("AAAAAA","aaaaa", 5);
+            //petitions.Add(validPetition);
+            validDemand = new Demand("BBBBBB", DemandStatus.InProgress);
             validDemand.Petitions.Add(validPetition);
             demands = new List<Demand>() { validDemand };
         }

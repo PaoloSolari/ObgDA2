@@ -20,7 +20,6 @@ namespace obg.Domain.Entities
             UserRole = userRole;
             UserName = userName;
             UserCode = userCode;
-            InvitationCode = new Guid().ToString().Substring(0, 6);
         }
 
         public Invitation() { }

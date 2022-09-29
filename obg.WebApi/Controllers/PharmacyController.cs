@@ -26,8 +26,7 @@ namespace obg.WebApi.Controllers
         {
             try
             {
-                pharmacyService.InsertPharmacy(pharmacy);
-                return Ok("Nombre de farmacia: " + pharmacy.Name);
+                return Ok(pharmacyService.InsertPharmacy(pharmacy));
             }
             catch (PharmacyException exception)
             {

@@ -11,10 +11,10 @@ namespace obg.Domain.Entities
         public double Amount { get; set; }
         public string BuyerEmail { get; set; }
 
-        public Purchase(string idPurchase, List<PurchaseLine> purchaselines, double amount, string buyerEmail)
+        public Purchase(string idPurchase, double amount, string buyerEmail)
         {
             IdPurchase = idPurchase;
-            PurchaseLines = purchaselines;
+            PurchaseLines = new List<PurchaseLine>();
             Amount = amount;
             BuyerEmail = buyerEmail;
         }

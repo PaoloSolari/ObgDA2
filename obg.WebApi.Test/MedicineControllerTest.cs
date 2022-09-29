@@ -26,7 +26,7 @@ namespace obg.WebApi.Test
         {
             mock = new Mock<IMedicineService>(MockBehavior.Strict);
             api = new MedicineController(mock.Object);
-            validMedicine = new Medicine("Paracetamol", "aaaa", PresentationMedicine.Capsulas, 0, "1mg", 200, false, true);
+            validMedicine = new Medicine("123456", "Paracetamol", "aaaa", PresentationMedicine.Capsulas, 0, "1mg", 200, false, true);
             medicines = new List<Medicine>() { validMedicine };
         }
 

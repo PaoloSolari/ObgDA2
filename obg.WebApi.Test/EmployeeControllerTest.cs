@@ -27,8 +27,8 @@ namespace obg.WebApi.Test
         {
             mock = new Mock<IEmployeeService>(MockBehavior.Strict);
             api = new EmployeeController(mock.Object);
-            pharmacy1 = new Pharmacy("San Roque", "aaaa", null);
-            validEmployee = new Employee("Paolo", "ps@gmail.com", "password123.", "addressPS", RoleUser.Employee, "12/09/2022", pharmacy1, null);
+            pharmacy1 = new Pharmacy("San Roque", "aaaa", null, null, null);
+            validEmployee = new Employee("Paolo", 123456, "ps@gmail.com", "password123.", "addressPS", RoleUser.Employee, "12/09/2022", pharmacy1, null);
             employees = new List<Employee>() { validEmployee };
         }
 
