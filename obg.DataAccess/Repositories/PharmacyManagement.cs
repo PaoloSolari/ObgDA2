@@ -1,4 +1,5 @@
-﻿using obg.DataAccess.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using obg.DataAccess.Context;
 using obg.DataAccess.Interface.Interfaces;
 using obg.Domain.Entities;
 using System;
@@ -26,5 +27,24 @@ namespace obg.DataAccess.Repositories
         {
             return ObgContext.Pharmacies.ToList();
         }
+
+        public Pharmacy GetPharmacyByName(string name)
+        {
+            return ObgContext.Pharmacies.Where<Pharmacy>(p => p.Name == name).AsNoTracking().FirstOrDefault();
+        }
+
+        public void UpdatePharmacy(Pharmacy pharmacy)
+        {
+            ObgContext.Pharmacies.Attach(pharmacy);
+            ObgContext.Entry(pharmacy).State = EntityState.Modified;
+            ObgContext.SaveChanges();
+        }
+
+        public void DeletePharmacy(Pharmacy pharmacy)
+        {
+            ObgContext.Pharmacies.Remove(pharmacy);
+            ObgContext.SaveChanges();
+        }
+
     }
 }
