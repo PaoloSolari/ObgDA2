@@ -40,6 +40,65 @@ namespace obg.DataAccess.Test
             Assert.AreEqual(administratorInDatabase.Name, administrator.Name);
         }
 
+        [TestMethod]
+        public void GetAdministratorsOk()
+        {
+            IAdministratorManagement administratorManagement = CreateAdministratorManagement();
+            IEnumerable<Administrator> administratorsInDatabase = administratorManagement.GetAdministrators();
+
+            Assert.AreEqual(administratorsInDatabase.ToList().Count, administrators.Count);
+            Assert.AreEqual(administratorsInDatabase.ToList()[0].Name, administrators[0].Name);
+
+        }
+
+        [TestMethod]
+        public void GetAdministratorByNameOk()
+        {
+            ObgContext context = CreateContext();
+            IAdministratorManagement administratorManagement = new AdministratorManagement(context);
+
+            context.Administrators.Add(administrator);
+            context.SaveChanges();
+
+            Administrator administratorInDatabase = administratorManagement.GetAdministratorByName(administrator.Name);
+
+            Assert.IsNotNull(administratorInDatabase);
+            Assert.AreEqual(administratorInDatabase.Name, administrator.Name);
+        }
+
+        [TestMethod]
+        public void UpdateAdministratorOk()
+        {
+            ObgContext context = CreateContext();
+            IAdministratorManagement administratorManagement = new AdministratorManagement(context);
+
+            context.Administrators.Add(administrator);
+            context.SaveChanges();
+            administrator.Address = "25 de Agosto";
+            administratorManagement.UpdateAdministrator(administrator);
+
+            Administrator administratorInDatabase = context.Administrators.Where<Administrator>(p => p.Name == administrator.Name).AsNoTracking().FirstOrDefault();
+
+            Assert.IsNotNull(administratorInDatabase);
+            Assert.AreEqual(administratorInDatabase.Address, administrator.Address);
+        }
+
+        [TestMethod]
+        public void DeleteAdministratorOk()
+        {
+            ObgContext context = CreateContext();
+            IAdministratorManagement administratorManagement = new AdministratorManagement(context);
+
+            context.Administrators.Add(administrator);
+            context.SaveChanges();
+
+            administratorManagement.DeleteAdministrator(administrator);
+
+            Administrator administratorInDatabase = context.Administrators.Where<Administrator>(p => p.Name == administrator.Name).AsNoTracking().FirstOrDefault();
+
+            Assert.IsNull(administratorInDatabase);
+        }
+
         private ObgContext CreateContext()
         {
             var contextOptions = new DbContextOptionsBuilder<ObgContext>()
@@ -50,6 +109,17 @@ namespace obg.DataAccess.Test
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
             return context;
+        }
+
+        private IAdministratorManagement CreateAdministratorManagement()
+        {
+            var context = CreateContext();
+
+            context.Administrators.Add(administrator);
+            context.SaveChanges();
+
+            IAdministratorManagement administratorManagement = new AdministratorManagement(context);
+            return administratorManagement;
         }
 
     }
