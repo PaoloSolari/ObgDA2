@@ -45,5 +45,16 @@ namespace obg.DataAccess.Repositories
             ObgContext.SaveChanges();
         }
 
+        public bool DemandExists(string id)
+        {
+            Demand demand = ObgContext.Demands.Where<Demand>(d => d.IdDemand == id).AsNoTracking().FirstOrDefault();
+            if(demand != null)
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
+        }
     }
 }
