@@ -15,7 +15,6 @@ namespace obg.DataAccess.Test
     [TestClass]
     public class InvitationManagementTest
     {
-        private Owner owner;
         private Pharmacy pharmacy;
         private Invitation invitation;
         private List<Invitation> invitations;
@@ -23,7 +22,6 @@ namespace obg.DataAccess.Test
         [TestInitialize]
         public void InitTest()
         {
-            owner = new Owner("Julio", 123456, "julio@gmail.com", "abccdefg.123", "Ejido", RoleUser.Owner, "29/09/2022", null);
             pharmacy = new Pharmacy("FarmaShop", "18 de Julio", null);
             invitation = new Invitation("XXZZYY", pharmacy, RoleUser.Owner, "Pedro", 343434);
 
