@@ -47,6 +47,65 @@ namespace obg.DataAccess.Test
             Assert.AreEqual(employeeInDatabase.Name, employee.Name);
         }
 
+        [TestMethod]
+        public void GetEmployeesOk()
+        {
+            IEmployeeManagement employeeManagement = CreateEmployeeManagement();
+            IEnumerable<Employee> employeesInDatabase = employeeManagement.GetEmployees();
+
+            Assert.AreEqual(employeesInDatabase.ToList().Count, employees.Count);
+            Assert.AreEqual(employeesInDatabase.ToList()[0].Name, employees[0].Name);
+
+        }
+
+        [TestMethod]
+        public void GetEmployeeByNameOk()
+        {
+            ObgContext context = CreateContext();
+            IEmployeeManagement employeeManagement = new EmployeeManagement(context);
+
+            context.Employees.Add(employee);
+            context.SaveChanges();
+
+            Employee employeeInDatabase = employeeManagement.GetEmployeeByName(employee.Name);
+
+            Assert.IsNotNull(employeeInDatabase);
+            Assert.AreEqual(employeeInDatabase.Name, employee.Name);
+        }
+
+        [TestMethod]
+        public void UpdateEmployeeOk()
+        {
+            ObgContext context = CreateContext();
+            IEmployeeManagement employeeManagement = new EmployeeManagement(context);
+
+            context.Employees.Add(employee);
+            context.SaveChanges();
+            employee.Address = "25 de Agosto";
+            employeeManagement.UpdateEmployee(employee);
+
+            Employee employeeInDatabase = context.Employees.Where<Employee>(e => e.Name == employee.Name).AsNoTracking().FirstOrDefault();
+
+            Assert.IsNotNull(employeeInDatabase);
+            Assert.AreEqual(employeeInDatabase.Address, employee.Address);
+        }
+
+        [TestMethod]
+        public void DeleteEmployeeOk()
+        {
+            ObgContext context = CreateContext();
+            IEmployeeManagement employeeManagement = new EmployeeManagement(context);
+
+            context.Employees.Add(employee);
+            context.SaveChanges();
+
+            employeeManagement.DeleteEmployee(employee);
+
+            Employee employeeInDatabase = context.Employees.Where<Employee>(e => e.Name == employee.Name).AsNoTracking().FirstOrDefault();
+
+            Assert.IsNull(employeeInDatabase);
+        }
+
         private ObgContext CreateContext()
         {
             var contextOptions = new DbContextOptionsBuilder<ObgContext>()
@@ -57,6 +116,17 @@ namespace obg.DataAccess.Test
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
             return context;
+        }
+
+        private IEmployeeManagement CreateEmployeeManagement()
+        {
+            var context = CreateContext();
+
+            context.Employees.Add(employee);
+            context.SaveChanges();
+
+            IEmployeeManagement employeeManagement = new EmployeeManagement(context);
+            return employeeManagement;
         }
 
     }
