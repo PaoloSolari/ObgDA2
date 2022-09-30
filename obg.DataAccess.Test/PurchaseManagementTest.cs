@@ -27,7 +27,7 @@ namespace obg.DataAccess.Test
         }
 
         [TestMethod]
-        public void InsertPharmacyOk()
+        public void InsertPurchaseOk()
         {
             ObgContext context = CreateContext();
             IPurchaseManagement pharmacyManagement = new PurchaseManagement(context);

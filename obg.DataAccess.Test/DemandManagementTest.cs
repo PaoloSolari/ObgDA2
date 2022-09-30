@@ -23,6 +23,7 @@ namespace obg.DataAccess.Test
         public void InitTest()
         {
             demand = new Demand("AABBCC", DemandStatus.Accepted);
+            
             demands = new List<Demand> { demand };
         }
 
