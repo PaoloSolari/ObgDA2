@@ -42,6 +42,65 @@ namespace obg.DataAccess.Test
             Assert.AreEqual(invitationInDatabase.IdInvitation, invitation.IdInvitation);
         }
 
+        [TestMethod]
+        public void GetInvitationsOk()
+        {
+            IInvitationManagement invitationManagement = CreateInvitationManagement();
+            IEnumerable<Invitation> invitationsInDatabase = invitationManagement.GetInvitations();
+
+            Assert.AreEqual(invitationsInDatabase.ToList().Count, invitations.Count);
+            Assert.AreEqual(invitationsInDatabase.ToList()[0].IdInvitation, invitations[0].IdInvitation);
+
+        }
+
+        [TestMethod]
+        public void GetInvitationByIdOk()
+        {
+            ObgContext context = CreateContext();
+            IInvitationManagement invitationManagement = new InvitationManagement(context);
+
+            context.Invitations.Add(invitation);
+            context.SaveChanges();
+
+            Invitation invitationInDatabase = invitationManagement.GetInvitationById(invitation.IdInvitation);
+
+            Assert.IsNotNull(invitationInDatabase);
+            Assert.AreEqual(invitationInDatabase.IdInvitation, invitation.IdInvitation);
+        }
+
+        [TestMethod]
+        public void UpdateInvitationOk()
+        {
+            ObgContext context = CreateContext();
+            IInvitationManagement invitationManagement = new InvitationManagement(context);
+
+            context.Invitations.Add(invitation);
+            context.SaveChanges();
+            invitation.UserRole = RoleUser.Employee;
+            invitationManagement.UpdateInvitation(invitation);
+
+            Invitation invitationInDatabase = context.Invitations.Where<Invitation>(d => d.IdInvitation == invitation.IdInvitation).AsNoTracking().FirstOrDefault();
+
+            Assert.IsNotNull(invitationInDatabase);
+            Assert.AreEqual(invitationInDatabase.UserRole, invitation.UserRole);
+        }
+
+        [TestMethod]
+        public void DeleteInvitationOk()
+        {
+            ObgContext context = CreateContext();
+            IInvitationManagement invitationManagement = new InvitationManagement(context);
+
+            context.Invitations.Add(invitation);
+            context.SaveChanges();
+
+            invitationManagement.DeleteInvitation(invitation);
+
+            Invitation invitationInDatabase = context.Invitations.Where<Invitation>(d => d.IdInvitation == invitation.IdInvitation).AsNoTracking().FirstOrDefault();
+
+            Assert.IsNull(invitationInDatabase);
+        }
+
         private ObgContext CreateContext()
         {
             var contextOptions = new DbContextOptionsBuilder<ObgContext>()
@@ -53,5 +112,17 @@ namespace obg.DataAccess.Test
             context.Database.EnsureCreated();
             return context;
         }
+
+        private IInvitationManagement CreateInvitationManagement()
+        {
+            var context = CreateContext();
+
+            context.Invitations.Add(invitation);
+            context.SaveChanges();
+
+            IInvitationManagement invitationManagement = new InvitationManagement(context);
+            return invitationManagement;
+        }
+
     }
 }
