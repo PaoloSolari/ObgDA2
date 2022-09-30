@@ -1,7 +1,10 @@
-﻿using obg.DataAccess.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using obg.DataAccess.Context;
 using obg.DataAccess.Interface.Interfaces;
 using obg.Domain.Entities;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace obg.DataAccess.Repositories
 {
@@ -18,5 +21,29 @@ namespace obg.DataAccess.Repositories
             ObgContext.Demands.Add(demand);
             ObgContext.SaveChanges();
         }
+
+        public IEnumerable<Demand> GetDemands()
+        {
+            return ObgContext.Demands.ToList();
+        }
+
+        public Demand GetDemandById(string id)
+        {
+            return ObgContext.Demands.Where<Demand>(d => d.IdDemand == id).AsNoTracking().FirstOrDefault();
+        }
+
+        public void UpdateDemand(Demand demand)
+        {
+            ObgContext.Demands.Attach(demand);
+            ObgContext.Entry(demand).State = EntityState.Modified;
+            ObgContext.SaveChanges();
+        }
+
+        public void DeleteDemand(Demand demand)
+        {
+            ObgContext.Demands.Remove(demand);
+            ObgContext.SaveChanges();
+        }
+
     }
 }

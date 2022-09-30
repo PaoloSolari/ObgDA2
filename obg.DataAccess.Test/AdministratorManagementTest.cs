@@ -23,7 +23,7 @@ namespace obg.DataAccess.Test
         [TestInitialize]
         public void InitTest()
         {
-            administrator = new Administrator("Gabriel", 987654, "gabriel@gmail.com", "ahi1244..dd", "Avenida 33", RoleUser.Administrator, "29/09/2022");
+            administrator = new Administrator("Gabriel", 987654, "gabriel@gmail.com", "ahi1244..dd", "18 de Julio", RoleUser.Administrator, "29/09/2022");
             administrators = new List<Administrator>() { administrator };
         }
         [TestMethod]

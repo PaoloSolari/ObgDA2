@@ -40,6 +40,65 @@ namespace obg.DataAccess.Test
             Assert.AreEqual(demandInDatabase.IdDemand, demand.IdDemand);
         }
 
+        [TestMethod]
+        public void GetDemandsOk()
+        {
+            IDemandManagement demandManagement = CreateDemandManagement();
+            IEnumerable<Demand> demandsInDatabase = demandManagement.GetDemands();
+
+            Assert.AreEqual(demandsInDatabase.ToList().Count, demands.Count);
+            Assert.AreEqual(demandsInDatabase.ToList()[0].IdDemand, demands[0].IdDemand);
+
+        }
+
+        [TestMethod]
+        public void GetDemandByIdOk()
+        {
+            ObgContext context = CreateContext();
+            IDemandManagement demandManagement = new DemandManagement(context);
+
+            context.Demands.Add(demand);
+            context.SaveChanges();
+
+            Demand demandInDatabase = demandManagement.GetDemandById(demand.IdDemand);
+
+            Assert.IsNotNull(demandInDatabase);
+            Assert.AreEqual(demandInDatabase.IdDemand, demand.IdDemand);
+        }
+
+        [TestMethod]
+        public void UpdateDemandOk()
+        {
+            ObgContext context = CreateContext();
+            IDemandManagement demandManagement = new DemandManagement(context);
+
+            context.Demands.Add(demand);
+            context.SaveChanges();
+            demand.Status = DemandStatus.Rejected;
+            demandManagement.UpdateDemand(demand);
+
+            Demand demandInDatabase = context.Demands.Where<Demand>(d => d.IdDemand == demand.IdDemand).AsNoTracking().FirstOrDefault();
+
+            Assert.IsNotNull(demandInDatabase);
+            Assert.AreEqual(demandInDatabase.Status, demand.Status);
+        }
+
+        [TestMethod]
+        public void DeleteDemandOk()
+        {
+            ObgContext context = CreateContext();
+            IDemandManagement demandManagement = new DemandManagement(context);
+
+            context.Demands.Add(demand);
+            context.SaveChanges();
+
+            demandManagement.DeleteDemand(demand);
+
+            Demand demandInDatabase = context.Demands.Where<Demand>(d => d.IdDemand == demand.IdDemand).AsNoTracking().FirstOrDefault();
+
+            Assert.IsNull(demandInDatabase);
+        }
+
         private ObgContext CreateContext()
         {
             var contextOptions = new DbContextOptionsBuilder<ObgContext>()
@@ -50,6 +109,17 @@ namespace obg.DataAccess.Test
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
             return context;
+        }
+
+        private IDemandManagement CreateDemandManagement()
+        {
+            var context = CreateContext();
+
+            context.Demands.Add(demand);
+            context.SaveChanges();
+
+            IDemandManagement demandManagement = new DemandManagement(context);
+            return demandManagement;
         }
 
     }
