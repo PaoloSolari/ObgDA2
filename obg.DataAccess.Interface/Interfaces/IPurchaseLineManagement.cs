@@ -12,5 +12,6 @@ namespace obg.DataAccess.Interface.Interfaces
         PurchaseLine GetPurchaseLineById(string id);
         void UpdatePurchaseLine(PurchaseLine purchaseLine);
         void DeletePurchaseLine(PurchaseLine purchaseLine);
+        bool IsIdPurchaseLineRegistered(string idPurchaseLine);
     }
 }

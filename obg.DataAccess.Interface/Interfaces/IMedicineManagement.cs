@@ -12,5 +12,7 @@ namespace obg.DataAccess.Interface.Interfaces
         Medicine GetMedicineByCode(string code);
         void UpdateMedicine(Medicine medicine);
         void DeleteMedicine(Medicine medicine);
+        bool IsCodeRegistered(string code);
+        IEnumerable<Medicine> GetMedicinesByName(string name);
     }
 }

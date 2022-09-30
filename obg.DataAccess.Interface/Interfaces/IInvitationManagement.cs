@@ -12,5 +12,8 @@ namespace obg.DataAccess.Interface.Interfaces
         Invitation GetInvitationById(string id);
         void UpdateInvitation(Invitation invitation);
         void DeleteInvitation(Invitation invitation);
+        bool IsIdInvitationRegistered(string idInvitation);
+        bool IsNameRegistered(string name);
+        bool IsCodeRegistered(int code);
     }
 }

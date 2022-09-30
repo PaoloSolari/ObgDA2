@@ -13,11 +13,6 @@ namespace obg.BusinessLogic.Logics
 {
     public class DemandService : IDemandService
     {
-        protected List<Demand> fakeDB = new List<Demand>();
-        Demand validDemand;
-        Demand validDemand2;
-        private Petition validPetition1;
-
         private readonly IDemandManagement _demandManagement;
 
         public DemandService(IDemandManagement demandManagement)

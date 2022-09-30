@@ -8,6 +8,5 @@ namespace obg.BusinessLogic.Interface.Interfaces
     public interface IInvitationService
     {
         Invitation InsertInvitation(Invitation invitation);
-
     }
 }

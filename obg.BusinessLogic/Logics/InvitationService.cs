@@ -23,8 +23,7 @@ namespace obg.BusinessLogic.Logics
         {
             if (IsInvitationValid(invitation))
             {
-                // Se agrega la Invitation a la DB: _invitationManagement.InsertInvitation(invitation);
-                FakeDB.Invitations.Add(invitation);
+                _invitationManagement.InsertInvitation(invitation);
             }
             return invitation;
         }
@@ -68,40 +67,19 @@ namespace obg.BusinessLogic.Logics
 
         public bool IsIdInvitationRegistered(string idInvitation)
         {
-            foreach (Invitation invitation in FakeDB.Invitations)
-            {
-                if (invitation.IdInvitation.Equals(idInvitation))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return _invitationManagement.IsIdInvitationRegistered(idInvitation);
         }
 
-        private bool IsNameRegistered(string name)
+        public bool IsNameRegistered(string name)
         {
             // Aquí se recorren los usuarios YA REGISTRADOS, para no hacer una invitación con un nombre que ya existe.
-            foreach (User user in FakeDB.Users)
-            {
-                if (name.Equals(user.Name))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return _invitationManagement.IsNameRegistered(name);
         }
 
-        private bool IsCodeRegistered(int code) 
+        public bool IsCodeRegistered(int code) 
         {
             // Aquí se recorren los usuarios YA REGISTRADOS, para no hacer una invitación con un código que ya existe.
-            foreach (User user in FakeDB.Users)
-            {
-                if (code.Equals(user.Code))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return _invitationManagement.IsCodeRegistered(code);
         }
 
     }

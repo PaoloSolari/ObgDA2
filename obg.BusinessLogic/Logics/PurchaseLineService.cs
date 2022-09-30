@@ -56,14 +56,7 @@ namespace obg.BusinessLogic.Logics
 
         public bool IsIdPurchaseLineRegistered(string idPurchaseLine)
         {
-            foreach (PurchaseLine purchaseLine in FakeDB.PurchaseLines)
-            {
-                if (purchaseLine.IdPurchaseLine.Equals(idPurchaseLine))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return _purchaseLineManagement.IsIdPurchaseLineRegistered(idPurchaseLine);
         }
 
         private bool IsMedicineCodeOk(string medicineCode)

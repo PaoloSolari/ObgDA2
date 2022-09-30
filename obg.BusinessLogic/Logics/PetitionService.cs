@@ -57,27 +57,13 @@ namespace obg.BusinessLogic.Logics
 
         public bool IsIdPetitionRegistered(string idPetition)
         {
-            foreach (Petition petition in FakeDB.Petitions)
-            {
-                if (petition.IdPetition.Equals(idPetition))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return _petitionManagement.IsIdPetitionRegistered(idPetition);
         }
 
         private bool IsMedicineCodeOk(string medicineCode)
         {
             // Se chequea que la medicina de la petición exista en la DB.
-            foreach (Medicine medicine in FakeDB.Medicines)
-            {
-                if (medicine.Code.Equals(medicineCode))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return _petitionManagement.IsMedicineCodeOk(medicineCode);
         }
     }
 }

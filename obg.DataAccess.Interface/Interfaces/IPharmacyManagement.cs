@@ -12,5 +12,6 @@ namespace obg.DataAccess.Interface.Interfaces
         Pharmacy GetPharmacyByName(string name);
         void UpdatePharmacy(Pharmacy pharmacy);
         void DeletePharmacy(Pharmacy pharmacy);
+        bool IsNameRegistered(string name);
     }
 }

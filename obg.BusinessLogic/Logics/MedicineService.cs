@@ -24,20 +24,13 @@ namespace obg.BusinessLogic.Logics
 
         public MedicineService()
         {
-            //validMedicine1 = new Medicine("Paracetamol", "aaaa", PresentationMedicine.Capsulas, 0, "1mg", 200, false, true);
-            //validMedicine2 = new Medicine("Ibuprofeno", "aaaa", PresentationMedicine.Comprimidos, 0, "0.5mg", 100, false, true);
-
-            //fakeDB.Add(validMedicine1);
-            //fakeDB.Add(validMedicine2);
-
         }
 
         public Medicine InsertMedicine(Medicine medicine)
         {
             if (IsMedicineValid(medicine))// && !IsCodeRegistered(medicine.Name))
             {
-                // Se agreaga la Medicine a la DB: _medicineManagement.InsertMedicine(medicine);
-                FakeDB.Medicines.Add(medicine);
+                _medicineManagement.InsertMedicine(medicine);
             }
             return medicine;
         }
@@ -81,66 +74,26 @@ namespace obg.BusinessLogic.Logics
 
         private bool IsCodeRegistered(string code)
         {
-            foreach (Medicine medicine in FakeDB.Medicines)
-            {
-                if (code.Equals(medicine.Code))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return _medicineManagement.IsCodeRegistered(code);
         }
 
         public IEnumerable<Medicine> GetMedicines()
         {
-            return fakeDB;
+            return _medicineManagement.GetMedicines();
         }
         public Medicine GetMedicineByCode(string code)
         {
-
-            Medicine auxMedicine = null;
-            foreach (Medicine medicine in FakeDB.Medicines)
-            {
-                if (medicine.Code.Equals(code))
-                {
-                    auxMedicine = medicine;
-                }
-            }
-            if (auxMedicine == null)
-            {
-                throw new MedicineException("El medicamento no existe.");
-            }
-            return auxMedicine;
+            return _medicineManagement.GetMedicineByCode(code);
         }
 
         public void DeleteMedicine(string code)
         {
-            Medicine medicineToDelete = this.GetMedicineByCode(code);
-            if (medicineToDelete == null)
-            {
-                throw new MedicineException("El medicamento no existe");
-            }
-            fakeDB.Remove(medicineToDelete);
+            _medicineManagement.DeleteMedicine(GetMedicineByCode(code));
         }
 
-        public IEnumerable<Medicine> GetMedicineByMedicineName(string medicineName)
+        public IEnumerable<Medicine> GetMedicinesByName(string medicineName)
         {
-            List <Medicine> medicinesFiltered = new List<Medicine>();
-            foreach(Medicine medicine in FakeDB.Medicines)
-            {
-                if (medicine.Name.Equals(medicineName))
-                {
-                    medicinesFiltered.Add(medicine);
-                }
-            }
-            if(medicinesFiltered.Count > 0)
-            {
-                return medicinesFiltered;
-            } 
-            else
-            {
-                throw new MedicineException("El medicamento no existe");
-            }
+            return _medicineManagement.GetMedicinesByName(medicineName);
         }
     }
 }

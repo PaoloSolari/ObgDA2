@@ -30,7 +30,7 @@ namespace obg.DataAccess.Repositories
 
         public PurchaseLine GetPurchaseLineById(string id)
         {
-            return ObgContext.PurchaseLines.Where<PurchaseLine>(pl => pl.IdPurchaseLine == id).AsNoTracking().FirstOrDefault();
+            return ObgContext.PurchaseLines.Where<PurchaseLine>(pl => pl.IdPurchaseLine.Equals(id)).AsNoTracking().FirstOrDefault();
         }
 
         public void UpdatePurchaseLine(PurchaseLine purchaseLine)
@@ -45,5 +45,17 @@ namespace obg.DataAccess.Repositories
             ObgContext.PurchaseLines.Remove(purchaseLine);
             ObgContext.SaveChanges();
         }
+
+        public bool IsIdPurchaseLineRegistered(string idPurchaseLine)
+        {
+            PurchaseLine purchaseLine = ObgContext.PurchaseLines.Where<PurchaseLine>(pl => pl.IdPurchaseLine.Equals(idPurchaseLine)).AsNoTracking().FirstOrDefault();
+            if(purchaseLine != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool IsMedicineCodeOk
     }
 }
