@@ -9,5 +9,8 @@ namespace obg.DataAccess.Interface.Interfaces
     {
         void InsertPharmacy(Pharmacy pharmacy);
         IEnumerable<Pharmacy> GetPharmacies();
+        Pharmacy GetPharmacyByName(string name);
+        void UpdatePharmacy(Pharmacy pharmacy);
+        void DeletePharmacy(Pharmacy pharmacy);
     }
 }

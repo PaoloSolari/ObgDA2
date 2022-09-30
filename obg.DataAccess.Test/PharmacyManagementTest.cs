@@ -40,10 +40,10 @@ namespace obg.DataAccess.Test
       
             pharmacyManagement.InsertPharmacy(pharmacy);
 
-            Pharmacy pharamacyInDatabase = context.Pharmacies.Where<Pharmacy>(p => p.Name == pharmacy.Name).AsNoTracking().FirstOrDefault();
+            Pharmacy pharmacyInDatabase = context.Pharmacies.Where<Pharmacy>(p => p.Name.Equals(pharmacy.Name)).AsNoTracking().FirstOrDefault();
 
-            Assert.IsNotNull(pharamacyInDatabase);
-            Assert.AreEqual(pharamacyInDatabase.Name, pharmacy.Name);
+            Assert.IsNotNull(pharmacyInDatabase);
+            Assert.AreEqual(pharmacyInDatabase.Name, pharmacy.Name);
         }
 
         [TestMethod]
@@ -55,6 +55,54 @@ namespace obg.DataAccess.Test
             Assert.AreEqual(pharmaciesInDatabase.ToList().Count, pharmacies.Count);
             Assert.AreEqual(pharmaciesInDatabase.ToList()[0].Name, pharmacies[0].Name);
 
+        }
+
+        [TestMethod]
+        public void GetPharmacyByNameOk()
+        {
+            ObgContext context = CreateContext();
+            IPharmacyManagement pharmacyManagement = new PharmacyManagement(context);
+
+            context.Pharmacies.Add(pharmacy);
+            context.SaveChanges();
+
+            Pharmacy pharmacyInDatabase = pharmacyManagement.GetPharmacyByName(pharmacy.Name);
+
+            Assert.IsNotNull(pharmacyInDatabase);
+            Assert.AreEqual(pharmacyInDatabase.Name, pharmacy.Name);
+        }
+
+        [TestMethod]
+        public void UpdatePharmacyOk()
+        {
+            ObgContext context = CreateContext();
+            IPharmacyManagement pharmacyManagement = new PharmacyManagement(context);
+
+            context.Pharmacies.Add(pharmacy);
+            context.SaveChanges();
+            pharmacy.Address = "25 de Agosto";
+            pharmacyManagement.UpdatePharmacy(pharmacy);
+
+            Pharmacy pharmacyInDatabase = context.Pharmacies.Where<Pharmacy>(p => p.Name.Equals(pharmacy.Name)).AsNoTracking().FirstOrDefault();
+
+            Assert.IsNotNull(pharmacyInDatabase);
+            Assert.AreEqual(pharmacyInDatabase.Address, pharmacy.Address);
+        }
+
+        [TestMethod]
+        public void DeletePharmacyOk()
+        {
+            ObgContext context = CreateContext();
+            IPharmacyManagement pharmacyManagement = new PharmacyManagement(context);
+
+            context.Pharmacies.Add(pharmacy);
+            context.SaveChanges();
+
+            pharmacyManagement.DeletePharmacy(pharmacy);
+
+            Pharmacy pharmacyInDatabase = context.Pharmacies.Where<Pharmacy>(p => p.Name.Equals(pharmacy.Name)).AsNoTracking().FirstOrDefault();
+
+            Assert.IsNull(pharmacyInDatabase);
         }
 
         private ObgContext CreateContext()

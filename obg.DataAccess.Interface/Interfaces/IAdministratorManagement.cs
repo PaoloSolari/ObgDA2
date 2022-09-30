@@ -7,6 +7,10 @@ namespace obg.DataAccess.Interface.Interfaces
 {
     public interface IAdministratorManagement
     {
-        void InsertAdministratorInDB(Administrator administrator);
+        void InsertAdministrator(Administrator administrator);
+        IEnumerable<Administrator> GetAdministrators();
+        Administrator GetAdministratorByName(string name);
+        void UpdateAdministrator(Administrator admnistrator);
+        void DeleteAdministrator(Administrator admnistrator);
     }
 }
