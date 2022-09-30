@@ -36,7 +36,7 @@ namespace obg.DataAccess.Test
 
             invitationManagement.InsertInvitation(invitation);
 
-            Invitation invitationInDatabase = context.Invitations.Where<Invitation>(i => i.IdInvitation == invitation.IdInvitation).AsNoTracking().FirstOrDefault();
+            Invitation invitationInDatabase = context.Invitations.Where<Invitation>(i => i.IdInvitation.Equals(invitation.IdInvitation)).AsNoTracking().FirstOrDefault();
 
             Assert.IsNotNull(invitationInDatabase);
             Assert.AreEqual(invitationInDatabase.IdInvitation, invitation.IdInvitation);
@@ -79,7 +79,7 @@ namespace obg.DataAccess.Test
             invitation.UserRole = RoleUser.Employee;
             invitationManagement.UpdateInvitation(invitation);
 
-            Invitation invitationInDatabase = context.Invitations.Where<Invitation>(d => d.IdInvitation == invitation.IdInvitation).AsNoTracking().FirstOrDefault();
+            Invitation invitationInDatabase = context.Invitations.Where<Invitation>(d => d.IdInvitation.Equals(invitation.IdInvitation)).AsNoTracking().FirstOrDefault();
 
             Assert.IsNotNull(invitationInDatabase);
             Assert.AreEqual(invitationInDatabase.UserRole, invitation.UserRole);
@@ -96,7 +96,7 @@ namespace obg.DataAccess.Test
 
             invitationManagement.DeleteInvitation(invitation);
 
-            Invitation invitationInDatabase = context.Invitations.Where<Invitation>(d => d.IdInvitation == invitation.IdInvitation).AsNoTracking().FirstOrDefault();
+            Invitation invitationInDatabase = context.Invitations.Where<Invitation>(d => d.IdInvitation.Equals(invitation.IdInvitation)).AsNoTracking().FirstOrDefault();
 
             Assert.IsNull(invitationInDatabase);
         }

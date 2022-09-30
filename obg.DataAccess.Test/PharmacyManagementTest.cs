@@ -40,7 +40,7 @@ namespace obg.DataAccess.Test
       
             pharmacyManagement.InsertPharmacy(pharmacy);
 
-            Pharmacy pharmacyInDatabase = context.Pharmacies.Where<Pharmacy>(p => p.Name == pharmacy.Name).AsNoTracking().FirstOrDefault();
+            Pharmacy pharmacyInDatabase = context.Pharmacies.Where<Pharmacy>(p => p.Name.Equals(pharmacy.Name)).AsNoTracking().FirstOrDefault();
 
             Assert.IsNotNull(pharmacyInDatabase);
             Assert.AreEqual(pharmacyInDatabase.Name, pharmacy.Name);
@@ -83,7 +83,7 @@ namespace obg.DataAccess.Test
             pharmacy.Address = "25 de Agosto";
             pharmacyManagement.UpdatePharmacy(pharmacy);
 
-            Pharmacy pharmacyInDatabase = context.Pharmacies.Where<Pharmacy>(p => p.Name == pharmacy.Name).AsNoTracking().FirstOrDefault();
+            Pharmacy pharmacyInDatabase = context.Pharmacies.Where<Pharmacy>(p => p.Name.Equals(pharmacy.Name)).AsNoTracking().FirstOrDefault();
 
             Assert.IsNotNull(pharmacyInDatabase);
             Assert.AreEqual(pharmacyInDatabase.Address, pharmacy.Address);
@@ -100,7 +100,7 @@ namespace obg.DataAccess.Test
 
             pharmacyManagement.DeletePharmacy(pharmacy);
 
-            Pharmacy pharmacyInDatabase = context.Pharmacies.Where<Pharmacy>(p => p.Name == pharmacy.Name).AsNoTracking().FirstOrDefault();
+            Pharmacy pharmacyInDatabase = context.Pharmacies.Where<Pharmacy>(p => p.Name.Equals(pharmacy.Name)).AsNoTracking().FirstOrDefault();
 
             Assert.IsNull(pharmacyInDatabase);
         }

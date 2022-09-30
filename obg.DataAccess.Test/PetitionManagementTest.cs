@@ -34,7 +34,7 @@ namespace obg.DataAccess.Test
 
             petitionManagement.InsertPetition(petition);
 
-            Petition petitionInDatabase = context.Petitions.Where<Petition>(p => p.IdPetition == petition.IdPetition).AsNoTracking().FirstOrDefault();
+            Petition petitionInDatabase = context.Petitions.Where<Petition>(p => p.IdPetition.Equals(petition.IdPetition)).AsNoTracking().FirstOrDefault();
 
             Assert.IsNotNull(petitionInDatabase);
             Assert.AreEqual(petitionInDatabase.IdPetition, petition.IdPetition);
@@ -77,7 +77,7 @@ namespace obg.DataAccess.Test
             petition.NewQuantity = 50;
             petitionManagement.UpdatePetition(petition);
 
-            Petition petitionInDatabase = context.Petitions.Where<Petition>(p => p.IdPetition == petition.IdPetition).AsNoTracking().FirstOrDefault();
+            Petition petitionInDatabase = context.Petitions.Where<Petition>(p => p.IdPetition.Equals(petition.IdPetition)).AsNoTracking().FirstOrDefault();
 
             Assert.IsNotNull(petitionInDatabase);
             Assert.AreEqual(petitionInDatabase.NewQuantity, petition.NewQuantity);
@@ -94,7 +94,7 @@ namespace obg.DataAccess.Test
 
             petitionManagement.DeletePetition(petition);
 
-            Petition petitionInDatabase = context.Petitions.Where<Petition>(p => p.IdPetition == petition.IdPetition).AsNoTracking().FirstOrDefault();
+            Petition petitionInDatabase = context.Petitions.Where<Petition>(p => p.IdPetition.Equals(petition.IdPetition)).AsNoTracking().FirstOrDefault();
 
             Assert.IsNull(petitionInDatabase);
         }

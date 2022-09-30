@@ -35,7 +35,7 @@ namespace obg.DataAccess.Test
 
             demandManagement.InsertDemand(demand);
 
-            Demand demandInDatabase = context.Demands.Where<Demand>(d => d.IdDemand == demand.IdDemand).AsNoTracking().FirstOrDefault();
+            Demand demandInDatabase = context.Demands.Where<Demand>(d => d.IdDemand.Equals(demand.IdDemand)).AsNoTracking().FirstOrDefault();
 
             Assert.IsNotNull(demandInDatabase);
             Assert.AreEqual(demandInDatabase.IdDemand, demand.IdDemand);
@@ -78,7 +78,7 @@ namespace obg.DataAccess.Test
             demand.Status = DemandStatus.Rejected;
             demandManagement.UpdateDemand(demand);
 
-            Demand demandInDatabase = context.Demands.Where<Demand>(d => d.IdDemand == demand.IdDemand).AsNoTracking().FirstOrDefault();
+            Demand demandInDatabase = context.Demands.Where<Demand>(d => d.IdDemand.Equals(demand.IdDemand)).AsNoTracking().FirstOrDefault();
 
             Assert.IsNotNull(demandInDatabase);
             Assert.AreEqual(demandInDatabase.Status, demand.Status);
@@ -95,7 +95,7 @@ namespace obg.DataAccess.Test
 
             demandManagement.DeleteDemand(demand);
 
-            Demand demandInDatabase = context.Demands.Where<Demand>(d => d.IdDemand == demand.IdDemand).AsNoTracking().FirstOrDefault();
+            Demand demandInDatabase = context.Demands.Where<Demand>(d => d.IdDemand.Equals(demand.IdDemand)).AsNoTracking().FirstOrDefault();
 
             Assert.IsNull(demandInDatabase);
         }

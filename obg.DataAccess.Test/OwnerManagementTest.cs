@@ -34,7 +34,7 @@ namespace obg.DataAccess.Test
 
             ownerManagement.InsertOwner(owner);
 
-            Owner ownerInDatabase = context.Owners.Where<Owner>(p => p.Name == owner.Name).AsNoTracking().FirstOrDefault();
+            Owner ownerInDatabase = context.Owners.Where<Owner>(p => p.Name.Equals(owner.Name)).AsNoTracking().FirstOrDefault();
 
             Assert.IsNotNull(ownerInDatabase);
             Assert.AreEqual(ownerInDatabase.Name, owner.Name);
@@ -77,7 +77,7 @@ namespace obg.DataAccess.Test
             owner.Address = "25 de Agosto";
             ownerManagement.UpdateOwner(owner);
 
-            Owner ownerInDatabase = context.Owners.Where<Owner>(o => o.Name == owner.Name).AsNoTracking().FirstOrDefault();
+            Owner ownerInDatabase = context.Owners.Where<Owner>(o => o.Name.Equals(owner.Name)).AsNoTracking().FirstOrDefault();
 
             Assert.IsNotNull(ownerInDatabase);
             Assert.AreEqual(ownerInDatabase.Address, owner.Address);
@@ -94,7 +94,7 @@ namespace obg.DataAccess.Test
 
             ownerManagement.DeleteOwner(owner);
 
-            Owner ownerInDatabase = context.Owners.Where<Owner>(o => o.Name == owner.Name).AsNoTracking().FirstOrDefault();
+            Owner ownerInDatabase = context.Owners.Where<Owner>(o => o.Name.Equals(owner.Name)).AsNoTracking().FirstOrDefault();
 
             Assert.IsNull(ownerInDatabase);
         }

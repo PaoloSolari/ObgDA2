@@ -41,7 +41,7 @@ namespace obg.DataAccess.Test
 
             employeeManagement.InsertEmployee(employee);
 
-            Employee employeeInDatabase = context.Employees.Where<Employee>(e => e.Name == employee.Name).AsNoTracking().FirstOrDefault();
+            Employee employeeInDatabase = context.Employees.Where<Employee>(e => e.Name.Equals(employee.Name)).AsNoTracking().FirstOrDefault();
 
             Assert.IsNotNull(employeeInDatabase);
             Assert.AreEqual(employeeInDatabase.Name, employee.Name);
@@ -84,7 +84,7 @@ namespace obg.DataAccess.Test
             employee.Address = "25 de Agosto";
             employeeManagement.UpdateEmployee(employee);
 
-            Employee employeeInDatabase = context.Employees.Where<Employee>(e => e.Name == employee.Name).AsNoTracking().FirstOrDefault();
+            Employee employeeInDatabase = context.Employees.Where<Employee>(e => e.Name.Equals(employee.Name)).AsNoTracking().FirstOrDefault();
 
             Assert.IsNotNull(employeeInDatabase);
             Assert.AreEqual(employeeInDatabase.Address, employee.Address);
@@ -101,7 +101,7 @@ namespace obg.DataAccess.Test
 
             employeeManagement.DeleteEmployee(employee);
 
-            Employee employeeInDatabase = context.Employees.Where<Employee>(e => e.Name == employee.Name).AsNoTracking().FirstOrDefault();
+            Employee employeeInDatabase = context.Employees.Where<Employee>(e => e.Name.Equals(employee.Name)).AsNoTracking().FirstOrDefault();
 
             Assert.IsNull(employeeInDatabase);
         }

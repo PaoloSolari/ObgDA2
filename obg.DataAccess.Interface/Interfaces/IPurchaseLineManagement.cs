@@ -8,5 +8,9 @@ namespace obg.DataAccess.Interface.Interfaces
     public interface IPurchaseLineManagement
     {
         void InsertPurchaseLine(PurchaseLine purchaseLine);
+        IEnumerable<PurchaseLine> GetPurchaseLines();
+        PurchaseLine GetPurchaseLineById(string id);
+        void UpdatePurchaseLine(PurchaseLine purchaseLine);
+        void DeletePurchaseLine(PurchaseLine purchaseLine);
     }
 }

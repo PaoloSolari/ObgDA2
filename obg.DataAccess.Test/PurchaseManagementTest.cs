@@ -30,14 +30,73 @@ namespace obg.DataAccess.Test
         public void InsertPurchaseOk()
         {
             ObgContext context = CreateContext();
-            IPurchaseManagement pharmacyManagement = new PurchaseManagement(context);
+            IPurchaseManagement purchaseManagement = new PurchaseManagement(context);
 
-            pharmacyManagement.InsertPurchase(purchase);
+            purchaseManagement.InsertPurchase(purchase);
 
-            Purchase purchaseInDatabase = context.Purchases.Where<Purchase>(p => p.IdPurchase == purchase.IdPurchase).AsNoTracking().FirstOrDefault();
+            Purchase purchaseInDatabase = context.Purchases.Where<Purchase>(p => p.IdPurchase.Equals(purchase.IdPurchase)).AsNoTracking().FirstOrDefault();
 
             Assert.IsNotNull(purchaseInDatabase);
             Assert.AreEqual(purchaseInDatabase.IdPurchase, purchase.IdPurchase);
+        }
+
+        [TestMethod]
+        public void GetPurchasesOk()
+        {
+            IPurchaseManagement purchaseManagement = CreatePurchaseManagement();
+            IEnumerable<Purchase> purchasesInDatabase = purchaseManagement.GetPurchases();
+
+            Assert.AreEqual(purchasesInDatabase.ToList().Count, purchases.Count);
+            Assert.AreEqual(purchasesInDatabase.ToList()[0].IdPurchase, purchases[0].IdPurchase);
+
+        }
+
+        [TestMethod]
+        public void GetPurchaseByIdOk()
+        {
+            ObgContext context = CreateContext();
+            IPurchaseManagement purchaseManagement = new PurchaseManagement(context);
+
+            context.Purchases.Add(purchase);
+            context.SaveChanges();
+
+            Purchase purchaseInDatabase = purchaseManagement.GetPurchaseById(purchase.IdPurchase);
+
+            Assert.IsNotNull(purchaseInDatabase);
+            Assert.AreEqual(purchaseInDatabase.IdPurchase, purchase.IdPurchase);
+        }
+
+        [TestMethod]
+        public void UpdatePurchaseOk()
+        {
+            ObgContext context = CreateContext();
+            IPurchaseManagement purchaseManagement = new PurchaseManagement(context);
+
+            context.Purchases.Add(purchase);
+            context.SaveChanges();
+            purchase.Amount = 800;
+            purchaseManagement.UpdatePurchase(purchase);
+
+            Purchase purchaseInDatabase = context.Purchases.Where<Purchase>(p => p.IdPurchase.Equals(purchase.IdPurchase)).AsNoTracking().FirstOrDefault();
+
+            Assert.IsNotNull(purchaseInDatabase);
+            Assert.AreEqual(purchaseInDatabase.Amount, purchase.Amount);
+        }
+
+        [TestMethod]
+        public void DeletePurchaseOk()
+        {
+            ObgContext context = CreateContext();
+            IPurchaseManagement purchaseManagement = new PurchaseManagement(context);
+
+            context.Purchases.Add(purchase);
+            context.SaveChanges();
+
+            purchaseManagement.DeletePurchase(purchase);
+
+            Purchase purchaseInDatabase = context.Purchases.Where<Purchase>(p => p.IdPurchase.Equals(purchase.IdPurchase)).AsNoTracking().FirstOrDefault();
+
+            Assert.IsNull(purchaseInDatabase);
         }
 
         private ObgContext CreateContext()
@@ -50,6 +109,17 @@ namespace obg.DataAccess.Test
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
             return context;
+        }
+
+        private IPurchaseManagement CreatePurchaseManagement()
+        {
+            var context = CreateContext();
+
+            context.Purchases.Add(purchase);
+            context.SaveChanges();
+
+            IPurchaseManagement purchaseManagement = new PurchaseManagement(context);
+            return purchaseManagement;
         }
     }
 }

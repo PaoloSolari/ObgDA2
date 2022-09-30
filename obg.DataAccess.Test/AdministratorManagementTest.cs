@@ -34,7 +34,7 @@ namespace obg.DataAccess.Test
 
             administratorManagement.InsertAdministrator(administrator);
 
-            Administrator administratorInDatabase = context.Administrators.Where<Administrator>(a => a.Name == administrator.Name).AsNoTracking().FirstOrDefault();
+            Administrator administratorInDatabase = context.Administrators.Where<Administrator>(a => a.Name.Equals(administrator.Name)).AsNoTracking().FirstOrDefault();
 
             Assert.IsNotNull(administratorInDatabase);
             Assert.AreEqual(administratorInDatabase.Name, administrator.Name);
@@ -77,7 +77,7 @@ namespace obg.DataAccess.Test
             administrator.Address = "25 de Agosto";
             administratorManagement.UpdateAdministrator(administrator);
 
-            Administrator administratorInDatabase = context.Administrators.Where<Administrator>(p => p.Name == administrator.Name).AsNoTracking().FirstOrDefault();
+            Administrator administratorInDatabase = context.Administrators.Where<Administrator>(p => p.Name.Equals(administrator.Name)).AsNoTracking().FirstOrDefault();
 
             Assert.IsNotNull(administratorInDatabase);
             Assert.AreEqual(administratorInDatabase.Address, administrator.Address);
@@ -94,7 +94,7 @@ namespace obg.DataAccess.Test
 
             administratorManagement.DeleteAdministrator(administrator);
 
-            Administrator administratorInDatabase = context.Administrators.Where<Administrator>(p => p.Name == administrator.Name).AsNoTracking().FirstOrDefault();
+            Administrator administratorInDatabase = context.Administrators.Where<Administrator>(p => p.Name.Equals(administrator.Name)).AsNoTracking().FirstOrDefault();
 
             Assert.IsNull(administratorInDatabase);
         }

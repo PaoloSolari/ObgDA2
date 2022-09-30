@@ -8,5 +8,9 @@ namespace obg.DataAccess.Interface.Interfaces
     public interface ISessionManagement
     {
         void InsertSession(Session session);
+        IEnumerable<Session> GetSessions();
+        Session GetSessionById(string id);
+        void UpdateSession(Session session);
+        void DeleteSession(Session session);
     }
 }

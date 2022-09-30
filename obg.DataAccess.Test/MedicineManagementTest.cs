@@ -36,7 +36,7 @@ namespace obg.DataAccess.Test
 
             medicineManagement.InsertMedicine(medicine);
 
-            Medicine medicineInDatabase = context.Medicines.Where<Medicine>(p => p.Code == medicine.Code).AsNoTracking().FirstOrDefault();
+            Medicine medicineInDatabase = context.Medicines.Where<Medicine>(p => p.Code.Equals(medicine.Code)).AsNoTracking().FirstOrDefault();
 
             Assert.IsNotNull(medicineInDatabase);
             Assert.AreEqual(medicineInDatabase.Code, medicine.Code);
@@ -79,7 +79,7 @@ namespace obg.DataAccess.Test
             medicine.Name = "Remedio";
             medicineManagement.UpdateMedicine(medicine);
 
-            Medicine medicineInDatabase = context.Medicines.Where<Medicine>(m => m.Code == medicine.Code).AsNoTracking().FirstOrDefault();
+            Medicine medicineInDatabase = context.Medicines.Where<Medicine>(m => m.Code.Equals(medicine.Code)).AsNoTracking().FirstOrDefault();
 
             Assert.IsNotNull(medicineInDatabase);
             Assert.AreEqual(medicineInDatabase.Name, medicine.Name);
@@ -96,7 +96,7 @@ namespace obg.DataAccess.Test
 
             medicineManagement.DeleteMedicine(medicine);
 
-            Medicine medicineInDatabase = context.Medicines.Where<Medicine>(m => m.Code == medicine.Code).AsNoTracking().FirstOrDefault();
+            Medicine medicineInDatabase = context.Medicines.Where<Medicine>(m => m.Code.Equals(medicine.Code)).AsNoTracking().FirstOrDefault();
 
             Assert.IsNull(medicineInDatabase);
         }
