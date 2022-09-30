@@ -21,7 +21,7 @@ namespace obg.DataAccess.Test
         [TestInitialize]
         public void InitTest()
         {
-            owner = new Owner("Julio", 123456, "julio@gmail.com", "abccdefg.123", "Ejido", RoleUser.Owner, "29/09/2022", null);
+            owner = new Owner("Julio", 123456, "julio@gmail.com", "abccdefg.123", "18 de Julio", RoleUser.Owner, "29/09/2022", null);
         
             owners = new List<Owner>() { owner };
         }
@@ -40,6 +40,65 @@ namespace obg.DataAccess.Test
             Assert.AreEqual(ownerInDatabase.Name, owner.Name);
         }
 
+        [TestMethod]
+        public void GetOwnersOk()
+        {
+            IOwnerManagement ownerManagement = CreateOwnerManagement();
+            IEnumerable<Owner> ownersInDatabase = ownerManagement.GetOwners();
+
+            Assert.AreEqual(ownersInDatabase.ToList().Count, owners.Count);
+            Assert.AreEqual(ownersInDatabase.ToList()[0].Name, owners[0].Name);
+
+        }
+
+        [TestMethod]
+        public void GetOwnerByNameOk()
+        {
+            ObgContext context = CreateContext();
+            IOwnerManagement ownerManagement = new OwnerManagement(context);
+
+            context.Owners.Add(owner);
+            context.SaveChanges();
+
+            Owner ownerInDatabase = ownerManagement.GetOwnerByName(owner.Name);
+
+            Assert.IsNotNull(ownerInDatabase);
+            Assert.AreEqual(ownerInDatabase.Name, owner.Name);
+        }
+
+        [TestMethod]
+        public void UpdateOwnerOk()
+        {
+            ObgContext context = CreateContext();
+            IOwnerManagement ownerManagement = new OwnerManagement(context);
+
+            context.Owners.Add(owner);
+            context.SaveChanges();
+            owner.Address = "25 de Agosto";
+            ownerManagement.UpdateOwner(owner);
+
+            Owner ownerInDatabase = context.Owners.Where<Owner>(o => o.Name == owner.Name).AsNoTracking().FirstOrDefault();
+
+            Assert.IsNotNull(ownerInDatabase);
+            Assert.AreEqual(ownerInDatabase.Address, owner.Address);
+        }
+
+        [TestMethod]
+        public void DeleteOwnerOk()
+        {
+            ObgContext context = CreateContext();
+            IOwnerManagement ownerManagement = new OwnerManagement(context);
+
+            context.Owners.Add(owner);
+            context.SaveChanges();
+
+            ownerManagement.DeleteOwner(owner);
+
+            Owner ownerInDatabase = context.Owners.Where<Owner>(o => o.Name == owner.Name).AsNoTracking().FirstOrDefault();
+
+            Assert.IsNull(ownerInDatabase);
+        }
+
         private ObgContext CreateContext()
         {
             var contextOptions = new DbContextOptionsBuilder<ObgContext>()
@@ -51,5 +110,17 @@ namespace obg.DataAccess.Test
             context.Database.EnsureCreated();
             return context;
         }
+
+        private IOwnerManagement CreateOwnerManagement()
+        {
+            var context = CreateContext();
+
+            context.Owners.Add(owner);
+            context.SaveChanges();
+
+            IOwnerManagement ownerManagement = new OwnerManagement(context);
+            return ownerManagement;
+        }
+
     }
 }
