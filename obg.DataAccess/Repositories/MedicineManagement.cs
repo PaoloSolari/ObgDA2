@@ -1,7 +1,10 @@
-﻿using obg.DataAccess.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using obg.DataAccess.Context;
 using obg.DataAccess.Interface.Interfaces;
 using obg.Domain.Entities;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace obg.DataAccess.Repositories
 {
@@ -18,5 +21,29 @@ namespace obg.DataAccess.Repositories
             ObgContext.Medicines.Add(medicine);
             ObgContext.SaveChanges();
         }
+
+        public IEnumerable<Medicine> GetMedicines()
+        {
+            return ObgContext.Medicines.ToList();
+        }
+
+        public Medicine GetMedicineByCode(string code)
+        {
+            return ObgContext.Medicines.Where<Medicine>(m => m.Code == code).AsNoTracking().FirstOrDefault();
+        }
+
+        public void UpdateMedicine(Medicine medicine)
+        {
+            ObgContext.Medicines.Attach(medicine);
+            ObgContext.Entry(medicine).State = EntityState.Modified;
+            ObgContext.SaveChanges();
+        }
+
+        public void DeleteMedicine(Medicine medicine)
+        {
+            ObgContext.Medicines.Remove(medicine);
+            ObgContext.SaveChanges();
+        }
+
     }
 }

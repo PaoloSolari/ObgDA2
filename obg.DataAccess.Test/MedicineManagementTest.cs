@@ -42,6 +42,65 @@ namespace obg.DataAccess.Test
             Assert.AreEqual(medicineInDatabase.Code, medicine.Code);
         }
 
+        [TestMethod]
+        public void GetMedicinesOk()
+        {
+            IMedicineManagement medicineManagement = CreateMedicineManagement();
+            IEnumerable<Medicine> medicinesInDatabase = medicineManagement.GetMedicines();
+
+            Assert.AreEqual(medicinesInDatabase.ToList().Count, medicines.Count);
+            Assert.AreEqual(medicinesInDatabase.ToList()[0].Code, medicines[0].Code);
+
+        }
+
+        [TestMethod]
+        public void GetMedicineByCodeOk()
+        {
+            ObgContext context = CreateContext();
+            IMedicineManagement medicineManagement = new MedicineManagement(context);
+
+            context.Medicines.Add(medicine);
+            context.SaveChanges();
+
+            Medicine medicineInDatabase = medicineManagement.GetMedicineByCode(medicine.Code);
+
+            Assert.IsNotNull(medicineInDatabase);
+            Assert.AreEqual(medicineInDatabase.Code, medicine.Code);
+        }
+
+        [TestMethod]
+        public void UpdateMedicineOk()
+        {
+            ObgContext context = CreateContext();
+            IMedicineManagement medicineManagement = new MedicineManagement(context);
+
+            context.Medicines.Add(medicine);
+            context.SaveChanges();
+            medicine.Name = "Remedio";
+            medicineManagement.UpdateMedicine(medicine);
+
+            Medicine medicineInDatabase = context.Medicines.Where<Medicine>(m => m.Code == medicine.Code).AsNoTracking().FirstOrDefault();
+
+            Assert.IsNotNull(medicineInDatabase);
+            Assert.AreEqual(medicineInDatabase.Name, medicine.Name);
+        }
+
+        [TestMethod]
+        public void DeleteMedicineOk()
+        {
+            ObgContext context = CreateContext();
+            IMedicineManagement medicineManagement = new MedicineManagement(context);
+
+            context.Medicines.Add(medicine);
+            context.SaveChanges();
+
+            medicineManagement.DeleteMedicine(medicine);
+
+            Medicine medicineInDatabase = context.Medicines.Where<Medicine>(m => m.Code == medicine.Code).AsNoTracking().FirstOrDefault();
+
+            Assert.IsNull(medicineInDatabase);
+        }
+
         private ObgContext CreateContext()
         {
             var contextOptions = new DbContextOptionsBuilder<ObgContext>()
@@ -53,5 +112,17 @@ namespace obg.DataAccess.Test
             context.Database.EnsureCreated();
             return context;
         }
+
+        private IMedicineManagement CreateMedicineManagement()
+        {
+            var context = CreateContext();
+
+            context.Medicines.Add(medicine);
+            context.SaveChanges();
+
+            IMedicineManagement medicineManagement = new MedicineManagement(context);
+            return medicineManagement;
+        }
+
     }
 }
