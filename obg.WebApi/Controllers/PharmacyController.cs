@@ -20,17 +20,16 @@ namespace obg.WebApi.Controllers
             this.pharmacyService = pharmacyService;
         }
 
-        // POST api/<PharmacyController>
         [HttpPost]
         public IActionResult PostPharmacy([FromBody] Pharmacy pharmacy)
         {
             try
             {
-                return Ok(pharmacyService.InsertPharmacy(pharmacy));
+                return StatusCode(200, "Nombre de la farmacia ingresada: " + pharmacyService.InsertPharmacy(pharmacy));
             }
             catch (PharmacyException exception)
             {
-                return BadRequest(exception.Message);
+                return StatusCode(400, exception.Message);
             }
             catch (Exception)
             {

@@ -23,15 +23,15 @@ namespace obg.BusinessLogic.Logics
         {
         }
 
-        public Pharmacy InsertPharmacy(Pharmacy pharmacy)
+        public string InsertPharmacy(Pharmacy pharmacy)
         {
             if (IsPharmacyValid(pharmacy))
             {
                 _pharmacyManagement.InsertPharmacy(pharmacy);
             }
-            return pharmacy;
+            return pharmacy.Name;
         }
-
+        
         private bool IsPharmacyValid(Pharmacy pharmacy)
         {
             if (pharmacy == null)

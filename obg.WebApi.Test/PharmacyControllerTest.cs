@@ -8,6 +8,7 @@ using obg.WebApi.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace obg.WebApi.Test
@@ -25,7 +26,7 @@ namespace obg.WebApi.Test
         {
             mock = new Mock<IPharmacyService>(MockBehavior.Strict);
             api = new PharmacyController(mock.Object);
-            validPharmacy = new Pharmacy("San Roque", "San Roque", null);
+            validPharmacy = new Pharmacy("FarmaShop", "San Roque", null);
             pharmacies = new List<Pharmacy>() { validPharmacy };
         }
 
@@ -56,15 +57,16 @@ namespace obg.WebApi.Test
         [TestMethod]
         public void PostPharmacyOk()
         {
-            mock.Setup(x => x.InsertPharmacy(It.IsAny<Pharmacy>())).Returns(validPharmacy);
+            mock.Setup(x => x.InsertPharmacy(It.IsAny<Pharmacy>())).Returns(validPharmacy.Name);
+            
             var result = api.PostPharmacy(It.IsAny<Pharmacy>());
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
-            var body = objectResult.Value as Pharmacy;
+            var body = objectResult.Value;
 
             mock.VerifyAll();
             Assert.AreEqual(200, statusCode);
-            Assert.IsTrue(validPharmacy.Equals(body));
+            Assert.IsTrue(("Nombre de la farmacia ingresada: " + (validPharmacy.Name)).Equals(body));
         }
     }
 }

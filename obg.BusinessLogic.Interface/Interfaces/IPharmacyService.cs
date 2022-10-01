@@ -7,6 +7,6 @@ namespace obg.BusinessLogic.Interface.Interfaces
 {
     public interface IPharmacyService
     {
-        Pharmacy InsertPharmacy(Pharmacy pharmacy);
+        string InsertPharmacy(Pharmacy pharmacy);
     }
 }
