@@ -12,9 +12,6 @@ namespace obg.BusinessLogic.Logics
 {
     public class PharmacyService: IPharmacyService
     {
-        protected List<Pharmacy> fakeDB = new List<Pharmacy>();
-        Pharmacy validPharmacy = new Pharmacy("San Roque", "San Roque", null);
-
         private readonly IPharmacyManagement _pharmacyManagement;
 
         public PharmacyService(IPharmacyManagement pharmacymanagement)
@@ -24,16 +21,13 @@ namespace obg.BusinessLogic.Logics
 
         public PharmacyService()
         {
-            //fakeDB.Add(validPharmacy);
-
         }
 
         public Pharmacy InsertPharmacy(Pharmacy pharmacy)
         {
             if (IsPharmacyValid(pharmacy))
             {
-                // Se agrega la Pharmacy a la DB: _pharmacyManagement.InsertPharmacy(pharmacy);
-                FakeDB.Pharmacies.Add(pharmacy);
+                _pharmacyManagement.InsertPharmacy(pharmacy);
             }
             return pharmacy;
         }
@@ -61,14 +55,7 @@ namespace obg.BusinessLogic.Logics
 
         private bool IsNameRegistered(string name)
         {
-            foreach (Pharmacy pharmacy in FakeDB.Pharmacies)
-            {
-                if (name.Equals(pharmacy.Name))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return _pharmacyManagement.IsNameRegistered(name);
         }
 
     }

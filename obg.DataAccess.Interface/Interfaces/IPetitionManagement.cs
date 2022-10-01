@@ -12,5 +12,7 @@ namespace obg.DataAccess.Interface.Interfaces
         Petition GetPetitionById(string id);
         void UpdatePetition(Petition petition);
         void DeletePetition(Petition petition);
+        bool IsIdPetitionRegistered(string id); 
+        bool IsMedicineCodeOk(string code); 
     }
 }

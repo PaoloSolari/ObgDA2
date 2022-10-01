@@ -46,5 +46,14 @@ namespace obg.DataAccess.Repositories
             ObgContext.SaveChanges();
         }
 
+        public bool IsNameRegistered(string name)
+        {
+            Pharmacy pharmacy = ObgContext.Pharmacies.Where<Pharmacy>(p => p.Name == name).AsNoTracking().FirstOrDefault();
+            if(pharmacy != null)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

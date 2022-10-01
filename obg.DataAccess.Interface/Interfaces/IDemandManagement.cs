@@ -12,5 +12,6 @@ namespace obg.DataAccess.Interface.Interfaces
         Demand GetDemandById(string id);
         void UpdateDemand(Demand demand);
         void DeleteDemand(Demand demand);
+        bool DemandExists(string id);
     }
 }

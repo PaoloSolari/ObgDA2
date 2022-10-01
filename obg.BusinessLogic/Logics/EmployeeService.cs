@@ -20,11 +20,10 @@ namespace obg.BusinessLogic.Logics
 
         public Employee InsertEmployee(Employee employee)
         {
-            if (IsUserValid(employee) && HasAPharmacy(employee) && IsAEmployee(employee))
+            if (IsUserValid(employee) && HasAPharmacy(employee) && IsAnEmployee(employee))
             {
                 // Se agrega el Employee a la DB: _employeeManagement.InsertEmployee(employee);
-                FakeDB.Employees.Add(employee);
-                FakeDB.Users.Add(employee);
+                _employeeManagement.InsertEmployee(employee);
             }
             return employee;
         }
@@ -38,7 +37,7 @@ namespace obg.BusinessLogic.Logics
             return true; ;
         }
 
-        private bool IsAEmployee(Employee employee)
+        private bool IsAnEmployee(Employee employee)
         {
             if(employee.Role != RoleUser.Employee)
             {
@@ -49,31 +48,32 @@ namespace obg.BusinessLogic.Logics
 
         public IEnumerable<User> GetEmployees()
         {
-            return FakeDB.Employees;
+            return _employeeManagement.GetEmployees();
         }
 
         public Employee UpdateEmployee(Employee employeeToUpdate)
         {
-            Employee employee = GetEmployeeByName(employeeToUpdate.Name);
-            return employee;
+            if (IsUserValid(employeeToUpdate) && HasAPharmacy(employeeToUpdate) && IsAnEmployee(employeeToUpdate))
+            {
+                Employee employee = _employeeManagement.GetEmployeeByName(employeeToUpdate.Name);
+                if (employee == null)
+                {
+                    throw new NotFoundException("El empleado no existe.");
+                }
+                _employeeManagement.UpdateEmployee(employeeToUpdate);
+            }
+            return employeeToUpdate;
         }
 
         public Employee GetEmployeeByName(string name)
         {
 
-            Employee auxEmployee = null;
-            foreach (Employee employee in FakeDB.Employees)
+            Employee employee = _employeeManagement.GetEmployeeByName(name);
+            if (employee == null)
             {
-                if (employee.Name.Equals(name))
-                {
-                    auxEmployee = employee;
-                }
+                throw new NotFoundException("El empleado no existe");
             }
-            if (auxEmployee == null)
-            {
-                throw new UserException("El administrador no existe.");
-            }
-            return auxEmployee;
+            return employee;
         }
 
     }

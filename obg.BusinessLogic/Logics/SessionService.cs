@@ -21,7 +21,7 @@ namespace obg.BusinessLogic.Logics
             if (IsSessionValid(session))
             {
                 // Se agrega la Session a la DB: _sessionManagement.InsertSession(session);
-                FakeDB.Sessions.Add(session);
+                _sessionManagement.InsertSession(session);
             }
         }
 
@@ -60,40 +60,18 @@ namespace obg.BusinessLogic.Logics
 
         public bool IsIdSessionRegistered(string idSession)
         {
-            foreach (Session session in FakeDB.Sessions)
-            {
-                if (session.IdSession.Equals(idSession))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return _sessionManagement.IsIdSessionRegistered(idSession);
         }
 
         private bool IsUserNameOk(string userName)
         {
             // Se chequea que el usuario exista en la DB.
-            foreach (User user in FakeDB.Users)
-            {
-                if (userName.Equals(user.Name))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return _sessionManagement.IsUserNameOk(userName);
         }
 
         private bool IsNameLogged(Session session)
         {
-            foreach (Session sessionDB in FakeDB.Sessions)
-            {
-                if (session.Token.Equals(sessionDB.Token))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return _sessionManagement.IsNameLogged(session);
         }
-
     }
 }

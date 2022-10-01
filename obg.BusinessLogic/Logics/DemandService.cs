@@ -7,16 +7,12 @@ using System;
 using System.Collections.Generic;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
+using System.Xml.Linq;
 
 namespace obg.BusinessLogic.Logics
 {
     public class DemandService : IDemandService
     {
-        protected List<Demand> fakeDB = new List<Demand>();
-        Demand validDemand;
-        Demand validDemand2;
-        private Petition validPetition1;
-
         private readonly IDemandManagement _demandManagement;
 
         public DemandService(IDemandManagement demandManagement)
@@ -26,20 +22,12 @@ namespace obg.BusinessLogic.Logics
 
         public DemandService()
         {
-            //validDemand = new Demand(2, DemandStatus.InProgress);
-            //validDemand2 = new Demand(1, DemandStatus.Rejected);
-            //validPetition1 = new Petition("aaaaa", 5);
-            //validDemand.Petitions.Add(validPetition1);
-            //validDemand2.Petitions.Add(validPetition1);
-            //fakeDB.Add(validDemand);
-            //fakeDB.Add(validDemand2);
         }
         public Demand InsertDemand(Demand demand)
         {
             if (IsDemandValid(demand))
             {
-                // Se agrega la Demand a la DB: _demandManagement.InsertDemand(demand);
-                FakeDB.Demands.Add(demand);
+                _demandManagement.InsertDemand(demand);
             }
             return demand;
         }
@@ -67,55 +55,36 @@ namespace obg.BusinessLogic.Logics
 
         public bool IsIdDemandRegistered(string idDemand)
         {
-            foreach (Demand demand in FakeDB.Demands)
-            {
-                if (demand.IdDemand.Equals(idDemand))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return _demandManagement.DemandExists(idDemand);
         }
 
         public IEnumerable<Demand> GetDemands()
         {
-            List<Demand> demandsInProgress = new List<Demand>();
-            foreach(Demand demand in FakeDB.Demands)
-            {
-                if(demand.Status.Equals(DemandStatus.InProgress))
-                {
-                    demandsInProgress.Add(demand);
-                }
-            }
-            if(demandsInProgress.Count == 0)
-            {
-                throw new DemandException("No hay solicitudes disponibles");
-            }
-            return demandsInProgress;
+            return _demandManagement.GetDemands();
         }
 
         public Demand UpdateDemand(Demand demandToUpdate)
         {
-            Demand demand = this.GetDemandById(demandToUpdate.IdDemand);
-            return demand;
+            if (IsDemandValid(demandToUpdate)) 
+            {
+                Demand demand = _demandManagement.GetDemandById(demandToUpdate.IdDemand);
+                if (demand == null)
+                {
+                    throw new NotFoundException("La solicitud no existe.");
+                }
+                _demandManagement.UpdateDemand(demandToUpdate);
+            }
+            return demandToUpdate;
         }
 
         public Demand GetDemandById(string id)
         {
-
-            Demand auxDemand = null;
-            foreach (Demand demand in FakeDB.Demands)
+            Demand demand = _demandManagement.GetDemandById(id);
+            if (demand == null)
             {
-                if (demand.IdDemand.Equals(id))
-                {
-                    auxDemand = demand;
-                }
+                throw new NotFoundException("La solicitud no existe.");
             }
-            if (auxDemand == null)
-            {
-                throw new DemandException("La solicitud no existe.");
-            }
-            return auxDemand;
+            return demand;
         }
     }
 }

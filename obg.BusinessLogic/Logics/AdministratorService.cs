@@ -23,22 +23,18 @@ namespace obg.BusinessLogic.Logics
 
         public AdministratorService()
         {
-            //validAdministrator = new Administrator("Paolo", 123456, "ps@gmail.com", "password123.", "addressPS", RoleUser.Administrator, "12/09/2022", null);
-            //fakeDB.Add(validAdministrator);
         }
 
         public Administrator InsertAdministrator(Administrator administrator)
         {
-            if (IsUserValid(administrator) && IsAAdministrator(administrator))
+            if (IsUserValid(administrator) && IsAnAdministrator(administrator))
             {
-                // Se agrega el Administrator a la DB: _administratorManagement.InsertEmployee(employee);
-                FakeDB.Administrators.Add(administrator);
-                FakeDB.Users.Add(administrator);
+                _administratorManagement.InsertAdministrator(administrator);
             }
             return administrator;
         }
 
-        private bool IsAAdministrator(Administrator administrator)
+        private bool IsAnAdministrator(Administrator administrator)
         {
             if (administrator.Role != RoleUser.Administrator)
             {
@@ -49,35 +45,32 @@ namespace obg.BusinessLogic.Logics
 
         public IEnumerable<User> GetAdministrators()
         {
-            //return _pharmacyManagement.GetPharmacies();
-
-            return FakeDB.Administrators;
+            return _administratorManagement.GetAdministrators();
         }
 
         public Administrator UpdateAdministrator(Administrator administratorToUpdate)
         {
-
-            Administrator administrator = GetAdministratorByName(administratorToUpdate.Name);
-            return administrator;
+            if (IsUserValid(administratorToUpdate) && IsAnAdministrator(administratorToUpdate))
+            {
+                Administrator administrator = _administratorManagement.GetAdministratorByName(administratorToUpdate.Name);
+                if (administrator == null)
+                {
+                    throw new NotFoundException("El administrador no existe.");
+                }
+                _administratorManagement.UpdateAdministrator(administratorToUpdate);
+            }
+            return administratorToUpdate;
         }
 
 
         public Administrator GetAdministratorByName(string name)
         {
-
-            Administrator auxAdministrator = null;
-            foreach (Administrator administrator in FakeDB.Administrators)
+            Administrator administrator = _administratorManagement.GetAdministratorByName(name);
+            if (administrator == null)
             {
-                if (administrator.Name.Equals(name))
-                {
-                    auxAdministrator = administrator;
-                }
+                throw new NotFoundException("El administrador no existe");
             }
-            if (auxAdministrator == null)
-            {
-                throw new UserException("El administrador no existe.");
-            }
-            return auxAdministrator;
+            return administrator;
         }
 
     }

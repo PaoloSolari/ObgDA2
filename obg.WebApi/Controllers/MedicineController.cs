@@ -37,7 +37,7 @@ namespace obg.WebApi.Controllers
         {
             try
             {
-                return Ok(medicineService.GetMedicineByMedicineName(medicineName));
+                return Ok(medicineService.GetMedicinesByName(medicineName));
             }
             catch (MedicineException exception)
             {

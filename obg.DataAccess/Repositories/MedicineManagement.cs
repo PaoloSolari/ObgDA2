@@ -45,5 +45,19 @@ namespace obg.DataAccess.Repositories
             ObgContext.SaveChanges();
         }
 
+        public bool IsCodeRegistered(string code)
+        {
+            Medicine medicine = ObgContext.Medicines.Where<Medicine>(m => m.Code.Equals(code)).AsNoTracking().FirstOrDefault();
+            if(medicine != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public IEnumerable<Medicine> GetMedicinesByName(string name)
+        {
+            return ObgContext.Medicines.ToList().Where<Medicine>(m => m.Code.Equals(name));
+        }
     }
 }

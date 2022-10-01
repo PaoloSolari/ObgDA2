@@ -45,5 +45,44 @@ namespace obg.DataAccess.Repositories
             ObgContext.SaveChanges();
         }
 
+        public bool IsIdInvitationRegistered(string idInvitation)
+        {
+            Invitation invitation = ObgContext.Invitations.Where<Invitation>(i => i.IdInvitation.Equals(idInvitation)).AsNoTracking().FirstOrDefault();
+            if(invitation != null)
+            {
+                return true;
+            } 
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool IsNameRegistered(string name)
+        {
+            Invitation invitation = ObgContext.Invitations.Where<Invitation>(i => i.UserName.Equals(name)).AsNoTracking().FirstOrDefault();
+            if(invitation != null)
+            {
+                return true;
+            } 
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool IsCodeRegistered(int code)
+        {
+            Invitation invitation = ObgContext.Invitations.Where<Invitation>(i => i.UserCode == code).AsNoTracking().FirstOrDefault();
+            if (invitation != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
     }
 }

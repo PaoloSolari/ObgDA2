@@ -11,6 +11,6 @@ namespace obg.BusinessLogic.Interface.Interfaces
         Medicine InsertMedicine(Medicine medicine);
         Medicine GetMedicineByCode(string code);
         void DeleteMedicine(string code);
-        IEnumerable<Medicine> GetMedicineByMedicineName(string medicineName);
+        IEnumerable<Medicine> GetMedicinesByName(string medicineName);
     }
 }

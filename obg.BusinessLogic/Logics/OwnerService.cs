@@ -22,9 +22,7 @@ namespace obg.BusinessLogic.Logics
         {
             if (IsUserValid(owner) && HasAPharmacy(owner) && IsAOwner(owner))
             {
-                // Se agrega el Owner a la DB: _ownerManagement.InsertOwner(owner);
-                FakeDB.Owners.Add(owner);
-                FakeDB.Users.Add(owner);
+                _ownerManagement.InsertOwner(owner);
             }
             return owner;
         }
@@ -49,34 +47,27 @@ namespace obg.BusinessLogic.Logics
 
         public IEnumerable<User> GetOwners()
         {
-            //return _pharmacyManagement.GetPharmacies();
-
-            return FakeDB.Owners;
+            return _ownerManagement.GetOwners();
         }
 
         public Owner UpdateOwner(Owner ownerToUpdate)
         {
-            Owner Owner = GetOwnerByName(ownerToUpdate.Name);
-            return Owner;
+            if (IsUserValid(ownerToUpdate) && HasAPharmacy(ownerToUpdate) && IsAOwner(ownerToUpdate))
+            {
+                Owner owner = _ownerManagement.GetOwnerByName(ownerToUpdate.Name);
+                if (owner == null)
+                {
+                    throw new NotFoundException("El empleado no existe.");
+                }
+                _ownerManagement.UpdateOwner(ownerToUpdate);
+            }
+            return ownerToUpdate;
         }
 
 
         public Owner GetOwnerByName(string name)
         {
-
-            Owner auxOwner = null;
-            foreach (Owner Owner in FakeDB.Owners)
-            {
-                if (Owner.Name.Equals(name))
-                {
-                    auxOwner = Owner;
-                }
-            }
-            if (auxOwner == null)
-            {
-                throw new UserException("El administrador no existe.");
-            }
-            return auxOwner;
+            return _ownerManagement.GetOwnerByName(name);
         }
     }
 }
