@@ -45,5 +45,35 @@ namespace obg.DataAccess.Repositories
             ObgContext.Sessions.Remove(session);
             ObgContext.SaveChanges();
         }
+
+        public bool IsIdSessionRegistered(string idSession)
+        {
+            Session session = ObgContext.Sessions.Where<Session>(s => s.IdSession.Equals(idSession)).AsNoTracking().FirstOrDefault();
+            if(session != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool IsUserNameOk(string userName)
+        {
+            Session session = ObgContext.Sessions.Where<Session>(s => s.UserName.Equals(userName)).AsNoTracking().FirstOrDefault();
+            if(session != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool IsNameLogged(Session session)
+        {
+            Session sessionDB = ObgContext.Sessions.Where<Session>(s => s.Token.Equals(session.Token)).AsNoTracking().FirstOrDefault();
+            if(sessionDB != null)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

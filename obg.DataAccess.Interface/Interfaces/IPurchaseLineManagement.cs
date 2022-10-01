@@ -13,5 +13,6 @@ namespace obg.DataAccess.Interface.Interfaces
         void UpdatePurchaseLine(PurchaseLine purchaseLine);
         void DeletePurchaseLine(PurchaseLine purchaseLine);
         bool IsIdPurchaseLineRegistered(string idPurchaseLine);
+        bool IsMedicineCodeOk(string medicineCode);
     }
 }

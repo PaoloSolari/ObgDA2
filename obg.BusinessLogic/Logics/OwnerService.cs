@@ -59,7 +59,7 @@ namespace obg.BusinessLogic.Logics
                 {
                     throw new NotFoundException("El empleado no existe.");
                 }
-                _ownerManagement.UpdateEmployee(ownerToUpdate);
+                _ownerManagement.UpdateOwner(ownerToUpdate);
             }
             return ownerToUpdate;
         }

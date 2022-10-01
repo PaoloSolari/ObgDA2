@@ -56,6 +56,14 @@ namespace obg.DataAccess.Repositories
             return false;
         }
 
-        public bool IsMedicineCodeOk
+        public bool IsMedicineCodeOk(string medicineCode)
+        {
+            Medicine medicine = ObgContext.Medicines.Where<Medicine>(m => m.Code.Equals(medicineCode)).AsNoTracking().FirstOrDefault();
+            if (medicine != null)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

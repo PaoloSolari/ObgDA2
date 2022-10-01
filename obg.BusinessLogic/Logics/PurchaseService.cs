@@ -23,8 +23,7 @@ namespace obg.BusinessLogic.Logics
         {
             if (IsPurchaseValid(purchase))// && !IsCodeRegistered(medicine.Name))
             {
-                // Se agrega la Purchase a la DB: _purchaseManagement.InsertPurchase(purchase);
-                FakeDB.Purchases.Add(purchase);
+                _purchaseManagement.InsertPurchase(purchase);
             }
             return purchase;
         }
@@ -64,14 +63,7 @@ namespace obg.BusinessLogic.Logics
 
         public bool IsIdPurchaseRegistered(string idPurchase)
         {
-            foreach (Purchase purchase in FakeDB.Purchases)
-            {
-                if (purchase.IdPurchase.Equals(idPurchase))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return _purchaseManagement.IsIdPurchaseRegistered(idPurchase);
         }
 
         // Font: https://stackoverflow.com/questions/5342375/regex-email-validation
@@ -88,6 +80,5 @@ namespace obg.BusinessLogic.Logics
                 return false;
             }
         }
-
     }
 }

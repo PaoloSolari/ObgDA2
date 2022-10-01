@@ -44,5 +44,15 @@ namespace obg.DataAccess.Repositories
             ObgContext.Purchases.Remove(purchase);
             ObgContext.SaveChanges();
         }
+
+        public bool IsIdPurchaseRegistered(string idPurchase)
+        {
+            Purchase purchase = ObgContext.Purchases.Where<Purchase>(p => p.IdPurchase.Equals(idPurchase)).AsNoTracking().FirstOrDefault();
+            if(purchase != null)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

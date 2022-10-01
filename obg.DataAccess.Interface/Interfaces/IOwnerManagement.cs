@@ -12,6 +12,5 @@ namespace obg.DataAccess.Interface.Interfaces
         Owner GetOwnerByName(string name);
         void UpdateOwner(Owner owner);
         void DeleteOwner(Owner owner);
-        void UpdateEmployee(Owner ownerToUpdate);
     }
 }

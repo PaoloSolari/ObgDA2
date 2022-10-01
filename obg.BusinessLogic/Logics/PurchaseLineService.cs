@@ -62,14 +62,7 @@ namespace obg.BusinessLogic.Logics
         private bool IsMedicineCodeOk(string medicineCode)
         {
             // Se chequea que la medicina de la compra exista en la DB.
-            foreach (Medicine medicine in FakeDB.Medicines)
-            {
-                if (medicine.Code.Equals(medicineCode))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return _purchaseLineManagement.IsMedicineCodeOk(medicineCode);
         }
 
     }

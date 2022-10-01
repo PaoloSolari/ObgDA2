@@ -12,5 +12,8 @@ namespace obg.DataAccess.Interface.Interfaces
         Session GetSessionById(string id);
         void UpdateSession(Session session);
         void DeleteSession(Session session);
+        bool IsIdSessionRegistered(string idSession);
+        bool IsUserNameOk(string userName);
+        bool IsNameLogged(Session session);
     }
 }
