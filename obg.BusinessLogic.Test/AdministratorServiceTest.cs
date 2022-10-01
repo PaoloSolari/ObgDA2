@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using obg.BusinessLogic.Logics;
 using obg.Exceptions;
 using obg.BusinessLogic.Interface.Interfaces;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace obg.BusinessLogic.Test
 {
@@ -31,11 +32,13 @@ namespace obg.BusinessLogic.Test
             validAdministrator1 = new Administrator("Paolo", 000001, "ps@gmail.com", "password123.", "addressPS", RoleUser.Administrator, "12/09/2022");
             validAdministrator2 = new Administrator("Gabriel", 000002, "gj@gmail.com", "password123.", "addressGJ", RoleUser.Administrator, "12/09/2022");
             nullAdministrator = null;
+
         }
 
         [TestMethod]
         public void InsertAdministratorOK()
         {
+            mock.Setup(x => x.InsertAdministrator(validAdministrator1));
             service.InsertAdministrator(validAdministrator1);
             mock.VerifyAll();
         }
@@ -67,8 +70,11 @@ namespace obg.BusinessLogic.Test
         [TestMethod]
         public void InsertAdministratorWrong_RepeatedName()
         {
+            mock.Setup(x=> x.InsertAdministrator(validAdministrator1));
             service.InsertAdministrator(validAdministrator1);
+
             validAdministrator2.Name = "Paolo";
+            mock.Setup(x => x.InsertAdministrator(validAdministrator2));
             service.InsertAdministrator(validAdministrator2);
         }
 

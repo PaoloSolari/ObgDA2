@@ -35,7 +35,9 @@ namespace obg.WebApi
             services.AddControllers();
             services.AddScoped<IPharmacyService, PharmacyService>();
             services.AddScoped<IPharmacyManagement, PharmacyManagement>();
-            services.AddScoped<IAdministratorService, AdministratorService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserManagement, UserManagement>();
+            //services.AddScoped<IAdministratorService, AdministratorService>();
             services.AddScoped<IAdministratorManagement, AdministratorManagement>();
             services.AddScoped<IOwnerService, OwnerService>();
             services.AddScoped<IOwnerManagement, OwnerManagement>();
