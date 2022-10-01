@@ -24,11 +24,11 @@ namespace obg.WebApi.Controllers
         {
             try
             {
-                return Ok(invitationService.InsertInvitation(invitation));
+                return StatusCode(200, "Código de invitación: " + invitationService.InsertInvitation(invitation));
             }
             catch (InvitationException exception)
             {
-                return BadRequest(exception.Message);
+                return StatusCode(400, exception.Message);
             }
             catch (Exception)
             {

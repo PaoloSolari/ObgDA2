@@ -47,7 +47,7 @@ namespace obg.WebApi.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(500, "Algo salió mal.");
+                return StatusCode(500, "Error interno.");
             }
         }
 

@@ -67,6 +67,7 @@ namespace obg.BusinessLogic.Test
         [TestMethod]
         public void InsertAdministratorWrong_RepeatedName()
         {
+            mock.Setup(x => x.InsertAdministrator(validAdministrator1));
             service.InsertAdministrator(validAdministrator1);
             validAdministrator2.Name = "Paolo";
             service.InsertAdministrator(validAdministrator2);

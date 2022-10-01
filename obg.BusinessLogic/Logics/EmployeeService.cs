@@ -18,14 +18,14 @@ namespace obg.BusinessLogic.Logics
             _employeeManagement = employeeManagement;
         }
 
-        public Employee InsertEmployee(Employee employee)
+        public string InsertEmployee(Employee employee)
         {
             if (IsUserValid(employee) && HasAPharmacy(employee) && IsAnEmployee(employee))
             {
                 // Se agrega el Employee a la DB: _employeeManagement.InsertEmployee(employee);
                 _employeeManagement.InsertEmployee(employee);
             }
-            return employee;
+            return employee.Name;
         }
 
         private bool HasAPharmacy(Employee employee)
@@ -51,7 +51,7 @@ namespace obg.BusinessLogic.Logics
             return _employeeManagement.GetEmployees();
         }
 
-        public Employee UpdateEmployee(Employee employeeToUpdate)
+        public string UpdateEmployee(Employee employeeToUpdate)
         {
             if (IsUserValid(employeeToUpdate) && HasAPharmacy(employeeToUpdate) && IsAnEmployee(employeeToUpdate))
             {
@@ -62,7 +62,7 @@ namespace obg.BusinessLogic.Logics
                 }
                 _employeeManagement.UpdateEmployee(employeeToUpdate);
             }
-            return employeeToUpdate;
+            return employeeToUpdate.Name;
         }
 
         public Employee GetEmployeeByName(string name)

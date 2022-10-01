@@ -23,13 +23,13 @@ namespace obg.BusinessLogic.Logics
         public DemandService()
         {
         }
-        public Demand InsertDemand(Demand demand)
+        public string InsertDemand(Demand demand)
         {
             if (IsDemandValid(demand))
             {
                 _demandManagement.InsertDemand(demand);
             }
-            return demand;
+            return demand.IdDemand;
         }
 
         private bool IsDemandValid(Demand demand)
@@ -60,21 +60,26 @@ namespace obg.BusinessLogic.Logics
 
         public IEnumerable<Demand> GetDemands()
         {
+            IEnumerable<Demand> demands = _demandManagement.GetDemands();
+            if(demands == null)
+            {
+                throw new NotFoundException("No hay solicitudes de reposición de stock.");
+            }
             return _demandManagement.GetDemands();
         }
 
-        public Demand UpdateDemand(Demand demandToUpdate)
+        public string UpdateDemand(Demand demandToUpdate)
         {
             if (IsDemandValid(demandToUpdate)) 
             {
                 Demand demand = _demandManagement.GetDemandById(demandToUpdate.IdDemand);
                 if (demand == null)
                 {
-                    throw new NotFoundException("La solicitud no existe.");
+                    throw new NotFoundException("No existe la solicitud de reposición de stock");
                 }
                 _demandManagement.UpdateDemand(demandToUpdate);
             }
-            return demandToUpdate;
+            return demandToUpdate.IdDemand;
         }
 
         public Demand GetDemandById(string id)

@@ -8,7 +8,7 @@ namespace obg.BusinessLogic.Interface.Interfaces
     public interface IDemandService
     {
         IEnumerable<Demand> GetDemands();
-        Demand InsertDemand(Demand demand);
-        Demand UpdateDemand(Demand demand);
+        string InsertDemand(Demand demand);
+        string UpdateDemand(Demand demand);
     }
 }

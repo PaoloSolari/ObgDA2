@@ -19,13 +19,13 @@ namespace obg.BusinessLogic.Logics
             _invitationManagement = invitationManagement;
         }
 
-        public Invitation InsertInvitation(Invitation invitation)
+        public int InsertInvitation(Invitation invitation)
         {
             if (IsInvitationValid(invitation))
             {
                 _invitationManagement.InsertInvitation(invitation);
             }
-            return invitation;
+            return invitation.UserCode;
         }
 
         private bool IsInvitationValid(Invitation invitation)

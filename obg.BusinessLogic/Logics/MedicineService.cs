@@ -26,13 +26,13 @@ namespace obg.BusinessLogic.Logics
         {
         }
 
-        public Medicine InsertMedicine(Medicine medicine)
+        public string InsertMedicine(Medicine medicine)
         {
             if (IsMedicineValid(medicine))// && !IsCodeRegistered(medicine.Name))
             {
                 _medicineManagement.InsertMedicine(medicine);
             }
-            return medicine;
+            return medicine.Code;
         }
 
         public bool IsMedicineValid(Medicine medicine)
@@ -88,11 +88,21 @@ namespace obg.BusinessLogic.Logics
 
         public void DeleteMedicine(string code)
         {
-            _medicineManagement.DeleteMedicine(GetMedicineByCode(code));
+            Medicine medicine = GetMedicineByCode(code);
+            if(medicine == null)
+            {
+                throw new NotFoundException();
+            }
+            _medicineManagement.DeleteMedicine(medicine);
         }
 
         public IEnumerable<Medicine> GetMedicinesByName(string medicineName)
         {
+            IEnumerable<Medicine> medicines = _medicineManagement.GetMedicinesByName(medicineName);
+            if(medicines == null)
+            {
+                throw new NotFoundException();
+            }
             return _medicineManagement.GetMedicinesByName(medicineName);
         }
     }

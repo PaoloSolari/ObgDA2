@@ -38,7 +38,7 @@ namespace obg.WebApi.Test
         [TestMethod]
         public void PostPurchaseBadRequest()
         {
-            mock.Setup(x => x.InsertPurchase(It.IsAny<Purchase>())).Throws(new UserException());
+            mock.Setup(x => x.InsertPurchase(It.IsAny<Purchase>())).Throws(new PurchaseException());
             var result = api.PostPurchase(It.IsAny<Purchase>());
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
@@ -62,15 +62,27 @@ namespace obg.WebApi.Test
         [TestMethod]
         public void PostPurchaseOk()
         {
-            mock.Setup(x => x.InsertPurchase(It.IsAny<Purchase>())).Returns(validPurchase);
+            mock.Setup(x => x.InsertPurchase(It.IsAny<Purchase>())).Returns(validPurchase.IdPurchase);
             var result = api.PostPurchase(It.IsAny<Purchase>());
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
-            var body = objectResult.Value as Purchase;
+            var body = objectResult.Value;
 
             mock.VerifyAll();
             Assert.AreEqual(200, statusCode);
-            Assert.IsTrue(validPurchase.Equals(body));
+            Assert.IsTrue(("Compra " + validPurchase.IdPurchase + " exitosa.").Equals(body));
+        }
+
+        [TestMethod]
+        public void PostPurchaseMedicineNotFound()
+        {
+            mock.Setup(x => x.InsertPurchase(It.IsAny<Purchase>())).Throws(new NotFoundException());
+            var result = api.PostPurchase(It.IsAny<Purchase>());
+            var objectResult = result as ObjectResult;
+            var statusCode = objectResult.StatusCode;
+
+            mock.VerifyAll();
+            Assert.AreEqual(404, statusCode);
         }
     }
 }

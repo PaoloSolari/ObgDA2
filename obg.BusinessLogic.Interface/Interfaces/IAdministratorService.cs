@@ -8,7 +8,7 @@ namespace obg.BusinessLogic.Interface.Interfaces
     public interface IAdministratorService
     {
         IEnumerable<User> GetAdministrators();
-        Administrator InsertAdministrator(Administrator administrator);
-        Administrator UpdateAdministrator(Administrator administrator);
+        string InsertAdministrator(Administrator administrator);
+        string UpdateAdministrator(Administrator administrator);
     }
 }

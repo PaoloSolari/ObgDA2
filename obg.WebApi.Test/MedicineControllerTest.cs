@@ -85,15 +85,15 @@ namespace obg.WebApi.Test
         [TestMethod]
         public void PostMedicineOk()
         {
-            mock.Setup(x => x.InsertMedicine(It.IsAny<Medicine>())).Returns(validMedicine);
+            mock.Setup(x => x.InsertMedicine(It.IsAny<Medicine>())).Returns(validMedicine.Code);
             var result = api.PostMedicine(It.IsAny<Medicine>());
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
-            var body = objectResult.Value as Medicine;
+            var body = objectResult.Value;
 
             mock.VerifyAll();
             Assert.AreEqual(200, statusCode);
-            Assert.IsTrue(validMedicine.Equals(body));
+            Assert.IsTrue(("Código del medicamento: " + validMedicine.Code).Equals(body));
         }
     }
 }

@@ -7,6 +7,6 @@ namespace obg.BusinessLogic.Interface.Interfaces
 {
     public interface IPurchaseService
     {
-        Purchase InsertPurchase(Purchase purchase);
+        string InsertPurchase(Purchase purchase);
     }
 }

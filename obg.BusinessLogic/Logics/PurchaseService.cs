@@ -19,13 +19,13 @@ namespace obg.BusinessLogic.Logics
             _purchaseManagement = purchaseManagement;
         }
 
-        public Purchase InsertPurchase(Purchase purchase)
+        public string InsertPurchase(Purchase purchase)
         {
             if (IsPurchaseValid(purchase))// && !IsCodeRegistered(medicine.Name))
             {
                 _purchaseManagement.InsertPurchase(purchase);
             }
-            return purchase;
+            return purchase.IdPurchase;
         }
 
         private bool IsPurchaseValid(Purchase purchase)

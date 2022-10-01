@@ -62,6 +62,10 @@ namespace obg.BusinessLogic.Logics
         private bool IsMedicineCodeOk(string medicineCode)
         {
             // Se chequea que la medicina de la compra exista en la DB.
+            if (!_purchaseLineManagement.IsMedicineCodeOk(medicineCode))
+            {
+                throw new NotFoundException();
+            }
             return _purchaseLineManagement.IsMedicineCodeOk(medicineCode);
         }
 

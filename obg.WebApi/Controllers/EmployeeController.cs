@@ -40,11 +40,11 @@ namespace obg.WebApi.Controllers
             try
             {
                 
-                return Ok(employeeService.InsertEmployee(employee));
+                return StatusCode(200, "Usuario " + employeeService.InsertEmployee(employee) + " identificado. Ingrese mail, contraseña y dirección.");
             }
             catch (UserException exception)
             {
-                return BadRequest(exception.Message);
+                return StatusCode(400, exception.Message);
             }
             catch (Exception)
             {
@@ -57,16 +57,15 @@ namespace obg.WebApi.Controllers
         {
             try
             {
-                employee.Name = name;
-                return Ok(employeeService.UpdateEmployee(employee));
+                return StatusCode(200, "Registro del usuario " + employeeService.UpdateEmployee(employee) + " exitoso.");
             }
             catch (UserException exception)
             {
-                return BadRequest(exception.Message);
+                return StatusCode(400, exception.Message);
             }
             catch (NotFoundException)
             {
-                return NotFound("No existe el usuario");
+                return StatusCode(404, "No existe el usuario");
             }
             catch (Exception )
             {
