@@ -18,9 +18,11 @@ namespace obg.BusinessLogic.Logics
             _employeeManagement = employeeManagement;
         }
 
+        public EmployeeService() { }
+
         public Employee InsertEmployee(Employee employee)
         {
-            if (IsUserValid(employee) && HasAPharmacy(employee) && IsAnEmployee(employee))
+            if (HasAPharmacy(employee) && IsAnEmployee(employee))
             {
                 // Se agrega el Employee a la DB: _employeeManagement.InsertEmployee(employee);
                 _employeeManagement.InsertEmployee(employee);

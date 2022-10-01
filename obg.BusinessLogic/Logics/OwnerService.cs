@@ -18,6 +18,8 @@ namespace obg.BusinessLogic.Logics
             _ownerManagement = ownerManagement;
         }
 
+        public OwnerService() { }
+
         public Owner InsertOwner(Owner owner)
         {
             if (IsUserValid(owner) && HasAPharmacy(owner) && IsAOwner(owner))

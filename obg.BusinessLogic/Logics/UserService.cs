@@ -1,17 +1,68 @@
-﻿using obg.DataAccess.Interface.Interfaces;
+﻿using obg.BusinessLogic.Interface.Interfaces;
+using obg.DataAccess.Interface.Interfaces;
 using obg.Domain.Entities;
+using obg.Domain.Enums;
 using obg.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Net.Mail;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 
 namespace obg.BusinessLogic.Logics
 {
-    public class UserService
+    public class UserService : IUserService
     {
+        private readonly IUserManagement _userManagement;
+
+        public UserService(IUserManagement userManagement)
+        {
+            _userManagement = userManagement;
+        }
+
         public UserService() { }
+
+        public string InsertUser(User user)
+        {
+            SetDefaultUserPreRegister(user);
+            if (IsUserValid(user))
+            {
+                _userManagement.InsertUser(user);
+            }
+            return user.Name;
+        }
+
+        private void SetDefaultUserPreRegister(User user)
+        {
+            Random random = new Random();
+            string ramdomString = random.Next(0, 1000000).ToString("D6");
+            int randomInt = Int32.Parse(ramdomString);
+            user.Code = randomInt;
+            user.Email = Guid.NewGuid().ToString().Substring(0, 10) + "@gmail.com";
+            user.Password = Guid.NewGuid().ToString().Substring(0, 10) + ".44#";
+            user.Address = "Default Address";
+            user.RegisterDate = "Default RegisterDate";
+    }
+
+        public string UpdateUser(User user)
+        {
+            User userFromDB = _userManagement.GetUserByName(user.Name);
+            if(userFromDB == null)
+            {
+                throw new NotFoundException();
+            }
+            else
+            {
+                userFromDB.Email = user.Email;
+                userFromDB.Password = user.Password;
+                userFromDB.Address = user.Address;
+                _userManagement.UpdateUser(user);
+            }
+
+            return user.Name;
+        }
 
         protected bool IsUserValid(User user)
         {
@@ -64,21 +115,20 @@ namespace obg.BusinessLogic.Logics
 
         private bool IsNameRegistered(string name)
         {
-            foreach (User user in FakeDB.Users)
+            User userFromDB = _userManagement.GetUserByName(name);
+            if(userFromDB == null)
             {
-                if (name.Equals(user.Name))
-                {
-                    return true;
-                }
+                return false;
             }
-            return false;
+            return true;
         }
 
         private bool IsCodeRegistered(int code)
         {
-            foreach (User user in FakeDB.Users)
+            IEnumerable<User> usersFromDB = _userManagement.GetUsers();
+            foreach (User userInDB in usersFromDB)
             {
-                if (code.Equals(user.Code))
+                if(userInDB.Code == code)
                 {
                     return true;
                 }
@@ -88,9 +138,10 @@ namespace obg.BusinessLogic.Logics
 
         private bool IsEmailRegistered(string email)
         {
-            foreach (User user in FakeDB.Users)
+            IEnumerable<User> usersFromDB = _userManagement.GetUsers();
+            foreach (User userInDB in usersFromDB)
             {
-                if (email.Equals(user.Email))
+                if (userInDB.Email.Equals(email))
                 {
                     return true;
                 }

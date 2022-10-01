@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "obg.DataAccess.Test", "obg.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "obg.Exceptions", "obg.Exceptions\obg.Exceptions.csproj", "{8A961AC1-8951-401B-BB7E-4A8C51D97BAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Migrations", "Migrations\Migrations.csproj", "{2DB54278-C9C2-4B8A-BF39-7803FF0203E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Migrations", "Migrations\Migrations.csproj", "{2DB54278-C9C2-4B8A-BF39-7803FF0203E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

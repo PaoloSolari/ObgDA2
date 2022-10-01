@@ -5,6 +5,7 @@ using obg.Domain.Enums;
 using obg.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Net.Mail;
 using System.Reflection.Metadata;
 using System.Text;
@@ -12,7 +13,7 @@ using System.Text.RegularExpressions;
 
 namespace obg.BusinessLogic.Logics
 {
-    public class AdministratorService : UserService, IAdministratorService
+    public class AdministratorService : UserService
     {
         private readonly IAdministratorManagement _administratorManagement;
 
@@ -21,13 +22,11 @@ namespace obg.BusinessLogic.Logics
             _administratorManagement = administratorManagement;
         }
 
-        public AdministratorService()
-        {
-        }
+        public AdministratorService() { }
 
         public Administrator InsertAdministrator(Administrator administrator)
         {
-            if (IsUserValid(administrator) && IsAnAdministrator(administrator))
+            if (IsAnAdministrator(administrator))
             {
                 _administratorManagement.InsertAdministrator(administrator);
             }
@@ -73,5 +72,18 @@ namespace obg.BusinessLogic.Logics
             return administrator;
         }
 
+        //public Administrator ConvertToAdministrator(User user)
+        //{
+        //    Administrator administrator = new Administrator();
+        //    administrator.Name = user.Name;
+        //    administrator.Code = user.Code;
+        //    administrator.Email = user.Email;
+        //    administrator.Password = user.Password;
+        //    administrator.Address = user.Address;
+        //    administrator.Role = user.Role;
+        //    administrator.RegisterDate = user.RegisterDate;
+        //    administrator.Pharmacies = new List<Pharmacy>();
+        //    return administrator;
+        //}
     }
 }
