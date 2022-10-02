@@ -9,7 +9,7 @@ using System.Text;
 
 namespace obg.BusinessLogic.Logics
 {
-    public class EmployeeService : UserService, IEmployeeService
+    public class EmployeeService : UserService
     {
         private readonly IEmployeeManagement _employeeManagement;
 
@@ -20,7 +20,7 @@ namespace obg.BusinessLogic.Logics
 
         public EmployeeService() { }
 
-        public Employee InsertEmployee(Employee employee)
+        public string InsertEmployee(Employee employee)
         {
             if (HasAPharmacy(employee) && IsAnEmployee(employee))
             {

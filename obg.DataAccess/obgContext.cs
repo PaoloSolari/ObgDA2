@@ -38,7 +38,8 @@ namespace obg.DataAccess.Context
             modelBuilder.Entity<Employee>().ToTable("Employees");
             modelBuilder.Entity<Pharmacy>().HasKey(p => p.Name);
             modelBuilder.Entity<Medicine>().HasKey(m => m.Code);
-            modelBuilder.Entity<Invitation>().HasKey(i => i.IdInvitation);
+            //modelBuilder.Entity<Invitation>().HasKey(i => i.IdInvitation);
+            modelBuilder.Entity<Invitation>().HasKey(i => new { i.IdInvitation, i.UserCode });
             modelBuilder.Entity<Demand>().HasKey(d => d.IdDemand);
             modelBuilder.Entity<Petition>().HasKey(p => p.IdPetition);
             modelBuilder.Entity<Purchase>().HasKey(p => p.IdPurchase);
