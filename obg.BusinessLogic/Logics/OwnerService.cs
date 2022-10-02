@@ -9,21 +9,32 @@ using System.Text;
 
 namespace obg.BusinessLogic.Logics
 {
-    public class OwnerService : UserService, IOwnerService
+    public class OwnerService : UserService
     {
         private readonly IOwnerManagement _ownerManagement;
+        private readonly IPharmacyManagement _pharmacyManagement;
+        private readonly IInvitationManagement _invitationManagement;
 
-        public OwnerService(IOwnerManagement ownerManagement)
+        public OwnerService(IOwnerManagement ownerManagement, IPharmacyManagement pharmacyManagement, IInvitationManagement invitationManagement)
         {
             _ownerManagement = ownerManagement;
+            _pharmacyManagement = pharmacyManagement;
+            _invitationManagement = invitationManagement;
         }
 
         public OwnerService() { }
 
         public Owner InsertOwner(Owner owner)
         {
+            Invitation invitation = _invitationManagement.GetInvitationByCode(owner.Code);
+            string pharmacyName = invitation.Pharmacy.Name;
+            Pharmacy pharmacy = _pharmacyManagement.GetPharmacyByName(pharmacyName);
+            //Pharmacy pharmacy = invitation.Pharmacy;
+            owner.Pharmacy = pharmacy;
+
             if (IsUserValid(owner) && HasAPharmacy(owner) && IsAOwner(owner))
             {
+                _pharmacyManagement.DeletePharmacy(pharmacy);
                 _ownerManagement.InsertOwner(owner);
             }
             return owner;
@@ -65,7 +76,6 @@ namespace obg.BusinessLogic.Logics
             }
             return ownerToUpdate;
         }
-
 
         public Owner GetOwnerByName(string name)
         {

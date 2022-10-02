@@ -24,8 +24,18 @@ namespace obg.BusinessLogic.Logics
 
         public AdministratorService() { }
 
+        //public Administrator InsertAdministrator(Administrator administrator)
+        //{
+        //    if (IsAnAdministrator(administrator))
+        //    {
+        //        _administratorManagement.InsertAdministrator(administrator);
+        //    }
+        //    return administrator;
+        //}
+        
         public Administrator InsertAdministrator(Administrator administrator)
         {
+
             if (IsAnAdministrator(administrator))
             {
                 _administratorManagement.InsertAdministrator(administrator);
@@ -72,18 +82,5 @@ namespace obg.BusinessLogic.Logics
             return administrator;
         }
 
-        //public Administrator ConvertToAdministrator(User user)
-        //{
-        //    Administrator administrator = new Administrator();
-        //    administrator.Name = user.Name;
-        //    administrator.Code = user.Code;
-        //    administrator.Email = user.Email;
-        //    administrator.Password = user.Password;
-        //    administrator.Address = user.Address;
-        //    administrator.Role = user.Role;
-        //    administrator.RegisterDate = user.RegisterDate;
-        //    administrator.Pharmacies = new List<Pharmacy>();
-        //    return administrator;
-        //}
     }
 }

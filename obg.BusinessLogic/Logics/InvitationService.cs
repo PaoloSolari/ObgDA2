@@ -1,6 +1,7 @@
 ﻿using obg.BusinessLogic.Interface.Interfaces;
 using obg.DataAccess.Interface.Interfaces;
 using obg.Domain.Entities;
+using obg.Domain.Enums;
 using obg.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -13,19 +14,45 @@ namespace obg.BusinessLogic.Logics
     {
         protected List<Invitation> fakeDB = new List<Invitation>();
         private readonly IInvitationManagement _invitationManagement;
+        private readonly IPharmacyManagement _pharmacyManagement;
 
-        public InvitationService(IInvitationManagement invitationManagement)
+        public InvitationService(IInvitationManagement invitationManagement, IPharmacyManagement pharmacyManagement)
         {
             _invitationManagement = invitationManagement;
+            _pharmacyManagement = pharmacyManagement;
         }
 
-        public Invitation InsertInvitation(Invitation invitation)
+        public int InsertInvitation(Invitation invitation, string pharmacyName)
         {
+            Pharmacy pharmacy = _pharmacyManagement.GetPharmacyByName(pharmacyName);
+            if(pharmacy == null)
+            {
+                throw new NotFoundException("No existe la farmacia.");
+            }
+
+            invitation.IdInvitation = CreateId();
+            invitation.Pharmacy = pharmacy;
+            invitation.UserCode = CreateCode();
+
             if (IsInvitationValid(invitation))
             {
+                _pharmacyManagement.DeletePharmacy(pharmacy);
                 _invitationManagement.InsertInvitation(invitation);
             }
-            return invitation;
+            return invitation.UserCode;
+        }
+
+        private string CreateId()
+        {
+            return Guid.NewGuid().ToString().Substring(0, 5);
+        }
+
+        private int CreateCode()
+        {
+            Random random = new Random();
+            string ramdomString = random.Next(0, 1000000).ToString("D6");
+            int randomInt = Int32.Parse(ramdomString);
+            return randomInt;
         }
 
         private bool IsInvitationValid(Invitation invitation)

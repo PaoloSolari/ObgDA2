@@ -16,30 +16,92 @@ namespace obg.BusinessLogic.Logics
     public class UserService : IUserService
     {
         private readonly IUserManagement _userManagement;
+        private readonly IAdministratorManagement _administratorManagement;
+        private readonly IOwnerManagement _ownerManagement;
+        private readonly IEmployeeManagement _employeeManagement;
+        private readonly IInvitationManagement _invitationManagement;
+        private readonly IPharmacyManagement _pharmacyManagement;
 
-        public UserService(IUserManagement userManagement)
+        public UserService(IUserManagement userManagement, IAdministratorManagement administratorManagement, IOwnerManagement ownerManagement, IEmployeeManagement employeeManagement, IInvitationManagement invitationManagement, IPharmacyManagement pharmacyManagement)
         {
             _userManagement = userManagement;
+            _administratorManagement = administratorManagement;
+            _ownerManagement = ownerManagement;
+            _employeeManagement = employeeManagement;
+            _invitationManagement = invitationManagement;
+            _pharmacyManagement = pharmacyManagement;
         }
 
         public UserService() { }
 
         public string InsertUser(User user)
         {
-            SetDefaultUserPreRegister(user);
-            if (IsUserValid(user))
+            if (ExistsInvitation(user.Name, user.Code))
             {
-                _userManagement.InsertUser(user);
+                user.Role = GetRole(user.Code);
+                SetDefaultUserPreRegister(user);
+                if (IsUserValid(user))
+                {
+                    if(user.Role == RoleUser.Administrator)
+                    {
+                        Administrator administrator = ParseToAdministrator(user);
+                        _administratorManagement.InsertAdministrator(administrator);
+                    } 
+                    else if (user.Role == RoleUser.Owner)
+                    {
+                        Owner owner = ParseToOwner(user);
+                        Invitation invitation = _invitationManagement.GetInvitationByCode(owner.Code);
+                        Pharmacy pharmacy = invitation.Pharmacy;
+                        owner.Pharmacy = pharmacy;
+                        //aca validar farmacia
+                        if (HasAPharmacy(owner))
+                        {
+                            //_invitationManagement.InsertInvitation(invitation);
+                            //_pharmacyManagement.DeletePharmacy(pharmacy);
+                            _ownerManagement.InsertOwner(owner);
+                        }
+                    } 
+                    else
+                    {
+                        Employee employee = ParseToEmployee(user);
+                        _employeeManagement.InsertEmployee(employee);
+                    }
+                    
+                }
+            }
+            else
+            {
+                throw new NotFoundException("No existe una invitación para el usuario");
             }
             return user.Name;
         }
 
+        private bool ExistsInvitation(string name, int code)
+        {
+            Invitation invitation = _invitationManagement.GetInvitationByCode(code);
+            if (invitation == null)
+            {
+                return false;
+            }
+            if (invitation.UserName.Equals(name))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private RoleUser GetRole(int code)
+        {
+            Invitation invitation = _invitationManagement.GetInvitationByCode(code);
+            return invitation.UserRole;
+        }
+
         private void SetDefaultUserPreRegister(User user)
         {
-            Random random = new Random();
-            string ramdomString = random.Next(0, 1000000).ToString("D6");
-            int randomInt = Int32.Parse(ramdomString);
-            user.Code = randomInt;
+            //Random random = new Random();
+            //string ramdomString = random.Next(0, 1000000).ToString("D6");
+            //int randomInt = Int32.Parse(ramdomString);
+            //user.Code = randomInt;
             user.Email = Guid.NewGuid().ToString().Substring(0, 10) + "@gmail.com";
             user.Password = Guid.NewGuid().ToString().Substring(0, 10) + ".44#";
             user.Address = "Default Address";
@@ -49,7 +111,7 @@ namespace obg.BusinessLogic.Logics
         public string UpdateUser(User user)
         {
             User userFromDB = _userManagement.GetUserByName(user.Name);
-            if(userFromDB == null)
+            if (userFromDB == null)
             {
                 throw new NotFoundException();
             }
@@ -58,7 +120,8 @@ namespace obg.BusinessLogic.Logics
                 userFromDB.Email = user.Email;
                 userFromDB.Password = user.Password;
                 userFromDB.Address = user.Address;
-                _userManagement.UpdateUser(user);
+                userFromDB.RegisterDate = DateTime.Now.ToShortDateString();
+                _userManagement.UpdateUser(userFromDB);
             }
 
             return user.Name;
@@ -172,6 +235,58 @@ namespace obg.BusinessLogic.Logics
             {
                 return false;
             }
+        }
+
+        private Administrator ParseToAdministrator(User user)
+        {
+            Administrator administrator = new Administrator();
+            administrator.Name = user.Name;
+            administrator.Code = user.Code;
+            administrator.Email = user.Email;
+            administrator.Password = user.Password;
+            administrator.Address = user.Address;
+            administrator.Role = RoleUser.Administrator;
+            administrator.RegisterDate = user.RegisterDate;
+            administrator.Pharmacies = new List<Pharmacy>();
+            return administrator;
+        }
+
+        private Owner ParseToOwner(User user)
+        {
+            Owner owner = new Owner();
+            owner.Name = user.Name;
+            owner.Code = user.Code;
+            owner.Email = user.Email;
+            owner.Password = user.Password;
+            owner.Address = user.Address;
+            owner.Role = RoleUser.Owner;
+            owner.RegisterDate = user.RegisterDate;
+            owner.Pharmacy = new Pharmacy();
+            return owner;
+        }
+
+        private Employee ParseToEmployee(User user)
+        {
+            Employee employee = new Employee();
+            employee.Name = user.Name;
+            employee.Code = user.Code;
+            employee.Email = user.Email;
+            employee.Password = user.Password;
+            employee.Address = user.Address;
+            employee.Role = RoleUser.Employee;
+            employee.RegisterDate = user.RegisterDate;
+            employee.Pharmacy = new Pharmacy();
+            employee.Demands = new List<Demand>();
+            return employee;
+        }
+
+        private bool HasAPharmacy(Owner owner)
+        {
+            if (owner.Pharmacy == null)
+            {
+                throw new UserException("El dueño no tiene una farmacia asignada.");
+            }
+            return true;
         }
 
     }

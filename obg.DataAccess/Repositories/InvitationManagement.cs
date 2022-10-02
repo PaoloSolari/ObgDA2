@@ -18,6 +18,13 @@ namespace obg.DataAccess.Repositories
 
         public void InsertInvitation(Invitation invitation)
         {
+            // Cuando insertás una invitación, se inserta la farmacia que tiene relacionada.
+            // Si existe la farmacia, tratas de no agregarla nuevamente.
+            //Pharmacy pharmacyOfInvitation = ObgContext.Pharmacies.Where<Pharmacy>(p => p.Name.Equals(invitation.Pharmacy.Name)).AsNoTracking().FirstOrDefault();
+            //if(pharmacyOfInvitation != null)
+            //{
+            //    invitation.Pharmacy = null;
+            //}
             ObgContext.Invitations.Add(invitation);
             ObgContext.SaveChanges();
         }
@@ -29,9 +36,13 @@ namespace obg.DataAccess.Repositories
 
         public Invitation GetInvitationById(string id)
         {
-            return ObgContext.Invitations.Where<Invitation>(i => i.IdInvitation == id).AsNoTracking().FirstOrDefault();
+            return ObgContext.Invitations.Where<Invitation>(i => i.IdInvitation.Equals(id)).AsNoTracking().FirstOrDefault();
         }
 
+        public Invitation GetInvitationByCode(int code)
+        {
+            return ObgContext.Invitations.Where<Invitation>(i => i.UserCode == code).Include("Pharmacy").AsNoTracking().FirstOrDefault();
+        }
         public void UpdateInvitation(Invitation invitation)
         {
             ObgContext.Invitations.Attach(invitation);

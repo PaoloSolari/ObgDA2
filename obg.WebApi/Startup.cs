@@ -39,7 +39,7 @@ namespace obg.WebApi
             services.AddScoped<IUserManagement, UserManagement>();
             //services.AddScoped<IAdministratorService, AdministratorService>();
             services.AddScoped<IAdministratorManagement, AdministratorManagement>();
-            services.AddScoped<IOwnerService, OwnerService>();
+            //services.AddScoped<IOwnerService, OwnerService>();
             services.AddScoped<IOwnerManagement, OwnerManagement>();
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IEmployeeManagement, EmployeeManagement>();
