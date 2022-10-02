@@ -26,12 +26,29 @@ namespace obg.BusinessLogic.Logics
 
         public string InsertUser(User user)
         {
-            SetDefaultUserPreRegister(user);
-            if (IsUserValid(user))
+            if (ExistsInvitation(user.Name, user.Code))
             {
-                _userManagement.InsertUser(user);
+                SetDefaultUserPreRegister(user);
+                if (IsUserValid(user))
+                {
+                    _userManagement.InsertUser(user);
+                }
             }
             return user.Name;
+        }
+
+        private bool ExistsInvitation(string name, int code)
+        {
+            Invitation invitation = _userManagement.GetInvitationByCode(code);
+            if (invitation == null)
+            {
+                return false;
+            }
+            if (invitation.UserName.Equals(name))
+            {
+                return true;
+            }
+            return false;
         }
 
         private void SetDefaultUserPreRegister(User user)

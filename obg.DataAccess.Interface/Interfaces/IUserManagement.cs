@@ -11,5 +11,6 @@ namespace obg.DataAccess.Interface.Interfaces
         IEnumerable<User> GetUsers();
         User GetUserByName(string name);
         void UpdateUser(User user);
+        Invitation GetInvitationByCode(int code);
     }
 }

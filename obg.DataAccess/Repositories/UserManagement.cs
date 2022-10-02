@@ -40,5 +40,10 @@ namespace obg.DataAccess.Repositories
             ObgContext.SaveChanges();
         }
 
+        public Invitation GetInvitationByCode(int code)
+        {
+            return ObgContext.Invitations.Where<Invitation>(i => i.UserCode == code).AsNoTracking().FirstOrDefault();
+        }
+
     }
 }
