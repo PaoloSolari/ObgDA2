@@ -5,6 +5,7 @@ using obg.Domain.Enums;
 using obg.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace obg.BusinessLogic.Logics
@@ -79,8 +80,24 @@ namespace obg.BusinessLogic.Logics
 
         public IEnumerable<Medicine> GetMedicines()
         {
+            IEnumerable<Medicine> medicines = _medicineManagement.GetMedicines();
+            if (GetLengthOfList(medicines) == 0)
+            {
+                throw new NotFoundException();
+            }
             return _medicineManagement.GetMedicines();
         }
+
+        public int GetLengthOfList(IEnumerable<Medicine> medicines)
+        {
+            int length = 0;
+            foreach(Medicine medicine in medicines)
+            {
+                length++;
+            }
+            return length;
+        }
+
         public Medicine GetMedicineByCode(string code)
         {
             return _medicineManagement.GetMedicineByCode(code);
