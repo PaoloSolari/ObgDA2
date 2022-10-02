@@ -16,13 +16,14 @@ namespace obg.BusinessLogic.Logics
             _sessionManagement = sessionManagement;
         }
 
-        public void InsertSession(Session session)
+        public string InsertSession(Session session)
         {
             if (IsSessionValid(session))
             {
                 // Se agrega la Session a la DB: _sessionManagement.InsertSession(session);
                 _sessionManagement.InsertSession(session);
             }
+            return session.Token;
         }
 
         private bool IsSessionValid(Session session)

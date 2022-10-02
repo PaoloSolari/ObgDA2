@@ -56,15 +56,15 @@ namespace obg.WebApi.Test
         [TestMethod]
         public void PostInvitationOk()
         {
-            mock.Setup(x => x.InsertInvitation(It.IsAny<Invitation>())).Returns(validInvitation);
+            mock.Setup(x => x.InsertInvitation(It.IsAny<Invitation>())).Returns(validInvitation.UserCode);
             var result = api.PostInvitation(It.IsAny<Invitation>());
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
-            var body = objectResult.Value as Invitation;
+            var body = objectResult.Value;
 
             mock.VerifyAll();
             Assert.AreEqual(200, statusCode);
-            Assert.IsTrue(validInvitation.Equals(body));
+            Assert.IsTrue(("Código de invitación: " + validInvitation.UserCode).Equals(body));
         }
     }
 }

@@ -23,11 +23,15 @@ namespace obg.WebApi.Controllers
         {
             try
             {
-                return Ok(demandService.GetDemands());
+                return StatusCode(200, demandService.GetDemands());
+            }
+            catch (NotFoundException)
+            {
+                return StatusCode(404, "No hay solicitudes de reposición de stock.");
             }
             catch (Exception)
             {
-                return StatusCode(500, "Algo salió mal.");
+                return StatusCode(500, "Error interno.");
             }
 
 
@@ -39,15 +43,15 @@ namespace obg.WebApi.Controllers
         {
             try
             {
-                return Ok(demandService.InsertDemand(demand));
+                return StatusCode(200, "Solicitud " + demandService.InsertDemand(demand) + " exitosa.");
             }
             catch (DemandException exception)
             {
-                return BadRequest(exception.Message);
+                return StatusCode(400, exception.Message);
             }
             catch (Exception)
             {
-                return StatusCode(500, "Algo salió mal.");
+                return StatusCode(500, "Error interno.");
             }
         }
 
@@ -56,20 +60,19 @@ namespace obg.WebApi.Controllers
         {
             try
             {
-                demand.IdDemand = id;
-                return Ok(demandService.UpdateDemand(demand));
+                return StatusCode(200, "Modificación de la solicitud: " + demandService.UpdateDemand(demand) + " exitosa.");
             }
             catch (DemandException exception)
             {
-                return BadRequest(exception.Message);
+                return StatusCode(400, exception.Message);
             }
             catch (NotFoundException exception)
             {
-                return NotFound(exception.Message);
+                return StatusCode(404, exception.Message);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return StatusCode(500, e.Message);
+                return StatusCode(500, "Error interno.");
             }
         }
     }

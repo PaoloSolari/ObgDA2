@@ -87,15 +87,15 @@ namespace obg.WebApi.Test
         [TestMethod]
         public void PostEmployeeOk()
         {
-            mock.Setup(x => x.InsertEmployee(It.IsAny<Employee>())).Returns(validEmployee);
+            mock.Setup(x => x.InsertEmployee(It.IsAny<Employee>())).Returns(validEmployee.Name);
             var result = api.PostEmployee(It.IsAny<Employee>());
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
-            var body = objectResult.Value as Employee;
+            var body = objectResult.Value;
 
             mock.VerifyAll();
             Assert.AreEqual(200, statusCode);
-            Assert.IsTrue(validEmployee.Equals(body));
+            Assert.IsTrue(("Usuario " + validEmployee.Name + " identificado. Ingrese mail, contraseña y dirección.").Equals(body));
         }
 
         [TestMethod]
@@ -139,15 +139,15 @@ namespace obg.WebApi.Test
         {
             var validEmployeeModified = validEmployee;
             validEmployeeModified.Password = "new password";
-            mock.Setup(x => x.UpdateEmployee(validEmployeeModified)).Returns(validEmployeeModified);
+            mock.Setup(x => x.UpdateEmployee(validEmployeeModified)).Returns(validEmployeeModified.Name);
             var result = api.PutEmployee(validEmployee.Name, validEmployeeModified);
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
-            var body = objectResult.Value as Employee;
+            var body = objectResult.Value;
 
             mock.VerifyAll();
             Assert.AreEqual(200, statusCode);
-            Assert.IsTrue(validEmployeeModified.Password.Equals(body.Password));
+            Assert.IsTrue(("Registro del usuario " + validEmployee.Name + " exitoso.").Equals(body));
         }
     }
 }

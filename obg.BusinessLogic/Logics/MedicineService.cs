@@ -5,6 +5,7 @@ using obg.Domain.Enums;
 using obg.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace obg.BusinessLogic.Logics
@@ -26,13 +27,13 @@ namespace obg.BusinessLogic.Logics
         {
         }
 
-        public Medicine InsertMedicine(Medicine medicine)
+        public string InsertMedicine(Medicine medicine)
         {
             if (IsMedicineValid(medicine))// && !IsCodeRegistered(medicine.Name))
             {
                 _medicineManagement.InsertMedicine(medicine);
             }
-            return medicine;
+            return medicine.Code;
         }
 
         public bool IsMedicineValid(Medicine medicine)
@@ -79,8 +80,24 @@ namespace obg.BusinessLogic.Logics
 
         public IEnumerable<Medicine> GetMedicines()
         {
+            IEnumerable<Medicine> medicines = _medicineManagement.GetMedicines();
+            if (GetLengthOfList(medicines) == 0)
+            {
+                throw new NotFoundException();
+            }
             return _medicineManagement.GetMedicines();
         }
+
+        public int GetLengthOfList(IEnumerable<Medicine> medicines)
+        {
+            int length = 0;
+            foreach(Medicine medicine in medicines)
+            {
+                length++;
+            }
+            return length;
+        }
+
         public Medicine GetMedicineByCode(string code)
         {
             return _medicineManagement.GetMedicineByCode(code);
@@ -88,11 +105,21 @@ namespace obg.BusinessLogic.Logics
 
         public void DeleteMedicine(string code)
         {
-            _medicineManagement.DeleteMedicine(GetMedicineByCode(code));
+            Medicine medicine = GetMedicineByCode(code);
+            if(medicine == null)
+            {
+                throw new NotFoundException();
+            }
+            _medicineManagement.DeleteMedicine(medicine);
         }
 
         public IEnumerable<Medicine> GetMedicinesByName(string medicineName)
         {
+            IEnumerable<Medicine> medicines = _medicineManagement.GetMedicinesByName(medicineName);
+            if(medicines == null)
+            {
+                throw new NotFoundException();
+            }
             return _medicineManagement.GetMedicinesByName(medicineName);
         }
     }

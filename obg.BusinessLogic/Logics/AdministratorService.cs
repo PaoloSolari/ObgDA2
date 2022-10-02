@@ -40,7 +40,7 @@ namespace obg.BusinessLogic.Logics
             {
                 _administratorManagement.InsertAdministrator(administrator);
             }
-            return administrator;
+            return administrator.Name;
         }
 
         private bool IsAnAdministrator(Administrator administrator)
@@ -57,7 +57,7 @@ namespace obg.BusinessLogic.Logics
             return _administratorManagement.GetAdministrators();
         }
 
-        public Administrator UpdateAdministrator(Administrator administratorToUpdate)
+        public string UpdateAdministrator(Administrator administratorToUpdate)
         {
             if (IsUserValid(administratorToUpdate) && IsAnAdministrator(administratorToUpdate))
             {
@@ -68,7 +68,7 @@ namespace obg.BusinessLogic.Logics
                 }
                 _administratorManagement.UpdateAdministrator(administratorToUpdate);
             }
-            return administratorToUpdate;
+            return administratorToUpdate.Name;
         }
 
 

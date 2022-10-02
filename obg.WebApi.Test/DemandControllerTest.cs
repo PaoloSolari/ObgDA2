@@ -91,15 +91,15 @@ namespace obg.WebApi.Test
         [TestMethod]
         public void PostDemandOk()
         {
-            mock.Setup(x => x.InsertDemand(It.IsAny<Demand>())).Returns(validDemand);
+            mock.Setup(x => x.InsertDemand(It.IsAny<Demand>())).Returns(validDemand.IdDemand);
             var result = api.PostDemand(It.IsAny<Demand>());
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
-            var body = objectResult.Value as Demand;
+            var body = objectResult.Value;
 
             mock.VerifyAll();
             Assert.AreEqual(200, statusCode);
-            Assert.IsTrue(validDemand.Equals(body));
+            Assert.IsTrue(("Solicitud " + validDemand.IdDemand + " exitosa.").Equals(body));
         }
 
         [TestMethod]
@@ -143,15 +143,15 @@ namespace obg.WebApi.Test
         {
             var validDemandModified = validDemand;
             validDemandModified.Status = DemandStatus.Accepted;
-            mock.Setup(x => x.UpdateDemand(validDemandModified)).Returns(validDemandModified);
+            mock.Setup(x => x.UpdateDemand(validDemandModified)).Returns(validDemandModified.IdDemand);
             var result = api.PutDemand(validDemand.IdDemand, validDemandModified);
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
-            var body = objectResult.Value as Demand;
+            var body = objectResult.Value;
 
             mock.VerifyAll();
             Assert.AreEqual(200, statusCode);
-            Assert.IsTrue(validDemandModified.Status.Equals(body.Status));
+            Assert.IsTrue(("Modificación de la solicitud: " + validDemandModified.IdDemand + " exitosa.").Equals(body));
         }
     }
 }

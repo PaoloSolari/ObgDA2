@@ -24,15 +24,19 @@ namespace obg.WebApi.Controllers
         {
             try
             {
-                return Ok(purchaseService.InsertPurchase(purchase));
+                return StatusCode(200, "Compra " + purchaseService.InsertPurchase(purchase) + " exitosa.");
             }
-            catch (UserException exception)
+            catch (PurchaseException exception)
             {
-                return BadRequest(exception.Message);
+                return StatusCode(400, exception.Message);
+            }
+            catch (NotFoundException)
+            {
+                return StatusCode(404, "No existe un medicamento a comprar.");
             }
             catch (Exception)
             {
-                return StatusCode(500, "Algo salió mal.");
+                return StatusCode(500, "Error interno.");
             }
         }
     }

@@ -85,14 +85,14 @@ namespace obg.WebApi.Test
         [TestMethod]
         public void PostAdministratorOk()
         {
-            mock.Setup(x => x.InsertAdministrator(It.IsAny<Administrator>())).Returns(validAdministrator);
+            mock.Setup(x => x.InsertAdministrator(It.IsAny<Administrator>())).Returns(validAdministrator.Name);
             var result = api.PostAdministrator(It.IsAny<Administrator>());
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
-            var body = objectResult.Value as Administrator;
+            var body = objectResult.Value;
             mock.VerifyAll();
             Assert.AreEqual(200, statusCode);
-            Assert.IsTrue(validAdministrator.Equals(body));
+            Assert.IsTrue(("Usuario " + validAdministrator.Name + " identificado. Ingrese mail, contraseña y dirección.").Equals(body));
         }
 
         [TestMethod]
@@ -136,15 +136,15 @@ namespace obg.WebApi.Test
         {
             var validAdministratorModified = validAdministrator;
             validAdministratorModified.Password = "new password";
-            mock.Setup(x => x.UpdateAdministrator(validAdministratorModified)).Returns(validAdministratorModified);
+            mock.Setup(x => x.UpdateAdministrator(validAdministratorModified)).Returns(validAdministratorModified.Name);
             var result = api.PutAdministrator(validAdministrator.Name, validAdministratorModified);
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
-            var body = objectResult.Value as Administrator;
+            var body = objectResult.Value;
 
             mock.VerifyAll();
             Assert.AreEqual(200, statusCode);
-            Assert.IsTrue(validAdministratorModified.Password.Equals(body.Password));
+            Assert.IsTrue(("Registro del usuario " + validAdministrator.Name + " exitoso.").Equals(body));
         }
     }
 }

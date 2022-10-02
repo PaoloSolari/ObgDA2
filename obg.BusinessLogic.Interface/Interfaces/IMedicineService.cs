@@ -8,7 +8,7 @@ namespace obg.BusinessLogic.Interface.Interfaces
     public interface IMedicineService
     {
         IEnumerable<Medicine> GetMedicines();
-        Medicine InsertMedicine(Medicine medicine);
+        string InsertMedicine(Medicine medicine);
         Medicine GetMedicineByCode(string code);
         void DeleteMedicine(string code);
         IEnumerable<Medicine> GetMedicinesByName(string medicineName);

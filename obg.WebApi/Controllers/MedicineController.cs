@@ -23,11 +23,15 @@ namespace obg.WebApi.Controllers
         {
             try
             {
-                return Ok(medicineService.GetMedicines());
+                return StatusCode(200, medicineService.GetMedicines());
+            }
+            catch (NotFoundException)
+            {
+                return StatusCode(404, "No hay medicamentos.");
             }
             catch (Exception)
             {
-                return StatusCode(500, "Algo salió mal.");
+                return StatusCode(500, "Error interno.");
             }
 
         }
@@ -37,15 +41,15 @@ namespace obg.WebApi.Controllers
         {
             try
             {
-                return Ok(medicineService.GetMedicinesByName(medicineName));
+                return StatusCode(200, medicineService.GetMedicinesByName(medicineName));
             }
-            catch (MedicineException exception)
+            catch (NotFoundException)
             {
-                return NotFound(exception.Message);
+                return StatusCode(404, "No existe el medicamento.");
             }
             catch (Exception)
             {
-                return StatusCode(500, "Algo salió mal.");
+                return StatusCode(500, "Error interno.");
             }
         }
 
@@ -54,15 +58,15 @@ namespace obg.WebApi.Controllers
         {
             try
             {
-                return Ok(medicineService.InsertMedicine(medicine));
+                return StatusCode(200, "Código del medicamento: " + medicineService.InsertMedicine(medicine));
             }
             catch (MedicineException exception)
             {
-                return BadRequest(exception.Message);
+                return StatusCode(400, exception.Message);
             }
             catch (Exception)
             {
-                return StatusCode(500, "Algo salió mal.");
+                return StatusCode(500, "Error interno.");
             }
         }
 
@@ -72,15 +76,19 @@ namespace obg.WebApi.Controllers
             try
             {
                 medicineService.DeleteMedicine(code);
-                return Ok();
+                return StatusCode(200, "Eliminación exitosa.");
             }
             catch (MedicineException exception)
             {
-                return BadRequest(exception.Message);
+                return StatusCode(400, exception.Message);
+            }
+            catch (NotFoundException)
+            {
+                return StatusCode(404, "No se ha encontrado el medicamento.");
             }
             catch (Exception)
             {
-                return StatusCode(500, "Algo salió mal.");
+                return StatusCode(500, "Error interno.");
             }
         }
     }

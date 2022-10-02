@@ -6,6 +6,10 @@ namespace obg.Exceptions
     [Serializable]
     public class PurchaseException : Exception
     {
+        public PurchaseException()
+        {
+        }
+
         public PurchaseException(string message) : base(message) { }
 
     }

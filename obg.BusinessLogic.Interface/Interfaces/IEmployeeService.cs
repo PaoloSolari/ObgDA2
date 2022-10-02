@@ -8,7 +8,7 @@ namespace obg.BusinessLogic.Interface.Interfaces
     public interface IEmployeeService
     {
         IEnumerable<User> GetEmployees();
-        Employee InsertEmployee(Employee employee);
-        Employee UpdateEmployee(Employee employee);
+        string InsertEmployee(Employee employee);
+        string UpdateEmployee(Employee employee);
     }
 }
