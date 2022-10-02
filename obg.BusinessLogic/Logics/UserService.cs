@@ -56,7 +56,8 @@ namespace obg.BusinessLogic.Logics
                         //aca validar farmacia
                         if (HasAPharmacy(owner))
                         {
-                            _pharmacyManagement.DeletePharmacy(pharmacy);
+                            //_invitationManagement.InsertInvitation(invitation);
+                            //_pharmacyManagement.DeletePharmacy(pharmacy);
                             _ownerManagement.InsertOwner(owner);
                         }
                     } 
@@ -110,7 +111,7 @@ namespace obg.BusinessLogic.Logics
         public string UpdateUser(User user)
         {
             User userFromDB = _userManagement.GetUserByName(user.Name);
-            if(userFromDB == null)
+            if (userFromDB == null)
             {
                 throw new NotFoundException();
             }
@@ -119,7 +120,8 @@ namespace obg.BusinessLogic.Logics
                 userFromDB.Email = user.Email;
                 userFromDB.Password = user.Password;
                 userFromDB.Address = user.Address;
-                _userManagement.UpdateUser(user);
+                userFromDB.RegisterDate = DateTime.Now.ToShortDateString();
+                _userManagement.UpdateUser(userFromDB);
             }
 
             return user.Name;
