@@ -32,6 +32,10 @@ namespace obg.DataAccess.Repositories
             return ObgContext.Invitations.Where<Invitation>(i => i.IdInvitation == id).AsNoTracking().FirstOrDefault();
         }
 
+        public Invitation GetInvitationByCode(int code)
+        {
+            return ObgContext.Invitations.Where<Invitation>(i => i.UserCode == code).Include("Pharmacy").AsNoTracking().FirstOrDefault();
+        }
         public void UpdateInvitation(Invitation invitation)
         {
             ObgContext.Invitations.Attach(invitation);

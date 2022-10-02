@@ -42,7 +42,13 @@ namespace obg.DataAccess.Repositories
 
         public void DeletePharmacy(Pharmacy pharmacy)
         {
+            Invitation invitationOfPharmacy = ObgContext.Invitations.Where<Invitation>(i => i.Pharmacy == pharmacy).AsNoTracking().FirstOrDefault();
+            if(invitationOfPharmacy != null)
+            {
+                ObgContext.Invitations.Remove(invitationOfPharmacy);
+            }
             ObgContext.Pharmacies.Remove(pharmacy);
+            
             ObgContext.SaveChanges();
         }
 
