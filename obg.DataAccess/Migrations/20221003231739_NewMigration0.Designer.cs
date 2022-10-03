@@ -9,8 +9,8 @@ using obg.DataAccess.Context;
 namespace obg.DataAccess.Migrations
 {
     [DbContext(typeof(ObgContext))]
-    [Migration("20220929213803_ThirdMigrationHerency")]
-    partial class ThirdMigrationHerency
+    [Migration("20221003231739_NewMigration0")]
+    partial class NewMigration0
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -43,11 +43,11 @@ namespace obg.DataAccess.Migrations
                     b.Property<string>("IdInvitation")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("PharmacyName")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("UserCode")
                         .HasColumnType("int");
+
+                    b.Property<string>("PharmacyName")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
@@ -55,7 +55,7 @@ namespace obg.DataAccess.Migrations
                     b.Property<int>("UserRole")
                         .HasColumnType("int");
 
-                    b.HasKey("IdInvitation");
+                    b.HasKey("IdInvitation", "UserCode");
 
                     b.HasIndex("PharmacyName");
 
@@ -86,6 +86,9 @@ namespace obg.DataAccess.Migrations
                         .HasColumnType("float");
 
                     b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Stock")
                         .HasColumnType("int");
 
                     b.Property<string>("SymtompsItTreats")

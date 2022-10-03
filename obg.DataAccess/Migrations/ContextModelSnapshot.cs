@@ -86,6 +86,9 @@ namespace obg.DataAccess.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<int>("Stock")
+                        .HasColumnType("int");
+
                     b.Property<string>("SymtompsItTreats")
                         .HasColumnType("nvarchar(max)");
 
