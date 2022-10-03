@@ -19,6 +19,11 @@ namespace obg.DataAccess.Repositories
 
         public void InsertAdministrator(Administrator administrator)
         {
+            IEnumerable<Pharmacy> pharmacies = ObgContext.Pharmacies.ToList();
+            foreach (Pharmacy pharmacy in pharmacies)
+            {
+                ObgContext.Attach(pharmacy);
+            }
             ObgContext.Administrators.Add(administrator);
             ObgContext.SaveChanges();
         }

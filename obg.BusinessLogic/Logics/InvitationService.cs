@@ -36,14 +36,7 @@ namespace obg.BusinessLogic.Logics
 
             if (IsInvitationValid(invitation))
             {
-                _pharmacyManagement.DeletePharmacy(pharmacy);
                 _invitationManagement.InsertInvitation(invitation);
-                Pharmacy pharmacyOfInvitation = _pharmacyManagement.GetPharmacyByName(invitation.Pharmacy.Name);
-                if(pharmacyOfInvitation == null)
-                {
-                    _pharmacyManagement.InsertPharmacy(pharmacy);
-                    //_pharmacyManagement.InsertPharmacy(pharmacyOfInvitation);
-                }
             }
             return invitation.UserCode;
         }

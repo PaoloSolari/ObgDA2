@@ -52,6 +52,7 @@ namespace obg.BusinessLogic.Logics
                         Owner owner = ParseToOwner(user);
                         Invitation invitation = _invitationManagement.GetInvitationByCode(owner.Code);
                         Pharmacy pharmacy = invitation.Pharmacy;
+                        // Aquí habría que verificar que si la farmacia ya tiene dueño, lanze una exception.
                         owner.Pharmacy = pharmacy;
                         if (HasAPharmacy(owner))
                         {

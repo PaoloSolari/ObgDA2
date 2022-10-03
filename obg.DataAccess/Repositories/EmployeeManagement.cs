@@ -18,6 +18,11 @@ namespace obg.DataAccess.Repositories
 
         public void InsertEmployee(Employee employee)
         {
+            Pharmacy pharmacyOfEmployee = ObgContext.Pharmacies.Where<Pharmacy>(p => p.Name.Equals(employee.Pharmacy.Name)).AsNoTracking().FirstOrDefault();
+            if (pharmacyOfEmployee != null)
+            {
+                ObgContext.Attach(employee.Pharmacy);
+            }
             ObgContext.Employees.Add(employee);
             ObgContext.SaveChanges();
         }
