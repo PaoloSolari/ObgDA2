@@ -20,7 +20,7 @@ namespace obg.BusinessLogic.Logics
 
         public EmployeeService() { }
 
-        public Employee InsertEmployee(Employee employee)
+        public string InsertEmployee(Employee employee)
         {
             if (HasAPharmacy(employee) && IsAnEmployee(employee))
             {

@@ -4,12 +4,14 @@ using obg.BusinessLogic.Interface.Interfaces;
 using obg.BusinessLogic.Logics;
 using obg.Domain.Entities;
 using obg.Exceptions;
+using obg.WebApi.Filters;
 using System;
 
 namespace obg.WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeService employeeService;
@@ -34,6 +36,8 @@ namespace obg.WebApi.Controllers
         }
 
         // POST api/<EmployeeController>
+        [ServiceFilter(typeof(AdministratorAuthorizationAttributeFilter))]
+
         [HttpPost]
         public IActionResult PostEmployee([FromBody] Employee employee)
         {

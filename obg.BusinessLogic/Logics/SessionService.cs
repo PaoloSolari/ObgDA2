@@ -1,5 +1,7 @@
-﻿using obg.DataAccess.Interface.Interfaces;
+﻿using obg.BusinessLogic.Interface;
+using obg.DataAccess.Interface.Interfaces;
 using obg.Domain.Entities;
+using obg.Domain.Enums;
 using obg.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -7,13 +9,15 @@ using System.Text;
 
 namespace obg.BusinessLogic.Logics
 {
-    public class SessionService
+    public class SessionService : ISessionService
     {
         private readonly ISessionManagement _sessionManagement;
+        private readonly IUserManagement _userManagement;
 
-        public SessionService(ISessionManagement sessionManagement)
+        public SessionService(ISessionManagement sessionManagement, IUserManagement userManagement)
         {
             _sessionManagement = sessionManagement;
+            _userManagement = userManagement;
         }
 
         public string InsertSession(Session session)
@@ -73,6 +77,30 @@ namespace obg.BusinessLogic.Logics
         private bool IsNameLogged(Session session)
         {
             return _sessionManagement.IsNameLogged(session);
+        }
+
+        public bool IsTokenValid(string token)
+        {
+            return _sessionManagement.IsTokenValid(token);
+        }
+
+        public RoleUser GetUserRole(string token)
+        {
+            Session session = _sessionManagement.GetSessionByToken(token);
+            if(session == null)
+            {
+                throw new NotFoundException();
+            } 
+            else
+            {
+                string userName = session.UserName;
+                User user = _userManagement.GetUserByName(userName);
+                if(user == null)
+                {
+                    throw new NotFoundException();
+                }
+                return user.Role;
+            }
         }
     }
 }

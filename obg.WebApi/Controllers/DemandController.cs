@@ -4,6 +4,7 @@ using obg.BusinessLogic.Interface.Interfaces;
 using obg.BusinessLogic.Logics;
 using obg.Domain.Entities;
 using obg.Exceptions;
+using obg.WebApi.Filters;
 using System;
 
 namespace obg.WebApi.Controllers
@@ -17,7 +18,9 @@ namespace obg.WebApi.Controllers
         {
             this.demandService = demandService;
         }
+
         // GET: <DemandController>
+        [ServiceFilter(typeof(OwnerAuthorizationAttributeFilter))]
         [HttpGet]
         public IActionResult GetDemands()
         {
@@ -37,6 +40,7 @@ namespace obg.WebApi.Controllers
 
         }
 
+        [ServiceFilter(typeof(EmployeeAuthorizationAttributeFilter))]
         // POST api/<DemandController>
         [HttpPost]
         public IActionResult PostDemand([FromBody] Demand demand)
@@ -55,6 +59,7 @@ namespace obg.WebApi.Controllers
             }
         }
 
+        [ServiceFilter(typeof(OwnerAuthorizationAttributeFilter))]
         [HttpPut("{id}")]
         public IActionResult PutDemand([FromRoute] string id, [FromBody] Demand demand)
         {

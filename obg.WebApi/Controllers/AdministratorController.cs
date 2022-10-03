@@ -1,15 +1,17 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using obg.BusinessLogic.Interface;
 using obg.BusinessLogic.Interface.Interfaces;
 using obg.BusinessLogic.Logics;
 using obg.Domain.Entities;
 using obg.Exceptions;
+using obg.WebApi.Filters;
 using System;
 
 namespace obg.WebApi.Controllers
 {
-    [ApiController]
     [Route("[controller]")]
+    [ApiController]
     public class AdministratorController : ControllerBase
     {
         private readonly IAdministratorService administratorService;
@@ -32,6 +34,8 @@ namespace obg.WebApi.Controllers
         }
 
         // POST api/<AdministratorController>
+        [ServiceFilter(typeof(AdministratorAuthorizationAttributeFilter))]
+
         [HttpPost]
         public IActionResult PostAdministrator([FromBody] Administrator administrator)
         {

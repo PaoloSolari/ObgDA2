@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using obg.BusinessLogic.Interface.Interfaces;
 using obg.Domain.Entities;
 using obg.Exceptions;
+using obg.WebApi.Filters;
 using System;
 using System.Runtime.InteropServices.WindowsRuntime;
 
@@ -53,6 +54,8 @@ namespace obg.WebApi.Controllers
             }
         }
 
+        [ServiceFilter(typeof(EmployeeAuthorizationAttributeFilter))]
+
         [HttpPost]
         public IActionResult PostMedicine([FromBody] Medicine medicine)
         {
@@ -70,7 +73,9 @@ namespace obg.WebApi.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
+        [ServiceFilter(typeof(EmployeeAuthorizationAttributeFilter))]
+
+        [HttpDelete("{code}")]
         public IActionResult DeleteMedicine(string code)
         {
             try
