@@ -15,6 +15,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using obg.DataAccess.Repositories;
+using obg.DataAccess.Filters;
+using obg.BusinessLogic.Interface;
 
 namespace obg.WebApi
 {
@@ -51,6 +53,9 @@ namespace obg.WebApi
             services.AddScoped<IDemandManagement, DemandManagement>();
             services.AddScoped<IInvitationService, InvitationService>();
             services.AddScoped<IInvitationManagement, InvitationManagement>();
+            services.AddScoped<ISessionService, SessionService>();
+            services.AddScoped<ISessionManagement, SessionManagement>();
+            services.AddScoped<AuthorizationAttributeFilter>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,4 +1,5 @@
-﻿using obg.DataAccess.Interface.Interfaces;
+﻿using obg.BusinessLogic.Interface;
+using obg.DataAccess.Interface.Interfaces;
 using obg.Domain.Entities;
 using obg.Exceptions;
 using System;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace obg.BusinessLogic.Logics
 {
-    public class SessionService
+    public class SessionService : ISessionService
     {
         private readonly ISessionManagement _sessionManagement;
 
@@ -73,6 +74,11 @@ namespace obg.BusinessLogic.Logics
         private bool IsNameLogged(Session session)
         {
             return _sessionManagement.IsNameLogged(session);
+        }
+
+        public bool IsTokenValid(string token)
+        {
+            return _sessionManagement.IsTokenValid(token);
         }
     }
 }

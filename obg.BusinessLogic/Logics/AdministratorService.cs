@@ -33,7 +33,7 @@ namespace obg.BusinessLogic.Logics
         //    return administrator;
         //}
         
-        public Administrator InsertAdministrator(Administrator administrator)
+        public string InsertAdministrator(Administrator administrator)
         {
 
             if (IsAnAdministrator(administrator))

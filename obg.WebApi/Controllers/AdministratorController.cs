@@ -1,21 +1,26 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using obg.BusinessLogic.Interface;
 using obg.BusinessLogic.Interface.Interfaces;
 using obg.BusinessLogic.Logics;
+using obg.DataAccess.Filters;
 using obg.Domain.Entities;
 using obg.Exceptions;
 using System;
 
 namespace obg.WebApi.Controllers
 {
-    [ApiController]
     [Route("[controller]")]
+    [ApiController]
+    [ServiceFilter(typeof(AuthorizationAttributeFilter))]
     public class AdministratorController : ControllerBase
     {
         private readonly IAdministratorService administratorService;
-        public AdministratorController(IAdministratorService administratorService)
+        private readonly ISessionService sessionService;
+        public AdministratorController(IAdministratorService administratorService, ISessionService sessionService)
         {
             this.administratorService = administratorService;
+            this.sessionService = sessionService;   
         }
         // GET: <AdministratoryController>
         [HttpGet]

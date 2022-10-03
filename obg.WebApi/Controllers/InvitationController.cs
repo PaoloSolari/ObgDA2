@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using obg.BusinessLogic.Interface.Interfaces;
 using obg.BusinessLogic.Logics;
+using obg.DataAccess.Filters;
 using obg.Domain.Entities;
 using obg.Exceptions;
 using System;
@@ -10,6 +11,7 @@ namespace obg.WebApi.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [ServiceFilter(typeof(AuthorizationAttributeFilter))]
     public class InvitationController : ControllerBase
     {
 
