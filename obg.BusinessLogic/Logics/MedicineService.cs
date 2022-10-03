@@ -29,7 +29,9 @@ namespace obg.BusinessLogic.Logics
 
         public string InsertMedicine(Medicine medicine)
         {
-            if (IsMedicineValid(medicine))// && !IsCodeRegistered(medicine.Name))
+            medicine.IsActive = true;
+            medicine.Stock = 0;
+            if (IsMedicineValid(medicine))
             {
                 _medicineManagement.InsertMedicine(medicine);
             }
@@ -110,7 +112,9 @@ namespace obg.BusinessLogic.Logics
             {
                 throw new NotFoundException();
             }
-            _medicineManagement.DeleteMedicine(medicine);
+            medicine.IsActive = false;
+            //_medicineManagement.DeleteMedicine(medicine);
+            _medicineManagement.UpdateMedicine(medicine);
         }
 
         public IEnumerable<Medicine> GetMedicinesByName(string medicineName)

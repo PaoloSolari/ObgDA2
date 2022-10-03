@@ -70,12 +70,12 @@ namespace obg.WebApi.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult DeleteMedicine(string code)
+        [HttpDelete("{medicineCode}")]
+        public IActionResult DeleteMedicine([FromRoute] string medicineCode)
         {
             try
             {
-                medicineService.DeleteMedicine(code);
+                medicineService.DeleteMedicine(medicineCode);
                 return StatusCode(200, "Eliminación exitosa.");
             }
             catch (MedicineException exception)

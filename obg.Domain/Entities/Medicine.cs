@@ -13,6 +13,7 @@ namespace obg.Domain.Entities
         public int Quantity { get; set; }
         public string Unit { get; set; }
         public double Price { get; set; }
+        public int Stock { get; set; }
         public bool Prescription { get; set; }
         public bool IsActive { get; set; }
 
@@ -26,6 +27,7 @@ namespace obg.Domain.Entities
             Quantity = quantity;
             Unit = unit;
             Price = price;
+            Stock = 0;
             Prescription = prescription;
             IsActive = isActive;
         }

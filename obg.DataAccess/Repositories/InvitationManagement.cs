@@ -18,18 +18,29 @@ namespace obg.DataAccess.Repositories
 
         public void InsertInvitation(Invitation invitation)
         {
-            // Cuando insertás una invitación, se inserta la farmacia que tiene relacionada.
-            // Si existe la farmacia, tratas de no agregarla nuevamente.
+            // Obtienes en una variable 'pharmacyOfInvitation' la farmacia de la invitación.
             //Pharmacy pharmacyOfInvitation = ObgContext.Pharmacies.Where<Pharmacy>(p => p.Name.Equals(invitation.Pharmacy.Name)).AsNoTracking().FirstOrDefault();
-            //if (pharmacyOfInvitation != null)
-            //{
-            //    invitation.Pharmacy = null;
-            //}
+            //Pharmacy newPharmacy = DuplicatePharmacy(pharmacyOfInvitation);
+            //invitation.Pharmacy = null;
             ObgContext.Invitations.Add(invitation);
             ObgContext.SaveChanges();
-            //ObgContext.Invitations.Where<Invitation>(i => i.IdInvitation.Equals(invitation.IdInvitation)).AsNoTracking().FirstOrDefault().Pharmacy = pharmacyOfInvitation;
-            //invitationInsertered.Pharmacy = pharmacyOfInvitation;
+
+            // Luego, una vez tengas la invitación en la base de datos, las relacionas.
+            //Invitation invitationFromDB = ObgContext.Invitations.Where<Invitation>(i => i.IdInvitation.Equals(invitation.IdInvitation)).AsNoTracking().FirstOrDefault();
+            //invitationFromDB.Pharmacy = newPharmacy;
+            //ObgContext.Invitations.Update(invitationFromDB);
             //ObgContext.SaveChanges();
+        }
+
+        private Pharmacy DuplicatePharmacy(Pharmacy pharmacyOfInvitation)
+        {
+            Pharmacy newPharmacy = new Pharmacy();
+            newPharmacy.Name = pharmacyOfInvitation.Name;
+            newPharmacy.Address = pharmacyOfInvitation.Address;
+            newPharmacy.Owner = pharmacyOfInvitation.Owner;
+            newPharmacy.Employees = pharmacyOfInvitation.Employees;
+            newPharmacy.Medicines = pharmacyOfInvitation.Medicines;
+            return newPharmacy;
         }
 
         public IEnumerable<Invitation> GetInvitations()
@@ -45,6 +56,7 @@ namespace obg.DataAccess.Repositories
         public Invitation GetInvitationByCode(int code)
         {
             return ObgContext.Invitations.Where<Invitation>(i => i.UserCode == code).Include("Pharmacy").AsNoTracking().FirstOrDefault();
+            //return ObgContext.Invitations.Where<Invitation>(i => i.UserCode == code).AsNoTracking().FirstOrDefault();
         }
         public void UpdateInvitation(Invitation invitation)
         {
