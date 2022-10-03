@@ -56,19 +56,9 @@ namespace obg.DataAccess.Repositories
             return false;
         }
 
-        public bool IsUserNameOk(string userName)
-        {
-            Session session = ObgContext.Sessions.Where<Session>(s => s.UserName.Equals(userName)).AsNoTracking().FirstOrDefault();
-            if(session != null)
-            {
-                return true;
-            }
-            return false;
-        }
-
         public bool IsNameLogged(Session session)
         {
-            Session sessionDB = ObgContext.Sessions.Where<Session>(s => s.Token.Equals(session.Token)).AsNoTracking().FirstOrDefault();
+            Session sessionDB = ObgContext.Sessions.Where<Session>(s => s.UserName.Equals(session.UserName)).AsNoTracking().FirstOrDefault();
             if(sessionDB != null)
             {
                 return true;

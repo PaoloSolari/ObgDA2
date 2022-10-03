@@ -18,18 +18,16 @@ namespace obg.DataAccess.Repositories
 
         public void InsertInvitation(Invitation invitation)
         {
-            // Cuando insertás una invitación, se inserta la farmacia que tiene relacionada.
-            // Si existe la farmacia, tratas de no agregarla nuevamente.
-            //Pharmacy pharmacyOfInvitation = ObgContext.Pharmacies.Where<Pharmacy>(p => p.Name.Equals(invitation.Pharmacy.Name)).AsNoTracking().FirstOrDefault();
-            //if (pharmacyOfInvitation != null)
-            //{
-            //    invitation.Pharmacy = null;
-            //}
+            if (invitation.UserRole != 0)
+            {
+                Pharmacy pharmacyOfInvitation = ObgContext.Pharmacies.Where<Pharmacy>(p => p.Name.Equals(invitation.Pharmacy.Name)).AsNoTracking().FirstOrDefault();
+                if (pharmacyOfInvitation != null)
+                {
+                    ObgContext.Attach(invitation.Pharmacy);
+                }
+            }
             ObgContext.Invitations.Add(invitation);
             ObgContext.SaveChanges();
-            //ObgContext.Invitations.Where<Invitation>(i => i.IdInvitation.Equals(invitation.IdInvitation)).AsNoTracking().FirstOrDefault().Pharmacy = pharmacyOfInvitation;
-            //invitationInsertered.Pharmacy = pharmacyOfInvitation;
-            //ObgContext.SaveChanges();
         }
 
         public IEnumerable<Invitation> GetInvitations()

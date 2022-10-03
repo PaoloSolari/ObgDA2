@@ -20,17 +20,23 @@ namespace obg.BusinessLogic.Logics
             _userManagement = userManagement;
         }
 
-        public string InsertSession(Session session)
+        public string InsertSession(Session session, string password)
         {
-            if (IsSessionValid(session))
+            session.IdSession = CreateGuid();
+            session.Token = CreateGuid();
+            if (IsSessionValid(session, password))
             {
-                // Se agrega la Session a la DB: _sessionManagement.InsertSession(session);
                 _sessionManagement.InsertSession(session);
             }
             return session.Token;
         }
 
-        private bool IsSessionValid(Session session)
+        private string CreateGuid()
+        {
+            return Guid.NewGuid().ToString().Substring(0, 5);
+        }
+
+        private bool IsSessionValid(Session session, string password)
         {
             if (session == null)
             {
@@ -48,9 +54,9 @@ namespace obg.BusinessLogic.Logics
             {
                 throw new SessionException("Nombre de usuario inválido.");
             }
-            if (!IsUserNameOk(session.UserName))
+            if (!IsUserOk(session.UserName, password))
             {
-                throw new SessionException("El usuario no existe.");
+                throw new SessionException("Contraseña incorrecta.");
             }
             if (IsNameLogged(session))
             {
@@ -68,10 +74,22 @@ namespace obg.BusinessLogic.Logics
             return _sessionManagement.IsIdSessionRegistered(idSession);
         }
 
-        private bool IsUserNameOk(string userName)
+        private bool IsUserOk(string userName, string password)
         {
-            // Se chequea que el usuario exista en la DB.
-            return _sessionManagement.IsUserNameOk(userName);
+            User userFromDB = _userManagement.GetUserByName(userName);
+            if(userFromDB != null)
+            {
+                if (userFromDB.Password.Equals(password))
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                throw new NotFoundException("No existe el usuario");
+            }
+
+            return false;
         }
 
         private bool IsNameLogged(Session session)

@@ -12,7 +12,6 @@ namespace obg.BusinessLogic.Logics
 {
     public class MedicineService : IMedicineService
     {
-        protected List<Medicine> fakeDB = new List<Medicine>();
         protected Medicine validMedicine1;
         protected Medicine validMedicine2;
 
@@ -29,7 +28,9 @@ namespace obg.BusinessLogic.Logics
 
         public string InsertMedicine(Medicine medicine)
         {
-            if (IsMedicineValid(medicine))// && !IsCodeRegistered(medicine.Name))
+            medicine.IsActive = true;
+            medicine.Stock = 0;
+            if (IsMedicineValid(medicine))
             {
                 _medicineManagement.InsertMedicine(medicine);
             }
@@ -106,11 +107,13 @@ namespace obg.BusinessLogic.Logics
         public void DeleteMedicine(string code)
         {
             Medicine medicine = GetMedicineByCode(code);
-            if(medicine == null)
+            if (medicine == null)
             {
                 throw new NotFoundException();
             }
-            _medicineManagement.DeleteMedicine(medicine);
+            medicine.IsActive = false;
+            //_medicineManagement.DeleteMedicine(medicine);
+            _medicineManagement.UpdateMedicine(medicine);
         }
 
         public IEnumerable<Medicine> GetMedicinesByName(string medicineName)

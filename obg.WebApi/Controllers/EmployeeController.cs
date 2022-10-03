@@ -50,10 +50,10 @@ namespace obg.WebApi.Controllers
             {
                 return StatusCode(400, exception.Message);
             }
-            catch (Exception)
-            {
-                return StatusCode(500, "Error interno.");
-            }
+            //catch (Exception)
+            //{
+            //    return StatusCode(500, "Error interno.");
+            //}
         }
 
         [HttpPut("{name}")]
@@ -71,7 +71,7 @@ namespace obg.WebApi.Controllers
             {
                 return StatusCode(404, "No existe el usuario");
             }
-            catch (Exception )
+            catch (Exception)
             {
                 return StatusCode(500, "Erorr interno.");
             }
