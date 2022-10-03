@@ -85,5 +85,10 @@ namespace obg.DataAccess.Repositories
             }
             return false;
         }
+
+        public Session GetSessionByToken(string token)
+        {
+            return ObgContext.Sessions.Where<Session>(s => s.Token.Equals(token)).AsNoTracking().FirstOrDefault();
+        }
     }
 }

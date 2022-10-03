@@ -1,4 +1,5 @@
 ﻿using obg.Domain.Entities;
+using obg.Domain.Enums;
 
 namespace obg.BusinessLogic.Interface
 {
@@ -6,5 +7,6 @@ namespace obg.BusinessLogic.Interface
     {
         string InsertSession(Session session);
         bool IsTokenValid(string token);
+        RoleUser GetUserRole(string token);
     }
 }

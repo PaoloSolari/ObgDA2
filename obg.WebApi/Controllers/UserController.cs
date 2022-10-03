@@ -3,6 +3,7 @@ using obg.BusinessLogic.Interface.Interfaces;
 using obg.BusinessLogic.Logics;
 using obg.Domain.Entities;
 using obg.Exceptions;
+using obg.WebApi.Filters;
 using System;
 using System.Collections.Generic;
 
@@ -17,7 +18,9 @@ namespace obg.WebApi.Controllers
         {
             _userService = userService;
         }
-        
+
+        [ServiceFilter(typeof(AdministratorAuthorizationAttributeFilter))]
+
         [HttpPost]
         public IActionResult PostUser([FromBody] User user)
         {

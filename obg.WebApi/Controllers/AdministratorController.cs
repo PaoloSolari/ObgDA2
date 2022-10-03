@@ -3,24 +3,21 @@ using Microsoft.AspNetCore.Mvc;
 using obg.BusinessLogic.Interface;
 using obg.BusinessLogic.Interface.Interfaces;
 using obg.BusinessLogic.Logics;
-using obg.DataAccess.Filters;
 using obg.Domain.Entities;
 using obg.Exceptions;
+using obg.WebApi.Filters;
 using System;
 
 namespace obg.WebApi.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    [ServiceFilter(typeof(AuthorizationAttributeFilter))]
     public class AdministratorController : ControllerBase
     {
         private readonly IAdministratorService administratorService;
-        private readonly ISessionService sessionService;
-        public AdministratorController(IAdministratorService administratorService, ISessionService sessionService)
+        public AdministratorController(IAdministratorService administratorService)
         {
             this.administratorService = administratorService;
-            this.sessionService = sessionService;   
         }
         // GET: <AdministratoryController>
         [HttpGet]
@@ -37,6 +34,8 @@ namespace obg.WebApi.Controllers
         }
 
         // POST api/<AdministratorController>
+        [ServiceFilter(typeof(AdministratorAuthorizationAttributeFilter))]
+
         [HttpPost]
         public IActionResult PostAdministrator([FromBody] Administrator administrator)
         {

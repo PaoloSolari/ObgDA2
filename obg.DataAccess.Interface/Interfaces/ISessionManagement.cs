@@ -16,5 +16,6 @@ namespace obg.DataAccess.Interface.Interfaces
         bool IsUserNameOk(string userName);
         bool IsNameLogged(Session session);
         bool IsTokenValid(string token);
+        Session GetSessionByToken(string token);
     }
 }
