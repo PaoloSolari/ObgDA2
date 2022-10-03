@@ -53,18 +53,22 @@ namespace obg.BusinessLogic.Logics
                         Invitation invitation = _invitationManagement.GetInvitationByCode(owner.Code);
                         Pharmacy pharmacy = invitation.Pharmacy;
                         owner.Pharmacy = pharmacy;
-                        //aca validar farmacia
                         if (HasAPharmacy(owner))
                         {
-                            //_invitationManagement.InsertInvitation(invitation);
-                            //_pharmacyManagement.DeletePharmacy(pharmacy);
                             _ownerManagement.InsertOwner(owner);
                         }
                     } 
                     else
                     {
                         Employee employee = ParseToEmployee(user);
-                        _employeeManagement.InsertEmployee(employee);
+                        Invitation invitation = _invitationManagement.GetInvitationByCode(employee.Code);
+                        Pharmacy pharmacy = _pharmacyManagement.GetPharmacyByName(invitation.Pharmacy.Name);
+                        employee.Pharmacy = pharmacy;
+                        if (HasAPharmacy(employee))
+                        {
+                            _employeeManagement.InsertEmployee(employee);
+                        }
+                        
                     }
                     
                 }
@@ -285,6 +289,15 @@ namespace obg.BusinessLogic.Logics
             if (owner.Pharmacy == null)
             {
                 throw new UserException("El dueño no tiene una farmacia asignada.");
+            }
+            return true;
+        }
+
+        private bool HasAPharmacy(Employee employee)
+        {
+            if (employee.Pharmacy == null)
+            {
+                throw new UserException("El empleado no tiene una farmacia asignada.");
             }
             return true;
         }

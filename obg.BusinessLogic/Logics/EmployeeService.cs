@@ -9,7 +9,7 @@ using System.Text;
 
 namespace obg.BusinessLogic.Logics
 {
-    public class EmployeeService : UserService, IEmployeeService
+    public class EmployeeService : UserService
     {
         private readonly IEmployeeManagement _employeeManagement;
 
