@@ -7,7 +7,7 @@ namespace obg.DataAccess.Interface.Interfaces
 {
     public interface IPharmacyManagement
     {
-        void InsertPharmacy(Pharmacy pharmacy);
+        void InsertPharmacy(Pharmacy pharmacy, Session session);
         IEnumerable<Pharmacy> GetPharmacies();
         Pharmacy GetPharmacyByName(string name);
         void UpdatePharmacy(Pharmacy pharmacy);

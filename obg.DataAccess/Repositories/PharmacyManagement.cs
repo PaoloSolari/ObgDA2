@@ -18,7 +18,7 @@ namespace obg.DataAccess.Repositories
             this.ObgContext = obgContext;
         }
 
-        public void InsertPharmacy(Pharmacy pharmacy)
+        public void InsertPharmacy(Pharmacy pharmacy, Session session)
         {
             //Owner ownerOfPharmacy = ObgContext.Owners.Where<Owner>(o => o.Pharmacy == pharmacy).AsNoTracking().FirstOrDefault();
             //if (ownerOfPharmacy != null)
@@ -26,9 +26,28 @@ namespace obg.DataAccess.Repositories
             //    //pharmacy.Owner = ownerOfPharmacy;
             //    pharmacy.Owner = null;
             //}
+
+            string admnistratorName = session.UserName;
+            //Administrator admnistratorOfPharmacy = ObgContext.Administrators.Where<Administrator>(a => a.Name.Equals(admnistratorName)).AsNoTracking().FirstOrDefault();
+            Administrator admnistratorOfPharmacy = ObgContext.Administrators.Where<Administrator>(a => a.Name.Equals(admnistratorName)).Include("Pharmacies").AsNoTracking().FirstOrDefault();
+            if(admnistratorOfPharmacy != null)
+            {
+                if(admnistratorOfPharmacy.Pharmacies != null)
+                {
+                    admnistratorOfPharmacy.Pharmacies.Add(pharmacy);
+                }
+                else
+                {
+                    admnistratorOfPharmacy.Pharmacies = new List<Pharmacy>();
+                    admnistratorOfPharmacy.Pharmacies.Add(pharmacy);
+                }
+                ObgContext.Attach(admnistratorOfPharmacy);
+            }
+            
             ObgContext.Pharmacies.Add(pharmacy);
             ObgContext.SaveChanges();
         }
+
 
         public IEnumerable<Pharmacy> GetPharmacies()
         {

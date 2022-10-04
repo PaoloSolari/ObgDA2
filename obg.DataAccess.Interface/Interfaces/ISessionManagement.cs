@@ -10,11 +10,11 @@ namespace obg.DataAccess.Interface.Interfaces
         void InsertSession(Session session);
         IEnumerable<Session> GetSessions();
         Session GetSessionById(string id);
+        Session GetSessionByToken(string token);
         void UpdateSession(Session session);
         void DeleteSession(Session session);
         bool IsIdSessionRegistered(string idSession);
         bool IsNameLogged(Session session);
         bool IsTokenValid(string token);
-        Session GetSessionByToken(string token);
     }
 }
