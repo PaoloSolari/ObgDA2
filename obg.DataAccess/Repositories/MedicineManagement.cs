@@ -16,8 +16,20 @@ namespace obg.DataAccess.Repositories
             this.ObgContext = obgContext;
         }
 
-        public void InsertMedicine(Medicine medicine)
+        public void InsertMedicine(Medicine medicine, Session session)
         {
+            string employeeName = session.UserName;
+            Employee employeeCreatingMedicine = ObgContext.Employees.Where<Employee>(a => a.Name.Equals(employeeName)).Include("Pharmacy").AsNoTracking().FirstOrDefault();
+            if (employeeCreatingMedicine != null)
+            {
+                Pharmacy pharmacyOfEmployee = ObgContext.Pharmacies.Where<Pharmacy>(a => a.Name.Equals(employeeCreatingMedicine.Pharmacy.Name)).Include("Medicines").AsNoTracking().FirstOrDefault();
+                if (pharmacyOfEmployee != null)
+                {
+                    pharmacyOfEmployee.Medicines.Add(medicine);
+                    ObgContext.Attach(pharmacyOfEmployee);
+                }
+            }
+
             ObgContext.Medicines.Add(medicine);
             ObgContext.SaveChanges();
         }

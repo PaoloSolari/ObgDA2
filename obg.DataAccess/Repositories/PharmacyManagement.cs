@@ -20,15 +20,7 @@ namespace obg.DataAccess.Repositories
 
         public void InsertPharmacy(Pharmacy pharmacy, Session session)
         {
-            //Owner ownerOfPharmacy = ObgContext.Owners.Where<Owner>(o => o.Pharmacy == pharmacy).AsNoTracking().FirstOrDefault();
-            //if (ownerOfPharmacy != null)
-            //{
-            //    //pharmacy.Owner = ownerOfPharmacy;
-            //    pharmacy.Owner = null;
-            //}
-
             string admnistratorName = session.UserName;
-            //Administrator admnistratorOfPharmacy = ObgContext.Administrators.Where<Administrator>(a => a.Name.Equals(admnistratorName)).AsNoTracking().FirstOrDefault();
             Administrator admnistratorOfPharmacy = ObgContext.Administrators.Where<Administrator>(a => a.Name.Equals(admnistratorName)).Include("Pharmacies").AsNoTracking().FirstOrDefault();
             if(admnistratorOfPharmacy != null)
             {
