@@ -16,23 +16,26 @@ namespace obg.BusinessLogic.Logics
         protected Medicine validMedicine2;
 
         private readonly IMedicineManagement _medicineManagement;
+        private readonly ISessionManagement _sessionManagement;
 
-        public MedicineService(IMedicineManagement medicineManagement)
+        public MedicineService(IMedicineManagement medicineManagement, ISessionManagement sessionManagement)
         {
             _medicineManagement = medicineManagement;
+            _sessionManagement = sessionManagement;
         }
 
         public MedicineService()
         {
         }
 
-        public string InsertMedicine(Medicine medicine)
+        public string InsertMedicine(Medicine medicine, string token)
         {
             medicine.IsActive = true;
             medicine.Stock = 0;
             if (IsMedicineValid(medicine))
             {
-                _medicineManagement.InsertMedicine(medicine);
+                Session session = _sessionManagement.GetSessionByToken(token);
+                _medicineManagement.InsertMedicine(medicine, session);
             }
             return medicine.Code;
         }
@@ -76,7 +79,15 @@ namespace obg.BusinessLogic.Logics
 
         private bool IsCodeRegistered(string code)
         {
-            return _medicineManagement.IsCodeRegistered(code);
+            IEnumerable<Medicine> medicinesFromDB = _medicineManagement.GetMedicines();
+            foreach (Medicine medicine in medicinesFromDB)
+            {
+                if (medicine.IsActive && medicine.Code.Equals(code))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public IEnumerable<Medicine> GetMedicines()
@@ -129,9 +140,7 @@ namespace obg.BusinessLogic.Logics
             {
                 throw new NotFoundException();
             }
-            medicine.IsActive = false;
-            //_medicineManagement.DeleteMedicine(medicine);
-            _medicineManagement.UpdateMedicine(medicine);
+            _medicineManagement.DeleteMedicine(medicine);
         }
 
         public IEnumerable<Medicine> GetMedicinesByName(string medicineName)

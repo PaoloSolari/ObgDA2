@@ -10,8 +10,8 @@ using System.Runtime.InteropServices.WindowsRuntime;
 namespace obg.WebApi.Controllers
 {
     [ApiController]
-    [ServiceFilter(typeof(EmployeeAuthorizationAttributeFilter))]
     [Route("[controller]")]
+    [ServiceFilter(typeof(EmployeeAuthorizationAttributeFilter))]
     public class MedicineController : ControllerBase
     {
         private readonly IMedicineService medicineService;
@@ -55,26 +55,22 @@ namespace obg.WebApi.Controllers
             }
         }
 
-
-        //[ServiceFilter(typeof(EmployeeAuthorizationAttributeFilter))]
         [HttpPost]
-        public IActionResult PostMedicine([FromBody] Medicine medicine)
+        public IActionResult PostMedicine([FromBody] Medicine medicine, [FromHeader] string token)
         {
             try
             {
-                return StatusCode(200, "Código del medicamento: " + medicineService.InsertMedicine(medicine));
+                return StatusCode(200, "Código del medicamento: " + medicineService.InsertMedicine(medicine, token));
             }
             catch (MedicineException exception)
             {
                 return StatusCode(400, exception.Message);
             }
-            //catch (Exception)
-            //{
-            //    return StatusCode(500, "Error interno.");
-            //}
+            catch (Exception)
+            {
+                return StatusCode(500, "Error interno.");
+            }
         }
-
-        //[ServiceFilter(typeof(EmployeeAuthorizationAttributeFilter))]
 
         [HttpDelete("{code}")]
         public IActionResult DeleteMedicine(string code)

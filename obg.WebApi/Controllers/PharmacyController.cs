@@ -6,8 +6,6 @@ using obg.WebApi.Filters;
 using System;
 using System.Collections.Generic;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace obg.WebApi.Controllers
 {
     
@@ -33,10 +31,10 @@ namespace obg.WebApi.Controllers
             {
                 return StatusCode(400, exception.Message);
             }
-            //catch (Exception)
-            //{
-            //    return StatusCode(500, "Error interno.");
-            //}
+            catch (Exception)
+            {
+                return StatusCode(500, "Error interno.");
+            }
         }
     }
 }

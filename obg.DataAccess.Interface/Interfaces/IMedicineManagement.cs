@@ -7,7 +7,7 @@ namespace obg.DataAccess.Interface.Interfaces
 {
     public interface IMedicineManagement
     {
-        void InsertMedicine(Medicine medicine);
+        void InsertMedicine(Medicine medicine, Session session);
         IEnumerable<Medicine> GetMedicines();
         Medicine GetMedicineByCode(string code);
         void UpdateMedicine(Medicine medicine);
