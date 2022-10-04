@@ -19,7 +19,6 @@ namespace obg.WebApi.Controllers
             this.demandService = demandService;
         }
 
-        // GET: <DemandController>
         [ServiceFilter(typeof(OwnerAuthorizationAttributeFilter))]
         [HttpGet]
         public IActionResult GetDemands()
@@ -41,7 +40,6 @@ namespace obg.WebApi.Controllers
         }
 
         [ServiceFilter(typeof(EmployeeAuthorizationAttributeFilter))]
-        // POST api/<DemandController>
         [HttpPost]
         public IActionResult PostDemand([FromBody] Demand demand)
         {
