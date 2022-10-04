@@ -33,133 +33,55 @@ namespace obg.DataAccess.Repositories
             ObgContext.Medicines.Add(medicine);
             ObgContext.SaveChanges();
         }
-        //    #region before
-        //    //if (employeeCreatingMedicine != null)
-        //    //{
-        //    //    string namePharamacyOfEmployee = employeeCreatingMedicine.Pharmacy.Name;
-        //    //    Pharmacy pharmacyOfEmployee = ObgContext.Pharmacies.Where<Pharmacy>(a => a.Name.Equals(namePharamacyOfEmployee)).Include("Medicines").AsNoTracking().FirstOrDefault();
-        //    //    if (employeeCreatingMedicine.Pharmacy != null)
-        //    //    {
-        //    //        pharmacyOfEmployee.Medicines.Add(medicine);
-        //    //        employeeCreatingMedicine.Pharmacy.Medicines.Add(medicine);
 
-        //    //    // Op: 1
-        //    //        foreach (Medicine newMedicine in pharmacyOfEmployee.Medicines)
-        //    //        {
-        //    //            ObgContext.Attach(pharmacyOfEmployee);
-        //    //        }
+        /*
+        public void InsertMedicine(Medicine medicine, Session session)
+        {
+            string employeeName = session.UserName;
+            Employee employeeCreatingMedicine = ObgContext.Employees.Where<Employee>(a => a.Name.Equals(employeeName)).Include("Pharmacy").FirstOrDefault();
+            if (employeeCreatingMedicine != null)
+            {
+                Pharmacy pharmacyOfEmployee = ObgContext.Pharmacies.Where<Pharmacy>(a => a.Name.Equals(employeeCreatingMedicine.Pharmacy.Name)).Include("Medicines").FirstOrDefault();
+                if (pharmacyOfEmployee != null)
+                {
+                    int preInsertCount = pharmacyOfEmployee.Medicines.Count;
+                    pharmacyOfEmployee.Medicines.Add(medicine);
+                    if (preInsertCount == 0) // Nos evita la excepción.
+                    {
+                        ObgContext.Attach(pharmacyOfEmployee);
+                    }
+                    else
+                    {
+                        List<Medicine> updateMedicines = new List<Medicine>();
+                        int count = 0;
+                        foreach (Medicine copyMedicine in pharmacyOfEmployee.Medicines)
+                        {
+                            Medicine newMedicine = CloneMedicine(copyMedicine);
+                            updateMedicines.Add(newMedicine);
+                            count++;
+                        }
+                        
+                        pharmacyOfEmployee.Medicines.RemoveRange(0, count);
 
-        //    //    // Op 2:
-        //    //        ObgContext.Attach(employeeCreatingMedicine.Pharmacy);
-        //    //    }
-        //    //}
-        //    #endregion
+                        ObgContext.SaveChanges();
 
-        //    ObgContext.Medicines.Add(medicine);
-        //    ObgContext.SaveChanges();
-        //}
+                        Employee employeeCreatingMedicineNOW = ObgContext.Employees.Where<Employee>(a => a.Name.Equals(employeeName)).Include("Pharmacy").AsNoTracking().FirstOrDefault();
+                        Pharmacy pharmacyOfEmployeeNOW = ObgContext.Pharmacies.Where<Pharmacy>(a => a.Name.Equals(employeeCreatingMedicine.Pharmacy.Name)).Include("Medicines").AsNoTracking().FirstOrDefault();
+                        foreach (Medicine newMedicine in updateMedicines)
+                        {
+                            pharmacyOfEmployeeNOW.Medicines.Add(newMedicine);
+                        }
 
-        //public void InsertMedicine(Medicine medicine, Session session)
-        //{
-        //    string employeeName = session.UserName;
-        //    Employee employeeCreatingMedicine = ObgContext.Employees.Where<Employee>(a => a.Name.Equals(employeeName)).Include("Pharmacy").AsNoTracking().FirstOrDefault();
-        //    if (employeeCreatingMedicine != null)
-        //    {
-        //        Pharmacy pharmacyOfEmployee = ObgContext.Pharmacies.Where<Pharmacy>(a => a.Name.Equals(employeeCreatingMedicine.Pharmacy.Name)).Include("Medicines").AsNoTracking().FirstOrDefault();
-        //        if (pharmacyOfEmployee != null)
-        //        {
-        //            // Op 1:
-        //            ////int preInsertCount = pharmacyOfEmployee.Medicines.Count;
-        //            ////ObgContext.Entry(employeeCreatingMedicine).State = EntityState.Detached;
-        //            ////pharmacyOfEmployee.Medicines.Add(medicine);
-        //            ////if (preInsertCount == 0) // Nos evita la excepción.
-        //            ////{
-        //            ////    ObgContext.Attach(pharmacyOfEmployee);
-        //            ////}
+                        ObgContext.Attach(pharmacyOfEmployeeNOW);
+                        ObgContext.SaveChanges();
+                    }
+                }
+            }
 
-        //            // Op2:
-        //            List<Medicine> updateMedicines = new List<Medicine>();
-        //            foreach (Medicine copyMedicine in pharmacyOfEmployee.Medicines)
-        //            {
-        //                Medicine newMedicine = CloneMedicine(copyMedicine);
-        //                updateMedicines.Add(newMedicine);
-        //            }
-        //            pharmacyOfEmployee.Medicines = null;
-        //            ObgContext.SaveChanges();
-
-
-        //            Employee employeeCreatingMedicineNOW = ObgContext.Employees.Where<Employee>(a => a.Name.Equals(employeeName)).Include("Pharmacy").AsNoTracking().FirstOrDefault();
-        //            Pharmacy pharmacyOfEmployeeNOW = ObgContext.Pharmacies.Where<Pharmacy>(a => a.Name.Equals(employeeCreatingMedicine.Pharmacy.Name)).Include("Medicines").AsNoTracking().FirstOrDefault();
-        //            foreach (Medicine newMedicine in updateMedicines)
-        //            {
-        //                pharmacyOfEmployeeNOW.Medicines.Add(newMedicine);
-        //            }
-
-        //            //pharmacyOfEmployee.Medicines = updateMedicines;
-        //            ObgContext.Attach(pharmacyOfEmployeeNOW);
-        //            ObgContext.SaveChanges();
-
-        //        } 
-        //    }
-
-        //    ObgContext.Medicines.Add(medicine);
-        //    ObgContext.SaveChanges();
-        //}
-
-        //    public void InsertMedicine(Medicine medicine, Session session)
-        //{
-        //    string employeeName = session.UserName;
-        //    Employee employeeCreatingMedicine = ObgContext.Employees.Where<Employee>(a => a.Name.Equals(employeeName)).Include("Pharmacy").AsNoTracking().FirstOrDefault();
-        //    if (employeeCreatingMedicine != null)
-        //    {
-        //        Pharmacy pharmacyOfEmployee = ObgContext.Pharmacies.Where<Pharmacy>(a => a.Name.Equals(employeeCreatingMedicine.Pharmacy.Name)).Include("Medicines").AsNoTracking().FirstOrDefault();
-        //        if (pharmacyOfEmployee != null)
-        //        {
-        //            int preInsertCount = pharmacyOfEmployee.Medicines.Count;
-        //            pharmacyOfEmployee.Medicines.Add(medicine);
-        //            if (preInsertCount == 0) // Nos evita la excepción.
-        //            {
-        //                ObgContext.Attach(pharmacyOfEmployee);
-        //            }
-        //            else
-        //            {
-        //                List<Medicine> updateMedicines = new List<Medicine>();
-        //                int count = 0;
-        //                foreach (Medicine copyMedicine in pharmacyOfEmployee.Medicines)
-        //                {
-        //                    Medicine newMedicine = CloneMedicine(copyMedicine);
-        //                    updateMedicines.Add(newMedicine);
-        //                    count++;
-        //                }
-        //                //for (int i = 0; i < count; i++)
-        //                //{
-        //                //    pharmacyOfEmployee.Medicines.RemoveAt(i);
-        //                //}
-        //                //pharmacyOfEmployee.Medicines = null;
-
-        //                pharmacyOfEmployee.Medicines.RemoveRange(0, count);
-
-        //                ObgContext.SaveChanges();
-
-
-        //                Employee employeeCreatingMedicineNOW = ObgContext.Employees.Where<Employee>(a => a.Name.Equals(employeeName)).Include("Pharmacy").AsNoTracking().FirstOrDefault();
-        //                Pharmacy pharmacyOfEmployeeNOW = ObgContext.Pharmacies.Where<Pharmacy>(a => a.Name.Equals(employeeCreatingMedicine.Pharmacy.Name)).Include("Medicines").AsNoTracking().FirstOrDefault();
-        //                foreach (Medicine newMedicine in updateMedicines)
-        //                {
-        //                    pharmacyOfEmployeeNOW.Medicines.Add(newMedicine);
-        //                }
-
-        //                //pharmacyOfEmployee.Medicines = updateMedicines;
-        //                ObgContext.Attach(pharmacyOfEmployeeNOW);
-        //                ObgContext.SaveChanges();
-        //            }
-        //        }
-        //    }
-
-        //    ObgContext.Medicines.Add(medicine);
-        //    ObgContext.SaveChanges();
-        //}
-
+            ObgContext.Medicines.Add(medicine);
+            ObgContext.SaveChanges();
+        }
+        
         private Medicine CloneMedicine(Medicine medicine)
         {
             Medicine newMedicine = new Medicine();
@@ -175,6 +97,7 @@ namespace obg.DataAccess.Repositories
             newMedicine.IsActive = medicine.IsActive;
             return newMedicine;
         }
+        */
 
         public IEnumerable<Medicine> GetMedicines()
         {
