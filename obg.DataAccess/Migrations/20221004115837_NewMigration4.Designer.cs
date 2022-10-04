@@ -9,8 +9,8 @@ using obg.DataAccess.Context;
 namespace obg.DataAccess.Migrations
 {
     [DbContext(typeof(ObgContext))]
-    [Migration("20221003231739_NewMigration0")]
-    partial class NewMigration0
+    [Migration("20221004115837_NewMigration4")]
+    partial class NewMigration4
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -25,7 +25,7 @@ namespace obg.DataAccess.Migrations
                     b.Property<string>("IdDemand")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("EmployeeName")
+                    b.Property<string>("PharmacyName")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Status")
@@ -33,7 +33,7 @@ namespace obg.DataAccess.Migrations
 
                     b.HasKey("IdDemand");
 
-                    b.HasIndex("EmployeeName");
+                    b.HasIndex("PharmacyName");
 
                     b.ToTable("Demands");
                 });
@@ -133,17 +133,7 @@ namespace obg.DataAccess.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("AdministratorName")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("OwnerName")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Name");
-
-                    b.HasIndex("AdministratorName");
-
-                    b.HasIndex("OwnerName");
 
                     b.ToTable("Pharmacies");
                 });
@@ -233,6 +223,11 @@ namespace obg.DataAccess.Migrations
                 {
                     b.HasBaseType("obg.Domain.Entities.User");
 
+                    b.Property<string>("PharmacyName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasIndex("PharmacyName");
+
                     b.ToTable("Administrators");
                 });
 
@@ -252,14 +247,19 @@ namespace obg.DataAccess.Migrations
                 {
                     b.HasBaseType("obg.Domain.Entities.User");
 
+                    b.Property<string>("PharmacyName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasIndex("PharmacyName");
+
                     b.ToTable("Owners");
                 });
 
             modelBuilder.Entity("obg.Domain.Entities.Demand", b =>
                 {
-                    b.HasOne("obg.Domain.Entities.Employee", null)
+                    b.HasOne("obg.Domain.Entities.Pharmacy", null)
                         .WithMany("Demands")
-                        .HasForeignKey("EmployeeName");
+                        .HasForeignKey("PharmacyName");
                 });
 
             modelBuilder.Entity("obg.Domain.Entities.Invitation", b =>
@@ -285,19 +285,6 @@ namespace obg.DataAccess.Migrations
                         .HasForeignKey("DemandIdDemand");
                 });
 
-            modelBuilder.Entity("obg.Domain.Entities.Pharmacy", b =>
-                {
-                    b.HasOne("obg.Domain.Entities.Administrator", null)
-                        .WithMany("Pharmacies")
-                        .HasForeignKey("AdministratorName");
-
-                    b.HasOne("obg.Domain.Entities.Owner", "Owner")
-                        .WithMany()
-                        .HasForeignKey("OwnerName");
-
-                    b.Navigation("Owner");
-                });
-
             modelBuilder.Entity("obg.Domain.Entities.PurchaseLine", b =>
                 {
                     b.HasOne("obg.Domain.Entities.Purchase", null)
@@ -312,6 +299,12 @@ namespace obg.DataAccess.Migrations
                         .HasForeignKey("obg.Domain.Entities.Administrator", "Name")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
+
+                    b.HasOne("obg.Domain.Entities.Pharmacy", "Pharmacy")
+                        .WithMany()
+                        .HasForeignKey("PharmacyName");
+
+                    b.Navigation("Pharmacy");
                 });
 
             modelBuilder.Entity("obg.Domain.Entities.Employee", b =>
@@ -322,9 +315,11 @@ namespace obg.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
-                    b.HasOne("obg.Domain.Entities.Pharmacy", null)
-                        .WithMany("Employees")
+                    b.HasOne("obg.Domain.Entities.Pharmacy", "Pharmacy")
+                        .WithMany()
                         .HasForeignKey("PharmacyName");
+
+                    b.Navigation("Pharmacy");
                 });
 
             modelBuilder.Entity("obg.Domain.Entities.Owner", b =>
@@ -334,6 +329,12 @@ namespace obg.DataAccess.Migrations
                         .HasForeignKey("obg.Domain.Entities.Owner", "Name")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
+
+                    b.HasOne("obg.Domain.Entities.Pharmacy", "Pharmacy")
+                        .WithMany()
+                        .HasForeignKey("PharmacyName");
+
+                    b.Navigation("Pharmacy");
                 });
 
             modelBuilder.Entity("obg.Domain.Entities.Demand", b =>
@@ -343,7 +344,7 @@ namespace obg.DataAccess.Migrations
 
             modelBuilder.Entity("obg.Domain.Entities.Pharmacy", b =>
                 {
-                    b.Navigation("Employees");
+                    b.Navigation("Demands");
 
                     b.Navigation("Medicines");
                 });
@@ -351,16 +352,6 @@ namespace obg.DataAccess.Migrations
             modelBuilder.Entity("obg.Domain.Entities.Purchase", b =>
                 {
                     b.Navigation("PurchaseLines");
-                });
-
-            modelBuilder.Entity("obg.Domain.Entities.Administrator", b =>
-                {
-                    b.Navigation("Pharmacies");
-                });
-
-            modelBuilder.Entity("obg.Domain.Entities.Employee", b =>
-                {
-                    b.Navigation("Demands");
                 });
 #pragma warning restore 612, 618
         }
