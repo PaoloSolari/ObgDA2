@@ -14,22 +14,43 @@ namespace obg.BusinessLogic.Logics
     public class DemandService : IDemandService
     {
         private readonly IDemandManagement _demandManagement;
+        private readonly ISessionManagement _sessionManagement;
+        private readonly IMedicineManagement _medicineManagement;
 
-        public DemandService(IDemandManagement demandManagement)
+        public DemandService(IDemandManagement demandManagement, ISessionManagement sessionManagement, IMedicineManagement medicineManagement)
         {
             _demandManagement = demandManagement;
+            _sessionManagement = sessionManagement;
+            _medicineManagement = medicineManagement;
         }
 
         public DemandService()
         {
         }
-        public string InsertDemand(Demand demand)
+        public string InsertDemand(Demand demand, string token)
         {
+            demand.IdDemand = CreateId();
+            demand.Status = DemandStatus.InProgress;
+            SetIdsPetitionOfDemand(demand.Petitions);
             if (IsDemandValid(demand))
             {
-                _demandManagement.InsertDemand(demand);
+                Session session = _sessionManagement.GetSessionByToken(token);
+                _demandManagement.InsertDemand(demand, session);
             }
             return demand.IdDemand;
+        }
+
+        private string CreateId()
+        {
+            return Guid.NewGuid().ToString().Substring(0, 5);
+        }
+
+        private void SetIdsPetitionOfDemand(List<Petition> petitions)
+        {
+            foreach (Petition petition in petitions)
+            {
+                petition.IdPetition = CreateId();
+            }
         }
 
         private bool IsDemandValid(Demand demand)
@@ -50,12 +71,29 @@ namespace obg.BusinessLogic.Logics
             {
                 throw new DemandException("Solicitud inválida.");
             }
+            if (!ExistAllMedicines(demand.Petitions))
+            {
+                throw new NotFoundException();
+            }
             return true;
         }
 
         public bool IsIdDemandRegistered(string idDemand)
         {
             return _demandManagement.DemandExists(idDemand);
+        }
+
+        private bool ExistAllMedicines(List<Petition> petitions)
+        {
+            foreach (Petition petition  in petitions)
+            {
+                Medicine medicineCode = _medicineManagement.GetMedicineByCode(petition.MedicineCode);
+                if(medicineCode == null)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public IEnumerable<Demand> GetDemands()

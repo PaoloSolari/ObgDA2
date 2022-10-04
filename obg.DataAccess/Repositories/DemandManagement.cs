@@ -16,8 +16,20 @@ namespace obg.DataAccess.Repositories
             this.ObgContext = obgContext;
         }
 
-        public void InsertDemand(Demand demand)
+        public void InsertDemand(Demand demand, Session session)
         {
+            string employeeName = session.UserName;
+            Employee employeeCreatingDemand = ObgContext.Employees.Where<Employee>(a => a.Name.Equals(employeeName)).Include("Pharmacy").FirstOrDefault();
+            if (employeeCreatingDemand != null)
+            {
+                Pharmacy pharmacyOfEmployee = ObgContext.Pharmacies.Where<Pharmacy>(a => a.Name.Equals(employeeCreatingDemand.Pharmacy.Name)).Include("Demands").FirstOrDefault();
+                if (pharmacyOfEmployee != null)
+                {
+                    pharmacyOfEmployee.Demands.Add(demand);
+                    ObgContext.Attach(pharmacyOfEmployee);
+                }
+            }
+
             ObgContext.Demands.Add(demand);
             ObgContext.SaveChanges();
         }
