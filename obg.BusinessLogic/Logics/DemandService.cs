@@ -96,28 +96,38 @@ namespace obg.BusinessLogic.Logics
             return true;
         }
 
-        public IEnumerable<Demand> GetDemands()
+        public IEnumerable<Demand> GetDemands(string token)
         {
-            IEnumerable<Demand> demands = _demandManagement.GetDemands();
+            Session session = _sessionManagement.GetSessionByToken(token);
+            IEnumerable<Demand> demands = _demandManagement.GetDemands(session);
             if(demands == null)
             {
                 throw new NotFoundException("No hay solicitudes de reposición de stock.");
             }
-            return _demandManagement.GetDemands();
+            return demands;
         }
 
-        public string UpdateDemand(Demand demandToUpdate)
+        public string UpdateDemand(string id, Demand demandToUpdate)
         {
-            if (IsDemandValid(demandToUpdate)) 
+
+            Demand demand = _demandManagement.GetDemandById(id);
+            if (demand == null)
             {
-                Demand demand = _demandManagement.GetDemandById(demandToUpdate.IdDemand);
-                if (demand == null)
-                {
-                    throw new NotFoundException("No existe la solicitud de reposición de stock");
-                }
-                _demandManagement.UpdateDemand(demandToUpdate);
+                throw new NotFoundException("No existe la solicitud de reposición de stock");
             }
-            return demandToUpdate.IdDemand;
+            bool isAlreadySaw = demand.Status == DemandStatus.Accepted || demand.Status == DemandStatus.Rejected;
+            if (!isAlreadySaw)
+            {
+                demand.Status = demandToUpdate.Status;
+                _demandManagement.UpdateDemand(demand);
+            }
+            else
+            {
+                throw new DemandException("Ya se realizó la reposición de stock para dicha demanda.");
+            }
+            
+            
+            return id;
         }
 
         public Demand GetDemandById(string id)

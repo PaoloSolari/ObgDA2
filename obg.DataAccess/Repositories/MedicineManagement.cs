@@ -134,7 +134,7 @@ namespace obg.DataAccess.Repositories
 
         public IEnumerable<Medicine> GetMedicinesByName(string name)
         {
-            return ObgContext.Medicines.ToList().Where<Medicine>(m => m.Code.Equals(name));
+            return ObgContext.Medicines.ToList().Where<Medicine>(m => m.Name.Equals(name));
         }
     }
 }
