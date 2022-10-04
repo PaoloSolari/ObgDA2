@@ -41,20 +41,24 @@ namespace obg.WebApi.Controllers
 
         [ServiceFilter(typeof(EmployeeAuthorizationAttributeFilter))]
         [HttpPost]
-        public IActionResult PostDemand([FromBody] Demand demand)
+        public IActionResult PostDemand([FromBody] Demand demand, [FromHeader] string token)
         {
             try
             {
-                return StatusCode(200, "Solicitud " + demandService.InsertDemand(demand) + " exitosa.");
+                return StatusCode(200, "Solicitud " + demandService.InsertDemand(demand, token) + " exitosa.");
             }
             catch (DemandException exception)
             {
                 return StatusCode(400, exception.Message);
             }
-            catch (Exception)
+            catch (NotFoundException)
             {
-                return StatusCode(500, "Error interno.");
+                return StatusCode(404, "Solicitud de medicamento inexistente.");
             }
+            //catch (Exception)
+            //{
+            //    return StatusCode(500, "Error interno.");
+            //}
         }
 
         [ServiceFilter(typeof(OwnerAuthorizationAttributeFilter))]

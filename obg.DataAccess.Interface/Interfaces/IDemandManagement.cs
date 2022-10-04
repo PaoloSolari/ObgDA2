@@ -7,7 +7,7 @@ namespace obg.DataAccess.Interface.Interfaces
 {
     public interface IDemandManagement
     {
-        void InsertDemand(Demand demand);
+        void InsertDemand(Demand demand, Session session);
         IEnumerable<Demand> GetDemands();
         Demand GetDemandById(string id);
         void UpdateDemand(Demand demand);
