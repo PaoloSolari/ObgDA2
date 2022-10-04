@@ -131,7 +131,12 @@ namespace obg.DataAccess.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("AdministratorName")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Name");
+
+                    b.HasIndex("AdministratorName");
 
                     b.ToTable("Pharmacies");
                 });
@@ -221,11 +226,6 @@ namespace obg.DataAccess.Migrations
                 {
                     b.HasBaseType("obg.Domain.Entities.User");
 
-                    b.Property<string>("PharmacyName")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasIndex("PharmacyName");
-
                     b.ToTable("Administrators");
                 });
 
@@ -283,6 +283,13 @@ namespace obg.DataAccess.Migrations
                         .HasForeignKey("DemandIdDemand");
                 });
 
+            modelBuilder.Entity("obg.Domain.Entities.Pharmacy", b =>
+                {
+                    b.HasOne("obg.Domain.Entities.Administrator", null)
+                        .WithMany("Pharmacies")
+                        .HasForeignKey("AdministratorName");
+                });
+
             modelBuilder.Entity("obg.Domain.Entities.PurchaseLine", b =>
                 {
                     b.HasOne("obg.Domain.Entities.Purchase", null)
@@ -297,12 +304,6 @@ namespace obg.DataAccess.Migrations
                         .HasForeignKey("obg.Domain.Entities.Administrator", "Name")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
-
-                    b.HasOne("obg.Domain.Entities.Pharmacy", "Pharmacy")
-                        .WithMany()
-                        .HasForeignKey("PharmacyName");
-
-                    b.Navigation("Pharmacy");
                 });
 
             modelBuilder.Entity("obg.Domain.Entities.Employee", b =>
@@ -350,6 +351,11 @@ namespace obg.DataAccess.Migrations
             modelBuilder.Entity("obg.Domain.Entities.Purchase", b =>
                 {
                     b.Navigation("PurchaseLines");
+                });
+
+            modelBuilder.Entity("obg.Domain.Entities.Administrator", b =>
+                {
+                    b.Navigation("Pharmacies");
                 });
 #pragma warning restore 612, 618
         }

@@ -33,6 +33,11 @@ namespace obg.DataAccess.Repositories
             return ObgContext.Sessions.Where<Session>(d => d.IdSession == id).AsNoTracking().FirstOrDefault();
         }
 
+        public Session GetSessionByToken(string token)
+        {
+            return ObgContext.Sessions.Where<Session>(s => s.Token.Equals(token)).AsNoTracking().FirstOrDefault();
+        }
+
         public void UpdateSession(Session session)
         {
             ObgContext.Sessions.Attach(session);
@@ -74,11 +79,6 @@ namespace obg.DataAccess.Repositories
                 return true;
             }
             return false;
-        }
-
-        public Session GetSessionByToken(string token)
-        {
-            return ObgContext.Sessions.Where<Session>(s => s.Token.Equals(token)).AsNoTracking().FirstOrDefault();
         }
     }
 }

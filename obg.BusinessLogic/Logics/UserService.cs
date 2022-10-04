@@ -281,7 +281,6 @@ namespace obg.BusinessLogic.Logics
             employee.Role = RoleUser.Employee;
             employee.RegisterDate = user.RegisterDate;
             employee.Pharmacy = new Pharmacy();
-            employee.Demands = new List<Demand>();
             return employee;
         }
 

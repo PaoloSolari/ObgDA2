@@ -23,11 +23,11 @@ namespace obg.WebApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult PostPharmacy([FromBody] Pharmacy pharmacy)
+        public IActionResult PostPharmacy([FromBody] Pharmacy pharmacy, [FromHeader] string token)
         {
             try
             {
-                return StatusCode(200, "Nombre de la farmacia ingresada: " + pharmacyService.InsertPharmacy(pharmacy));
+                return StatusCode(200, "Nombre de la farmacia ingresada: " + pharmacyService.InsertPharmacy(pharmacy, token));
             }
             catch (PharmacyException exception)
             {
