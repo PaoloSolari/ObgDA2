@@ -11,23 +11,16 @@ namespace obg.Domain.Entities
     {
         [Key] public string Name { get; set; }
         public string Address { get; set; }
-        public Owner Owner { get; set; }
-        public List<Employee> Employees { get; set; }
         public List<Medicine> Medicines { get; set; }
+        public List<Demand> Demands { get; set; }
 
         public Pharmacy() { }
-        public Pharmacy(string name, string address, Owner owner)
+        public Pharmacy(string name, string address)
         {
             Name = name;
             Address = address;
-            Owner = owner;
-            Employees = new List<Employee>();
             Medicines = new List<Medicine>();
-        }
-
-        public void AddEmployee(Employee employee)
-        {
-            Employees.Add(employee);
+            Demands = new List<Demand>();
         }
 
         public override bool Equals(object obj)

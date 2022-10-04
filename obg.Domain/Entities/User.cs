@@ -8,7 +8,6 @@ namespace obg.Domain.Entities
 {
     public class User
     {
-        //[Key] public int Id { get; set; }
         [Key] public string Name { get; set; }
         public int Code { get; set; }
         public string Email { get; set; }
