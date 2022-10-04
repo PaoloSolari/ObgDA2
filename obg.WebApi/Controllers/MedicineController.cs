@@ -10,6 +10,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 namespace obg.WebApi.Controllers
 {
     [ApiController]
+    [ServiceFilter(typeof(EmployeeAuthorizationAttributeFilter))]
     [Route("[controller]")]
     public class MedicineController : ControllerBase
     {
@@ -54,8 +55,8 @@ namespace obg.WebApi.Controllers
             }
         }
 
-        [ServiceFilter(typeof(EmployeeAuthorizationAttributeFilter))]
 
+        //[ServiceFilter(typeof(EmployeeAuthorizationAttributeFilter))]
         [HttpPost]
         public IActionResult PostMedicine([FromBody] Medicine medicine)
         {
@@ -67,13 +68,13 @@ namespace obg.WebApi.Controllers
             {
                 return StatusCode(400, exception.Message);
             }
-            catch (Exception)
-            {
-                return StatusCode(500, "Error interno.");
-            }
+            //catch (Exception)
+            //{
+            //    return StatusCode(500, "Error interno.");
+            //}
         }
 
-        [ServiceFilter(typeof(EmployeeAuthorizationAttributeFilter))]
+        //[ServiceFilter(typeof(EmployeeAuthorizationAttributeFilter))]
 
         [HttpDelete("{code}")]
         public IActionResult DeleteMedicine(string code)

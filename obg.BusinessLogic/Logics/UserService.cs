@@ -42,22 +42,23 @@ namespace obg.BusinessLogic.Logics
                 SetDefaultUserPreRegister(user);
                 if (IsUserValid(user))
                 {
-                    if(user.Role == RoleUser.Administrator)
+                    if (user.Role == RoleUser.Administrator)
                     {
                         Administrator administrator = ParseToAdministrator(user);
                         _administratorManagement.InsertAdministrator(administrator);
-                    } 
+                    }
                     else if (user.Role == RoleUser.Owner)
                     {
                         Owner owner = ParseToOwner(user);
                         Invitation invitation = _invitationManagement.GetInvitationByCode(owner.Code);
                         Pharmacy pharmacy = invitation.Pharmacy;
+                        // Aquí habría que verificar que si la farmacia ya tiene dueño, lanze una exception.
                         owner.Pharmacy = pharmacy;
                         if (HasAPharmacy(owner))
                         {
                             _ownerManagement.InsertOwner(owner);
                         }
-                    } 
+                    }
                     else
                     {
                         Employee employee = ParseToEmployee(user);
@@ -68,9 +69,9 @@ namespace obg.BusinessLogic.Logics
                         {
                             _employeeManagement.InsertEmployee(employee);
                         }
-                        
+
                     }
-                    
+
                 }
             }
             else

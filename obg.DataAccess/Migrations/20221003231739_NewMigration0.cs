@@ -2,7 +2,7 @@
 
 namespace obg.DataAccess.Migrations
 {
-    public partial class FourthMigrationServices : Migration
+    public partial class NewMigration0 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

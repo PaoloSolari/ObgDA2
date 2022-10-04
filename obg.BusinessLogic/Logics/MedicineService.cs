@@ -12,7 +12,6 @@ namespace obg.BusinessLogic.Logics
 {
     public class MedicineService : IMedicineService
     {
-        protected List<Medicine> fakeDB = new List<Medicine>();
         protected Medicine validMedicine1;
         protected Medicine validMedicine2;
 
@@ -29,7 +28,9 @@ namespace obg.BusinessLogic.Logics
 
         public string InsertMedicine(Medicine medicine)
         {
-            if (IsMedicineValid(medicine))// && !IsCodeRegistered(medicine.Name))
+            medicine.IsActive = true;
+            medicine.Stock = 0;
+            if (IsMedicineValid(medicine))
             {
                 _medicineManagement.InsertMedicine(medicine);
             }
@@ -85,7 +86,12 @@ namespace obg.BusinessLogic.Logics
             {
                 throw new NotFoundException();
             }
-            return _medicineManagement.GetMedicines();
+            IEnumerable<Medicine> ActivesMedicines = GetActivesMedicines(medicines);
+            if (GetLengthOfList(ActivesMedicines) == 0)
+            {
+                throw new NotFoundException();
+            }
+            return ActivesMedicines;
         }
 
         public int GetLengthOfList(IEnumerable<Medicine> medicines)
@@ -98,6 +104,19 @@ namespace obg.BusinessLogic.Logics
             return length;
         }
 
+        public IEnumerable<Medicine> GetActivesMedicines(IEnumerable<Medicine> medicines)
+        {
+            List<Medicine> activesMedicines = new List<Medicine>();
+            foreach(Medicine medicine in medicines)
+            {
+                if (medicine.IsActive)
+                {
+                    activesMedicines.Add(medicine);
+                }
+            }
+            return activesMedicines;
+        }
+
         public Medicine GetMedicineByCode(string code)
         {
             return _medicineManagement.GetMedicineByCode(code);
@@ -106,11 +125,13 @@ namespace obg.BusinessLogic.Logics
         public void DeleteMedicine(string code)
         {
             Medicine medicine = GetMedicineByCode(code);
-            if(medicine == null)
+            if (medicine == null)
             {
                 throw new NotFoundException();
             }
-            _medicineManagement.DeleteMedicine(medicine);
+            medicine.IsActive = false;
+            //_medicineManagement.DeleteMedicine(medicine);
+            _medicineManagement.UpdateMedicine(medicine);
         }
 
         public IEnumerable<Medicine> GetMedicinesByName(string medicineName)

@@ -19,7 +19,7 @@ namespace obg.WebApi.Controllers
             _userService = userService;
         }
 
-        [ServiceFilter(typeof(AdministratorAuthorizationAttributeFilter))]
+        //[ServiceFilter(typeof(AdministratorAuthorizationAttributeFilter))]
 
         [HttpPost]
         public IActionResult PostUser([FromBody] User user)
@@ -62,21 +62,6 @@ namespace obg.WebApi.Controllers
             {
                 return StatusCode(500, "Error interno");
             }
-        }
-
-        public class ForecastBody
-        {
-            [FromBody]
-            public string Name { get; set; }
-
-            [FromBody]
-            public string Email { get; set; }
-
-            [FromBody]
-            public string Password { get; set; }
-
-            [FromBody]
-            public string Address { get; set; }
         }
 
     }

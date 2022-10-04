@@ -24,15 +24,6 @@ namespace obg.BusinessLogic.Logics
 
         public AdministratorService() { }
 
-        //public Administrator InsertAdministrator(Administrator administrator)
-        //{
-        //    if (IsAnAdministrator(administrator))
-        //    {
-        //        _administratorManagement.InsertAdministrator(administrator);
-        //    }
-        //    return administrator;
-        //}
-        
         public string InsertAdministrator(Administrator administrator)
         {
 

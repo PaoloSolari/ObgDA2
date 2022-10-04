@@ -19,11 +19,11 @@ namespace obg.WebApi.Controllers
 
         // POST api/<PharmacyController>
         [HttpPost]
-        public IActionResult PostSession([FromBody] Session session)
+        public IActionResult PostSession([FromBody] Session session, [FromHeader] string password)
         {
             try
             {
-                return StatusCode(200, "Token: " + sessionService.InsertSession(session));
+                return StatusCode(200, "Token: " + sessionService.InsertSession(session, password));
             }
             catch (SessionException exception)
             {

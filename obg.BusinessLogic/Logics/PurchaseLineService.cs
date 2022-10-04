@@ -20,8 +20,7 @@ namespace obg.BusinessLogic.Logics
         {
             if (IsPurchaseLineValid(purchaseLine))// && !IsCodeRegistered(medicine.Name))
             {
-                // Se agrega la PurchaseLine a la DB: _purchaseLineManagement.InsertMedicine(purchaseLine);
-                FakeDB.PurchaseLines.Add(purchaseLine);
+                _purchaseLineManagement.InsertPurchaseLine(purchaseLine);
             }
         }
 

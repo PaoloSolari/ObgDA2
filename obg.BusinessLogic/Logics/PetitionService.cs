@@ -21,8 +21,7 @@ namespace obg.BusinessLogic.Logics
         {
             if (IsPetitionValid(petition))
             {
-                // Se agrega la Petition a la DB: _petitionManagement.InsertPetition(petition);
-                FakeDB.Petitions.Add(petition);
+                _petitionManagement.InsertPetition(petition);
             }
         }
 

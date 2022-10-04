@@ -8,7 +8,7 @@ using System;
 
 namespace obg.WebApi.Filters
 {
-    public class EmployeeAuthorizationAttributeFilter
+    public class EmployeeAuthorizationAttributeFilter : Attribute, IAuthorizationFilter
     {
         private readonly ISessionService _sessionService;
         public EmployeeAuthorizationAttributeFilter(ISessionService sessionService)

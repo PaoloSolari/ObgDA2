@@ -12,7 +12,6 @@ namespace obg.BusinessLogic.Logics
 {
     public class InvitationService : IInvitationService
     {
-        protected List<Invitation> fakeDB = new List<Invitation>();
         private readonly IInvitationManagement _invitationManagement;
         private readonly IPharmacyManagement _pharmacyManagement;
 
@@ -25,7 +24,8 @@ namespace obg.BusinessLogic.Logics
         public int InsertInvitation(Invitation invitation, string pharmacyName)
         {
             Pharmacy pharmacy = _pharmacyManagement.GetPharmacyByName(pharmacyName);
-            if(pharmacy == null)
+            bool noAdministrator = invitation.UserRole != 0;
+            if (noAdministrator && pharmacy == null)
             {
                 throw new NotFoundException("No existe la farmacia.");
             }
@@ -36,7 +36,6 @@ namespace obg.BusinessLogic.Logics
 
             if (IsInvitationValid(invitation))
             {
-                _pharmacyManagement.DeletePharmacy(pharmacy);
                 _invitationManagement.InsertInvitation(invitation);
             }
             return invitation.UserCode;
@@ -69,7 +68,7 @@ namespace obg.BusinessLogic.Logics
             {
                 throw new InvitationException("Ya existe una invitación con el mismo identificador");
             }
-            if (invitation.Pharmacy == null)
+            if (invitation.UserRole != 0 && invitation.Pharmacy == null)
             {
                 throw new InvitationException("Farmacia inválida.");
             }
