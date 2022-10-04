@@ -86,7 +86,12 @@ namespace obg.BusinessLogic.Logics
             {
                 throw new NotFoundException();
             }
-            return _medicineManagement.GetMedicines();
+            IEnumerable<Medicine> ActivesMedicines = GetActivesMedicines(medicines);
+            if (GetLengthOfList(ActivesMedicines) == 0)
+            {
+                throw new NotFoundException();
+            }
+            return ActivesMedicines;
         }
 
         public int GetLengthOfList(IEnumerable<Medicine> medicines)
@@ -97,6 +102,19 @@ namespace obg.BusinessLogic.Logics
                 length++;
             }
             return length;
+        }
+
+        public IEnumerable<Medicine> GetActivesMedicines(IEnumerable<Medicine> medicines)
+        {
+            List<Medicine> activesMedicines = new List<Medicine>();
+            foreach(Medicine medicine in medicines)
+            {
+                if (medicine.IsActive)
+                {
+                    activesMedicines.Add(medicine);
+                }
+            }
+            return activesMedicines;
         }
 
         public Medicine GetMedicineByCode(string code)
