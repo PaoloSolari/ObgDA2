@@ -11,7 +11,6 @@ namespace obg.WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    [ServiceFilter(typeof(EmployeeAuthorizationAttributeFilter))]
     public class MedicineController : ControllerBase
     {
         private readonly IMedicineService medicineService;
@@ -20,6 +19,7 @@ namespace obg.WebApi.Controllers
             this.medicineService = medicineService;
         }
 
+        [ServiceFilter(typeof(EmployeeAuthorizationAttributeFilter))]
         [HttpGet]
         public IActionResult GetMedicines()
         {
@@ -35,32 +35,21 @@ namespace obg.WebApi.Controllers
             {
                 return StatusCode(500, "Error interno.");
             }
-
         }
 
-        [HttpGet("{medicineName}")]
-        public IActionResult GetMedicineByMedicineName([FromRoute] string medicineName)
+
+        [HttpGet("stock")]
+        //[HttpGet("/medicine?medicineName")]
+        //[HttpGet]
+        public IActionResult GetMedicinesWithStock([FromQuery] string Name)
         {
             try
             {
-                return StatusCode(200, medicineService.GetMedicinesByName(medicineName));
+                return StatusCode(200, medicineService.GetMedicinesWithStock(Name));
             }
             catch (NotFoundException)
             {
-                return StatusCode(404, "No existe el medicamento.");
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, "Error interno.");
-            }
-        }
-
-        [HttpPost]
-        public IActionResult PostMedicine([FromBody] Medicine medicine, [FromHeader] string token)
-        {
-            try
-            {
-                return StatusCode(200, "Código del medicamento: " + medicineService.InsertMedicine(medicine, token));
+                return StatusCode(404, "No existe el medicamento en el sistema.");
             }
             catch (MedicineException exception)
             {
@@ -72,6 +61,25 @@ namespace obg.WebApi.Controllers
             //}
         }
 
+        [ServiceFilter(typeof(EmployeeAuthorizationAttributeFilter))]
+        [HttpPost]
+        public IActionResult PostMedicine([FromBody] Medicine medicine, [FromHeader] string token)
+        {
+            try
+            {
+                return StatusCode(200, "Código del medicamento: " + medicineService.InsertMedicine(medicine, token));
+            }
+            catch (MedicineException exception)
+            {
+                return StatusCode(400, exception.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Error interno.");
+            }
+        }
+
+        [ServiceFilter(typeof(EmployeeAuthorizationAttributeFilter))]
         [HttpDelete("{code}")]
         public IActionResult DeleteMedicine(string code)
         {

@@ -92,6 +92,7 @@ namespace obg.BusinessLogic.Logics
 
         public IEnumerable<Medicine> GetMedicines()
         {
+            // Corroborar que sean los medicamentos de la farmacia del empleado.
             IEnumerable<Medicine> medicines = _medicineManagement.GetMedicines();
             if (GetLengthOfList(medicines) == 0)
             {
@@ -150,7 +151,30 @@ namespace obg.BusinessLogic.Logics
             {
                 throw new NotFoundException();
             }
-            return _medicineManagement.GetMedicinesByName(medicineName);
+            return medicines;
         }
+
+        public IEnumerable<Medicine> GetMedicinesWithStock(string medicineName)
+        {
+            List<Medicine> allMedicines = _medicineManagement.GetMedicinesByName(medicineName).ToList();
+            if (allMedicines == null)
+            {
+                throw new NotFoundException();
+            }
+            List<Medicine> medicinesWithStock = new List<Medicine>();
+            foreach (Medicine medicine in allMedicines)
+            {
+                if(medicine.Stock > 0)
+                {
+                    medicinesWithStock.Add(medicine);
+                }
+            }
+            if(medicinesWithStock.Count < 1)
+            {
+                throw new MedicineException("No hay stock disponible del medicamento en el sistema.");
+            }
+            return medicinesWithStock;
+        }
+
     }
 }

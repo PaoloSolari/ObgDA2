@@ -6,6 +6,7 @@ using obg.Domain.Entities;
 using obg.Exceptions;
 using obg.WebApi.Filters;
 using System;
+using System.Collections.Generic;
 
 namespace obg.WebApi.Controllers
 {
@@ -21,20 +22,21 @@ namespace obg.WebApi.Controllers
 
         [ServiceFilter(typeof(OwnerAuthorizationAttributeFilter))]
         [HttpGet]
-        public IActionResult GetDemands()
+        public IActionResult GetDemands([FromHeader] string token)
         {
             try
             {
-                return StatusCode(200, demandService.GetDemands());
+                //IEnumerable<Demand> demands = demandService.GetDemands(token);
+                return StatusCode(200, demandService.GetDemands(token));
             }
             catch (NotFoundException)
             {
                 return StatusCode(404, "No hay solicitudes de reposición de stock.");
             }
-            catch (Exception)
-            {
-                return StatusCode(500, "Error interno.");
-            }
+            //catch (Exception)
+            //{
+            //    return StatusCode(500, "Error interno.");
+            //}
 
 
         }
@@ -67,7 +69,7 @@ namespace obg.WebApi.Controllers
         {
             try
             {
-                return StatusCode(200, "Modificación de la solicitud: " + demandService.UpdateDemand(demand) + " exitosa.");
+                return StatusCode(200, "Modificación de la solicitud: " + demandService.UpdateDemand(id, demand) + " exitosa.");
             }
             catch (DemandException exception)
             {
@@ -77,10 +79,10 @@ namespace obg.WebApi.Controllers
             {
                 return StatusCode(404, exception.Message);
             }
-            catch (Exception)
-            {
-                return StatusCode(500, "Error interno.");
-            }
+            //catch (Exception)
+            //{
+            //    return StatusCode(500, "Error interno.");
+            //}
         }
     }
 }
