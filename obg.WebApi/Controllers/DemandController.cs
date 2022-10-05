@@ -12,6 +12,7 @@ namespace obg.WebApi.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+        [ExceptionFilter]
     public class DemandController : ControllerBase
     {
         private readonly IDemandService demandService;
@@ -19,20 +20,18 @@ namespace obg.WebApi.Controllers
         {
             this.demandService = demandService;
         }
-
         [ServiceFilter(typeof(OwnerAuthorizationAttributeFilter))]
         [HttpGet]
         public IActionResult GetDemands([FromHeader] string token)
         {
-            try
-            {
-                //IEnumerable<Demand> demands = demandService.GetDemands(token);
+            //try
+            //{
                 return StatusCode(200, demandService.GetDemands(token));
-            }
-            catch (NotFoundException)
-            {
-                return StatusCode(404, "No hay solicitudes de reposición de stock.");
-            }
+            //}
+            //catch (NotFoundException)
+            //{
+            //    return StatusCode(404, "No hay solicitudes de reposición de stock.");
+            //}
             //catch (Exception)
             //{
             //    return StatusCode(500, "Error interno.");
@@ -57,10 +56,10 @@ namespace obg.WebApi.Controllers
             {
                 return StatusCode(404, "Solicitud de medicamento inexistente.");
             }
-            //catch (Exception)
-            //{
-            //    return StatusCode(500, "Error interno.");
-            //}
+            catch (Exception)
+            {
+                return StatusCode(500, "Error interno.");
+            }
         }
 
         [ServiceFilter(typeof(OwnerAuthorizationAttributeFilter))]
@@ -79,10 +78,10 @@ namespace obg.WebApi.Controllers
             {
                 return StatusCode(404, exception.Message);
             }
-            //catch (Exception)
-            //{
-            //    return StatusCode(500, "Error interno.");
-            //}
+            catch (Exception)
+            {
+                return StatusCode(500, "Error interno.");
+            }
         }
     }
 }

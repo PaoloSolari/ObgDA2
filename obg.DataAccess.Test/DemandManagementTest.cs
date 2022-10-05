@@ -18,13 +18,23 @@ namespace obg.DataAccess.Test
     {
         private Demand demand;
         private List<Demand> demands;
+        private Pharmacy validPharmacy1;
+
+        private Session validSession1;
+        private Employee validEmployee;
+        private Owner validOwner;
 
         [TestInitialize]
         public void InitTest()
         {
-            demand = new Demand("AABBCC", DemandStatus.Accepted);
-            
+            demand = new Demand("AABBCC", DemandStatus.InProgress);
+            validPharmacy1 = new Pharmacy("FarmaUy", "Gaboto");
+            validEmployee = new Employee("Rodrigo", 000101, "r@gmail.com", "$$$aaa123.", "addressR", RoleUser.Employee, "13/09/2022", validPharmacy1);
+            validOwner = new Owner("Paolo", 000111, "rasdas@gmail.com", "$$$aaa123.", "addressR", RoleUser.Owner, "13/09/2022", validPharmacy1);
+
+            validSession1 = new Session("DDIQDS", validOwner.Name, "4de12a");
             demands = new List<Demand> { demand };
+            validPharmacy1.Demands = demands;
         }
 
         [TestMethod]
@@ -33,7 +43,7 @@ namespace obg.DataAccess.Test
             ObgContext context = CreateContext();
             IDemandManagement demandManagement = new DemandManagement(context);
 
-            demandManagement.InsertDemand(demand);
+            demandManagement.InsertDemand(demand, validSession1);
 
             Demand demandInDatabase = context.Demands.Where<Demand>(d => d.IdDemand.Equals(demand.IdDemand)).AsNoTracking().FirstOrDefault();
 
@@ -44,8 +54,14 @@ namespace obg.DataAccess.Test
         [TestMethod]
         public void GetDemandsOk()
         {
-            IDemandManagement demandManagement = CreateDemandManagement();
-            IEnumerable<Demand> demandsInDatabase = demandManagement.GetDemands();
+            ObgContext context = CreateContext();
+            IDemandManagement demandManagement = new DemandManagement(context);
+
+            context.Demands.Add(demand);
+            context.Owners.Add(validOwner);
+            context.SaveChanges();
+            //IDemandManagement demandManagement = CreateDemandManagement();
+            IEnumerable<Demand> demandsInDatabase = demandManagement.GetDemands(validSession1);
 
             Assert.AreEqual(demandsInDatabase.ToList().Count, demands.Count);
             Assert.AreEqual(demandsInDatabase.ToList()[0].IdDemand, demands[0].IdDemand);

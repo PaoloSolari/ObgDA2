@@ -23,22 +23,26 @@ namespace obg.BusinessLogic.Logics
 
         public int InsertInvitation(Invitation invitation, string pharmacyName)
         {
-            Pharmacy pharmacy = _pharmacyManagement.GetPharmacyByName(pharmacyName);
-            bool noAdministrator = invitation.UserRole != 0;
-            if (noAdministrator && pharmacy == null)
-            {
-                throw new NotFoundException("No existe la farmacia.");
-            }
+            //if(invitation != null)
+            //{
+                Pharmacy pharmacy = _pharmacyManagement.GetPharmacyByName(pharmacyName);
+                bool noAdministrator = invitation.UserRole != 0;
+                if (noAdministrator && pharmacy == null)
+                {
+                    throw new NotFoundException("No existe la farmacia.");
+                }
 
-            invitation.IdInvitation = CreateId();
-            invitation.Pharmacy = pharmacy;
-            invitation.UserCode = CreateCode();
+                invitation.IdInvitation = CreateId();
+                invitation.Pharmacy = pharmacy;
+                invitation.UserCode = CreateCode();
 
-            if (IsInvitationValid(invitation))
-            {
-                _invitationManagement.InsertInvitation(invitation);
-            }
-            return invitation.UserCode;
+                if (IsInvitationValid(invitation))
+                {
+                    _invitationManagement.InsertInvitation(invitation);
+                }
+                return invitation.UserCode;
+            //}
+            //throw new NullReferenceException();
         }
 
         private string CreateId()
@@ -60,17 +64,9 @@ namespace obg.BusinessLogic.Logics
             {
                 throw new InvitationException("Invitación inválida.");
             }
-            if (invitation.IdInvitation == null || invitation.IdInvitation.Length < 1)
-            {
-                throw new InvitationException("Identificador inválido.");
-            }
             if (IsIdInvitationRegistered(invitation.IdInvitation))
             {
                 throw new InvitationException("Ya existe una invitación con el mismo identificador");
-            }
-            if (invitation.UserRole != 0 && invitation.Pharmacy == null)
-            {
-                throw new InvitationException("Farmacia inválida.");
             }
             if (invitation.UserName == null || invitation.UserName.Length == 0 || invitation.UserName.Length > 20)
             {

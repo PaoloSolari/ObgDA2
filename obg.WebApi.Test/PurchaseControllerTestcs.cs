@@ -39,7 +39,7 @@ namespace obg.WebApi.Test
         public void PostPurchaseBadRequest()
         {
             mock.Setup(x => x.InsertPurchase(It.IsAny<Purchase>())).Throws(new PurchaseException());
-            var result = api.PostPurchase(It.IsAny<Purchase>());
+            var result = api.PostPurchase(It.IsAny<Purchase>(), validPurchase.BuyerEmail);
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
 
@@ -51,7 +51,7 @@ namespace obg.WebApi.Test
         public void PostPurchaseFail()
         {
             mock.Setup(x => x.InsertPurchase(It.IsAny<Purchase>())).Throws(new Exception());
-            var result = api.PostPurchase(It.IsAny<Purchase>());
+            var result = api.PostPurchase(It.IsAny<Purchase>(), validPurchase.BuyerEmail);
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
 
@@ -63,7 +63,7 @@ namespace obg.WebApi.Test
         public void PostPurchaseOk()
         {
             mock.Setup(x => x.InsertPurchase(It.IsAny<Purchase>())).Returns(validPurchase.IdPurchase);
-            var result = api.PostPurchase(It.IsAny<Purchase>());
+            var result = api.PostPurchase(It.IsAny<Purchase>(), validPurchase.BuyerEmail);
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
             var body = objectResult.Value;
@@ -77,7 +77,7 @@ namespace obg.WebApi.Test
         public void PostPurchaseMedicineNotFound()
         {
             mock.Setup(x => x.InsertPurchase(It.IsAny<Purchase>())).Throws(new NotFoundException());
-            var result = api.PostPurchase(It.IsAny<Purchase>());
+            var result = api.PostPurchase(It.IsAny<Purchase>(), validPurchase.BuyerEmail);
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
 

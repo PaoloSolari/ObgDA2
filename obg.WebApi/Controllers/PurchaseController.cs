@@ -25,7 +25,7 @@ namespace obg.WebApi.Controllers
         {
             try
             {
-                purchase.BuyerEmail = buyerEmail;
+               // purchase.BuyerEmail = buyerEmail;
                 return StatusCode(200, "Compra " + _purchaseService.InsertPurchase(purchase) + " exitosa.");
             }
             catch (PurchaseException exception)
@@ -36,10 +36,10 @@ namespace obg.WebApi.Controllers
             {
                 return StatusCode(404, "No existe un medicamento a comprar.");
             }
-            //catch (Exception)
-            //{
-            //    return StatusCode(500, "Error interno.");
-            //}
+            catch (Exception)
+            {
+                return StatusCode(500, "error interno.");
+            }
         }
     }
 }

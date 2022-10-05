@@ -171,10 +171,6 @@ namespace obg.BusinessLogic.Logics
             {
                 throw new PurchaseException("Compra inválida.");
             }
-            if (purchase.IdPurchase == null || purchase.IdPurchase.Length < 1)
-            {
-                throw new PurchaseException("Identificador inválido.");
-            }
             if (IsIdPurchaseRegistered(purchase.IdPurchase))
             {
                 throw new PurchaseException("Ya existe una compra con el mismo identificador");

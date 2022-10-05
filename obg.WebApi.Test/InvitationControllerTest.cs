@@ -64,7 +64,7 @@ namespace obg.WebApi.Test
 
             mock.VerifyAll();
             Assert.AreEqual(200, statusCode);
-            Assert.IsTrue(("Código de invitación: " + validInvitation.UserCode).Equals(body));
+            Assert.IsTrue((validInvitation.UserCode).Equals(body));
         }
     }
 }

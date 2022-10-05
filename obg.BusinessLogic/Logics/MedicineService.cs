@@ -47,10 +47,6 @@ namespace obg.BusinessLogic.Logics
             {
                 throw new MedicineException("Medicamento inválido.");
             }
-            if (medicine.Code == null || medicine.Code.Length < 1)
-            {
-                throw new MedicineException("Código inválido.");
-            }
             if (IsCodeRegistered(medicine.Code))
             {
                 throw new MedicineException("Un medicamento con ese código ya fue registrado");

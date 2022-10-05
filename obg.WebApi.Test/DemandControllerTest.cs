@@ -21,7 +21,14 @@ namespace obg.WebApi.Test
         private DemandController api;
         private Demand validDemand;
         private Petition validPetition;
-        //private List<Petition> petitions;
+        private Pharmacy validPharmacy1;
+
+        private Session validSession1;
+        private Session validSession2;
+        private Employee validEmployee;
+        private Owner validOwner;
+
+
         private IEnumerable<Demand> demands;
 
         [TestInitialize]
@@ -31,6 +38,12 @@ namespace obg.WebApi.Test
             api = new DemandController(mock.Object);
             validPetition = new Petition("AAAAAA","aaaaa", 5);
             //petitions.Add(validPetition);
+            validPharmacy1 = new Pharmacy("FarmaUy", "Gaboto");
+            validEmployee = new Employee("Rodrigo", 000101, "r@gmail.com", "$$$aaa123.", "addressR", RoleUser.Employee, "13/09/2022", validPharmacy1);
+            validOwner = new Owner("Paolo", 000111, "rasdas@gmail.com", "$$$aaa123.", "addressR", RoleUser.Owner, "13/09/2022", validPharmacy1);
+
+            validSession1 = new Session("DDIQDS", validEmployee.Name, "4de12a");
+            validSession2 = new Session("DAIQDS", validOwner.Name, "4dd12a");
             validDemand = new Demand("BBBBBB", DemandStatus.InProgress);
             validDemand.Petitions.Add(validPetition);
             demands = new List<Demand>() { validDemand };
@@ -39,9 +52,9 @@ namespace obg.WebApi.Test
         [TestMethod]
         public void GetDemandsOk()
         {
-            mock.Setup(x => x.GetDemands()).Returns(demands);
+            mock.Setup(x => x.GetDemands("4dd12a")).Returns(demands);
 
-            var result = api.GetDemands();
+            var result = api.GetDemands("4dd12a");
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
             var body = objectResult.Value as IEnumerable<Demand>;
@@ -54,9 +67,9 @@ namespace obg.WebApi.Test
         [TestMethod]
         public void GetDemandsFail()
         {
-            mock.Setup(x => x.GetDemands()).Throws(new Exception());
+            mock.Setup(x => x.GetDemands("4dd12a")).Throws(new Exception());
 
-            var result = api.GetDemands();
+            var result = api.GetDemands("4dd12a");
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
 
@@ -67,8 +80,8 @@ namespace obg.WebApi.Test
         [TestMethod]
         public void PostDemandBadRequest()
         {
-            mock.Setup(x => x.InsertDemand(It.IsAny<Demand>())).Throws(new DemandException());
-            var result = api.PostDemand(It.IsAny<Demand>());
+            mock.Setup(x => x.InsertDemand(It.IsAny<Demand>(), "4de12a")).Throws(new DemandException());
+            var result = api.PostDemand(It.IsAny<Demand>(), "4de12a");
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
 
@@ -79,8 +92,8 @@ namespace obg.WebApi.Test
         [TestMethod]
         public void PostDemandFail()
         {
-            mock.Setup(x => x.InsertDemand(It.IsAny<Demand>())).Throws(new Exception());
-            var result = api.PostDemand(It.IsAny<Demand>());
+            mock.Setup(x => x.InsertDemand(It.IsAny<Demand>(), "4de12a")).Throws(new Exception());
+            var result = api.PostDemand(It.IsAny<Demand>(), ("4de12a"));
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
 
@@ -91,8 +104,8 @@ namespace obg.WebApi.Test
         [TestMethod]
         public void PostDemandOk()
         {
-            mock.Setup(x => x.InsertDemand(It.IsAny<Demand>())).Returns(validDemand.IdDemand);
-            var result = api.PostDemand(It.IsAny<Demand>());
+            mock.Setup(x => x.InsertDemand(It.IsAny<Demand>(), "4de12a")).Returns(validDemand.IdDemand);
+            var result = api.PostDemand(It.IsAny<Demand>(), ("4de12a"));
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
             var body = objectResult.Value;
@@ -105,7 +118,7 @@ namespace obg.WebApi.Test
         [TestMethod]
         public void PutDemandBadRequest()
         {
-            mock.Setup(x => x.UpdateDemand(validDemand)).Throws(new DemandException());
+            mock.Setup(x => x.UpdateDemand(validDemand.IdDemand, validDemand)).Throws(new DemandException());
             var result = api.PutDemand(validDemand.IdDemand, validDemand);
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
@@ -117,7 +130,7 @@ namespace obg.WebApi.Test
         [TestMethod]
         public void PutDemandNotFound()
         {
-            mock.Setup(x => x.UpdateDemand(validDemand)).Throws(new NotFoundException());
+            mock.Setup(x => x.UpdateDemand(validDemand.IdDemand, validDemand)).Throws(new NotFoundException());
             var result = api.PutDemand(validDemand.IdDemand, validDemand);
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
@@ -129,7 +142,7 @@ namespace obg.WebApi.Test
         [TestMethod]
         public void PutDemandFail()
         {
-            mock.Setup(x => x.UpdateDemand(validDemand)).Throws(new Exception());
+            mock.Setup(x => x.UpdateDemand(validDemand.IdDemand, validDemand)).Throws(new Exception());
             var result = api.PutDemand(validDemand.IdDemand, validDemand);
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
@@ -143,7 +156,7 @@ namespace obg.WebApi.Test
         {
             var validDemandModified = validDemand;
             validDemandModified.Status = DemandStatus.Accepted;
-            mock.Setup(x => x.UpdateDemand(validDemandModified)).Returns(validDemandModified.IdDemand);
+            mock.Setup(x => x.UpdateDemand(validDemandModified.IdDemand, validDemandModified)).Returns(validDemandModified.IdDemand);
             var result = api.PutDemand(validDemand.IdDemand, validDemandModified);
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
