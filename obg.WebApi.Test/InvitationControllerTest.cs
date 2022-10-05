@@ -25,15 +25,15 @@ namespace obg.WebApi.Test
         {
             mock = new Mock<IInvitationService>(MockBehavior.Strict);
             api = new InvitationController(mock.Object);
-            validPharmacy = new Pharmacy("San Roque", "aaaa", null);
+            validPharmacy = new Pharmacy("San Roque", "aaaa");
             validInvitation = new Invitation("CCCCCC", validPharmacy, RoleUser.Employee, "Paolo", 123456);
         }
 
         [TestMethod]
         public void PostInvitationBadRequest()
         {
-            mock.Setup(x => x.InsertInvitation(It.IsAny<Invitation>())).Throws(new InvitationException());
-            var result = api.PostInvitation(It.IsAny<Invitation>());
+            mock.Setup(x => x.InsertInvitation(It.IsAny<Invitation>(), It.IsAny<string>())).Throws(new InvitationException());
+            var result = api.PostInvitation(It.IsAny<Invitation>(), It.IsAny<string>());
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
 
@@ -44,8 +44,8 @@ namespace obg.WebApi.Test
         [TestMethod]
         public void PostInvitationFail()
         {
-            mock.Setup(x => x.InsertInvitation(It.IsAny<Invitation>())).Throws(new Exception());
-            var result = api.PostInvitation(It.IsAny<Invitation>());
+            mock.Setup(x => x.InsertInvitation(It.IsAny<Invitation>(), It.IsAny<string>())).Throws(new Exception());
+            var result = api.PostInvitation(It.IsAny<Invitation>(), It.IsAny<string>());
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
 
@@ -56,8 +56,8 @@ namespace obg.WebApi.Test
         [TestMethod]
         public void PostInvitationOk()
         {
-            mock.Setup(x => x.InsertInvitation(It.IsAny<Invitation>())).Returns(validInvitation.UserCode);
-            var result = api.PostInvitation(It.IsAny<Invitation>());
+            mock.Setup(x => x.InsertInvitation(It.IsAny<Invitation>(), It.IsAny<string>())).Returns(validInvitation.UserCode);
+            var result = api.PostInvitation(It.IsAny<Invitation>(), It.IsAny<string>());
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
             var body = objectResult.Value;

@@ -20,12 +20,18 @@ namespace obg.WebApi.Test
         private MedicineController api;
         private Medicine validMedicine;
         private IEnumerable<Medicine> medicines;
+        private Pharmacy validPharmacy1;
+        private Session session;
+        private Employee employee;
 
         [TestInitialize]
         public void InitTest()
         {
             mock = new Mock<IMedicineService>(MockBehavior.Strict);
             api = new MedicineController(mock.Object);
+            validPharmacy1 = new Pharmacy("San Roque", "Ejido");
+            employee = new Employee("Lucas", 000102, "l@gmail.com", "###bbb123.", "addressL", RoleUser.Employee, "13/09/2022", validPharmacy1);
+            session = new Session("123456", "Lucas", "XXYYZZ");
             validMedicine = new Medicine("123456", "Paracetamol", "aaaa", PresentationMedicine.Capsulas, 0, "1mg", 200, false, true);
             medicines = new List<Medicine>() { validMedicine };
         }
@@ -61,8 +67,8 @@ namespace obg.WebApi.Test
         [TestMethod]
         public void PostMedicineBadRequest()
         {
-            mock.Setup(x => x.InsertMedicine(It.IsAny<Medicine>())).Throws(new MedicineException());
-            var result = api.PostMedicine(It.IsAny<Medicine>());
+            mock.Setup(x => x.InsertMedicine(It.IsAny<Medicine>(), It.IsAny<string>())).Throws(new MedicineException());
+            var result = api.PostMedicine(It.IsAny<Medicine>(), It.IsAny<string>());
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
 
@@ -73,8 +79,8 @@ namespace obg.WebApi.Test
         [TestMethod]
         public void PostMedicineFail()
         {
-            mock.Setup(x => x.InsertMedicine(It.IsAny<Medicine>())).Throws(new Exception());
-            var result = api.PostMedicine(It.IsAny<Medicine>());
+            mock.Setup(x => x.InsertMedicine(It.IsAny<Medicine>(), It.IsAny<string>())).Throws(new Exception());
+            var result = api.PostMedicine(It.IsAny<Medicine>(), It.IsAny<string>());
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
 
@@ -85,8 +91,8 @@ namespace obg.WebApi.Test
         [TestMethod]
         public void PostMedicineOk()
         {
-            mock.Setup(x => x.InsertMedicine(It.IsAny<Medicine>())).Returns(validMedicine.Code);
-            var result = api.PostMedicine(It.IsAny<Medicine>());
+            mock.Setup(x => x.InsertMedicine(It.IsAny<Medicine>(), It.IsAny<string>())).Returns(validMedicine.Code);
+            var result = api.PostMedicine(It.IsAny<Medicine>(), It.IsAny<string>());
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
             var body = objectResult.Value;

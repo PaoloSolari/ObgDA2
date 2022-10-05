@@ -30,13 +30,14 @@ namespace obg.BusinessLogic.Logics
 
         public string InsertMedicine(Medicine medicine, string token)
         {
-            medicine.IsActive = true;
-            medicine.Stock = 0;
             if (IsMedicineValid(medicine))
             {
+                medicine.IsActive = true;
+                medicine.Stock = 0;
                 Session session = _sessionManagement.GetSessionByToken(token);
                 _medicineManagement.InsertMedicine(medicine, session);
             }
+
             return medicine.Code;
         }
 

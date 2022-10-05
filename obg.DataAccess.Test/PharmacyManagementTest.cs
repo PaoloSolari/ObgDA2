@@ -23,11 +23,18 @@ namespace obg.DataAccess.Test
         private Pharmacy pharmacy;
         private List<Pharmacy> pharmacies;
 
+        private Administrator administrator;
+        private Session session;
+
         [TestInitialize]
         public void InitTest()
         {
             owner = new Owner("Julio", 123456, "julio@gmail.com", "abccdefg.123", "Ejido", RoleUser.Owner, "29/09/2022", null);
-            pharmacy = new Pharmacy("FarmaShop", "18 de Julio", owner);
+            pharmacy = new Pharmacy("FarmaShop", "18 de Julio");
+
+            administrator = new Administrator("Lucas", 000102, "l@gmail.com", "###bbb123.", "addressL", RoleUser.Employee, "13/09/2022");
+            //administrator.Pharmacies.Add(pharmacy);
+            session = new Session("123456", "Lucas", "XXYYZZ");
 
             pharmacies = new List<Pharmacy>() { pharmacy };
         }
@@ -38,7 +45,7 @@ namespace obg.DataAccess.Test
             ObgContext context = CreateContext();
             IPharmacyManagement pharmacyManagement = new PharmacyManagement(context);
       
-            pharmacyManagement.InsertPharmacy(pharmacy);
+            pharmacyManagement.InsertPharmacy(pharmacy, session);
 
             Pharmacy pharmacyInDatabase = context.Pharmacies.Where<Pharmacy>(p => p.Name.Equals(pharmacy.Name)).AsNoTracking().FirstOrDefault();
 

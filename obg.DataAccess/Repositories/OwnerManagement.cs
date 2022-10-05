@@ -19,7 +19,8 @@ namespace obg.DataAccess.Repositories
 
         public void InsertOwner(Owner owner)
         {
-            Pharmacy pharmacyOfOwner = ObgContext.Pharmacies.Where<Pharmacy>(p => p.Name.Equals(owner.Pharmacy.Name)).AsNoTracking().FirstOrDefault();
+            string pharmacyName = owner.Pharmacy.Name;
+            Pharmacy pharmacyOfOwner = ObgContext.Pharmacies.Where<Pharmacy>(p => p.Name.Equals(pharmacyName)).Include("Medicines").Include("Demands.Petitions").FirstOrDefault();
             if (pharmacyOfOwner != null)
             {
                 ObgContext.Attach(owner.Pharmacy);

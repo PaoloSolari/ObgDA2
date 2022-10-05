@@ -18,13 +18,22 @@ namespace obg.DataAccess.Test
     public class MedicineManagementTest
     {
         private Medicine medicine;
+
+        private Session session;
+        private Employee employee;
+        private Pharmacy validPharmacy1;
+
         private List<Medicine> medicines;
 
         [TestInitialize]
         public void InitTest()
         {
             medicine = new Medicine("HUS56A", "Paracetamol", "Dolor de cabeza", PresentationMedicine.Comprimidos, 0, "0.5 ml", 300, false, true);
-            
+            validPharmacy1 = new Pharmacy("FarmaUy", "Gaboto");
+
+            employee = new Employee("Lucas", 000102, "l@gmail.com", "###bbb123.", "addressL", RoleUser.Employee, "13/09/2022", validPharmacy1);
+            session = new Session("123456", "Lucas", "XXYYZZ");
+
             medicines = new List<Medicine> { medicine };
         }
 
@@ -34,7 +43,7 @@ namespace obg.DataAccess.Test
             ObgContext context = CreateContext();
             IMedicineManagement medicineManagement = new MedicineManagement(context);
 
-            medicineManagement.InsertMedicine(medicine);
+            medicineManagement.InsertMedicine(medicine, session);
 
             Medicine medicineInDatabase = context.Medicines.Where<Medicine>(p => p.Code.Equals(medicine.Code)).AsNoTracking().FirstOrDefault();
 

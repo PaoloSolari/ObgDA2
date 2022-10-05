@@ -32,12 +32,12 @@ namespace obg.BusinessLogic.Test
 
             employeesFromPharmacy1 = new List<Employee>();
             employeesFromPharmacy2 = new List<Employee>();
-            pharmacy1 = new Pharmacy("San Roque", "18 de Julio", null);
-            pharmacy2 = new Pharmacy("Farmacity", "25 de Agosto", null);
-            validEmployee1 = new Employee("Rodrigo", 000101, "r@gmail.com", "$$$aaa123.", "addressR", RoleUser.Employee, "13/09/2022", pharmacy1);
-            validEmployee2 = new Employee("Lucas", 000102, "l@gmail.com", "###bbb123.", "addressL", RoleUser.Employee, "13/09/2022", pharmacy2);
-            pharmacy1.AddEmployee(validEmployee1);
-            pharmacy2.AddEmployee(validEmployee2);
+            pharmacy1 = new Pharmacy("San Roque", "18 de Julio");
+            pharmacy2 = new Pharmacy("Farmacity", "25 de Agosto");
+            //validEmployee1 = new Employee("Rodrigo", 000101, "r@gmail.com", "$$$aaa123.", "addressR", RoleUser.Employee, "13/09/2022", pharmacy1);
+            //validEmployee2 = new Employee("Lucas", 000102, "l@gmail.com", "###bbb123.", "addressL", RoleUser.Employee, "13/09/2022", pharmacy2);
+            //pharmacy1.AddEmployee(validEmployee1);
+            //pharmacy2.AddEmployee(validEmployee2);
             nullEmployee = null;
         }
 

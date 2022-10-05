@@ -16,13 +16,15 @@ namespace obg.DataAccess.Test
     public class OwnerManagementTest
     {
         private Owner owner;
+        private Pharmacy validPharmacy1;
         private List<Owner> owners;
 
         [TestInitialize]
         public void InitTest()
         {
             owner = new Owner("Julio", 123456, "julio@gmail.com", "abccdefg.123", "18 de Julio", RoleUser.Owner, "29/09/2022", null);
-        
+            validPharmacy1 = new Pharmacy("FarmaUy", "Gaboto");
+            owner.Pharmacy = validPharmacy1;
             owners = new List<Owner>() { owner };
         }
 
@@ -34,7 +36,7 @@ namespace obg.DataAccess.Test
 
             ownerManagement.InsertOwner(owner);
 
-            Owner ownerInDatabase = context.Owners.Where<Owner>(p => p.Name.Equals(owner.Name)).AsNoTracking().FirstOrDefault();
+            Owner ownerInDatabase = context.Owners.Where<Owner>(p => p.Name.Equals(owner.Name)).FirstOrDefault();
 
             Assert.IsNotNull(ownerInDatabase);
             Assert.AreEqual(ownerInDatabase.Name, owner.Name);
