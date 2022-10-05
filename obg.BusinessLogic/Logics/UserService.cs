@@ -108,7 +108,7 @@ namespace obg.BusinessLogic.Logics
             User userFromDB = _userManagement.GetUserByName(user.Name);
             if (userFromDB == null)
             {
-                throw new NotFoundException();
+                throw new NotFoundException("El usuario no existe.");
             }
             else
             {
@@ -183,10 +183,6 @@ namespace obg.BusinessLogic.Logics
             if (!IsEmailOK(user.Email))
             {
                 throw new UserException("Email con formato inválido.");
-            }
-            if (IsEmailRegistered(user.Email))
-            {
-                throw new UserException("El nombre ya fue registrado.");
             }
             if (!IsPasswordOK(user.Password))
             {

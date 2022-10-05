@@ -14,9 +14,8 @@ namespace obg.DataAccess.Repositories
         private ObgContext ObgContext { get; set; }
         public UserManagement(ObgContext obgContext)
         {
-            this.ObgContext = obgContext;
+            ObgContext = obgContext;
         }
-
         public void InsertUser(User user)
         {
             ObgContext.Users.Add(user);
@@ -30,7 +29,7 @@ namespace obg.DataAccess.Repositories
 
         public User GetUserByName(string name)
         {
-            return ObgContext.Users.Where<User>(u => u.Name == name).AsNoTracking().FirstOrDefault();
+            return ObgContext.Users.Where<User>(u => u.Name == name).FirstOrDefault();
         }
 
         public void UpdateUser(User user)
@@ -39,8 +38,6 @@ namespace obg.DataAccess.Repositories
             ObgContext.Entry(user).State = EntityState.Modified;
             ObgContext.SaveChanges();
         }
-
-        
 
     }
 }

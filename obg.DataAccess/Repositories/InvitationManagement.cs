@@ -20,7 +20,7 @@ namespace obg.DataAccess.Repositories
         {
             if (invitation.UserRole != 0)
             {
-                Pharmacy pharmacyOfInvitation = ObgContext.Pharmacies.Where<Pharmacy>(p => p.Name.Equals(invitation.Pharmacy.Name)).AsNoTracking().FirstOrDefault();
+                Pharmacy pharmacyOfInvitation = ObgContext.Pharmacies.Where<Pharmacy>(p => p.Name.Equals(invitation.Pharmacy.Name)).FirstOrDefault();
                 if (pharmacyOfInvitation != null)
                 {
                     ObgContext.Attach(invitation.Pharmacy);
@@ -37,12 +37,12 @@ namespace obg.DataAccess.Repositories
 
         public Invitation GetInvitationById(string id)
         {
-            return ObgContext.Invitations.Where<Invitation>(i => i.IdInvitation.Equals(id)).AsNoTracking().FirstOrDefault();
+            return ObgContext.Invitations.Where<Invitation>(i => i.IdInvitation.Equals(id)).FirstOrDefault();
         }
 
         public Invitation GetInvitationByCode(int code)
         {
-            return ObgContext.Invitations.Where<Invitation>(i => i.UserCode == code).Include("Pharmacy").AsNoTracking().FirstOrDefault();
+            return ObgContext.Invitations.Where<Invitation>(i => i.UserCode == code).Include("Pharmacy").FirstOrDefault();
         }
         public void UpdateInvitation(Invitation invitation)
         {
@@ -59,7 +59,7 @@ namespace obg.DataAccess.Repositories
 
         public bool IsIdInvitationRegistered(string idInvitation)
         {
-            Invitation invitation = ObgContext.Invitations.Where<Invitation>(i => i.IdInvitation.Equals(idInvitation)).AsNoTracking().FirstOrDefault();
+            Invitation invitation = ObgContext.Invitations.Where<Invitation>(i => i.IdInvitation.Equals(idInvitation)).FirstOrDefault();
             if(invitation != null)
             {
                 return true;
@@ -72,7 +72,7 @@ namespace obg.DataAccess.Repositories
 
         public bool IsNameRegistered(string name)
         {
-            Invitation invitation = ObgContext.Invitations.Where<Invitation>(i => i.UserName.Equals(name)).AsNoTracking().FirstOrDefault();
+            Invitation invitation = ObgContext.Invitations.Where<Invitation>(i => i.UserName.Equals(name)).FirstOrDefault();
             if(invitation != null)
             {
                 return true;
@@ -85,7 +85,7 @@ namespace obg.DataAccess.Repositories
 
         public bool IsCodeRegistered(int code)
         {
-            Invitation invitation = ObgContext.Invitations.Where<Invitation>(i => i.UserCode == code).AsNoTracking().FirstOrDefault();
+            Invitation invitation = ObgContext.Invitations.Where<Invitation>(i => i.UserCode == code).FirstOrDefault();
             if (invitation != null)
             {
                 return true;

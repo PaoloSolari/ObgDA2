@@ -21,7 +21,7 @@ namespace obg.DataAccess.Repositories
         public void InsertPharmacy(Pharmacy pharmacy, Session session)
         {
             string admnistratorName = session.UserName;
-            Administrator admnistratorOfPharmacy = ObgContext.Administrators.Where<Administrator>(a => a.Name.Equals(admnistratorName)).Include("Pharmacies").AsNoTracking().FirstOrDefault();
+            Administrator admnistratorOfPharmacy = ObgContext.Administrators.Where<Administrator>(a => a.Name.Equals(admnistratorName)).Include("Pharmacies").FirstOrDefault();
             if(admnistratorOfPharmacy != null)
             {
                 if(admnistratorOfPharmacy.Pharmacies != null)
@@ -48,7 +48,7 @@ namespace obg.DataAccess.Repositories
 
         public Pharmacy GetPharmacyByName(string name)
         {
-            return ObgContext.Pharmacies.Where<Pharmacy>(p => p.Name == name).AsNoTracking().FirstOrDefault();
+            return ObgContext.Pharmacies.Where<Pharmacy>(p => p.Name == name).FirstOrDefault();
         }
 
         public void UpdatePharmacy(Pharmacy pharmacy)
@@ -60,7 +60,7 @@ namespace obg.DataAccess.Repositories
 
         public void DeletePharmacy(Pharmacy pharmacy)
         {
-            Invitation invitationDependPharmacy = ObgContext.Invitations.Where<Invitation>(i => i.Pharmacy == pharmacy).AsNoTracking().FirstOrDefault();
+            Invitation invitationDependPharmacy = ObgContext.Invitations.Where<Invitation>(i => i.Pharmacy == pharmacy).FirstOrDefault();
             if (invitationDependPharmacy != null)
             {
                 ObgContext.Invitations.Remove(invitationDependPharmacy);
@@ -72,7 +72,7 @@ namespace obg.DataAccess.Repositories
 
         public bool IsNameRegistered(string name)
         {
-            Pharmacy pharmacy = ObgContext.Pharmacies.Where<Pharmacy>(p => p.Name == name).AsNoTracking().FirstOrDefault();
+            Pharmacy pharmacy = ObgContext.Pharmacies.Where<Pharmacy>(p => p.Name == name).FirstOrDefault();
             if(pharmacy != null)
             {
                 return true;

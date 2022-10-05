@@ -30,7 +30,7 @@ namespace obg.DataAccess.Repositories
 
         public Petition GetPetitionById(string id)
         {
-            return ObgContext.Petitions.Where<Petition>(p => p.IdPetition.Equals(id)).AsNoTracking().FirstOrDefault();
+            return ObgContext.Petitions.Where<Petition>(p => p.IdPetition.Equals(id)).FirstOrDefault();
         }
 
         public void UpdatePetition(Petition petition)
@@ -48,7 +48,7 @@ namespace obg.DataAccess.Repositories
 
         public bool IsIdPetitionRegistered(string idPetition)
         {
-            Petition petition = ObgContext.Petitions.Where<Petition>(p => p.IdPetition.Equals(idPetition)).AsNoTracking().FirstOrDefault();
+            Petition petition = ObgContext.Petitions.Where<Petition>(p => p.IdPetition.Equals(idPetition)).FirstOrDefault();
             if(petition != null)
             {
                 return true;
@@ -58,7 +58,7 @@ namespace obg.DataAccess.Repositories
 
         public bool IsMedicineCodeOk(string medicineCode)
         {
-            Medicine medicine = ObgContext.Medicines.Where<Medicine>(m => m.Code.Equals(medicineCode)).AsNoTracking().FirstOrDefault();
+            Medicine medicine = ObgContext.Medicines.Where<Medicine>(m => m.Code.Equals(medicineCode)).FirstOrDefault();
             if (medicine != null)
             {
                 return true;
