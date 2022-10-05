@@ -17,6 +17,7 @@ namespace obg.BusinessLogic.Logics
         private readonly ISessionManagement _sessionManagement;
         private readonly IMedicineManagement _medicineManagement;
 
+        public DemandService(){}
         public DemandService(IDemandManagement demandManagement, ISessionManagement sessionManagement, IMedicineManagement medicineManagement)
         {
             _demandManagement = demandManagement;
@@ -24,9 +25,6 @@ namespace obg.BusinessLogic.Logics
             _medicineManagement = medicineManagement;
         }
 
-        public DemandService()
-        {
-        }
         public string InsertDemand(Demand demand, string token)
         {
             demand.IdDemand = CreateId();
@@ -109,7 +107,6 @@ namespace obg.BusinessLogic.Logics
 
         public string UpdateDemand(string id, Demand demandToUpdate)
         {
-
             Demand demand = _demandManagement.GetDemandById(id);
             if (demand == null)
             {
@@ -125,8 +122,6 @@ namespace obg.BusinessLogic.Logics
             {
                 throw new DemandException("Ya se realizó la reposición de stock para dicha demanda.");
             }
-            
-            
             return id;
         }
 
@@ -139,5 +134,6 @@ namespace obg.BusinessLogic.Logics
             }
             return demand;
         }
+
     }
 }

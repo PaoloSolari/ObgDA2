@@ -27,7 +27,6 @@ namespace obg.BusinessLogic.Logics
 
         public string InsertPurchase(Purchase purchase)
         {
-            // Además tiene que haber stock de todos.
             purchase.IdPurchase = CreateId();
             SetIdsLinesOfPurchase(purchase.PurchaseLines);
             if (MedicinesOfTheSamePharmacy(purchase.PurchaseLines))
@@ -72,50 +71,29 @@ namespace obg.BusinessLogic.Logics
             int quantityOfMedicinesToBuy = medicinesToBuy.Count;
             if(quantityOfMedicinesToBuy > 0)
             {
-                //if (ExistMedicinesToBuy(medicinesToBuy))
-                //{
-                    // Como los medicamentos no conocen su farmacia, lo implementamos de la siguiente manera:
-                    foreach (Pharmacy pharmacy in pharmaciesOfDataBase)
+                foreach (Pharmacy pharmacy in pharmaciesOfDataBase)
+                {
+                    int coincidences = 0;
+                    foreach (Medicine medicineOfPharamacy in pharmacy.Medicines)
                     {
-                        int coincidences = 0;
-                        foreach (Medicine medicineOfPharamacy in pharmacy.Medicines)
+                        foreach (Medicine medicineToBuy in medicinesToBuy)
                         {
-                            foreach (Medicine medicineToBuy in medicinesToBuy)
+                            if (medicineToBuy.Code.Equals(medicineOfPharamacy.Code))
                             {
-                                if (medicineToBuy.Code.Equals(medicineOfPharamacy.Code))
-                                {
-                                    coincidences++;
-                                }
+                                coincidences++;
                             }
                         }
-                        // O ningún medicamento es de la farmacia o son todos (como el código es único).
-                        if(0 < coincidences && coincidences < quantityOfMedicinesToBuy)
-                        {
-                            return false;
-                        }
                     }
-                //}
-                //else
-                //{
-                //    throw new NotFoundException();
-                //}
+                    bool areNotInSamePharmacy = 0 < coincidences && coincidences < quantityOfMedicinesToBuy;
+                    if (areNotInSamePharmacy)
+                    {
+                        return false;
+                    }
+                }
             }
             else
             {
                 throw new PurchaseException("Compra inválida, debe elegir al menos un medicamento a comprar.");
-            }
-            return true;
-        }
-
-        private bool ExistMedicinesToBuy(List<Medicine> medicinesToBuy)
-        {
-            foreach (Medicine medicine in medicinesToBuy)
-            {
-                Medicine medicineFromDataBase = _medicineManagement.GetMedicineByCode(medicine.Code);
-                if(medicineFromDataBase == null)
-                {
-                    return false;
-                }
             }
             return true;
         }
@@ -142,7 +120,7 @@ namespace obg.BusinessLogic.Logics
                 Medicine medicineOfLine = _medicineManagement.GetMedicineByCode(code);
                 if(medicineOfLine == null)
                 {
-                    throw new NotFoundException();
+                    throw new NotFoundException("No existe el medicamento a comprar.");
                 }
                 medicines.Add(medicineOfLine);
             }
@@ -217,5 +195,6 @@ namespace obg.BusinessLogic.Logics
                 return false;
             }
         }
+
     }
 }

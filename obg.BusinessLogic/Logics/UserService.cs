@@ -20,19 +20,16 @@ namespace obg.BusinessLogic.Logics
         private readonly IOwnerManagement _ownerManagement;
         private readonly IEmployeeManagement _employeeManagement;
         private readonly IInvitationManagement _invitationManagement;
-        private readonly IPharmacyManagement _pharmacyManagement;
 
-        public UserService(IUserManagement userManagement, IAdministratorManagement administratorManagement, IOwnerManagement ownerManagement, IEmployeeManagement employeeManagement, IInvitationManagement invitationManagement, IPharmacyManagement pharmacyManagement)
+        public UserService() { }
+        public UserService(IUserManagement userManagement, IAdministratorManagement administratorManagement, IOwnerManagement ownerManagement, IEmployeeManagement employeeManagement, IInvitationManagement invitationManagement)
         {
             _userManagement = userManagement;
             _administratorManagement = administratorManagement;
             _ownerManagement = ownerManagement;
             _employeeManagement = employeeManagement;
             _invitationManagement = invitationManagement;
-            _pharmacyManagement = pharmacyManagement;
         }
-
-        public UserService() { }
 
         public string InsertUser(User user)
         {
@@ -52,7 +49,6 @@ namespace obg.BusinessLogic.Logics
                         Owner owner = ParseToOwner(user);
                         Invitation invitation = _invitationManagement.GetInvitationByCode(owner.Code);
                         Pharmacy pharmacy = invitation.Pharmacy;
-                        // Aquí habría que verificar que si la farmacia ya tiene dueño, lanze una exception.
                         owner.Pharmacy = pharmacy;
                         if (HasAPharmacy(owner))
                         {
@@ -63,15 +59,13 @@ namespace obg.BusinessLogic.Logics
                     {
                         Employee employee = ParseToEmployee(user);
                         Invitation invitation = _invitationManagement.GetInvitationByCode(employee.Code);
-                        Pharmacy pharmacy = _pharmacyManagement.GetPharmacyByName(invitation.Pharmacy.Name);
+                        Pharmacy pharmacy = invitation.Pharmacy;
                         employee.Pharmacy = pharmacy;
                         if (HasAPharmacy(employee))
                         {
                             _employeeManagement.InsertEmployee(employee);
                         }
-
                     }
-
                 }
             }
             else
@@ -107,7 +101,7 @@ namespace obg.BusinessLogic.Logics
             user.Password = Guid.NewGuid().ToString().Substring(0, 10) + ".44#";
             user.Address = "Default Address";
             user.RegisterDate = "Default RegisterDate";
-    }
+        }
 
         public string UpdateUser(User user)
         {
@@ -257,7 +251,6 @@ namespace obg.BusinessLogic.Logics
             try
             {
                 MailAddress m = new MailAddress(email);
-
                 return true;
             }
             catch (FormatException)

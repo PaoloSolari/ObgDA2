@@ -120,5 +120,6 @@ namespace obg.BusinessLogic.Logics
                 return user.Role;
             }
         }
+
     }
 }
