@@ -103,10 +103,6 @@ namespace obg.BusinessLogic.Logics
 
         private void SetDefaultUserPreRegister(User user)
         {
-            //Random random = new Random();
-            //string ramdomString = random.Next(0, 1000000).ToString("D6");
-            //int randomInt = Int32.Parse(ramdomString);
-            //user.Code = randomInt;
             user.Email = Guid.NewGuid().ToString().Substring(0, 10) + "@gmail.com";
             user.Password = Guid.NewGuid().ToString().Substring(0, 10) + ".44#";
             user.Address = "Default Address";
@@ -126,7 +122,10 @@ namespace obg.BusinessLogic.Logics
                 userFromDB.Password = user.Password;
                 userFromDB.Address = user.Address;
                 userFromDB.RegisterDate = DateTime.Now.ToShortDateString();
-                _userManagement.UpdateUser(userFromDB);
+                if (IsUpdateUserValid(userFromDB))
+                {
+                    _userManagement.UpdateUser(userFromDB);
+                }
             }
 
             return user.Name;
@@ -177,6 +176,31 @@ namespace obg.BusinessLogic.Logics
             if (user.RegisterDate == null || user.RegisterDate.Length == 0)
             {
                 throw new UserException("Fecha de registro inválida.");
+            }
+            return true;
+        }
+
+        protected bool IsUpdateUserValid(User user)
+        {
+            if (user.Email == null || user.Email.Length == 0)
+            {
+                throw new UserException("Email inválido.");
+            }
+            if (!IsEmailOK(user.Email))
+            {
+                throw new UserException("Email con formato inválido.");
+            }
+            if (IsEmailRegistered(user.Email))
+            {
+                throw new UserException("El nombre ya fue registrado.");
+            }
+            if (!IsPasswordOK(user.Password))
+            {
+                throw new UserException("Contraseña con formato inválida.");
+            }
+            if (user.Address == null || user.Address.Length == 0)
+            {
+                throw new UserException("Dirección inválida.");
             }
             return true;
         }
