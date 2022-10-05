@@ -22,8 +22,6 @@ namespace obg.BusinessLogic.Logics
 
         public string InsertSession(Session session, string password)
         {
-            //session.IdSession = CreateGuid();
-            //session.Token = CreateGuid();
             if (IsSessionValid(session, password))
             {
                 session.IdSession = CreateGuid();
