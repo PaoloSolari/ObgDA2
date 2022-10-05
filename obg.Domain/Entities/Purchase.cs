@@ -8,17 +8,17 @@ namespace obg.Domain.Entities
     public class Purchase
     {
         [Key] public string IdPurchase { get; set; }
-        public List<PurchaseLine> PurchaseLines { get; set; }
         public double Amount { get; set; }
         public string BuyerEmail { get; set; }
+        public List<PurchaseLine> PurchaseLines { get; set; }
         
         public Purchase() { }
         public Purchase(string idPurchase, double amount, string buyerEmail)
         {
             IdPurchase = idPurchase;
-            PurchaseLines = new List<PurchaseLine>();
             Amount = amount;
             BuyerEmail = buyerEmail;
+            PurchaseLines = new List<PurchaseLine>();
         }
     }
 }

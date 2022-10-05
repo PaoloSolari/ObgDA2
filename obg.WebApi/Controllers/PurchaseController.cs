@@ -5,6 +5,8 @@ using obg.BusinessLogic.Logics;
 using obg.Domain.Entities;
 using obg.Exceptions;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace obg.WebApi.Controllers
 {
@@ -12,19 +14,19 @@ namespace obg.WebApi.Controllers
     [ApiController]
     public class PurchaseController : ControllerBase
     {
-        private readonly IPurchaseService purchaseService;
+        private readonly IPurchaseService _purchaseService;
         public PurchaseController(IPurchaseService purchaseService)
         {
-            this.purchaseService = purchaseService;
+            _purchaseService = purchaseService;
         }
 
-        // POST api/<AdministratorController>
         [HttpPost]
-        public IActionResult PostPurchase([FromBody] Purchase purchase)
+        public IActionResult PostPurchase([FromBody] Purchase purchase, [FromHeader] string buyerEmail)
         {
             try
             {
-                return StatusCode(200, "Compra " + purchaseService.InsertPurchase(purchase) + " exitosa.");
+                purchase.BuyerEmail = buyerEmail;
+                return StatusCode(200, "Compra " + _purchaseService.InsertPurchase(purchase) + " exitosa.");
             }
             catch (PurchaseException exception)
             {
@@ -34,10 +36,10 @@ namespace obg.WebApi.Controllers
             {
                 return StatusCode(404, "No existe un medicamento a comprar.");
             }
-            catch (Exception)
-            {
-                return StatusCode(500, "Error interno.");
-            }
+            //catch (Exception)
+            //{
+            //    return StatusCode(500, "Error interno.");
+            //}
         }
     }
 }

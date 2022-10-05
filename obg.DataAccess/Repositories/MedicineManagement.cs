@@ -106,7 +106,7 @@ namespace obg.DataAccess.Repositories
 
         public Medicine GetMedicineByCode(string code)
         {
-            return ObgContext.Medicines.Where<Medicine>(m => m.Code == code).AsNoTracking().FirstOrDefault();
+            return ObgContext.Medicines.Where<Medicine>(m => m.Code == code).FirstOrDefault();
         }
 
         public void UpdateMedicine(Medicine medicine)
@@ -124,7 +124,7 @@ namespace obg.DataAccess.Repositories
 
         public bool IsCodeRegistered(string code)
         {
-            Medicine medicine = ObgContext.Medicines.Where<Medicine>(m => m.Code.Equals(code)).AsNoTracking().FirstOrDefault();
+            Medicine medicine = ObgContext.Medicines.Where<Medicine>(m => m.Code.Equals(code)).FirstOrDefault();
             if(medicine != null)
             {
                 return true;
