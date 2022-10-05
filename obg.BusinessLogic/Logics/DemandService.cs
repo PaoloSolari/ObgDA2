@@ -32,7 +32,7 @@ namespace obg.BusinessLogic.Logics
             return demand.IdDemand;
         }
 
-        private bool IsDemandValid(Demand demand)
+        public bool IsDemandValid(Demand demand)
         {
             if (demand == null)
             {

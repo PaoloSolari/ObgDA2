@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using obg.BusinessLogic.Interface.Interfaces;
 using obg.Domain.Entities;
+using obg.Domain.Enums;
 using obg.Exceptions;
 using obg.WebApi.Controllers;
 using System;
@@ -19,20 +20,25 @@ namespace obg.WebApi.Test
         private Mock<IPharmacyService> mock;
         private PharmacyController api;
         private Pharmacy validPharmacy;
+        private Administrator administrator;
+        private Session session;
 
         [TestInitialize]
         public void InitTest()
         {
             mock = new Mock<IPharmacyService>(MockBehavior.Strict);
             api = new PharmacyController(mock.Object);
-            validPharmacy = new Pharmacy("FarmaShop", "San Roque", null);
+            validPharmacy = new Pharmacy("FarmaShop", "San Roque");
+            administrator = new Administrator("Lucas", 000102, "l@gmail.com", "###bbb123.", "addressL", RoleUser.Employee, "13/09/2022");
+            //administrator.Pharmacies.Add(pharmacy);
+            session = new Session("123456", "Lucas", "XXYYZZ");
         }
 
         [TestMethod]
         public void PostPharmacyBadRequest()
         {
-            mock.Setup(x => x.InsertPharmacy(It.IsAny<Pharmacy>())).Throws(new PharmacyException());
-            var result = api.PostPharmacy(It.IsAny<Pharmacy>());
+            mock.Setup(x => x.InsertPharmacy(It.IsAny<Pharmacy>(),It.IsAny<string>())).Throws(new PharmacyException());
+            var result = api.PostPharmacy(It.IsAny<Pharmacy>(), It.IsAny<string>());
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
 
@@ -43,8 +49,8 @@ namespace obg.WebApi.Test
         [TestMethod]
         public void PostPharmacyFail()
         {
-            mock.Setup(x => x.InsertPharmacy(It.IsAny<Pharmacy>())).Throws(new Exception());
-            var result = api.PostPharmacy(It.IsAny<Pharmacy>());
+            mock.Setup(x => x.InsertPharmacy(It.IsAny<Pharmacy>(), It.IsAny<string>())).Throws(new Exception());
+            var result = api.PostPharmacy(It.IsAny<Pharmacy>(), It.IsAny<string>());
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
 
@@ -55,9 +61,9 @@ namespace obg.WebApi.Test
         [TestMethod]
         public void PostPharmacyOk()
         {
-            mock.Setup(x => x.InsertPharmacy(It.IsAny<Pharmacy>())).Returns(validPharmacy.Name);
+            mock.Setup(x => x.InsertPharmacy(It.IsAny<Pharmacy>(), It.IsAny<string>())).Returns(validPharmacy.Name);
             
-            var result = api.PostPharmacy(It.IsAny<Pharmacy>());
+            var result = api.PostPharmacy(It.IsAny<Pharmacy>(), It.IsAny<string>());
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
             var body = objectResult.Value;

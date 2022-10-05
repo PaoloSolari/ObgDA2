@@ -4,6 +4,7 @@ using Moq;
 using obg.BusinessLogic.Interface;
 using obg.BusinessLogic.Logics;
 using obg.Domain.Entities;
+using obg.Domain.Enums;
 using obg.Exceptions;
 using obg.WebApi.Controllers;
 using System;
@@ -18,6 +19,7 @@ namespace obg.WebApi.Test
         private Mock<ISessionService> mock;
         private Session validSession;
         private SessionController api;
+        private Administrator administrator;
 
         [TestInitialize]
         public void InitTest()
@@ -25,13 +27,15 @@ namespace obg.WebApi.Test
             mock = new Mock<ISessionService>(MockBehavior.Strict);
             api = new SessionController(mock.Object);
             validSession = new Session("123456", "Paolo", "AABBCC");
+            administrator = new Administrator("Paolo", 000102, "l@gmail.com", "###bbb123.", "addressL", RoleUser.Employee, "13/09/2022");
+
         }
 
         [TestMethod]
-        public void PostPharmacyBadRequest()
+        public void PostSessionBadRequest()
         {
-            mock.Setup(x => x.InsertSession(It.IsAny<Session>())).Throws(new SessionException());
-            var result = api.PostSession(It.IsAny<Session>());
+            mock.Setup(x => x.InsertSession(It.IsAny<Session>(), It.IsAny<string>())).Throws(new SessionException());
+            var result = api.PostSession(It.IsAny<Session>(), It.IsAny<string>());
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
 
@@ -42,8 +46,8 @@ namespace obg.WebApi.Test
         [TestMethod]
         public void PostSessionFail()
         {
-            mock.Setup(x => x.InsertSession(It.IsAny<Session>())).Throws(new Exception());
-            var result = api.PostSession(It.IsAny<Session>());
+            mock.Setup(x => x.InsertSession(It.IsAny<Session>(), It.IsAny<string>())).Throws(new Exception());
+            var result = api.PostSession(It.IsAny<Session>(), It.IsAny<string>());
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
 
@@ -54,8 +58,8 @@ namespace obg.WebApi.Test
         [TestMethod]
         public void PostSessionOk()
         {
-            mock.Setup(x => x.InsertSession(It.IsAny<Session>())).Returns(validSession.Token);
-            var result = api.PostSession(It.IsAny<Session>());
+            mock.Setup(x => x.InsertSession(It.IsAny<Session>(), It.IsAny<string>())).Returns(validSession.Token);
+            var result = api.PostSession(It.IsAny<Session>(), It.IsAny<string>());
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
             var body = objectResult.Value;

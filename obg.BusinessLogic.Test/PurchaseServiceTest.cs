@@ -46,12 +46,6 @@ namespace obg.BusinessLogic.Test
             nullPurchase = null;
         }
 
-        [TestCleanup]
-        public void ResetDBs()
-        {
-            FakeDB.Purchases.Clear();
-        }
-
         [TestMethod]
         public void InsertPurchaseOK()
         {

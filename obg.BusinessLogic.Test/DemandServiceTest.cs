@@ -8,6 +8,7 @@ using obg.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace obg.BusinessLogic.Test
 {
@@ -49,15 +50,12 @@ namespace obg.BusinessLogic.Test
             nullDemand = null;
         }
 
-        [TestCleanup]
-        public void ResetDBs()
-        {
-            FakeDB.Demands.Clear();
-        }
-
         [TestMethod]
         public void InsertDemandOK()
         {
+            mock.Setup(x => x.DemandExists(validDemand1.IdDemand)).Returns(false);
+            mock.Setup(x => x.InsertDemand(validDemand1));
+
             service.InsertDemand(validDemand1);
             mock.VerifyAll();
         }
@@ -89,8 +87,15 @@ namespace obg.BusinessLogic.Test
         [TestMethod]
         public void InsertDemandWrong_RepeatedIdDemand()
         {
+            mock.Setup(x => x.DemandExists(validDemand1.IdDemand)).Returns(false);
+            mock.Setup(x => x.InsertDemand(validDemand1));
+
             service.InsertDemand(validDemand1);
             validDemand2.IdDemand = "AAHHGG";
+
+            mock.Setup(x => x.DemandExists(validDemand2.IdDemand)).Returns(true);
+            mock.Setup(x => x.InsertDemand(validDemand2));
+
             service.InsertDemand(validDemand2);
         }
 
@@ -98,6 +103,9 @@ namespace obg.BusinessLogic.Test
         [TestMethod]
         public void InsertDemandWrong_NullPetitionList()
         {
+            mock.Setup(x => x.DemandExists(validDemand1.IdDemand)).Returns(false);
+            mock.Setup(x => x.InsertDemand(validDemand1));
+
             validDemand1.Petitions = nullPetitions;
             service.InsertDemand(validDemand1);
         }
@@ -106,6 +114,9 @@ namespace obg.BusinessLogic.Test
         [TestMethod]
         public void InsertDemandWrong_EmptyPetitionList()
         {
+            mock.Setup(x => x.DemandExists(validDemand1.IdDemand)).Returns(false);            mock.Setup(x => x.InsertDemand(validDemand1));
+            mock.Setup(x => x.InsertDemand(validDemand1));
+
             validDemand1.Petitions = emptyPetitions;
             service.InsertDemand(validDemand1);
         }

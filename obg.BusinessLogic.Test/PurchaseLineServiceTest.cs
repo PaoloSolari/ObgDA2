@@ -29,22 +29,18 @@ namespace obg.BusinessLogic.Test
             service = new PurchaseLineService(mock.Object);
 
             validMedicine = new Medicine("GDY3AA", "Remedio", "Dolores", PresentationMedicine.Capsulas, 10, "25g", 300, false, true);
-            FakeDB.Medicines.Add(validMedicine);
             validPurchaseLine1 = new PurchaseLine("HUDTGY", validMedicine.Code, 2);
             validPurchaseLine2 = new PurchaseLine("LJUAHl", validMedicine.Code, 3);
             nullPurchaseLine = null;
         }
 
-        [TestCleanup]
-        public void ResetDBs()
-        {
-            FakeDB.PurchaseLines.Clear();
-            FakeDB.Medicines.Clear();
-        }
-
         [TestMethod]
         public void InsertPurchaseLineOK()
         {
+            mock.Setup(x => x.IsIdPurchaseLineRegistered(validPurchaseLine1.IdPurchaseLine)).Returns(false);
+            mock.Setup(x => x.IsMedicineCodeOk(validPurchaseLine1.MedicineCode)).Returns(true);
+            mock.Setup(x => x.InsertPurchaseLine(validPurchaseLine1));
+
             service.InsertPurchaseLine(validPurchaseLine1);
             mock.VerifyAll();
         }
@@ -60,8 +56,13 @@ namespace obg.BusinessLogic.Test
         [TestMethod]
         public void InsertPurchaseLineWrong_NullIdPurchaseLine()
         {
-            validPurchaseLine1.IdPurchaseLine = null;
+            validPurchaseLine1.IdPurchaseLine = null; 
+            mock.Setup(x => x.IsIdPurchaseLineRegistered(validPurchaseLine1.IdPurchaseLine)).Returns(false);
+            mock.Setup(x => x.IsMedicineCodeOk(validPurchaseLine1.MedicineCode)).Returns(true);
+            mock.Setup(x => x.InsertPurchaseLine(validPurchaseLine1));
+
             service.InsertPurchaseLine(validPurchaseLine1);
+            mock.VerifyAll();
         }
 
         [ExpectedException(typeof(PurchaseLineException))]
@@ -69,16 +70,31 @@ namespace obg.BusinessLogic.Test
         public void InsertPurchaseLineWrong_EmptyIdPurchaseLine()
         {
             validPurchaseLine1.IdPurchaseLine = "";
+            mock.Setup(x => x.IsIdPurchaseLineRegistered(validPurchaseLine1.IdPurchaseLine)).Returns(false);
+            mock.Setup(x => x.IsMedicineCodeOk(validPurchaseLine1.MedicineCode)).Returns(true);
+            mock.Setup(x => x.InsertPurchaseLine(validPurchaseLine1));
+
             service.InsertPurchaseLine(validPurchaseLine1);
+            mock.VerifyAll();
         }
 
         [ExpectedException(typeof(PurchaseLineException))]
         [TestMethod]
         public void InsertPurchaseLineWrong_RepeatedIdPurchaseLine()
         {
+            mock.Setup(x => x.IsIdPurchaseLineRegistered(validPurchaseLine1.IdPurchaseLine)).Returns(false);
+            mock.Setup(x => x.IsMedicineCodeOk(validPurchaseLine1.MedicineCode)).Returns(true);
+            mock.Setup(x => x.InsertPurchaseLine(validPurchaseLine1));
+
             service.InsertPurchaseLine(validPurchaseLine1);
+            mock.VerifyAll();
             validPurchaseLine2.IdPurchaseLine = "HUDTGY";
+            mock.Setup(x => x.IsIdPurchaseLineRegistered(validPurchaseLine2.IdPurchaseLine)).Returns(true);
+            mock.Setup(x => x.IsMedicineCodeOk(validPurchaseLine2.MedicineCode)).Returns(true);
+            mock.Setup(x => x.InsertPurchaseLine(validPurchaseLine2));
+
             service.InsertPurchaseLine(validPurchaseLine2);
+            mock.VerifyAll();
         }
 
         [ExpectedException(typeof(PurchaseLineException))]
@@ -86,7 +102,12 @@ namespace obg.BusinessLogic.Test
         public void InsertPurchaseLineWrong_NullMedicineCode()
         {
             validPurchaseLine1.MedicineCode = null;
+            mock.Setup(x => x.IsIdPurchaseLineRegistered(validPurchaseLine1.IdPurchaseLine)).Returns(false);
+            mock.Setup(x => x.IsMedicineCodeOk(validPurchaseLine1.MedicineCode)).Returns(true);
+            mock.Setup(x => x.InsertPurchaseLine(validPurchaseLine1));
+
             service.InsertPurchaseLine(validPurchaseLine1);
+            mock.VerifyAll();
         }
 
         [ExpectedException(typeof(PurchaseLineException))]
@@ -94,23 +115,33 @@ namespace obg.BusinessLogic.Test
         public void InsertPurchaseLineWrong_EmptyMedicineCode()
         {
             validPurchaseLine1.MedicineCode = "";
+            mock.Setup(x => x.IsIdPurchaseLineRegistered(validPurchaseLine1.IdPurchaseLine)).Returns(false);
+            mock.Setup(x => x.IsMedicineCodeOk(validPurchaseLine1.MedicineCode)).Returns(true);
+            mock.Setup(x => x.InsertPurchaseLine(validPurchaseLine1));
+
             service.InsertPurchaseLine(validPurchaseLine1);
+            mock.VerifyAll();
         }
 
-        [ExpectedException(typeof(PurchaseLineException))]
-        [TestMethod]
-        public void InsertPurchaseLineWrong_InexistMedicineCode()
-        {
-            validPurchaseLine1.MedicineCode = "..."; // Nos aseguramos de no introducirlo nunca.
-            service.InsertPurchaseLine(validPurchaseLine1);
-        }
+        //[ExpectedException(typeof(PurchaseLineException))]
+        //[TestMethod]
+        //public void InsertPurchaseLineWrong_InexistMedicineCode()
+        //{
+        //    validPurchaseLine1.MedicineCode = "..."; // Nos aseguramos de no introducirlo nunca.
+        //    service.InsertPurchaseLine(validPurchaseLine1);
+        //}
 
         [ExpectedException(typeof(PurchaseLineException))]
         [TestMethod]
         public void InsertPurchaseLineWrong_HasMedicineQuantityLessThan1()
         {
             validPurchaseLine1.MedicineQuantity = 0;
+            mock.Setup(x => x.IsIdPurchaseLineRegistered(validPurchaseLine1.IdPurchaseLine)).Returns(false);
+            mock.Setup(x => x.IsMedicineCodeOk(validPurchaseLine1.MedicineCode)).Returns(true);
+            mock.Setup(x => x.InsertPurchaseLine(validPurchaseLine1));
+
             service.InsertPurchaseLine(validPurchaseLine1);
+            mock.VerifyAll();
         }
     }
 }

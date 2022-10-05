@@ -22,7 +22,7 @@ namespace obg.DataAccess.Test
         [TestInitialize]
         public void InitTest()
         {
-            pharmacy = new Pharmacy("FarmaShop", "18 de Julio", null);
+            pharmacy = new Pharmacy("FarmaShop", "18 de Julio");
             invitation = new Invitation("XXZZYY", pharmacy, RoleUser.Owner, "Pedro", 343434);
 
             invitations = new List<Invitation>() { invitation };

@@ -27,7 +27,7 @@ namespace obg.DataAccess.Test
         public void InitTest()
         {
             owner = new Owner("Julio", 123456, "julio@gmail.com", "abccdefg.123", "Ejido", RoleUser.Owner, "29/09/2022", null);
-            pharmacy = new Pharmacy("FarmaShop", "18 de Julio", owner);
+            pharmacy = new Pharmacy("FarmaShop", "18 de Julio");
             employee = new Employee("Jaime", 232323, "jaime@gmail.com", ".egudhu345d", "18 de Julio", RoleUser.Employee, "29/09/2022", pharmacy);
         
             employees = new List<Employee> { employee };
