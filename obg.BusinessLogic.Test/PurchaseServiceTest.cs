@@ -49,6 +49,8 @@ namespace obg.BusinessLogic.Test
         [TestMethod]
         public void InsertPurchaseOK()
         {
+            mock.Setup(x => x.IsIdPurchaseRegistered(validPurchase1.IdPurchase)).Returns(false);
+            mock.Setup(x => x.InsertPurchase(validPurchase1));
             service.InsertPurchase(validPurchase1);
             mock.VerifyAll();
         }
@@ -80,9 +82,16 @@ namespace obg.BusinessLogic.Test
         [TestMethod]
         public void InsertPurchaseWrong_RepeatedIdPurchase()
         {
+            mock.Setup(x => x.IsIdPurchaseRegistered(validPurchase1.IdPurchase)).Returns(false);
+            mock.Setup(x => x.InsertPurchase(validPurchase1));
             service.InsertPurchase(validPurchase1);
+            mock.VerifyAll();
+
             validPurchase2.IdPurchase = "MANMAN";
+            mock.Setup(x => x.IsIdPurchaseRegistered(validPurchase2.IdPurchase)).Returns(true);
+            mock.Setup(x => x.InsertPurchase(validPurchase2));
             service.InsertPurchase(validPurchase2);
+            mock.VerifyAll();
         }
 
         [ExpectedException(typeof(PurchaseException))]
@@ -90,7 +99,10 @@ namespace obg.BusinessLogic.Test
         public void InsertPurchaseLineWrong_NullPurchaseLines()
         {
             validPurchase1.PurchaseLines = null;
+            mock.Setup(x => x.IsIdPurchaseRegistered(validPurchase1.IdPurchase)).Returns(false);
+            mock.Setup(x => x.InsertPurchase(validPurchase1));
             service.InsertPurchase(validPurchase1);
+            mock.VerifyAll();
         }
 
         [ExpectedException(typeof(PurchaseException))]
@@ -98,7 +110,10 @@ namespace obg.BusinessLogic.Test
         public void InsertPurchaseLineWrong_EmptyPurchaseLines()
         {
             validPurchase1.PurchaseLines = emptyPurchaseLines;
+            mock.Setup(x => x.IsIdPurchaseRegistered(validPurchase1.IdPurchase)).Returns(false);
+            mock.Setup(x => x.InsertPurchase(validPurchase1));
             service.InsertPurchase(validPurchase1);
+            mock.VerifyAll();
         }
 
         [ExpectedException(typeof(PurchaseException))]
@@ -106,7 +121,10 @@ namespace obg.BusinessLogic.Test
         public void InsertPurchaseWrong_NullNegativeAmount()
         {
             validPurchase1.Amount = -2;
+            mock.Setup(x => x.IsIdPurchaseRegistered(validPurchase1.IdPurchase)).Returns(false);
+            mock.Setup(x => x.InsertPurchase(validPurchase1));
             service.InsertPurchase(validPurchase1);
+            mock.VerifyAll();
         }
 
         [ExpectedException(typeof(PurchaseException))]
@@ -114,7 +132,10 @@ namespace obg.BusinessLogic.Test
         public void InsertPurchaseWrong_NullEmail()
         {
             validPurchase1.BuyerEmail = null;
+            mock.Setup(x => x.IsIdPurchaseRegistered(validPurchase1.IdPurchase)).Returns(false);
+            mock.Setup(x => x.InsertPurchase(validPurchase1));
             service.InsertPurchase(validPurchase1);
+            mock.VerifyAll();
         }
 
         [ExpectedException(typeof(PurchaseException))]
@@ -122,7 +143,10 @@ namespace obg.BusinessLogic.Test
         public void InsertPurchaseWrong_EmptyEmail()
         {
             validPurchase1.BuyerEmail = "";
+            mock.Setup(x => x.IsIdPurchaseRegistered(validPurchase1.IdPurchase)).Returns(false);
+            mock.Setup(x => x.InsertPurchase(validPurchase1));
             service.InsertPurchase(validPurchase1);
+            mock.VerifyAll();
         }
 
         [ExpectedException(typeof(PurchaseException))]
@@ -130,7 +154,10 @@ namespace obg.BusinessLogic.Test
         public void InsertPurchaseWrong_EmailHasNoFormat()
         {
             validPurchase1.BuyerEmail = "psgmail.com";
+            mock.Setup(x => x.IsIdPurchaseRegistered(validPurchase1.IdPurchase)).Returns(false);
+            mock.Setup(x => x.InsertPurchase(validPurchase1));
             service.InsertPurchase(validPurchase1);
+            mock.VerifyAll();
         }
 
     }

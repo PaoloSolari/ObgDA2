@@ -43,13 +43,18 @@ namespace obg.BusinessLogic.Test
         [TestMethod]
         public void InsertSessiondOK()
         {
+            mock.Setup(x => x.IsIdSessionRegistered(It.IsAny<string>())).Returns(false);
+            mockUser.Setup(x => x.GetUserByName(validAdministrator1.Name)).Returns(validAdministrator1);
+            mock.Setup(x => x.IsNameLogged(validSession1)).Returns(false);
+            mock.Setup(x => x.InsertSession(validSession1));
             service.InsertSession(validSession1, validAdministrator1.Password);
             mock.VerifyAll();
+            mockUser.VerifyAll();
         }
 
         [ExpectedException(typeof(SessionException))]
         [TestMethod]
-        public void InsertSessionWrong_NullDemand()
+        public void InsertSessionWrong_NullSession()
         {
             service.InsertSession(nullSession, validAdministrator1.Password);
         }
@@ -58,57 +63,90 @@ namespace obg.BusinessLogic.Test
         [TestMethod]
         public void InsertSessionWrong_NullIdSession()
         {
-            validSession1.IdSession = null;
+            validSession1.IdSession = null; mock.Setup(x => x.IsIdSessionRegistered(It.IsAny<string>())).Returns(false);
+            mockUser.Setup(x => x.GetUserByName(validAdministrator1.Name)).Returns(validAdministrator1);
+            mock.Setup(x => x.IsNameLogged(validSession1)).Returns(false);
+            mock.Setup(x => x.InsertSession(validSession1));
             service.InsertSession(validSession1, validAdministrator1.Password);
+            mock.VerifyAll();
+            mockUser.VerifyAll();
         }
 
         [ExpectedException(typeof(SessionException))]
         [TestMethod]
         public void InsertSessionWrong_EmptyIdSession()
         {
-            validSession1.IdSession = "";
+            validSession1.IdSession = ""; mock.Setup(x => x.IsIdSessionRegistered(It.IsAny<string>())).Returns(false);
+            mockUser.Setup(x => x.GetUserByName(validAdministrator1.Name)).Returns(validAdministrator1);
+            mock.Setup(x => x.IsNameLogged(validSession1)).Returns(false);
+            mock.Setup(x => x.InsertSession(validSession1));
             service.InsertSession(validSession1, validAdministrator1.Password);
+            mock.VerifyAll();
+            mockUser.VerifyAll();
         }
 
         [ExpectedException(typeof(SessionException))]
         [TestMethod]
         public void InsertSessionWrong_RepeatedIdSession()
         {
+            mock.Setup(x => x.IsIdSessionRegistered(It.IsAny<string>())).Returns(false);
+            mockUser.Setup(x => x.GetUserByName(validAdministrator1.Name)).Returns(validAdministrator1);
+            mock.Setup(x => x.IsNameLogged(validSession1)).Returns(false);
+            mock.Setup(x => x.InsertSession(validSession1));
             service.InsertSession(validSession1, validAdministrator1.Password);
-            validSession2.IdSession = "DDIQDS";
+            mock.VerifyAll();
+            mockUser.VerifyAll();
+
+            validSession2.IdSession = "DDIQDS"; 
+            mock.Setup(x => x.IsIdSessionRegistered(It.IsAny<string>())).Returns(true);
+            mockUser.Setup(x => x.GetUserByName(validAdministrator1.Name)).Returns(validAdministrator1);
+            mock.Setup(x => x.IsNameLogged(validSession2)).Returns(true);
+            mock.Setup(x => x.InsertSession(validSession2));
             service.InsertSession(validSession2, validAdministrator1.Password);
+            mock.VerifyAll();
+            mockUser.VerifyAll();
         }
 
         [ExpectedException(typeof(SessionException))]
         [TestMethod]
         public void InsertSessionWrong_NullUserName()
         {
-            validSession1.UserName = null;
+            validSession1.UserName = null; 
+            mock.Setup(x => x.IsIdSessionRegistered(It.IsAny<string>())).Returns(false);
+            mockUser.Setup(x => x.GetUserByName(validAdministrator1.Name)).Returns(validAdministrator1);
+            mock.Setup(x => x.IsNameLogged(validSession1)).Returns(false);
+            mock.Setup(x => x.InsertSession(validSession1));
             service.InsertSession(validSession1, validAdministrator1.Password);
+            mock.VerifyAll();
+            mockUser.VerifyAll();
         }
 
         [ExpectedException(typeof(SessionException))]
         [TestMethod]
         public void InsertSessionWrong_EmptyUserName()
         {
-            validSession1.UserName = "";
+            validSession1.UserName = ""; 
+            mock.Setup(x => x.IsIdSessionRegistered(It.IsAny<string>())).Returns(false);
+            mockUser.Setup(x => x.GetUserByName(validAdministrator1.Name)).Returns(validAdministrator1);
+            mock.Setup(x => x.IsNameLogged(validSession1)).Returns(false);
+            mock.Setup(x => x.InsertSession(validSession1));
             service.InsertSession(validSession1, validAdministrator1.Password);
+            mock.VerifyAll();
+            mockUser.VerifyAll();
         }
 
         [ExpectedException(typeof(SessionException))]
         [TestMethod]
         public void InsertSessionWrong_UserNameHasMore20Chars()
         {
-            validSession1.UserName = "#aaabbbccc$aaabbbcccD";
+            validSession1.UserName = "#aaabbbccc$aaabbbcccD"; 
+            mock.Setup(x => x.IsIdSessionRegistered(It.IsAny<string>())).Returns(false);
+            mockUser.Setup(x => x.GetUserByName(validAdministrator1.Name)).Returns(validAdministrator1);
+            mock.Setup(x => x.IsNameLogged(validSession1)).Returns(false);
+            mock.Setup(x => x.InsertSession(validSession1));
             service.InsertSession(validSession1, validAdministrator1.Password);
-        }
-
-        [ExpectedException(typeof(SessionException))]
-        [TestMethod]
-        public void InsertSessionWrong_InexistUserName()
-        {
-            validSession1.UserName = "..."; // Nos aseguramos de no introducirlo nunca.
-            service.InsertSession(validSession1, validAdministrator1.Password);
+            mock.VerifyAll();
+            mockUser.VerifyAll();
         }
 
         [ExpectedException(typeof(SessionException))]
@@ -116,7 +154,13 @@ namespace obg.BusinessLogic.Test
         public void InsertSessionWrong_NullToken()
         {
             validSession1.Token = null;
+            mock.Setup(x => x.IsIdSessionRegistered(It.IsAny<string>())).Returns(false);
+            mockUser.Setup(x => x.GetUserByName(validAdministrator1.Name)).Returns(validAdministrator1);
+            mock.Setup(x => x.IsNameLogged(validSession1)).Returns(false);
+            mock.Setup(x => x.InsertSession(validSession1));
             service.InsertSession(validSession1, validAdministrator1.Password);
+            mock.VerifyAll();
+            mockUser.VerifyAll();
         }
 
         [ExpectedException(typeof(SessionException))]
@@ -124,15 +168,26 @@ namespace obg.BusinessLogic.Test
         public void InsertSessionWrong_EmptyToken()
         {
             validSession1.Token = "";
+            mock.Setup(x => x.IsIdSessionRegistered(It.IsAny<string>())).Returns(false);
+            mockUser.Setup(x => x.GetUserByName(validAdministrator1.Name)).Returns(validAdministrator1);
+            mock.Setup(x => x.IsNameLogged(validSession1)).Returns(false);
+            mock.Setup(x => x.InsertSession(validSession1));
             service.InsertSession(validSession1, validAdministrator1.Password);
+            mock.VerifyAll();
+            mockUser.VerifyAll();
         }
 
         [ExpectedException(typeof(SessionException))]
         [TestMethod]
         public void InsertSessionWrong_LoggedToken()
         {
+            mock.Setup(x => x.IsIdSessionRegistered(It.IsAny<string>())).Returns(false);
+            mockUser.Setup(x => x.GetUserByName(validAdministrator1.Name)).Returns(validAdministrator1);
+            mock.Setup(x => x.IsNameLogged(validSession1)).Returns(true);
+            mock.Setup(x => x.InsertSession(validSession1));
             service.InsertSession(validSession1, validAdministrator1.Password);
-            service.InsertSession(validSession1, validAdministrator1.Password);
+            mock.VerifyAll();
+            mockUser.VerifyAll();
         }
 
     }

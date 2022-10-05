@@ -47,10 +47,10 @@ namespace obg.WebApi.Controllers
             {
                 return StatusCode(400, exception.Message);
             }
-            //catch (Exception)
-            //{
-            //    return StatusCode(500, "Error interno.");
-            //}
+            catch (Exception)
+            {
+                return StatusCode(500, "Error interno.");
+            }
         }
 
         [HttpPut("{name}")]

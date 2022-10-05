@@ -11,7 +11,6 @@ namespace obg.BusinessLogic.Logics
 {
     public class PurchaseService : IPurchaseService
     {
-        protected List<Purchase> fakeDB = new List<Purchase>();
         private readonly IPurchaseManagement _purchaseManagement;
 
         public PurchaseService(IPurchaseManagement purchaseManagement)
