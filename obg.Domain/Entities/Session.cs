@@ -18,5 +18,6 @@ namespace obg.Domain.Entities
             UserName = userName;
             Token = token;
         }
+
     }
 }

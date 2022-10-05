@@ -15,5 +15,6 @@ namespace obg.Domain.Entities
             MedicineCode = medicineCode;
             MedicineQuantity = medicineQuantity;
         }
+
     }
 }

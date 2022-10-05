@@ -36,5 +36,6 @@ namespace obg.Domain.Entities
             }
             return this.Name == pharmacy.Name;
         }
+
     }
 }

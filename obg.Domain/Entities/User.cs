@@ -29,5 +29,4 @@ namespace obg.Domain.Entities
         }
 
     }
-
 }

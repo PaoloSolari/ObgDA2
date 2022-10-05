@@ -41,11 +41,11 @@ namespace obg.DataAccess.Migrations
                     b.Property<string>("IdInvitation")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("UserCode")
-                        .HasColumnType("int");
-
                     b.Property<string>("PharmacyName")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("UserCode")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
@@ -53,7 +53,7 @@ namespace obg.DataAccess.Migrations
                     b.Property<int>("UserRole")
                         .HasColumnType("int");
 
-                    b.HasKey("IdInvitation", "UserCode");
+                    b.HasKey("IdInvitation");
 
                     b.HasIndex("PharmacyName");
 

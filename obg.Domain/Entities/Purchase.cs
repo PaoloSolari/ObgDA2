@@ -20,5 +20,6 @@ namespace obg.Domain.Entities
             BuyerEmail = buyerEmail;
             PurchaseLines = new List<PurchaseLine>();
         }
+
     }
 }

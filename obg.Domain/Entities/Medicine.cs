@@ -31,5 +31,6 @@ namespace obg.Domain.Entities
             Prescription = prescription;
             IsActive = isActive;
         }
+
     }
 }
