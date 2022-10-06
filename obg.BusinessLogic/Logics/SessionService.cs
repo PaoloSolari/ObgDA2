@@ -99,7 +99,7 @@ namespace obg.BusinessLogic.Logics
             Session session = _sessionManagement.GetSessionByToken(token);
             if(session == null)
             {
-                throw new NotFoundException();
+                throw new NotFoundException("Sesión inválida.");
             } 
             else
             {
@@ -107,7 +107,7 @@ namespace obg.BusinessLogic.Logics
                 User user = _userManagement.GetUserByName(userName);
                 if(user == null)
                 {
-                    throw new NotFoundException();
+                    throw new NotFoundException("Usuario de sesión incorrecto.");
                 }
                 return user.Role;
             }

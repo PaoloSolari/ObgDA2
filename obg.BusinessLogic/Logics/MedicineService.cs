@@ -90,12 +90,12 @@ namespace obg.BusinessLogic.Logics
             IEnumerable<Medicine> medicines = _medicineManagement.GetMedicines();
             if (GetLengthOfList(medicines) == 0)
             {
-                throw new NotFoundException();
+                throw new NotFoundException("No hay medicamentos.");
             }
             IEnumerable<Medicine> ActivesMedicines = GetActivesMedicines(medicines);
             if (GetLengthOfList(ActivesMedicines) == 0)
             {
-                throw new NotFoundException();
+                throw new NotFoundException("No hay medicamentos.");
             }
             return ActivesMedicines;
         }
@@ -153,7 +153,7 @@ namespace obg.BusinessLogic.Logics
             List<Medicine> allMedicines = _medicineManagement.GetMedicinesByName(medicineName).ToList();
             if (allMedicines == null)
             {
-                throw new NotFoundException();
+                throw new NotFoundException("No existe el medicamento.");
             }
             List<Medicine> medicinesWithStock = new List<Medicine>();
             foreach (Medicine medicine in allMedicines)
