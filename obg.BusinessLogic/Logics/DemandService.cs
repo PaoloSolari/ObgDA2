@@ -16,13 +16,15 @@ namespace obg.BusinessLogic.Logics
         private readonly IDemandManagement _demandManagement;
         private readonly ISessionManagement _sessionManagement;
         private readonly IMedicineManagement _medicineManagement;
+        private readonly IEmployeeManagement _employeeManagement;
 
-        public DemandService(){}
-        public DemandService(IDemandManagement demandManagement, ISessionManagement sessionManagement, IMedicineManagement medicineManagement)
+        public DemandService() { }
+        public DemandService(IDemandManagement demandManagement, ISessionManagement sessionManagement, IMedicineManagement medicineManagement, IEmployeeManagement employeeManagement)
         {
             _demandManagement = demandManagement;
             _sessionManagement = sessionManagement;
             _medicineManagement = medicineManagement;
+            _employeeManagement = employeeManagement;
         }
 
         public string InsertDemand(Demand demand, string token)
@@ -33,9 +35,31 @@ namespace obg.BusinessLogic.Logics
             if (IsDemandValid(demand))
             {
                 Session session = _sessionManagement.GetSessionByToken(token);
-                _demandManagement.InsertDemand(demand, session);
+                Employee employee = _employeeManagement.GetEmployeeByName(session.UserName);
+                Pharmacy employeePharmacy = employee.Pharmacy;
+                if (AllMedicinesExistsInPharmacy(employeePharmacy, demand))
+                {
+                    _demandManagement.InsertDemand(demand, session);
+                }
+                else
+                {
+                    throw new DemandException("No existe el medicamento en la farmacia del empleado.");
+                }
             }
             return demand.IdDemand;
+        }
+
+        private bool AllMedicinesExistsInPharmacy(Pharmacy employeePharmacy, Demand demand)
+        {
+            foreach (Petition petition in demand.Petitions)
+            {
+                Medicine medicine = _medicineManagement.GetMedicineByCode(petition.MedicineCode);
+                if (!employeePharmacy.Medicines.Contains(medicine))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         private string CreateId()
@@ -71,7 +95,7 @@ namespace obg.BusinessLogic.Logics
             }
             if (!ExistAllMedicines(demand.Petitions))
             {
-                throw new NotFoundException();
+                throw new NotFoundException("No existe el medicamento.");
             }
             return true;
         }
@@ -83,10 +107,10 @@ namespace obg.BusinessLogic.Logics
 
         private bool ExistAllMedicines(List<Petition> petitions)
         {
-            foreach (Petition petition  in petitions)
+            foreach (Petition petition in petitions)
             {
                 Medicine medicineCode = _medicineManagement.GetMedicineByCode(petition.MedicineCode);
-                if(medicineCode == null)
+                if (medicineCode == null)
                 {
                     return false;
                 }
@@ -98,7 +122,7 @@ namespace obg.BusinessLogic.Logics
         {
             Session session = _sessionManagement.GetSessionByToken(token);
             IEnumerable<Demand> demands = _demandManagement.GetDemands(session);
-            if(demands == null)
+            if (demands == null)
             {
                 throw new NotFoundException("No hay solicitudes de reposición de stock.");
             }
@@ -115,8 +139,15 @@ namespace obg.BusinessLogic.Logics
             bool isAlreadySaw = demand.Status == DemandStatus.Accepted || demand.Status == DemandStatus.Rejected;
             if (!isAlreadySaw)
             {
-                demand.Status = demandToUpdate.Status;
-                _demandManagement.UpdateDemand(demand);
+                if ((demandToUpdate.Status == DemandStatus.Accepted) || (demandToUpdate.Status == DemandStatus.Rejected))
+                {
+                    demand.Status = demandToUpdate.Status;
+                    _demandManagement.UpdateDemand(demand);
+                }
+                else
+                {
+                    throw new DemandException("Debes aceptar o rechazar la solicitud.");
+                }
             }
             else
             {

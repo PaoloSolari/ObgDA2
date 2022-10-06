@@ -36,6 +36,7 @@ namespace obg.BusinessLogic.Logics
                     if (IsPurchaseValid(purchase))
                     {
                         UpdateMedicinesBuyed(purchase.PurchaseLines);
+                        purchase.Amount = CalculateAmountOfBuy(purchase.PurchaseLines);
                         _purchaseManagement.InsertPurchase(purchase);
                     }
                 }
@@ -142,6 +143,21 @@ namespace obg.BusinessLogic.Logics
                 _medicineManagement.UpdateMedicine(medicineFromDataBase);
             }
         }
+
+        private double CalculateAmountOfBuy(List<PurchaseLine> lines)
+        {
+            double amount = 0;
+            foreach (PurchaseLine line in lines)
+            {
+                Medicine medicineToBuy = _medicineManagement.GetMedicineByCode(line.MedicineCode);
+                int quantity = line.MedicineQuantity;
+                double price = medicineToBuy.Price;
+                double totalCost = quantity* price;
+                amount+=totalCost;
+            }
+            return amount;
+        }
+
 
         private bool IsPurchaseValid(Purchase purchase)
         {

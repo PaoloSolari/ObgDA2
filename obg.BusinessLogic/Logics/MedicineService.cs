@@ -133,7 +133,7 @@ namespace obg.BusinessLogic.Logics
             Medicine medicine = GetMedicineByCode(code);
             if (medicine == null)
             {
-                throw new NotFoundException();
+                throw new NotFoundException("El medicamento no existe.");
             }
             _medicineManagement.DeleteMedicine(medicine);
         }
@@ -143,7 +143,7 @@ namespace obg.BusinessLogic.Logics
             IEnumerable<Medicine> medicines = _medicineManagement.GetMedicinesByName(medicineName);
             if(medicines == null)
             {
-                throw new NotFoundException();
+                throw new NotFoundException("El medicamento no existe.");
             }
             return medicines;
         }
