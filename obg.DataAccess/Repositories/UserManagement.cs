@@ -29,7 +29,7 @@ namespace obg.DataAccess.Repositories
 
         public User GetUserByName(string name)
         {
-            return ObgContext.Users.Where<User>(u => u.Name == name).FirstOrDefault();
+            return ObgContext.Users.Where<User>(u => u.Name.Equals(name)).FirstOrDefault();
         }
 
         public void UpdateUser(User user)
