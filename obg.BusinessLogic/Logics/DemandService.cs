@@ -35,7 +35,7 @@ namespace obg.BusinessLogic.Logics
             if (IsDemandValid(demand))
             {
                 Session session = _sessionManagement.GetSessionByToken(token);
-                Employee employee = _employeeManagement.GetEmployeeByName(session.UserName); // Te trae al empleado en null
+                Employee employee = _employeeManagement.GetEmployeeByName(session.UserName);
                 Pharmacy employeePharmacy = employee.Pharmacy;
                 if (AllMedicinesExistsInPharmacy(employeePharmacy, demand))
                 {

@@ -34,7 +34,7 @@ namespace obg.DataAccess.Repositories
 
         public Employee GetEmployeeByName(string name)
         {
-            return ObgContext.Employees.Where<Employee>(e => e.Name.Equals(name)).FirstOrDefault();
+            return ObgContext.Employees.Where<Employee>(e => e.Name.Equals(name)).Include("Pharmacy").FirstOrDefault();
         }
 
         public void UpdateEmployee(Employee employee)
