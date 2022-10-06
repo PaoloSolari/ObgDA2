@@ -141,7 +141,7 @@ namespace obg.BusinessLogic.Logics
         public IEnumerable<Medicine> GetMedicinesByName(string medicineName)
         {
             IEnumerable<Medicine> medicines = _medicineManagement.GetMedicinesByName(medicineName);
-            if(medicines == null)
+            if(medicines.ToList().Count == 0)
             {
                 throw new NotFoundException("El medicamento no existe.");
             }
