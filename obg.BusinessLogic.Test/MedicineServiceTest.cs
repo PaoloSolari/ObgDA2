@@ -26,6 +26,7 @@ namespace obg.BusinessLogic.Test
         private Medicine nullMedicine;
 
         private List<Medicine> medicines;
+        private List<Medicine> medicinesTest;
 
         private Employee employee;
         private Session session;
@@ -39,11 +40,12 @@ namespace obg.BusinessLogic.Test
 
             validPharmacy1 = new Pharmacy("San Roque", "Ejido");
 
-            validMedicine1 = new Medicine("XXCCAA", "Paracetamol", "Dolor de cabeza", PresentationMedicine.Capsulas, 0, "1mg", 200, false, true);
+            validMedicine1 = new Medicine("XXCCAA", "Paracetamol", "Dolor de cabeza", PresentationMedicine.Capsulas, 10, "1mg", 200, false, true);
             validMedicine2 = new Medicine("XF45GG", "Ibuprofeno", "Dolor de estómago", PresentationMedicine.Comprimidos, 0, "0.5mg", 100, false, true);
             nullMedicine = null;
 
             medicines = new List <Medicine> ();
+            medicinesTest = new List<Medicine> { validMedicine1};
 
             employee = new Employee("Lucas", 000102, "l@gmail.com", "###bbb123.", "addressL", RoleUser.Employee, "13/09/2022", validPharmacy1);
             session = new Session("123456", "Lucas", "XXYYZZ");
@@ -279,6 +281,70 @@ namespace obg.BusinessLogic.Test
 
             mock.VerifyAll();
             mockSession.VerifyAll();
+        }
+
+        [TestMethod]
+        public void GetMedicines_Ok()
+        {
+            mock.Setup(x => x.GetMedicines()).Returns(medicinesTest);
+
+            service.GetMedicines();
+
+            mock.VerifyAll();
+        }
+
+        [ExpectedException(typeof(NotFoundException))]
+        [TestMethod]
+        public void GetMedicinesFail_EmptyMedicines()
+        {
+            mock.Setup(x => x.GetMedicines()).Returns(new List<Medicine> { });
+
+            service.GetMedicines();
+
+            mock.VerifyAll();
+        }
+
+        [TestMethod]
+        public void GetMedicinesWithStock_Ok()
+        {
+            validMedicine1.Stock = 10;
+            mock.Setup(x => x.GetMedicinesByName(validMedicine1.Name)).Returns(medicinesTest);
+
+            service.GetMedicinesWithStock(validMedicine1.Name);
+
+            mock.VerifyAll();
+        }
+
+        [ExpectedException(typeof(MedicineException))]
+        [TestMethod]
+        public void GetMedicinesWithStockFail_EmptyMedicines()
+        {
+            mock.Setup(x => x.GetMedicinesByName(validMedicine2.Name)).Returns(new List<Medicine> { });
+
+            service.GetMedicinesWithStock(validMedicine2.Name);
+
+            mock.VerifyAll();
+        }        
+
+        [TestMethod]
+        public void GetMedicineByName_Ok()
+        {
+            mock.Setup(x => x.GetMedicinesByName(validMedicine1.Name)).Returns(medicinesTest);
+
+            service.GetMedicinesByName(validMedicine1.Name);
+
+            mock.VerifyAll();
+        }       
+        
+        [ExpectedException(typeof(NotFoundException))]
+        [TestMethod]
+        public void GetMedicineByName_EmptyMedicine()
+        {
+            mock.Setup(x => x.GetMedicinesByName(validMedicine2.Name)).Returns(new List<Medicine> { });
+
+            service.GetMedicinesByName(validMedicine2.Name);
+
+            mock.VerifyAll();
         }
     }
 }

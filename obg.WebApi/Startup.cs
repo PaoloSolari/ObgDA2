@@ -29,7 +29,6 @@ namespace obg.WebApi
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             var connection = @"Server=.\SQLEXPRESS; Database=ObgDA2; Integrated Security=True; Trusted_Connection=True; MultipleActiveResultSets=True";
@@ -39,11 +38,8 @@ namespace obg.WebApi
             services.AddScoped<IPharmacyManagement, PharmacyManagement>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserManagement, UserManagement>();
-            //services.AddScoped<IAdministratorService, AdministratorService>();
             services.AddScoped<IAdministratorManagement, AdministratorManagement>();
-            //services.AddScoped<IOwnerService, OwnerService>();
             services.AddScoped<IOwnerManagement, OwnerManagement>();
-            //services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IEmployeeManagement, EmployeeManagement>();
             services.AddScoped<IMedicineService, MedicineService>();
             services.AddScoped<IMedicineManagement, MedicineManagement>();
@@ -61,7 +57,6 @@ namespace obg.WebApi
             services.AddScoped<ExceptionFilter>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ObgContext db)
         {
             if (env.IsDevelopment())

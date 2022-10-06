@@ -11,6 +11,7 @@ namespace obg.WebApi.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [ExceptionFilter]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -19,49 +20,16 @@ namespace obg.WebApi.Controllers
             _userService = userService;
         }
 
-        //[ServiceFilter(typeof(AdministratorAuthorizationAttributeFilter))]
-
         [HttpPost]
         public IActionResult PostUser([FromBody] User user)
         {
-            try
-            {
-                return StatusCode(200, "Usuario " + _userService.InsertUser(user) + " identificado. Ingrese mail, contraseña y dirección.");
-            }
-            catch (UserException exception)
-            {
-                return StatusCode(400, exception.Message);
-            }
-            catch (NotFoundException exception)
-            {
-                return StatusCode(404, exception.Message);
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, "Error interno.");
-            }
+            return StatusCode(200, "Usuario " + _userService.InsertUser(user) + " identificado. Ingrese email, contraseña y dirección.");
         }
-
         
         [HttpPut]
         public IActionResult PutUser([FromBody] User user)
         {
-            try
-            {
-                return StatusCode(200, "Registro del usuario " + _userService.UpdateUser(user) + " exitoso.");
-            }
-            catch (UserException exception)
-            {
-                return StatusCode(400, exception.Message);
-            }
-            catch (NotFoundException)
-            {
-                return StatusCode(404, "No existe el usuario");
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, "Error interno");
-            }
+            return StatusCode(200, "Registro del usuario " + _userService.UpdateUser(user) + " exitoso.");
         }
 
     }

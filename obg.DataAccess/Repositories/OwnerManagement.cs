@@ -36,7 +36,7 @@ namespace obg.DataAccess.Repositories
 
         public Owner GetOwnerByName(string name)
         {
-            return ObgContext.Owners.Where<Owner>(o => o.Name == name).AsNoTracking().FirstOrDefault();
+            return ObgContext.Owners.Where<Owner>(o => o.Name == name).FirstOrDefault();
         }
 
         public void UpdateOwner(Owner owner)

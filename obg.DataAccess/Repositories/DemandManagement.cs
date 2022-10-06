@@ -98,7 +98,7 @@ namespace obg.DataAccess.Repositories
 
         public bool DemandExists(string id)
         {
-            Demand demand = ObgContext.Demands.Where<Demand>(d => d.IdDemand == id).AsNoTracking().FirstOrDefault();
+            Demand demand = ObgContext.Demands.Where<Demand>(d => d.IdDemand == id).FirstOrDefault();
             if(demand != null)
             {
                 return true;

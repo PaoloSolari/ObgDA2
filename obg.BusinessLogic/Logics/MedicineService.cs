@@ -12,20 +12,14 @@ namespace obg.BusinessLogic.Logics
 {
     public class MedicineService : IMedicineService
     {
-        protected Medicine validMedicine1;
-        protected Medicine validMedicine2;
-
         private readonly IMedicineManagement _medicineManagement;
         private readonly ISessionManagement _sessionManagement;
 
+        public MedicineService(){}
         public MedicineService(IMedicineManagement medicineManagement, ISessionManagement sessionManagement)
         {
             _medicineManagement = medicineManagement;
             _sessionManagement = sessionManagement;
-        }
-
-        public MedicineService()
-        {
         }
 
         public string InsertMedicine(Medicine medicine, string token)
@@ -93,16 +87,15 @@ namespace obg.BusinessLogic.Logics
 
         public IEnumerable<Medicine> GetMedicines()
         {
-            // Corroborar que sean los medicamentos de la farmacia del empleado.
             IEnumerable<Medicine> medicines = _medicineManagement.GetMedicines();
             if (GetLengthOfList(medicines) == 0)
             {
-                throw new NotFoundException();
+                throw new NotFoundException("No hay medicamentos.");
             }
             IEnumerable<Medicine> ActivesMedicines = GetActivesMedicines(medicines);
             if (GetLengthOfList(ActivesMedicines) == 0)
             {
-                throw new NotFoundException();
+                throw new NotFoundException("No hay medicamentos.");
             }
             return ActivesMedicines;
         }
@@ -140,7 +133,7 @@ namespace obg.BusinessLogic.Logics
             Medicine medicine = GetMedicineByCode(code);
             if (medicine == null)
             {
-                throw new NotFoundException();
+                throw new NotFoundException("El medicamento no existe.");
             }
             _medicineManagement.DeleteMedicine(medicine);
         }
@@ -148,9 +141,9 @@ namespace obg.BusinessLogic.Logics
         public IEnumerable<Medicine> GetMedicinesByName(string medicineName)
         {
             IEnumerable<Medicine> medicines = _medicineManagement.GetMedicinesByName(medicineName);
-            if(medicines == null)
+            if(medicines.ToList().Count == 0)
             {
-                throw new NotFoundException();
+                throw new NotFoundException("El medicamento no existe.");
             }
             return medicines;
         }
@@ -160,7 +153,7 @@ namespace obg.BusinessLogic.Logics
             List<Medicine> allMedicines = _medicineManagement.GetMedicinesByName(medicineName).ToList();
             if (allMedicines == null)
             {
-                throw new NotFoundException();
+                throw new NotFoundException("No existe el medicamento.");
             }
             List<Medicine> medicinesWithStock = new List<Medicine>();
             foreach (Medicine medicine in allMedicines)

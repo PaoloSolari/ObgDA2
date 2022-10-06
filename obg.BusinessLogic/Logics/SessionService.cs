@@ -22,8 +22,6 @@ namespace obg.BusinessLogic.Logics
 
         public string InsertSession(Session session, string password)
         {
-            //session.IdSession = CreateGuid();
-            //session.Token = CreateGuid();
             if (IsSessionValid(session, password))
             {
                 session.IdSession = CreateGuid();
@@ -44,10 +42,6 @@ namespace obg.BusinessLogic.Logics
             {
                 throw new SessionException("Sesión inválida.");
             }
-            if (session.IdSession == null || session.IdSession.Length < 1)
-            {
-                throw new SessionException("Identificador inválido.");
-            }
             if (IsIdSessionRegistered(session.IdSession))
             {
                 throw new SessionException("Ya existe una sesión activa con el mismo identificador");
@@ -63,10 +57,6 @@ namespace obg.BusinessLogic.Logics
             if (IsNameLogged(session))
             {
                 throw new SessionException("El usuario ya fue logueado.");
-            }
-            if (session.Token == null || session.Token.Length < 1)
-            {
-                throw new SessionException("Token inválido.");
             }
             return true;
         }
@@ -109,7 +99,7 @@ namespace obg.BusinessLogic.Logics
             Session session = _sessionManagement.GetSessionByToken(token);
             if(session == null)
             {
-                throw new NotFoundException();
+                throw new NotFoundException("Sesión inválida.");
             } 
             else
             {
@@ -117,10 +107,11 @@ namespace obg.BusinessLogic.Logics
                 User user = _userManagement.GetUserByName(userName);
                 if(user == null)
                 {
-                    throw new NotFoundException();
+                    throw new NotFoundException("Usuario de sesión incorrecto.");
                 }
                 return user.Role;
             }
         }
+
     }
 }

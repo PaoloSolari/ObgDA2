@@ -30,12 +30,12 @@ namespace obg.DataAccess.Repositories
 
         public Session GetSessionById(string id)
         {
-            return ObgContext.Sessions.Where<Session>(d => d.IdSession == id).AsNoTracking().FirstOrDefault();
+            return ObgContext.Sessions.Where<Session>(d => d.IdSession == id).FirstOrDefault();
         }
 
         public Session GetSessionByToken(string token)
         {
-            return ObgContext.Sessions.Where<Session>(s => s.Token.Equals(token)).AsNoTracking().FirstOrDefault();
+            return ObgContext.Sessions.Where<Session>(s => s.Token.Equals(token)).FirstOrDefault();
         }
 
         public void UpdateSession(Session session)
@@ -53,7 +53,7 @@ namespace obg.DataAccess.Repositories
 
         public bool IsIdSessionRegistered(string idSession)
         {
-            Session session = ObgContext.Sessions.Where<Session>(s => s.IdSession.Equals(idSession)).AsNoTracking().FirstOrDefault();
+            Session session = ObgContext.Sessions.Where<Session>(s => s.IdSession.Equals(idSession)).FirstOrDefault();
             if(session != null)
             {
                 return true;
@@ -63,7 +63,7 @@ namespace obg.DataAccess.Repositories
 
         public bool IsNameLogged(Session session)
         {
-            Session sessionDB = ObgContext.Sessions.Where<Session>(s => s.UserName.Equals(session.UserName)).AsNoTracking().FirstOrDefault();
+            Session sessionDB = ObgContext.Sessions.Where<Session>(s => s.UserName.Equals(session.UserName)).FirstOrDefault();
             if(sessionDB != null)
             {
                 return true;
@@ -73,7 +73,7 @@ namespace obg.DataAccess.Repositories
 
         public bool IsTokenValid(string token)
         {
-            Session sessionDB = ObgContext.Sessions.Where<Session>(s => s.Token.Equals(token)).AsNoTracking().FirstOrDefault();
+            Session sessionDB = ObgContext.Sessions.Where<Session>(s => s.Token.Equals(token)).FirstOrDefault();
             if( sessionDB != null)
             {
                 return true;

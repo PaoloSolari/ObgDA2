@@ -15,14 +15,11 @@ namespace obg.BusinessLogic.Logics
         private readonly IPharmacyManagement _pharmacyManagement;
         private readonly ISessionManagement _sessionManagement;
 
+        public PharmacyService(){}
         public PharmacyService(IPharmacyManagement pharmacymanagement, ISessionManagement sessionManagement)
         {
             _pharmacyManagement = pharmacymanagement;
             _sessionManagement = sessionManagement;
-        }
-
-        public PharmacyService()
-        {
         }
 
         public string InsertPharmacy(Pharmacy pharmacy, string token)

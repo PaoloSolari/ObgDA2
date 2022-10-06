@@ -14,5 +14,6 @@ namespace obg.Domain.Entities
         {
             Pharmacy = pharmacy;
         }
+
     }
 }

@@ -98,13 +98,11 @@ namespace obg.BusinessLogic.Logics
 
         public bool IsNameRegistered(string name)
         {
-            // Aquí se recorren los usuarios YA REGISTRADOS, para no hacer una invitación con un nombre que ya existe.
             return _invitationManagement.IsNameRegistered(name);
         }
 
         public bool IsCodeRegistered(int code) 
         {
-            // Aquí se recorren los usuarios YA REGISTRADOS, para no hacer una invitación con un código que ya existe.
             return _invitationManagement.IsCodeRegistered(code);
         }
 

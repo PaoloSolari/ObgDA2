@@ -41,7 +41,7 @@ namespace obg.DataAccess.Repositories
 
         public Administrator GetAdministratorByName(string name)
         {
-            return ObgContext.Administrators.Where<Administrator>(a => a.Name == name).AsNoTracking().FirstOrDefault();
+            return ObgContext.Administrators.Where<Administrator>(a => a.Name == name).FirstOrDefault();
         }
 
         public void UpdateAdministrator(Administrator administrator)

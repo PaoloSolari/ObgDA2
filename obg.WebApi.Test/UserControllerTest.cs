@@ -64,7 +64,7 @@ namespace obg.WebApi.Test
             var body = objectResult.Value;
             mock.VerifyAll();
             Assert.AreEqual(200, statusCode);
-            Assert.IsTrue(("Usuario " + validUser.Name + " identificado. Ingrese mail, contraseña y dirección.").Equals(body));
+            Assert.IsTrue(("Usuario " + validUser.Name + " identificado. Ingrese email, contraseña y dirección.").Equals(body));
         }
 
         [TestMethod]

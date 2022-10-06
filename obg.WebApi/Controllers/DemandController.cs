@@ -10,79 +10,37 @@ using System.Collections.Generic;
 
 namespace obg.WebApi.Controllers
 {
-    [Route("[controller]")]
     [ApiController]
+    [Route("[controller]")]
+    [ExceptionFilter]
     public class DemandController : ControllerBase
     {
-        private readonly IDemandService demandService;
+        private readonly IDemandService _demandService;
         public DemandController(IDemandService demandService)
         {
-            this.demandService = demandService;
+            _demandService = demandService;
         }
 
         [ServiceFilter(typeof(OwnerAuthorizationAttributeFilter))]
         [HttpGet]
         public IActionResult GetDemands([FromHeader] string token)
         {
-            try
-            {
-                //IEnumerable<Demand> demands = demandService.GetDemands(token);
-                return StatusCode(200, demandService.GetDemands(token));
-            }
-            catch (NotFoundException)
-            {
-                return StatusCode(404, "No hay solicitudes de reposición de stock.");
-            }
-            //catch (Exception)
-            //{
-            //    return StatusCode(500, "Error interno.");
-            //}
+            return StatusCode(200, _demandService.GetDemands(token));
+        }
 
-
+        [ServiceFilter(typeof(OwnerAuthorizationAttributeFilter))]
+        [HttpPut("{idDemand}")]
+        public IActionResult PutDemand([FromRoute] string idDemand, [FromBody] Demand demand)
+        {
+            return StatusCode(200, "Modificación de la solicitud: " + _demandService.UpdateDemand(idDemand, demand) + " exitosa.");
         }
 
         [ServiceFilter(typeof(EmployeeAuthorizationAttributeFilter))]
         [HttpPost]
         public IActionResult PostDemand([FromBody] Demand demand, [FromHeader] string token)
         {
-            try
-            {
-                return StatusCode(200, "Solicitud " + demandService.InsertDemand(demand, token) + " exitosa.");
-            }
-            catch (DemandException exception)
-            {
-                return StatusCode(400, exception.Message);
-            }
-            catch (NotFoundException)
-            {
-                return StatusCode(404, "Solicitud de medicamento inexistente.");
-            }
-            //catch (Exception)
-            //{
-            //    return StatusCode(500, "Error interno.");
-            //}
+            return StatusCode(200, "Solicitud " + _demandService.InsertDemand(demand, token) + " exitosa.");
         }
 
-        [ServiceFilter(typeof(OwnerAuthorizationAttributeFilter))]
-        [HttpPut("{id}")]
-        public IActionResult PutDemand([FromRoute] string id, [FromBody] Demand demand)
-        {
-            try
-            {
-                return StatusCode(200, "Modificación de la solicitud: " + demandService.UpdateDemand(id, demand) + " exitosa.");
-            }
-            catch (DemandException exception)
-            {
-                return StatusCode(400, exception.Message);
-            }
-            catch (NotFoundException exception)
-            {
-                return StatusCode(404, exception.Message);
-            }
-            //catch (Exception)
-            //{
-            //    return StatusCode(500, "Error interno.");
-            //}
-        }
     }
 }

@@ -29,7 +29,7 @@ namespace obg.DataAccess.Repositories
 
         public Purchase GetPurchaseById(string id)
         {
-            return ObgContext.Purchases.Where<Purchase>(p => p.IdPurchase.Equals(id)).AsNoTracking().FirstOrDefault();
+            return ObgContext.Purchases.Where<Purchase>(p => p.IdPurchase.Equals(id)).FirstOrDefault();
         }
 
         public void UpdatePurchase(Purchase purchase)
@@ -47,7 +47,7 @@ namespace obg.DataAccess.Repositories
 
         public bool IsIdPurchaseRegistered(string idPurchase)
         {
-            Purchase purchase = ObgContext.Purchases.Where<Purchase>(p => p.IdPurchase.Equals(idPurchase)).AsNoTracking().FirstOrDefault();
+            Purchase purchase = ObgContext.Purchases.Where<Purchase>(p => p.IdPurchase.Equals(idPurchase)).FirstOrDefault();
             if(purchase != null)
             {
                 return true;

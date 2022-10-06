@@ -11,30 +11,21 @@ namespace obg.WebApi.Controllers
     
     [ApiController]
     [Route("[controller]")]
+    [ExceptionFilter]
     [ServiceFilter(typeof(AdministratorAuthorizationAttributeFilter))]
     public class PharmacyController : ControllerBase
     {
-        private readonly IPharmacyService pharmacyService;
+        private readonly IPharmacyService _pharmacyService;
         public PharmacyController(IPharmacyService pharmacyService)
         {
-            this.pharmacyService = pharmacyService;
+            _pharmacyService = pharmacyService;
         }
 
         [HttpPost]
         public IActionResult PostPharmacy([FromBody] Pharmacy pharmacy, [FromHeader] string token)
         {
-            try
-            {
-                return StatusCode(200, "Nombre de la farmacia ingresada: " + pharmacyService.InsertPharmacy(pharmacy, token));
-            }
-            catch (PharmacyException exception)
-            {
-                return StatusCode(400, exception.Message);
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, "Error interno.");
-            }
+            return StatusCode(200, "Nombre de la farmacia ingresada: " + _pharmacyService.InsertPharmacy(pharmacy, token));
         }
+
     }
 }
