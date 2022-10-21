@@ -176,12 +176,12 @@ namespace obg.BusinessLogic.Logics
             {
                 string medicineCode = petition.MedicineCode;
                 Medicine medicine = _medicineManagement.GetMedicineByCode(medicineCode);
-                if(medicine != null)
+                if(medicine == null)
                 {
-                    return true;
+                    return false;
                 }
             }
-            return false;
+            return true;
         }
 
     }
