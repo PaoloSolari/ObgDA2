@@ -136,6 +136,10 @@ namespace obg.BusinessLogic.Logics
             {
                 throw new NotFoundException("No existe la solicitud de reposición de stock");
             }
+            if (!MedicineExists(demand))
+            {
+                throw new MedicineException("El medicamento fue dado de baja.");
+            }
             bool isAlreadySaw = demand.Status == DemandStatus.Accepted || demand.Status == DemandStatus.Rejected;
             if (!isAlreadySaw)
             {
@@ -164,6 +168,20 @@ namespace obg.BusinessLogic.Logics
                 throw new NotFoundException("La solicitud no existe.");
             }
             return demand;
+        }
+
+        public bool MedicineExists(Demand demand)
+        {
+            foreach(Petition petition in demand.Petitions)
+            {
+                string medicineCode = petition.MedicineCode;
+                Medicine medicine = _medicineManagement.GetMedicineByCode(medicineCode);
+                if(medicine != null)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
     }
