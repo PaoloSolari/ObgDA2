@@ -138,6 +138,8 @@ namespace obg.BusinessLogic.Logics
             }
             if (!MedicineExists(demand))
             {
+                demand.Status = DemandStatus.Rejected;
+                _demandManagement.UpdateDemand(demand);
                 throw new MedicineException("El medicamento fue dado de baja.");
             }
             bool isAlreadySaw = demand.Status == DemandStatus.Accepted || demand.Status == DemandStatus.Rejected;
