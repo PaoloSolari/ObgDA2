@@ -30,9 +30,9 @@ namespace obg.WebApi.Controllers
 
         [ServiceFilter(typeof(OwnerAuthorizationAttributeFilter))]
         [HttpPut("{idDemand}")]
-        public IActionResult PutDemand([FromRoute] string idDemand, [FromBody] Demand demand)
+        public IActionResult PutDemand([FromRoute] string idDemand, [FromBody] Demand demand, [FromHeader] string token)
         {
-            return StatusCode(200, "Modificación de la solicitud: " + _demandService.UpdateDemand(idDemand, demand) + " exitosa.");
+            return StatusCode(200, "Modificación de la solicitud: " + _demandService.UpdateDemand(idDemand, demand, token) + " exitosa.");
         }
 
         [ServiceFilter(typeof(EmployeeAuthorizationAttributeFilter))]

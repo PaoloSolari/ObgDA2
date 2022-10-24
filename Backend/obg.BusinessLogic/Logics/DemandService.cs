@@ -129,9 +129,22 @@ namespace obg.BusinessLogic.Logics
             return demands;
         }
 
-        public string UpdateDemand(string id, Demand demandToUpdate)
+        public string UpdateDemand(string id, Demand demandToUpdate, string token)
         {
-            Demand demand = _demandManagement.GetDemandById(id);
+            Session session = _sessionManagement.GetSessionByToken(token);
+            IEnumerable<Demand> demands = _demandManagement.GetDemands(session);
+            if(demands == null)
+            {
+                throw new NotFoundException("No existe la solicitud de reposición de stock");
+            }
+            Demand demand = null;
+            foreach(Demand ownerDemand in demands)
+            {
+                if (ownerDemand.IdDemand.Equals(id))
+                {
+                    demand = ownerDemand;
+                }
+            }
             if (demand == null)
             {
                 throw new NotFoundException("No existe la solicitud de reposición de stock");

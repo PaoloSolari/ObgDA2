@@ -29,8 +29,8 @@ namespace obg.BusinessLogic.Logics
         {
             purchase.IdPurchase = CreateId();
             SetIdsLinesOfPurchase(purchase.PurchaseLines);
-            if (MedicinesOfTheSamePharmacy(purchase.PurchaseLines))
-            {
+            //if (MedicinesOfTheSamePharmacy(purchase.PurchaseLines))
+            //{
                 if (ThereIsStock(purchase.PurchaseLines))
                 {
                     if (IsPurchaseValid(purchase))
@@ -44,11 +44,11 @@ namespace obg.BusinessLogic.Logics
                 {
                     throw new PurchaseException("No hay stock para los medicamentos elegidos.");
                 }
-            }
-            else
-            {
-                throw new PurchaseException("Los medicamentos no pertenecen a la misma farmacia.");
-            }
+            //}
+            //else
+            //{
+            //    throw new PurchaseException("Los medicamentos no pertenecen a la misma farmacia.");
+            //}
             return purchase.IdPurchase;
         }
 

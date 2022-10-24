@@ -9,6 +9,6 @@ namespace obg.BusinessLogic.Interface.Interfaces
     {
         IEnumerable<Demand> GetDemands(string token);
         string InsertDemand(Demand demand, string token);
-        string UpdateDemand(string id, Demand demand);
+        string UpdateDemand(string id, Demand demand, string token);
     }
 }
