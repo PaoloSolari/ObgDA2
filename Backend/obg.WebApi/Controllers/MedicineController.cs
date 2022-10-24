@@ -22,9 +22,9 @@ namespace obg.WebApi.Controllers
 
         [ServiceFilter(typeof(EmployeeAuthorizationAttributeFilter))]
         [HttpGet]
-        public IActionResult GetMedicines()
+        public IActionResult GetMedicines([FromQuery] string employeeName)
         {
-            return StatusCode(200, medicineService.GetMedicines());
+            return StatusCode(200, medicineService.GetMedicines(employeeName));
         }
 
         [HttpGet("stock")]

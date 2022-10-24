@@ -14,12 +14,14 @@ namespace obg.BusinessLogic.Logics
     {
         private readonly IMedicineManagement _medicineManagement;
         private readonly ISessionManagement _sessionManagement;
+        private readonly IEmployeeManagement _employeeManagement;
 
         public MedicineService(){}
-        public MedicineService(IMedicineManagement medicineManagement, ISessionManagement sessionManagement)
+        public MedicineService(IMedicineManagement medicineManagement, ISessionManagement sessionManagement, IEmployeeManagement employeeManagement)
         {
             _medicineManagement = medicineManagement;
             _sessionManagement = sessionManagement;
+            _employeeManagement = employeeManagement;
         }
 
         public string InsertMedicine(Medicine medicine, string token)
@@ -85,9 +87,12 @@ namespace obg.BusinessLogic.Logics
             return false;
         }
 
-        public IEnumerable<Medicine> GetMedicines()
+        public IEnumerable<Medicine> GetMedicines(string employeeName)
         {
-            IEnumerable<Medicine> medicines = _medicineManagement.GetMedicines();
+            Employee employee = _employeeManagement.GetEmployeeByName(employeeName);
+            Pharmacy employeePharmacy = employee.Pharmacy;
+            IEnumerable<Medicine> medicines = employeePharmacy.Medicines;
+            //IEnumerable<Medicine> medicines = _medicineManagement.GetMedicines();
             if (GetLengthOfList(medicines) == 0)
             {
                 throw new NotFoundException("No hay medicamentos.");
