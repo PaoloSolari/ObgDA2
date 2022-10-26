@@ -1,0 +1,27 @@
+<div class="medicine-list-container">
+    
+    <h2 class="title">Medicamentos</h2>
+
+    <div class="medicine-header">
+      <!-- <input class="filter-input" [(ngModel)]="filterValue" placeholder="Filtrar por" /> -->
+      <button class="button" (click)="navigateToAddMedicine()">Alta de medicamento</button>
+    </div>
+    <!-- <p class="filter" *ngIf="filterValue">Películas filtradas por <b>{{ filterValue }}</b></p> -->
+    
+    <!-- <div class="list" *ngIf="movies && (movies | moviesFilter: filterValue).length > 0; else elseBlock"> -->
+    <div class="list" *ngIf="medicines.length > 0; else elseBlock">
+        <!-- <app-medicine-item
+        *ngFor="let movie of movies | moviesFilter: filterValue"
+        [movie]="movie"
+        (delete)="deleteMovie($event)">
+        </app-medicine-item> -->
+        <app-medicine-item
+        *ngFor="let medicine of medicines"
+        [medicine]="medicine">
+        </app-medicine-item>
+    </div>
+    <ng-template #elseBlock>
+      <p class="no-medicines-message">No hay medicamentos</p>
+    </ng-template>
+    
+</div>  

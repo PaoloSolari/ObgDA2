@@ -1,0 +1,149 @@
+<div class="form">
+    <form [formGroup]="medicineForm">
+
+        <!-- Código de medicamento -->
+        <div class="form-item">
+            <div class="form-item-control">
+                <label class="form-item-label" for="code">Código de medicamento</label>
+                <input class="form-item-input" formControlName="code" id="code"
+                [ngClass]="{ 'input-error': code?.invalid && (code?.dirty || code?.touched) }" />
+            </div>
+            <div *ngIf="code?.invalid && (code?.dirty || code?.touched)" class="alert-danger">
+                <div *ngIf="code?.errors?.['required'] || code?.errors?.['invalidString']">
+                    El código de medicamento ingresado es incorrecto.
+                </div>
+            </div>
+        </div>
+
+        <!-- Nombre de medicamento -->
+         <div class="form-item">
+            <div class="form-item-control">
+                <label class="form-item-label" for="name">Nombre de medicamento</label>
+                <input class="form-item-input" formControlName="name" id="name"
+                [ngClass]="{ 'input-error': name?.invalid && (name?.dirty || name?.touched) }" />
+            </div>
+            <div *ngIf="name?.invalid && (name?.dirty || name?.touched)" class="alert-danger">
+                <div *ngIf="name?.errors?.['required'] || name?.errors?.['invalidString']">
+                    El nombre ingresado es incorrecto.
+                </div>
+            </div>
+        </div>
+
+        <!-- Síntomas que trata el medicamento -->
+        <div class="form-item">
+            <div class="form-item-control">
+                <label class="form-item-label" for="symtompsItTreats">Síntomas que trata</label>
+                <input class="form-item-input" formControlName="symtompsItTreats" id="symtompsItTreats"
+                [ngClass]="{ 'input-error': symtompsItTreats?.invalid && (symtompsItTreats?.dirty || symtompsItTreats?.touched) }" />
+            </div>
+            <div *ngIf="symtompsItTreats?.invalid && (symtompsItTreats?.dirty || symtompsItTreats?.touched)" class="alert-danger">
+                <div *ngIf="symtompsItTreats?.errors?.['required'] || symtompsItTreats?.errors?.['invalidString']">
+                    Síntomas que trata ingresado incorrectamente.
+                </div>
+            </div>
+        </div>
+
+        <!-- Presentación del medicamento -->
+        <div class="form-item">
+            <div class="form-item-control">
+                <label class="form-item-label" for="presentation">Presentación</label>
+                <input class="form-item-input" formControlName="presentation" id="presentation"
+                [ngClass]="{ 'input-error': presentation?.invalid && (presentation?.dirty || presentation?.touched) }" />
+            </div>
+            <div *ngIf="presentation?.invalid && (presentation?.dirty || presentation?.touched)" class="alert-danger">
+                <div *ngIf="presentation?.errors?.['required']">
+                    La presentación ingresada es incorrecta.
+                </div>
+            </div>
+        </div>
+
+        <!-- Cantidad por presentación -->
+        <div class="form-item">
+            <div class="form-item-control">
+                <label class="form-item-label" for="quantity">Cantidad por presentación</label>
+                <input class="form-item-input" formControlName="quantity" id="quantity"
+                [ngClass]="{ 'input-error': quantity?.invalid && (quantity?.dirty || quantity?.touched) }" />
+            </div>
+            <div *ngIf="quantity?.invalid && (quantity?.dirty || quantity?.touched)" class="alert-danger">
+                <div *ngIf="quantity?.errors?.['required'] || quantity?.errors?.['min']">
+                    La cantidad por prescripción ingresada es incorrecta.
+                </div>
+            </div>
+        </div>
+
+        <!-- Unidad por presentación -->
+        <div class="form-item">
+            <div class="form-item-control">
+                <label class="form-item-label" for="unit">Unidad por presentación</label>
+                <input class="form-item-input" formControlName="unit" id="unit"
+                [ngClass]="{ 'input-error': unit?.invalid && (unit?.dirty || unit?.touched) }" />
+            </div>
+            <div *ngIf="unit?.invalid && (unit?.dirty || unit?.touched)" class="alert-danger">
+                <div *ngIf="unit?.errors?.['required'] || unit?.errors?.['invalidString']">
+                    La unidad por presentación ingresada es incorrecta.
+                </div>
+            </div>
+        </div>
+        
+        <!-- Precio del medicamento -->
+        <div class="form-item">
+            <div class="form-item-control">
+                <label class="form-item-label" for="price">Precio</label>
+                <input class="form-item-input" formControlName="price" id="price"
+                [ngClass]="{ 'input-error': price?.invalid && (price?.dirty || price?.touched) }" />
+            </div>
+            <div *ngIf="price?.invalid && (price?.dirty || price?.touched)" class="alert-danger">
+                <div *ngIf="price?.errors?.['required'] || price?.errors?.['min']">
+                    El precio ingresado es incorrecto.
+                </div>
+            </div>
+        </div>
+        
+        <!-- Stock de medicamento -->
+        <div class="form-item">
+            <div class="form-item-control">
+                <label class="form-item-label" for="stock">Stock</label>
+                <input class="form-item-input" formControlName="stock" id="stock"
+                [ngClass]="{ 'input-error': stock?.invalid && (stock?.dirty || stock?.touched) }" />
+            </div>
+            <div *ngIf="stock?.invalid && (stock?.dirty || stock?.touched)" class="alert-danger">
+                <div *ngIf="stock?.errors?.['required'] || stock?.errors?.['min']">
+                    El stock ingresado es incorrecto.
+                </div>
+            </div>
+        </div>
+
+        <!-- Necesidad de prescripción -->
+        <div class="form-item">
+            <div class="form-item-control">
+                <label class="form-item-label" for="prescription">Prescripción</label>
+                <input class="form-item-input" formControlName="prescription" id="prescription"
+                [ngClass]="{ 'input-error': prescription?.invalid && (prescription?.dirty || prescription?.touched) }" />
+            </div>
+            <div *ngIf="prescription?.invalid && (prescription?.dirty || prescription?.touched)" class="alert-danger">
+                <div *ngIf="prescription?.errors?.['required']">
+                    La prescripción ingresada es incorrecta.
+                </div>
+            </div>
+        </div>
+
+        <!-- Medicamento activo -->
+        <div class="form-item">
+            <div class="form-item-control">
+                <label class="form-item-label" for="isActive">Medicamento activo</label>
+                <input class="form-item-input" formControlName="isActive" id="isActive"
+                [ngClass]="{ 'input-error': isActive?.invalid && (isActive?.dirty || isActive?.touched) }" />
+            </div>
+            <div *ngIf="isActive?.invalid && (isActive?.dirty || isActive?.touched)" class="alert-danger">
+                <div *ngIf="isActive?.errors?.['required']">
+                    La actividad del medicamento ingresada es incorrecta.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-item">
+            <button class="button" (click)="createMedicine()">Crear</button>
+        </div>
+
+    </form>
+</div>
