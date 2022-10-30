@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Globals } from './utils/globals';
 
 @Component({
     selector: 'app-root',
@@ -7,5 +8,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
     title = 'ObgApp';
+    constructor(){}
+    ngOnInit(){}
+    get selectTab(){
+        return Globals.selectTab;
+    }
 }
 export class TabGroupBasicExample { }

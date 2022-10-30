@@ -1,3 +1,7 @@
-<div class="back-button" (click)="back()">
-    <i class="arrow left"></i>Volver
-</div>
+<mat-tab-group mat-align-tabs="center" (click)="back()">
+    <mat-tab label="Volver" id="backButton">
+        <ng-template mat-tab-label>
+            <mat-icon>arrow_back</mat-icon>
+        </ng-template>
+    </mat-tab>
+</mat-tab-group>

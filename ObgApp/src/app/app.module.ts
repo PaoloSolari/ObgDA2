@@ -20,33 +20,48 @@ import { InvitationFormComponent } from './components/invitation-form/invitation
 import { InvitationListComponent } from './components/invitation-list/invitation-list.component';
 import { DemandListComponent } from './components/demand-list/demand-list.component';
 
+// Angular Material (luego se agreagan a los imports)
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTabsModule } from '@angular/material/tabs';
+import {MatButtonModule} from '@angular/material/button';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon';
+
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    MedicineListComponent,
-    MedicineItemComponent,
-    MedicineFormComponent,
-    MenuEmployeeComponent,
-    MenuOwnerComponent,
-    MenuAdministratorComponent,
-    BackButtonComponent,
-    LoaderComponent,
-    InitComponent,
-    DemandFormComponent,
-    PurchaseListComponent,
-    PharmacyFormComponent,
-    InvitationFormComponent,
-    InvitationListComponent,
-    DemandListComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    schemas: [CUSTOM_ELEMENTS_SCHEMA], // Para solucionar el tema de Angular Material
+    declarations: [
+        AppComponent,
+        MedicineListComponent,
+        MedicineItemComponent,
+        MedicineFormComponent,
+        MenuEmployeeComponent,
+        MenuOwnerComponent,
+        MenuAdministratorComponent,
+        BackButtonComponent,
+        LoaderComponent,
+        InitComponent,
+        DemandFormComponent,
+        PurchaseListComponent,
+        PharmacyFormComponent,
+        InvitationFormComponent,
+        InvitationListComponent,
+        DemandListComponent
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        // Angular Material:
+        BrowserAnimationsModule,
+        MatTabsModule,
+        MatButtonModule,
+        MatToolbarModule,
+        MatIconModule,
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,14 +1,24 @@
-<button mat-button>Clieck Me</button>
-
 <div class="header">
-    <ul class="nav">
-    
-        <li><app-menu-administrator></app-menu-administrator></li>
-        <li><app-menu-owner></app-menu-owner></li>
-        <li><app-menu-employee></app-menu-employee></li>
-    </ul>
+    <mat-toolbar id="toolBar">
+        <span class="spacer"></span>
+        <div class="login">
+            <button mat-icon-button>
+                <mat-icon id="loginIcon">account_circle</mat-icon>
+            </button>
+        </div>
+        <div class="logout">
+            <button mat-icon-button>
+                <mat-icon id="logoutIcon">logout</mat-icon>
+            </button>
+        </div>
+    </mat-toolbar>
 </div>
-<div clas="container">
+
+<div class="body">
     <app-loader></app-loader> <!-- Para que me muestre un spinner mientras carga -->
     <router-outlet></router-outlet>
+</div>
+
+<div class="footer">
+
 </div>

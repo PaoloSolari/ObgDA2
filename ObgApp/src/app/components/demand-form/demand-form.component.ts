@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Globals } from 'src/app/utils/globals';
 import { INIT } from '../../utils/routes';
 
 @Component({
@@ -13,6 +14,7 @@ export class DemandFormComponent implements OnInit {
     constructor() { }
 
     ngOnInit(): void {
+        Globals.selectTab = 2;
     }
 
 }

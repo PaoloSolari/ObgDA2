@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MedicineService } from '../../services/medicine.service';
 import { Medicine } from '../../models/medicine';
 import { Router } from '@angular/router';
 import { INIT } from '../../utils/routes';
+import { Globals } from '../../utils/globals';
 
 @Component({
     selector: 'app-medicine-list',
@@ -22,6 +23,7 @@ export class MedicineListComponent implements OnInit {
     public ngOnInit(): void {
         // cuando inicia el componente llamo al servicio para obtener los medicamentos
         this.medicines = this._medicinesService.getMedicines();
+        Globals.selectTab = 2;
     }
 
     // Cuando el empleado le da click al botón de "Alta de medicamento".

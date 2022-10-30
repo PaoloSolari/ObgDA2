@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { INIT, MEDICINE_LIST_URL } from '../../utils/routes';
 import { ICreateMedicine } from '../../interfaces/create-medicine';
 import { MedicineService } from '../../services/medicine.service';
 import { ValidateString } from '../../validators/string.validator';
+import { Globals } from '../../utils/globals';
 
 @Component({
     selector: 'app-medicine-form',
@@ -44,7 +45,9 @@ export class MedicineFormComponent implements OnInit {
     public get prescription() { return this.medicineForm.get('prescription'); }
     public get isActive() { return this.medicineForm.get('isActive'); }
 
-    public ngOnInit(): void {}
+    public ngOnInit(): void {
+        Globals.selectTab = 2;
+    }
 
     public createMedicine(): void {
         if(this.medicineForm.valid) {

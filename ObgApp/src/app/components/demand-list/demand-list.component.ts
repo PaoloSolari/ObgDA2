@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Globals } from '../../utils/globals';
 import { INIT } from '../../utils/routes';
 
 @Component({
@@ -13,6 +14,7 @@ export class DemandListComponent implements OnInit {
     constructor() { }
 
     ngOnInit(): void {
+        Globals.selectTab = 1;
     }
 
 }
