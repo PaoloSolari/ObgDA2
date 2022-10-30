@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MedicineService } from '../../services/medicine.service';
 import { Medicine } from '../../models/medicine';
 import { Router } from '@angular/router';
+import { INIT } from '../../utils/routes';
 
 @Component({
     selector: 'app-medicine-list',
@@ -10,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class MedicineListComponent implements OnInit {
 
+    public backUrl = `/${INIT}`;
     public medicines: Medicine[] = [];
 
     constructor(

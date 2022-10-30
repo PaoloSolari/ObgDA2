@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { INIT, MEDICINE_LIST_URL } from '../../utils/routes';
 import { ICreateMedicine } from '../../interfaces/create-medicine';
 import { MedicineService } from '../../services/medicine.service';
 import { ValidateString } from '../../validators/string.validator';
@@ -11,6 +12,8 @@ import { ValidateString } from '../../validators/string.validator';
     styleUrls: ['./medicine-form.component.css']
 })
 export class MedicineFormComponent implements OnInit {
+
+    public backUrl = `/${INIT}`;
 
     public medicineForm = new FormGroup({
         code: new FormControl(undefined, [Validators.required, ValidateString]),
@@ -60,7 +63,7 @@ export class MedicineFormComponent implements OnInit {
             const medicineId = this._medicineService.postMedicine(medicine);
             if(!!medicineId) { // ¿What's this?
                 alert('Medicamento creado correctamente con código: ' + medicineId)
-                this._router.navigateByUrl('/medicine');
+                this._router.navigateByUrl(MEDICINE_LIST_URL);
             } else{
                 alert('El medicamento no se ha creado correctamente con código: ' + medicineId)
             }

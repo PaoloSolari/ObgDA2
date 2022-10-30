@@ -1,2 +1,14 @@
-<router-outlet></router-outlet>
+<button mat-button>Clieck Me</button>
 
+<div class="header">
+    <ul class="nav">
+    
+        <li><app-menu-administrator></app-menu-administrator></li>
+        <li><app-menu-owner></app-menu-owner></li>
+        <li><app-menu-employee></app-menu-employee></li>
+    </ul>
+</div>
+<div clas="container">
+    <app-loader></app-loader> <!-- Para que me muestre un spinner mientras carga -->
+    <router-outlet></router-outlet>
+</div>
