@@ -52,6 +52,10 @@ namespace obg.BusinessLogic.Logics
                 Medicine medicine = _medicineManagement.GetMedicineByCode(purchaseLine.MedicineCode);
                 if (employeePharmacy.Medicines.Contains(medicine))
                 {
+                    if(purchaseLine.Status.Equals(PurchaseLineStatus.Accepted) || purchaseLine.Status.Equals(PurchaseLineStatus.Rejected))
+                    {
+                        throw new PurchaseException("No se puede modificar el estado del medicamento luego de haber sido aceptado o rechazado.");
+                    }
                     purchasesLinesBuyed.Add(purchaseLine);
                     purchaseLine.Status = purchaseToUpdate.PurchaseLines.ElementAt(counter).Status;
                     if (purchaseLine.Status.Equals(PurchaseLineStatus.UnResolved))
@@ -71,6 +75,7 @@ namespace obg.BusinessLogic.Logics
             {
                 throw new PurchaseException("No puedes confirmar la compra si existe al menos un medicamento pendiente.");
             }
+            _purchaseManagement.UpdatePurchase(purchaseFromDB);
             return purchaseFromDB;
         }
 
@@ -122,7 +127,20 @@ namespace obg.BusinessLogic.Logics
                     {
                     //UpdateMedicinesBuyed(purchase.PurchaseLines);
                     //purchase.Amount = CalculateAmountOfBuy(purchase.PurchaseLines);
-                    purchase.Amount = 1;
+                        purchase.Amount = 1;
+                        foreach(PurchaseLine purchaseLine in purchase.PurchaseLines)
+                        {
+                            string medicineCode = purchaseLine.MedicineCode;
+                            Medicine medicine = _medicineManagement.GetMedicineByCode(medicineCode);
+                            List<Pharmacy> pharmacies = _pharmacyManagement.GetPharmacies().ToList();
+                            foreach(Pharmacy pharmacy in pharmacies)
+                            {
+                                if (pharmacy.Medicines.Contains(medicine))
+                                {
+                                    pharmacy.Purchases.Add(purchase);
+                                }
+                            }
+                        }
                         _purchaseManagement.InsertPurchase(purchase);
                     }
                 }
@@ -148,6 +166,7 @@ namespace obg.BusinessLogic.Logics
             foreach (PurchaseLine line in lines)
             {
                 line.IdPurchaseLine = CreateId();
+                line.Status = PurchaseLineStatus.UnResolved;
             }
         }
 

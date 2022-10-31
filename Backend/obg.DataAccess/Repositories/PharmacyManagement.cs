@@ -43,7 +43,7 @@ namespace obg.DataAccess.Repositories
 
         public IEnumerable<Pharmacy> GetPharmacies()
         {
-            return ObgContext.Pharmacies.Include("Medicines");
+            return ObgContext.Pharmacies.Include("Medicines").Include("Purchases");
         }
 
         public Pharmacy GetPharmacyByName(string name)

@@ -29,7 +29,7 @@ namespace obg.DataAccess.Repositories
 
         public Purchase GetPurchaseById(string id)
         {
-            return ObgContext.Purchases.Where<Purchase>(p => p.IdPurchase.Equals(id)).FirstOrDefault();
+            return ObgContext.Purchases.Where<Purchase>(p => p.IdPurchase.Equals(id)).Include("PurchaseLines").FirstOrDefault();
         }
 
         public void UpdatePurchase(Purchase purchase)
