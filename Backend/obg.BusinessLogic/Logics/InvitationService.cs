@@ -6,6 +6,7 @@ using obg.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.Linq;
 using System.Text;
 
 namespace obg.BusinessLogic.Logics
@@ -19,6 +20,29 @@ namespace obg.BusinessLogic.Logics
         {
             _invitationManagement = invitationManagement;
             _pharmacyManagement = pharmacyManagement;
+        }
+
+        public IEnumerable<Invitation> GetInvitations()
+        {
+            IEnumerable<Invitation> invitations = _invitationManagement.GetInvitations();
+            if(invitations.ToList().Count == 0 || invitations == null)
+            {
+                throw new NotFoundException("No hay invitaciones enviadas.");
+            }
+
+            List<Invitation> invitationsUsed = new List<Invitation>();
+            foreach (Invitation invitation in invitations)
+            {
+                if (invitation.WasUsed)
+                {
+                    invitationsUsed.Add(invitation);
+                }
+            }
+            if(invitationsUsed.Count == 0)
+            {
+                throw new NotFoundException("No hay invitaciones enviadas.");
+            }
+            return invitationsUsed;
         }
 
         public int InsertInvitation(Invitation invitation, string pharmacyName)

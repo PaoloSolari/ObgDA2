@@ -8,6 +8,7 @@ using obg.Exceptions;
 using obg.WebApi.Controllers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace obg.WebApi.Test
@@ -18,6 +19,7 @@ namespace obg.WebApi.Test
         private Mock<IInvitationService> mock;
         private InvitationController api;
         private Invitation validInvitation;
+        private List<Invitation> invitations;
         private Pharmacy validPharmacy;
 
         [TestInitialize]
@@ -26,7 +28,37 @@ namespace obg.WebApi.Test
             mock = new Mock<IInvitationService>(MockBehavior.Strict);
             api = new InvitationController(mock.Object);
             validPharmacy = new Pharmacy("San Roque", "aaaa");
-            validInvitation = new Invitation("CCCCCC", validPharmacy, RoleUser.Employee, "Paolo", 123456);
+            validInvitation = new Invitation("CCCCCC", validPharmacy, RoleUser.Employee, "Paolo", 123456, true);
+            invitations = new List<Invitation>();
+            invitations.Add(validInvitation);
+        }
+
+        [TestMethod]
+        public void GetInvitationsOk()
+        {
+            mock.Setup(x => x.GetInvitations()).Returns(invitations);
+
+            var result = api.GetInvitations();
+            var objectResult = result as ObjectResult;
+            var statusCode = objectResult.StatusCode;
+            var body = objectResult.Value as IEnumerable<Invitation>;
+
+            mock.VerifyAll();
+            Assert.AreEqual(200, statusCode);
+            Assert.IsTrue(body.SequenceEqual(invitations));
+        }
+
+        [TestMethod]
+        public void GetDemandsFail()
+        {
+            mock.Setup(x => x.GetInvitations()).Throws(new Exception());
+
+            var result = api.GetInvitations();
+            var objectResult = result as ObjectResult;
+            var statusCode = objectResult.StatusCode;
+
+            mock.VerifyAll();
+            Assert.AreEqual(500, statusCode);
         }
 
         [TestMethod]

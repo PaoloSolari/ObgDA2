@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using obg.Domain.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace obg.Domain.Entities
 {
@@ -7,6 +8,7 @@ namespace obg.Domain.Entities
         [Key] public string IdPurchaseLine { get; set; }
         public string MedicineCode { get; set; }
         public int MedicineQuantity { get; set; } 
+        public PurchaseLineStatus Status { get; set; }
 
         public PurchaseLine() { }
         public PurchaseLine(string idPurchaseLine, string medicineCode, int medicineQuantity)
@@ -14,6 +16,7 @@ namespace obg.Domain.Entities
             IdPurchaseLine = idPurchaseLine;
             MedicineCode = medicineCode;
             MedicineQuantity = medicineQuantity;
+            Status = PurchaseLineStatus.UnResolved;
         }
 
     }

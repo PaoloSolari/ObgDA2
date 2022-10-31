@@ -24,7 +24,7 @@ namespace obg.DataAccess.Repositories
 
         public IEnumerable<Purchase> GetPurchases()
         {
-            return ObgContext.Purchases.ToList();
+            return ObgContext.Purchases.Include("PurchaseLines").ToList();
         }
 
         public Purchase GetPurchaseById(string id)

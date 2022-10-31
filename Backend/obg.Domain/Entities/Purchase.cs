@@ -11,6 +11,7 @@ namespace obg.Domain.Entities
         public double Amount { get; set; }
         public string BuyerEmail { get; set; }
         public List<PurchaseLine> PurchaseLines { get; set; }
+        public bool IsConfirmed { get; set; }
         
         public Purchase() { }
         public Purchase(string idPurchase, double amount, string buyerEmail)
@@ -19,6 +20,7 @@ namespace obg.Domain.Entities
             Amount = amount;
             BuyerEmail = buyerEmail;
             PurchaseLines = new List<PurchaseLine>();
+            IsConfirmed = false;
         }
 
     }

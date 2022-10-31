@@ -8,5 +8,6 @@ namespace obg.BusinessLogic.Interface.Interfaces
     public interface IInvitationService
     {
         int InsertInvitation(Invitation invitation, string pharamacyName);
+        IEnumerable<Invitation> GetInvitations();
     }
 }
