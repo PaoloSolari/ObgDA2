@@ -6,6 +6,7 @@ import { ICreateMedicine } from '../../interfaces/create-medicine';
 import { MedicineService } from '../../services/medicine.service';
 import { ValidateString } from '../../validators/string.validator';
 import { Globals } from '../../utils/globals';
+import { PresentationMedicine } from '../../models/medicine';
 
 @Component({
     selector: 'app-medicine-form',
@@ -17,60 +18,93 @@ export class MedicineFormComponent implements OnInit {
     public backUrl = `/${INIT}`;
 
     public medicineForm = new FormGroup({
-        code: new FormControl(undefined, [Validators.required, ValidateString]),
-        name: new FormControl(undefined, [Validators.required, ValidateString]),
-        symtompsItTreats: new FormControl(undefined, [Validators.required, ValidateString]),
-        presentation: new FormControl(undefined, [Validators.required]),
-        quantity: new FormControl(undefined, [Validators.required, Validators.min(0)]),
-        unit: new FormControl(undefined, [Validators.required, ValidateString]),
-        price: new FormControl(undefined, [Validators.required, Validators.min(0)]),
-        stock: new FormControl(undefined, [Validators.required, Validators.min(0)]),
-        prescription: new FormControl(undefined, [Validators.required]),
-        isActive: new FormControl(undefined, [Validators.required])
+        // code: new FormControl(undefined, [Validators.required, ValidateString]),
+        // name: new FormControl(undefined, [Validators.required, ValidateString]),
+        // symtompsItTreats: new FormControl(undefined, [Validators.required, ValidateString]),
+        // presentation: new FormControl(undefined, [Validators.required]),
+        // quantity: new FormControl(undefined, [Validators.required, Validators.min(0)]),
+        // unit: new FormControl(undefined, [Validators.required, ValidateString]),
+        // price: new FormControl(undefined, [Validators.required, Validators.min(0)]),
+        // stock: new FormControl(undefined, [Validators.required, Validators.min(0)]),
+        // prescription: new FormControl(undefined, [Validators.required]),
+        // isActive: new FormControl(undefined, [Validators.required])
+        code: new FormControl(),
+        name: new FormControl(),
+        symtomps: new FormControl(),
+        presentation: new FormControl(),
+        quantity: new FormControl(),
+        unit: new FormControl(),
+        price: new FormControl(),
+        stock: new FormControl(),
+        prescription: new FormControl(),
+        isActive: new FormControl(),
     })
+
+    selectFormControl = new FormControl('', Validators.required);
+    presentationControl = new FormControl<string | null>(null, Validators.required);
+    presentations: string[] = [
+        'Cápsulas',
+        'Comprimidos',
+        'Solución soluble',
+        'Stick Pack',
+        'Líquido',
+        // PresentationMedicine.capsulas,
+        // PresentationMedicine.comprimidos,
+        // PresentationMedicine.solucionSoluble,
+        // PresentationMedicine.stickPack,
+        // PresentationMedicine.liquido,
+    ];
+    prescriptionControl = new FormControl<string | null>(null, Validators.required);
+    prescriptions: string[] = [
+        'Sí',
+        'No',
+    ];
+
 
     constructor(
         private _medicineService: MedicineService,
         private _router: Router,
     ) { }
 
-    public get code() { return this.medicineForm.get('code'); }
-    public get name() { return this.medicineForm.get('name'); }
-    public get symtompsItTreats() { return this.medicineForm.get('symtompsItTreats'); }
-    public get presentation() { return this.medicineForm.get('presentation'); }
-    public get quantity() { return this.medicineForm.get('quantity'); }
-    public get unit() { return this.medicineForm.get('unit'); }
-    public get price() { return this.medicineForm.get('price'); }
-    public get stock() { return this.medicineForm.get('stock'); }
-    public get prescription() { return this.medicineForm.get('prescription'); }
-    public get isActive() { return this.medicineForm.get('isActive'); }
+    public get codeForm() { return this.medicineForm.value.code!; }
+    public get nameForm() { return this.medicineForm.value.name!; }
+    public get symtompsForm() { return this.medicineForm.value.symtomps!; }
+    public get presentationForm() { return this.medicineForm.value.presentation!; }
+    public get quantityForm() { return this.medicineForm.value.quantity!; }
+    public get unitForm() { return this.medicineForm.value.unit!; }
+    public get priceForm() { return this.medicineForm.value.price!; }
+    public get prescriptionForm() { return this.medicineForm.value.prescription!; }
+    // El '!' del final es para prometerle a TypeScript que no va a ser null.
 
     public ngOnInit(): void {
         Globals.selectTab = 2;
     }
 
     public createMedicine(): void {
-        if(this.medicineForm.valid) {
-            const medicine : ICreateMedicine = {
-                code: this.medicineForm.value.code!, // El '!' es para prometerle a TypeScript que no va a ser null.
-                name: this.medicineForm.value.name!,
-                symtompsItTreats: this.medicineForm.value.symtompsItTreats!,
-                presentation: this.medicineForm.value.presentation!,
-                quantity: this.medicineForm.value.quantity!,
-                unit: this.medicineForm.value.unit!,
-                price: this.medicineForm.value.price!,
-                stock: this.medicineForm.value.stock!,
-                prescription: this.medicineForm.value.prescription!,
-                isActive:  this.medicineForm.value.isActive!,
+        if (this.medicineForm.valid) {
+            const medicineFromForm: ICreateMedicine = {
+                code: this.codeForm,
+                name: this.nameForm,
+                symtompsItTreats: this.symtompsForm,
+                presentation: this.presentationForm,
+                quantity: this.quantityForm,
+                unit: this.unitForm,
+                price: this.priceForm,
+                prescription: this.prescriptionForm,
             };
-            const medicineId = this._medicineService.postMedicine(medicine);
-            if(!!medicineId) { // ¿What's this?
-                alert('Medicamento creado correctamente con código: ' + medicineId)
-                this._router.navigateByUrl(MEDICINE_LIST_URL);
-            } else{
-                alert('El medicamento no se ha creado correctamente con código: ' + medicineId)
+            const medicineCode = this._medicineService.postMedicine(medicineFromForm);
+            if (medicineCode) {
+                alert('Medicamento con código' + medicineFromForm.code + 'creado correctamente.');
+                this.clearForm();
+                // this._router.navigateByUrl(MEDICINE_LIST_URL);
+            } else {
+                alert('Debe ingresar todos los datos solictados');
             }
         }
+    }
+
+    public clearForm() {
+        this.medicineForm.reset();
     }
 
 }

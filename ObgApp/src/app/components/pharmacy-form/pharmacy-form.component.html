@@ -1,1 +1,29 @@
 <app-back-button [url]="backUrl"></app-back-button>
+<div class="body">
+    <div class="form">
+        <from [formGroup]="pharmacyForm">
+            
+            <mat-form-field appearance="outline">
+                <mat-label>Nombre</mat-label>
+                <input matInput formControlName="name" #name maxlength="50" required> 
+                <mat-hint>{{name.value.length || 0}}/50</mat-hint>
+                    <!-- Errores de entrada -->
+                    <mat-error *ngIf="name.value.length==0">{{"Debe ingresar un nombre"}}</mat-error>
+                    <!-- Luego agregar el de nombre existente -->
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Dirección</mat-label>
+                <input matInput id="address" formControlName="address" #address required>
+                    <!-- Errores de entrada -->
+                    <mat-error *ngIf="address.value.length==0">{{"Debe ingresar una dirección"}}</mat-error>
+            </mat-form-field>
+        
+            <div class="buttonOk">
+                <button mat-raised-button (click)="createPharmacy()">Crear</button>
+                <!-- <button mat-raised-button>Crear</button> -->
+            </div>
+
+        </from>
+    </div>
+</div>

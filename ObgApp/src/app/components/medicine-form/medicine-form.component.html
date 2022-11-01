@@ -1,151 +1,188 @@
 <app-back-button [url]="backUrl"></app-back-button>
+<div class="body">
+    <div class="form">
+        <form [formGroup]="medicineForm">
 
-<div class="form">
-    <form [formGroup]="medicineForm">
-
-        <!-- Código de medicamento -->
-        <div class="form-item">
-            <div class="form-item-control">
-                <label class="form-item-label" for="code">Código de medicamento</label>
-                <input class="form-item-input" formControlName="code" id="code"
-                [ngClass]="{ 'input-error': code?.invalid && (code?.dirty || code?.touched) }" />
-            </div>
-            <div *ngIf="code?.invalid && (code?.dirty || code?.touched)" class="alert-danger">
-                <div *ngIf="code?.errors?.['required'] || code?.errors?.['invalidString']">
-                    El código de medicamento ingresado es incorrecto.
+            <!-- Código de medicamento -->
+            <!-- <div class="form-item">
+                <div class="form-item-control">
+                    <label class="form-item-label" for="code">Código de medicamento</label>
+                    <input class="form-item-input" formControlName="code" id="code"
+                        [ngClass]="{ 'input-error': code?.invalid && (code?.dirty || code?.touched) }" />
                 </div>
-            </div>
-        </div>
-
-        <!-- Nombre de medicamento -->
-         <div class="form-item">
-            <div class="form-item-control">
-                <label class="form-item-label" for="name">Nombre de medicamento</label>
-                <input class="form-item-input" formControlName="name" id="name"
-                [ngClass]="{ 'input-error': name?.invalid && (name?.dirty || name?.touched) }" />
-            </div>
-            <div *ngIf="name?.invalid && (name?.dirty || name?.touched)" class="alert-danger">
-                <div *ngIf="name?.errors?.['required'] || name?.errors?.['invalidString']">
-                    El nombre ingresado es incorrecto.
+                <div *ngIf="code?.invalid && (code?.dirty || code?.touched)" class="alert-danger">
+                    <div *ngIf="code?.errors?.['required'] || code?.errors?.['invalidString']">
+                        El código de medicamento ingresado es incorrecto.
+                    </div>
                 </div>
-            </div>
-        </div>
+            </div> -->
+            <mat-form-field appearance="outline">
+                <mat-label>Código</mat-label>
+                <input matInput formControlName="code" #code required> 
+                    <!-- Errores de entrada -->
+                    <mat-error *ngIf="code.value.length==0">{{"Debe ingresar un código"}}</mat-error>
+                    <!-- Luego agregar el de código existente -->
+            </mat-form-field>
 
-        <!-- Síntomas que trata el medicamento -->
-        <div class="form-item">
-            <div class="form-item-control">
-                <label class="form-item-label" for="symtompsItTreats">Síntomas que trata</label>
-                <input class="form-item-input" formControlName="symtompsItTreats" id="symtompsItTreats"
-                [ngClass]="{ 'input-error': symtompsItTreats?.invalid && (symtompsItTreats?.dirty || symtompsItTreats?.touched) }" />
-            </div>
-            <div *ngIf="symtompsItTreats?.invalid && (symtompsItTreats?.dirty || symtompsItTreats?.touched)" class="alert-danger">
-                <div *ngIf="symtompsItTreats?.errors?.['required'] || symtompsItTreats?.errors?.['invalidString']">
-                    Síntomas que trata ingresado incorrectamente.
+            <!-- Nombre de medicamento -->
+            <!-- <div class="form-item">
+                <div class="form-item-control">
+                    <label class="form-item-label" for="name">Nombre de medicamento</label>
+                    <input class="form-item-input" formControlName="name" id="name"
+                        [ngClass]="{ 'input-error': name?.invalid && (name?.dirty || name?.touched) }" />
                 </div>
-            </div>
-        </div>
+                <div *ngIf="name?.invalid && (name?.dirty || name?.touched)" class="alert-danger">
+                    <div *ngIf="name?.errors?.['required'] || name?.errors?.['invalidString']">
+                        El nombre ingresado es incorrecto.
+                    </div>
+                </div>
+            </div> -->
+            <mat-form-field appearance="outline">
+                <mat-label>Nombre</mat-label>
+                <input matInput formControlName="name" #name required> 
+                    <!-- Errores de entrada -->
+                    <mat-error *ngIf="name.value.length==0">{{"Debe ingresar un nombre"}}</mat-error>
+            </mat-form-field>
+            
+            <!-- Síntomas que trata el medicamento -->
+            <!-- <div class="form-item">
+                <div class="form-item-control">
+                    <label class="form-item-label" for="symtompsItTreats">Síntomas que trata</label>
+                    <input class="form-item-input" formControlName="symtompsItTreats" id="symtompsItTreats"
+                        [ngClass]="{ 'input-error': symtompsItTreats?.invalid && (symtompsItTreats?.dirty || symtompsItTreats?.touched) }" />
+                </div>
+                <div *ngIf="symtompsItTreats?.invalid && (symtompsItTreats?.dirty || symtompsItTreats?.touched)"
+                    class="alert-danger">
+                    <div *ngIf="symtompsItTreats?.errors?.['required'] || symtompsItTreats?.errors?.['invalidString']">
+                        Síntomas que trata ingresado incorrectamente.
+                    </div>
+                </div>
+            </div> -->
+            <mat-form-field appearance="outline">
+                <mat-label>Síntomas</mat-label>
+                <input matInput formControlName="symtomps" #symtomps required> 
+                    <!-- Errores de entrada -->
+                    <mat-error *ngIf="symtomps.value.length==0">{{"Debe ingresar un síntoma"}}</mat-error>
+            </mat-form-field>
 
-        <!-- Presentación del medicamento -->
-        <div class="form-item">
-            <div class="form-item-control">
-                <label class="form-item-label" for="presentation">Presentación</label>
-                <input class="form-item-input" formControlName="presentation" id="presentation"
-                [ngClass]="{ 'input-error': presentation?.invalid && (presentation?.dirty || presentation?.touched) }" />
-            </div>
-            <div *ngIf="presentation?.invalid && (presentation?.dirty || presentation?.touched)" class="alert-danger">
-                <div *ngIf="presentation?.errors?.['required']">
-                    La presentación ingresada es incorrecta.
-                </div>
-            </div>
-        </div>
+            <!-- Presentación del medicamento -->
+            <!-- <div class="form-item">
+                            <div class="form-item-control">
+                                <label class="form-item-label" for="presentation">Presentación</label>
+                                <input class="form-item-input" formControlName="presentation" id="presentation"
+                                    [ngClass]="{ 'input-error': presentation?.invalid && (presentation?.dirty || presentation?.touched) }" />
+                            </div>
+                            <div *ngIf="presentation?.invalid && (presentation?.dirty || presentation?.touched)"
+                                class="alert-danger">
+                                <div *ngIf="presentation?.errors?.['required']">
+                                    La presentación ingresada es incorrecta.
+                                </div>
+                            </div>
+                        </div> -->
+            <mat-form-field appearance="fill">
+                <mat-label>Presentación</mat-label>
+                <mat-select [formControl]="presentationControl" required>
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let presentation of presentations" [value]="presentation">
+                        {{presentation}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="presentationControl.hasError('required')">Debe elegir una presentación</mat-error>
+            </mat-form-field>
 
-        <!-- Cantidad por presentación -->
-        <div class="form-item">
-            <div class="form-item-control">
-                <label class="form-item-label" for="quantity">Cantidad por presentación</label>
-                <input class="form-item-input" formControlName="quantity" id="quantity"
-                [ngClass]="{ 'input-error': quantity?.invalid && (quantity?.dirty || quantity?.touched) }" />
-            </div>
-            <div *ngIf="quantity?.invalid && (quantity?.dirty || quantity?.touched)" class="alert-danger">
-                <div *ngIf="quantity?.errors?.['required'] || quantity?.errors?.['min']">
-                    La cantidad por prescripción ingresada es incorrecta.
+            <!-- Cantidad por presentación -->
+            <!-- <div class="form-item">
+                <div class="form-item-control">
+                    <label class="form-item-label" for="quantity">Cantidad por presentación</label>
+                    <input class="form-item-input" formControlName="quantity" id="quantity"
+                        [ngClass]="{ 'input-error': quantity?.invalid && (quantity?.dirty || quantity?.touched) }" />
                 </div>
-            </div>
-        </div>
+                <div *ngIf="quantity?.invalid && (quantity?.dirty || quantity?.touched)" class="alert-danger">
+                    <div *ngIf="quantity?.errors?.['required'] || quantity?.errors?.['min']">
+                        La cantidad por prescripción ingresada es incorrecta.
+                    </div>
+                </div>
+            </div> -->
+            <mat-form-field appearance="outline">
+                <mat-label>Cantidad por presentación</mat-label>
+                <input matInput formControlName="quantity" #quantity type="number" min="1" required> 
+                    <!-- Errores de entrada -->
+                    <mat-error *ngIf="quantity.value.length==0, else minOneQuantity">{{"Debe ingresar una cantidad"}}</mat-error>
+                    <ng-template #minOneQuantity><mat-error>{{"Debe ingresar una cantidad mayor a cero"}}</mat-error></ng-template>
+            </mat-form-field>
 
-        <!-- Unidad por presentación -->
-        <div class="form-item">
-            <div class="form-item-control">
-                <label class="form-item-label" for="unit">Unidad por presentación</label>
-                <input class="form-item-input" formControlName="unit" id="unit"
-                [ngClass]="{ 'input-error': unit?.invalid && (unit?.dirty || unit?.touched) }" />
-            </div>
-            <div *ngIf="unit?.invalid && (unit?.dirty || unit?.touched)" class="alert-danger">
-                <div *ngIf="unit?.errors?.['required'] || unit?.errors?.['invalidString']">
-                    La unidad por presentación ingresada es incorrecta.
+            <!-- Unidad por presentación -->
+            <!-- <div class="form-item">
+                <div class="form-item-control">
+                    <label class="form-item-label" for="unit">Unidad por presentación</label>
+                    <input class="form-item-input" formControlName="unit" id="unit"
+                        [ngClass]="{ 'input-error': unit?.invalid && (unit?.dirty || unit?.touched) }" />
                 </div>
-            </div>
-        </div>
-        
-        <!-- Precio del medicamento -->
-        <div class="form-item">
-            <div class="form-item-control">
-                <label class="form-item-label" for="price">Precio</label>
-                <input class="form-item-input" formControlName="price" id="price"
-                [ngClass]="{ 'input-error': price?.invalid && (price?.dirty || price?.touched) }" />
-            </div>
-            <div *ngIf="price?.invalid && (price?.dirty || price?.touched)" class="alert-danger">
-                <div *ngIf="price?.errors?.['required'] || price?.errors?.['min']">
-                    El precio ingresado es incorrecto.
+                <div *ngIf="unit?.invalid && (unit?.dirty || unit?.touched)" class="alert-danger">
+                    <div *ngIf="unit?.errors?.['required'] || unit?.errors?.['invalidString']">
+                        La unidad por presentación ingresada es incorrecta.
+                    </div>
                 </div>
-            </div>
-        </div>
-        
-        <!-- Stock de medicamento -->
-        <div class="form-item">
-            <div class="form-item-control">
-                <label class="form-item-label" for="stock">Stock</label>
-                <input class="form-item-input" formControlName="stock" id="stock"
-                [ngClass]="{ 'input-error': stock?.invalid && (stock?.dirty || stock?.touched) }" />
-            </div>
-            <div *ngIf="stock?.invalid && (stock?.dirty || stock?.touched)" class="alert-danger">
-                <div *ngIf="stock?.errors?.['required'] || stock?.errors?.['min']">
-                    El stock ingresado es incorrecto.
-                </div>
-            </div>
-        </div>
+            </div> -->
+            <mat-form-field appearance="outline">
+                <mat-label>Unidad de medida</mat-label>
+                <input matInput formControlName="unit" #unit required> 
+                    <!-- Errores de entrada -->
+                    <mat-error *ngIf="unit.value.length==0">{{"Debe ingresar una unidad de medida"}}</mat-error>
+            </mat-form-field>
 
-        <!-- Necesidad de prescripción -->
-        <div class="form-item">
-            <div class="form-item-control">
-                <label class="form-item-label" for="prescription">Prescripción</label>
-                <input class="form-item-input" formControlName="prescription" id="prescription"
-                [ngClass]="{ 'input-error': prescription?.invalid && (prescription?.dirty || prescription?.touched) }" />
-            </div>
-            <div *ngIf="prescription?.invalid && (prescription?.dirty || prescription?.touched)" class="alert-danger">
-                <div *ngIf="prescription?.errors?.['required']">
-                    La prescripción ingresada es incorrecta.
+            <!-- Precio del medicamento -->
+            <!-- <div class="form-item">
+                <div class="form-item-control">
+                    <label class="form-item-label" for="price">Precio</label>
+                    <input class="form-item-input" formControlName="price" id="price"
+                        [ngClass]="{ 'input-error': price?.invalid && (price?.dirty || price?.touched) }" />
                 </div>
-            </div>
-        </div>
-
-        <!-- Medicamento activo -->
-        <div class="form-item">
-            <div class="form-item-control">
-                <label class="form-item-label" for="isActive">Medicamento activo</label>
-                <input class="form-item-input" formControlName="isActive" id="isActive"
-                [ngClass]="{ 'input-error': isActive?.invalid && (isActive?.dirty || isActive?.touched) }" />
-            </div>
-            <div *ngIf="isActive?.invalid && (isActive?.dirty || isActive?.touched)" class="alert-danger">
-                <div *ngIf="isActive?.errors?.['required']">
-                    La actividad del medicamento ingresada es incorrecta.
+                <div *ngIf="price?.invalid && (price?.dirty || price?.touched)" class="alert-danger">
+                    <div *ngIf="price?.errors?.['required'] || price?.errors?.['min']">
+                        El precio ingresado es incorrecto.
+                    </div>
                 </div>
+            </div> -->
+            <mat-form-field appearance="outline">
+                <mat-label>Precio</mat-label>
+                <input matInput formControlName="price" #price type="number" min="1" required>
+                <mat-icon matSuffix>attach_money</mat-icon> 
+                    <!-- Errores de entrada -->
+                    <mat-error *ngIf="price.value.length==0, else minOnePrice">{{"Debe ingresar un precio"}}</mat-error>
+                    <ng-template #minOnePrice><mat-error>{{"Debe ingresar una precio mayor a cero"}}</mat-error></ng-template>
+            </mat-form-field>
+
+            <!-- Necesidad de prescripción -->
+            <!-- <div class="form-item">
+                <div class="form-item-control">
+                    <label class="form-item-label" for="prescription">Prescripción</label>
+                    <input class="form-item-input" formControlName="prescription" id="prescription"
+                        [ngClass]="{ 'input-error': prescription?.invalid && (prescription?.dirty || prescription?.touched) }" />
+                </div>
+                <div *ngIf="prescription?.invalid && (prescription?.dirty || prescription?.touched)"
+                    class="alert-danger">
+                    <div *ngIf="prescription?.errors?.['required']">
+                        La prescripción ingresada es incorrecta.
+                    </div>
+                </div>
+            </div> -->
+            <mat-form-field appearance="fill">
+                <mat-label>Receta</mat-label>
+                <mat-select [formControl]="prescriptionControl" required>
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let prescription of prescriptions" [value]="prescription">
+                        {{prescription}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="prescriptionControl.hasError('required')">Debe elegir una opción</mat-error>
+            </mat-form-field>
+
+            <div class="buttonOk">
+                <!-- <button mat-raised-button (click)="createMedicine()">Crear</button> -->
+                <button mat-raised-button>Crear</button>
             </div>
-        </div>
 
-        <div class="form-item">
-            <button class="button" (click)="createMedicine()">Crear</button>
-        </div>
-
-    </form>
+        </form>
+    </div>
 </div>

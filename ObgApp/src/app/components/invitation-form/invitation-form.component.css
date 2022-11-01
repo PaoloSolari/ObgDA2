@@ -1,0 +1,31 @@
+.body {
+    max-width: 100%; /* Se ajusta al ancho  */
+    height: 300px; /* Máximo de expansión del body  */
+    position: relative; 
+    /* border: 5px solid rgb(0, 0, 0); */
+    background-color:rgb(240, 240, 240);
+}
+
+.conteiner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    display: table;
+}
+
+/* button {
+    display:block;
+    margin: 8px 8px 8px 8px;
+    min-width: auto;
+    width: 300px;
+    min-height: auto;
+    height: 50px;
+} */
+
+/* mat-form-field {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }  */

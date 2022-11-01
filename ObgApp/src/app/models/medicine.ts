@@ -5,6 +5,7 @@ export enum PresentationMedicine {
     stickPack,
     liquido
 }
+
 export class Medicine {
     code: string;
     name: string;
@@ -12,7 +13,7 @@ export class Medicine {
     presentation: PresentationMedicine;
     quantity: number;
     unit: string;
-    price: number; // ¿double == number?
+    price: number;
     stock: number;
     prescription: boolean;
     isActive: boolean;

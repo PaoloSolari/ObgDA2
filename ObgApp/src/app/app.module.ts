@@ -15,7 +15,6 @@ import { LoaderComponent } from './components/loader/loader.component';
 import { InitComponent } from './components/init/init.component';
 import { DemandFormComponent } from './components/demand-form/demand-form.component';
 import { PurchaseListComponent } from './components/purchase-list/purchase-list.component';
-import { PharmacyFormComponent } from './components/pharmacy-form/pharmacy-form.component';
 import { InvitationFormComponent } from './components/invitation-form/invitation-form.component';
 import { InvitationListComponent } from './components/invitation-list/invitation-list.component';
 import { DemandListComponent } from './components/demand-list/demand-list.component';
@@ -26,8 +25,15 @@ import { MatTabsModule } from '@angular/material/tabs';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
+// Form
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { PharmacyFormComponent } from './components/pharmacy-form/pharmacy-form.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     schemas: [CUSTOM_ELEMENTS_SCHEMA], // Para solucionar el tema de Angular Material
@@ -54,12 +60,16 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
         AppRoutingModule,
         FormsModule,
         ReactiveFormsModule,
+        RouterModule, // Para el [RouterModule]
         // Angular Material:
         BrowserAnimationsModule,
         MatTabsModule,
         MatButtonModule,
         MatToolbarModule,
         MatIconModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
     ],
     providers: [],
     bootstrap: [AppComponent]

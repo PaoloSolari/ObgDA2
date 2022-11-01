@@ -7,8 +7,8 @@ export interface ICreateMedicine {
     presentation: PresentationMedicine;
     quantity: number;
     unit: string;
-    price: number; // ¿double == number?
-    stock: number;
+    price: number;
+    // stock: number; (Default = 0)
     prescription: boolean;
-    isActive: boolean;
+    // isActive = boolean; (Default = false)
 }
