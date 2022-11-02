@@ -11,13 +11,24 @@ export class MedicineService {
 
     private _medicines: Medicine[] | undefined;
 
-    constructor() { 
+    constructor(
+        // De momento nada...
+    ) { 
         this._medicines = this.initializeMedicines();
     }
 
     private initializeMedicines(): Medicine[] {
         return [
-            new Medicine("XXYYZZ", "Paracetamol", "Dolor de cabeza", 1, 20, "20mL", 150, 0, false, false)
+            new Medicine("XXYYZZ", "Paracetamol", "Dolor de cabeza", "Cápsulas", 20, "mL", 150, 0, "Sí", false),
+            new Medicine("XXYYZZ", "Paracetamol", "Dolor de cabeza", "Cápsulas", 20, "mL", 150, 0, "Sí", false),
+            new Medicine("XXYYZZ", "Paracetamol", "Dolor de cabeza", "Cápsulas", 20, "mL", 150, 0, "Sí", false),
+            new Medicine("XXYYZZ", "Paracetamol", "Dolor de cabeza", "Cápsulas", 20, "mL", 150, 0, "Sí", false),
+            new Medicine("XXYYZZ", "Paracetamol", "Dolor de cabeza", "Cápsulas", 20, "mL", 150, 0, "Sí", false),
+            new Medicine("XXYYZZ", "Paracetamol", "Dolor de cabeza", "Cápsulas", 20, "mL", 150, 0, "Sí", false),
+            new Medicine("XXYYZZ", "Paracetamol", "Dolor de cabeza", "Cápsulas", 20, "mL", 150, 0, "Sí", false),
+            new Medicine("XXYYZZ", "Paracetamol", "Dolor de cabeza", "Cápsulas", 20, "mL", 150, 0, "Sí", false),
+            new Medicine("XXYYZZ", "Paracetamol", "Dolor de cabeza", "Cápsulas", 20, "mL", 150, 0, "Sí", false),
+            new Medicine("XXYYZZ", "Paracetamol", "Dolor de cabeza", "Cápsulas", 20, "mL", 150, 0, "Sí", false),
         ];
     }
 
@@ -29,7 +40,7 @@ export class MedicineService {
         if(!this._medicines) this._medicines = [];
         const stock = 0; // Default.
         const isActive = false; // Default.
-        const medicineToAdd = new Medicine(medicine.code, medicine.name, medicine.symtompsItTreats, medicine.presentation, medicine.quantity, medicine.unit, medicine.price, stock, medicine.prescription, isActive);
+        const medicineToAdd = new Medicine(medicine.code, medicine.name, medicine.symtomps, medicine.presentation, medicine.quantity, medicine.unit, medicine.price, stock, medicine.prescription, isActive);
         this._medicines.push(medicineToAdd);
         return medicine.code;
     }

@@ -14,6 +14,10 @@ export class MedicineListComponent implements OnInit {
 
     public backUrl = `/${INIT}`;
     public medicines: Medicine[] = [];
+    // public medicines: Medicine[] = this._medicinesService.getMedicines();
+    
+    displayedColumns: string[] = ['code', 'name', 'price', 'presentation', 'delete'];
+    dataSource = this._medicinesService.getMedicines();;
 
     constructor(
         private _medicinesService: MedicineService,
@@ -22,7 +26,7 @@ export class MedicineListComponent implements OnInit {
 
     public ngOnInit(): void {
         // cuando inicia el componente llamo al servicio para obtener los medicamentos
-        this.medicines = this._medicinesService.getMedicines();
+        // this.medicines = this._medicinesService.getMedicines();
         Globals.selectTab = 2;
     }
 

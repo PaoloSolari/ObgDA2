@@ -1,27 +1,27 @@
-import { Component, Injectable, OnInit } from '@angular/core';
+import { Component, Injectable, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ValidateString } from '../../validators/string.validator';
 import { Globals } from '../../utils/globals';
 import { INIT } from '../../utils/routes';
 import { PharmacyService } from '../../services/pharmacy.service';
 import { Router } from '@angular/router';
-import { ICreateMedicine } from 'src/app/interfaces/create-medicine';
 import { ICreatePharmacy } from 'src/app/interfaces/create-pharmacy';
+import { NoSpace } from 'src/app/validators/noEmptyString.validator';
 
 @Component({
     selector: 'app-pharmacy-form',
     templateUrl: './pharmacy-form.component.html',
-    styleUrls: ['./pharmacy-form.component.css']
+    styleUrls: ['./pharmacy-form.component.css'],
+    // encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class PharmacyFormComponent implements OnInit {
 
     public backUrl = `/${INIT}`;
 
     public pharmacyForm = new FormGroup({
-        // name: new FormControl(undefined, [Validators.required, ValidateString]),
-        // address: new FormControl(undefined, [Validators.required, ValidateString]),
-        name: new FormControl(),
-        address: new FormControl(),
+        name: new FormControl(undefined, [Validators.required, NoSpace]),
+        address: new FormControl(undefined, [Validators.required, NoSpace]),
+        // name: new FormControl(),
+        // address: new FormControl(),
     })
 
     constructor(

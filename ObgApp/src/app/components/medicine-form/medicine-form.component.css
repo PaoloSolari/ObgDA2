@@ -1,8 +1,7 @@
 .body {
-    max-width: 100%; /* Se ajusta al ancho */
-    height: 1000px;  /* Máximo de expansión del body */
+    max-width: 100%;
+    height: 780px;
     position: relative;
-    /* border: 5px solid rgb(0, 0, 0); */
     background-color:rgb(240, 240, 240);
 }
 
@@ -28,28 +27,27 @@
 .mat-raised-button {
     color: rgb(240, 240, 240) !important;
     background-color: rgb(89, 149, 189) !important;
-    /* Centrar botón */
     margin: 0 auto;
     display: block;
 }
 
 ::ng-deep .mat-focused .mat-form-field-label {
-    /* Color para el 'label' de los inputs */
     color: rgb(89, 149, 189) !important;
 }
 
 ::ng-deep.mat-form-field-outline-thick {
-    /* Colo para el borde de los inputs */
     color: rgb(89, 149, 189) !important;
 }
 
-/* Para quitar las flechas de los inputs de números en Chrome */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
 }
 
-/* Para quitar las flechas de los inputs de números en Firefox */
 input[type=number] {
     -moz-appearance:textfield;
+}
+
+.mat-icon {
+    color: rgb(89, 149, 189);
 }

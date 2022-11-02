@@ -1,51 +1,57 @@
-.medicine-list-container {
-    display: flex;
-    flex-direction: column;
+.body {
+    background-color:rgb(240, 240, 240);
+    /* Fondo se adapta al contenido */
+    position: relative;
+    height: auto;
+    min-height: 100% !important;
 }
 
-.medicine-header {
-    display: flex;
-    justify-content: space-between;
+table {
+    /* Centrar */
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
 }
 
-.filter-input {
-    width: 20rem;
-    font-size: 1.5rem;
-    padding: 0.5rem;
-    border-radius: 1rem;
+.mat-header-cell {
+    text-align: center;
+    color: rgb(89, 149, 189) ;
 }
 
-.list {
-    display: flex;
-    font-size: 1.5rem;
-    margin-top: 2rem;
+.deleteColumn{
+    width: 75px;
 }
 
-.add-button {
-    width: 12.5rem;
-    margin-top: 0.5rem;
-    background: skyblue;
-    border-radius: 2.188rem;
-    color: black;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
+.mat-raised-button {
+    color: rgb(240, 240, 240) !important;
+    background-color: rgb(176, 50, 50) !important;
 }
 
-.add-button:hover {
-    border: 0.15rem solid black;
-    background: white;
-    color: black;
-    cursor: pointer;
+tr.element-row:hover {
+    background: whitesmoke;
+    cursor: default;
+    color: rgb(89, 149, 189) ;
 }
 
-.no-medicines-message {
-    padding: 10px;
-    border: 2px solid black;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.icon-display {
+    color: rgb(177, 76, 76) !important;
+    transform: scale(3);
+    margin-top: 100px;
+    /* Centrar */
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
 }
 
-
+.NoMedicine {
+    color: rgb(177, 76, 76) !important;
+    font-family: Bahnschrift;
+    transform: scale(1.5);
+    /* Centrar */
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}

@@ -1,12 +1,15 @@
-<div class="card">
-    <div>{{ medicine?.code }}</div>
-    <div>{{ medicine?.name }}</div>
-    <div>{{ medicine?.symtompsItTreats }}</div>
-    <div>{{ medicine?.presentation }}</div>
-    <div>{{ medicine?.quantity }}</div>
-    <div>{{ medicine?.unit }}</div>
-    <div>{{ medicine?.price }}</div>
-    <div>{{ medicine?.stock }}</div>
-    <div>{{ medicine?.prescription }}</div>
-    <div>{{ medicine?.isActive }}</div>
-</div>
+<mat-card>
+    <mat-card-title>{{ medicine?.name }}</mat-card-title>
+    <mat-card-subtitle>{{ medicine?.code }}</mat-card-subtitle>
+    <div class="priceMedicine">
+        <b>$ {{ medicine?.price }}</b>
+    </div>
+    <div class="descriptionMedicine">
+        <b>Síntomas:</b> {{ medicine?.symtomps }}
+        <br>
+        <b>Presentación: </b>{{ medicine?.presentation }}
+    </div>
+    <mat-card-actions>
+      <button mat-raised-button>Eliminar</button>
+    </mat-card-actions>
+  </mat-card>

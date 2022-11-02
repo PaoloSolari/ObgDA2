@@ -1,9 +1,14 @@
+// Módulos:
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
+// Router (permitir SPA):
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent, TabGroupBasicExample } from './app.component';
+import { RouterModule } from '@angular/router';
+
+// Componentes:
+import { AppComponent } from './app.component';
 import { MedicineListComponent } from './components/medicine-list/medicine-list.component';
 import { MedicineItemComponent } from './components/medicine-item/medicine-item.component';
 import { MedicineFormComponent } from './components/medicine-form/medicine-form.component';
@@ -18,22 +23,27 @@ import { PurchaseListComponent } from './components/purchase-list/purchase-list.
 import { InvitationFormComponent } from './components/invitation-form/invitation-form.component';
 import { InvitationListComponent } from './components/invitation-list/invitation-list.component';
 import { DemandListComponent } from './components/demand-list/demand-list.component';
+import { PharmacyFormComponent } from './components/pharmacy-form/pharmacy-form.component';
 
-// Angular Material (luego se agreagan a los imports)
+// Angular Material (luego se agreagan a los 'imports'):
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTabsModule } from '@angular/material/tabs';
-import {MatButtonModule} from '@angular/material/button';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatIconModule} from '@angular/material/icon';
-// Form
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatTableModule } from '@angular/material/table';
+// Form (Angular Material)
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 
-
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { PharmacyFormComponent } from './components/pharmacy-form/pharmacy-form.component';
-import { RouterModule } from '@angular/router';
+// Servicios (luego se agregan a los 'providers'):
+import { PharmacyService } from './services/pharmacy.service';
+import { MedicineService } from './services/medicine.service';
+import { LoadingService } from './services/loading.service';
 
 @NgModule({
     schemas: [CUSTOM_ELEMENTS_SCHEMA], // Para solucionar el tema de Angular Material
@@ -70,8 +80,11 @@ import { RouterModule } from '@angular/router';
         MatFormFieldModule,
         MatInputModule,
         MatSelectModule,
+        MatCardModule,
+        MatChipsModule,
+        MatTableModule,
     ],
-    providers: [],
+    providers: [PharmacyService, MedicineService, LoadingService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

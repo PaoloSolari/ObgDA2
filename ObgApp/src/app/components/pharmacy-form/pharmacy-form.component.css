@@ -1,6 +1,6 @@
 .body {
     max-width: 100%; /* Se ajusta al ancho */
-    height: 300px; /* Máximo de expansión del body */
+    height: 300px;  /* Máximo de expansión del body */
     position: relative;
     /* border: 5px solid rgb(0, 0, 0); */
     background-color:rgb(240, 240, 240);
