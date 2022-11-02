@@ -13,6 +13,7 @@ namespace obg.Domain.Entities
         public string Address { get; set; }
         public List<Medicine> Medicines { get; set; }
         public List<Demand> Demands { get; set; }
+        public List<Purchase> Purchases { get; set; }
 
         public Pharmacy() { }
         public Pharmacy(string name, string address)

@@ -24,12 +24,12 @@ namespace obg.DataAccess.Repositories
 
         public IEnumerable<Purchase> GetPurchases()
         {
-            return ObgContext.Purchases.ToList();
+            return ObgContext.Purchases.Include("PurchaseLines").ToList();
         }
 
         public Purchase GetPurchaseById(string id)
         {
-            return ObgContext.Purchases.Where<Purchase>(p => p.IdPurchase.Equals(id)).FirstOrDefault();
+            return ObgContext.Purchases.Where<Purchase>(p => p.IdPurchase.Equals(id)).Include("PurchaseLines").FirstOrDefault();
         }
 
         public void UpdatePurchase(Purchase purchase)

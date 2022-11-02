@@ -28,5 +28,10 @@ namespace obg.WebApi.Controllers
             return StatusCode(200, invitationService.InsertInvitation(invitation, pharmacyName));
         }
 
+        [HttpGet]
+        public IActionResult GetInvitations()
+        {
+            return StatusCode(200, invitationService.GetInvitations());
+        }
     }
 }

@@ -14,16 +14,17 @@ namespace obg.Domain.Entities
         public RoleUser UserRole { get; set; }
         public string UserName { get; set; }
         public int UserCode { get; set; }
+        public bool WasUsed { get; set; } 
 
         public Invitation() { }
-        public Invitation(string idInvitation, Pharmacy pharmacy, RoleUser userRole, string userName, int userCode)
+        public Invitation(string idInvitation, Pharmacy pharmacy, RoleUser userRole, string userName, int userCode, bool wasUsed)
         {
             IdInvitation = idInvitation;
             Pharmacy = pharmacy;
             UserRole = userRole;
             UserName = userName;
             UserCode = userCode;
+            WasUsed = wasUsed;
         }
-
     }
 }
