@@ -1,12 +1,11 @@
-.body {
-    max-width: 100%; /* Se ajusta al ancho  */
-    height: 300px; /* Máximo de expansión del body  */
-    position: relative; 
-    /* border: 5px solid rgb(0, 0, 0); */
-    background-color:rgb(240, 240, 240);
+.container {
+    max-width: 100%;
+    height: 400px;
+    position: relative;
+    /* background-color:rgb(240, 240, 240); */
 }
 
-.conteiner {
+.form {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -15,17 +14,27 @@
     display: table;
 }
 
-/* button {
+.mat-form-field {
     display:block;
     margin: 8px 8px 8px 8px;
+    margin-bottom: 30px;
     min-width: auto;
     width: 300px;
     min-height: auto;
     height: 50px;
-} */
+}
 
-/* mat-form-field {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }  */
+.mat-raised-button {
+    color: rgb(240, 240, 240) !important;
+    background-color: rgb(89, 149, 189) !important;
+    margin: 0 auto;
+    display: block;
+}
+
+::ng-deep .mat-focused .mat-form-field-label {
+    color: rgb(89, 149, 189) !important;
+}
+
+::ng-deep.mat-form-field-outline-thick {
+    color: rgb(89, 149, 189) !important;
+}

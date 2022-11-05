@@ -89,7 +89,7 @@ export class MedicineFormComponent implements OnInit {
                 // this._router.navigateByUrl(MEDICINE_FORM_URL);
             }
         } else {
-            alert('Debe ingresar todos los datos solictados');
+            alert('Debe ingresar todos los datos solicitados');
         }
     }
 

@@ -1,11 +1,3 @@
-.body {
-    background-color:rgb(240, 240, 240);
-    /* Fondo se adapta al contenido */
-    position: relative;
-    height: auto;
-    min-height: 100% !important;
-}
-
 table {
     /* Centrar */
     width: 80%;
