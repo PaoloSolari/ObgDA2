@@ -1,0 +1,94 @@
+<app-back-button [url]="backUrl"></app-back-button>
+<div class="container">
+    <div class="form">
+        <form [formGroup]="medicineForm">
+
+            <!-- Código de medicamento -->
+            <mat-form-field appearance="outline">
+                <mat-label>Código</mat-label>
+                <input matInput formControlName="code" #code required> 
+                    <!-- Errores de entrada -->
+                    <mat-error *ngIf="code.value.length==0; else OnlySpace">{{"Debe ingresar un código"}}</mat-error>
+                    <ng-template #OnlySpace><mat-error *ngIf="onlySpace(code.value)">{{"Debe ingresar un código correctamente"}}</mat-error></ng-template>
+                    <!-- <mat-error *ngIf="onlySpace(code.value)">{{"No puede ingresar solo espacios"}}</mat-error> -->
+                    <!-- Luego agregar el de código existente -->
+            </mat-form-field>
+
+            <!-- Nombre de medicamento -->
+            <mat-form-field appearance="outline">
+                <mat-label>Nombre</mat-label>
+                <input matInput formControlName="name" #name required> 
+                    <!-- Errores de entrada -->
+                    <mat-error *ngIf="name.value.length==0">{{"Debe ingresar un nombre"}}</mat-error>
+            </mat-form-field>
+            
+            <!-- Síntomas que trata el medicamento -->
+            <mat-form-field appearance="outline">
+                <mat-label>Síntomas</mat-label>
+                <input matInput formControlName="symtomps" #symtomps required> 
+                    <!-- Errores de entrada -->
+                    <mat-error *ngIf="symtomps.value.length==0">{{"Debe ingresar un síntoma"}}</mat-error>
+            </mat-form-field>
+
+            <!-- Presentación del medicamento -->
+            <mat-form-field appearance="fill">
+                <mat-label>Presentación</mat-label>
+                <!-- <mat-select [formControl]="presentationControl" formControlName="presentation" required> -->
+                    <mat-select formControlName="presentationControl" required>
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let presentation of presentations" [value]="presentation">
+                        {{presentation}}
+                    </mat-option>
+                </mat-select>
+                    <!-- Errores de entrada -->
+                    <mat-error *ngIf="presentationControl.hasError('required')">Debe elegir una presentación</mat-error>
+            </mat-form-field>
+            
+            <!-- Cantidad por presentación -->
+            <mat-form-field appearance="outline">
+                <mat-label>Cantidad por presentación</mat-label>
+                <input matInput formControlName="quantity" #quantity type="number" min="1" required> 
+                    <!-- Errores de entrada -->
+                    <mat-error *ngIf="quantity.value.length==0, else minOneQuantity">{{"Debe ingresar una cantidad"}}</mat-error>
+                    <ng-template #minOneQuantity><mat-error>{{"Debe ingresar una cantidad mayor a cero"}}</mat-error></ng-template>
+            </mat-form-field>
+
+            <!-- Unidad por presentación -->
+            <mat-form-field appearance="outline">
+                <mat-label>Unidad de medida</mat-label>
+                <input matInput formControlName="unit" #unit required> 
+                    <!-- Errores de entrada -->
+                    <mat-error *ngIf="unit.value.length==0">{{"Debe ingresar una unidad de medida"}}</mat-error>
+            </mat-form-field>
+
+            <!-- Precio del medicamento -->
+            <mat-form-field appearance="outline">
+                <mat-label>Precio</mat-label>
+                <input matInput formControlName="price" #price type="number" min="1" required>
+                <mat-icon matSuffix>attach_money</mat-icon> 
+                    <!-- Errores de entrada -->
+                    <mat-error *ngIf="price.value.length==0, else minOnePrice">{{"Debe ingresar un precio"}}</mat-error>
+                    <ng-template #minOnePrice><mat-error>{{"Debe ingresar una precio mayor a cero"}}</mat-error></ng-template>
+            </mat-form-field>
+
+            <!-- Necesidad de prescripción -->
+            <mat-form-field appearance="fill">
+                <mat-label>Receta</mat-label>
+                <!-- <mat-select [formControl]="prescriptionControl" formControlName="prescription" required> -->
+                    <mat-select formControlName="prescriptionControl" required>
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let prescription of prescriptions" [value]="prescription">
+                        {{prescription}}
+                    </mat-option>
+                </mat-select>
+                    <!-- Errores de entrada -->
+                    <mat-error *ngIf="prescriptionControl.hasError('required')">Debe elegir una opción</mat-error>
+            </mat-form-field>
+
+            <div class="buttonOk">
+                <button mat-raised-button (click)="createMedicine()">Crear</button>
+            </div>
+
+        </form>
+    </div>
+</div>

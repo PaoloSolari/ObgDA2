@@ -1,0 +1,29 @@
+/* .mat-card {
+    width: 180px;
+    font-family: Bahnschrift;
+    background-color: rgb(245, 245, 246) !important;
+    display: flex;
+    flex-direction: column;
+    margin: 0.25rem;
+    border-radius: 1.0rem;
+    min-width: 200px;
+    cursor: default;
+}
+.priceMedicine {
+    color:rgb(28, 149, 72);
+}
+
+.descriptionMedicine {
+    color: gray;
+}
+
+.mat-raised-button {
+    color: rgb(240, 240, 240) !important;
+    background-color: rgb(176, 50, 50) !important;
+}
+  
+.mat-card:hover {
+    border: 0.1rem solid black;
+    border-color: rgb(89, 149, 189) !important;
+    color:  rgb(89, 149, 189) ;
+} */

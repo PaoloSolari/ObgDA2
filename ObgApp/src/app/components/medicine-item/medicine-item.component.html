@@ -1,0 +1,15 @@
+<mat-card>
+    <mat-card-title>{{ medicine?.name }}</mat-card-title>
+    <mat-card-subtitle>{{ medicine?.code }}</mat-card-subtitle>
+    <div class="priceMedicine">
+        <b>$ {{ medicine?.price }}</b>
+    </div>
+    <div class="descriptionMedicine">
+        <b>Síntomas:</b> {{ medicine?.symtomps }}
+        <br>
+        <b>Presentación: </b>{{ medicine?.presentation }}
+    </div>
+    <mat-card-actions>
+      <button mat-raised-button>Eliminar</button>
+    </mat-card-actions>
+  </mat-card>

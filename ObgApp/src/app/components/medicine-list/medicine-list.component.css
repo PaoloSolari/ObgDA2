@@ -1,0 +1,49 @@
+table {
+    /* Centrar */
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.mat-header-cell {
+    text-align: center;
+    color: rgb(89, 149, 189) ;
+}
+
+.deleteColumn{
+    width: 75px;
+}
+
+.mat-raised-button {
+    color: rgb(240, 240, 240) !important;
+    background-color: rgb(176, 50, 50) !important;
+}
+
+tr.element-row:hover {
+    background: whitesmoke;
+    cursor: default;
+    color: rgb(89, 149, 189) ;
+}
+
+.icon-display {
+    color: rgb(177, 76, 76) !important;
+    transform: scale(3);
+    margin-top: 100px;
+    /* Centrar */
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.NoMedicine {
+    color: rgb(177, 76, 76) !important;
+    font-family: Bahnschrift;
+    transform: scale(1.5);
+    /* Centrar */
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
