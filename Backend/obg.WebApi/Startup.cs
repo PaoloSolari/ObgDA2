@@ -55,6 +55,13 @@ namespace obg.WebApi
             services.AddScoped<OwnerAuthorizationAttributeFilter>();
             services.AddScoped<EmployeeAuthorizationAttributeFilter>();
             services.AddScoped<ExceptionFilter>();
+
+            services.AddCors(c =>
+            {
+                c.AddPolicy("CorsPolicy", options =>
+                options.WithOrigins("http://localhost:4200").AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            });
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ObgContext db)
@@ -70,12 +77,15 @@ namespace obg.WebApi
 
             app.UseRouting();
 
+            app.UseCors("CorsPolicy");
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
         }
     }
 }

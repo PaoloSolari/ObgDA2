@@ -1,23 +1,14 @@
-.body {
-    max-width: 100%; /* Se ajusta al ancho */
-    height: 300px; /* Máximo de expansión del body */
-    position: relative;
-}
-
-.conteiner {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    display: table;
-}
-
-button {
-    display:block;
-    margin: 8px 8px 8px 8px;
+.mat-raised-button{
+    display: block;
+    color: rgb(240, 240, 240) !important;
+    background-color: rgb(80, 129, 161) !important;
+    width: 400px;
     min-width: auto;
-    width: 300px;
-    min-height: auto;
     height: 50px;
+    min-height: auto;
+    margin: 8px 8px 15px 8px;
+}
+
+.mat-raised-button:hover{
+    background: rgb(196, 195, 195) !important;
 }

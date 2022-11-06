@@ -3,18 +3,26 @@ import { Injectable } from '@angular/core';
 import { ICreateMedicine } from '../interfaces/create-medicine';
 import { Medicine } from '../models/medicine';
 
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
+import { BehaviorSubject, Observable, map, tap, catchError } from 'rxjs';
+import { environment } from '../../environments/environment';
+import { IDeleteResponse } from '../interfaces/delete-response.interface';
+import { query } from '@angular/animations';
+
 @Injectable({
     providedIn: 'root'
 })
 
 export class MedicineService {
 
-    private _medicines: Medicine[] | undefined;
+    // private _medicines: Medicine[] | undefined;
+    private _medicinesBehaviorSubject$: BehaviorSubject<Medicine[] | undefined>;
 
     constructor(
-        // De momento nada...
-    ) { 
-        this._medicines = this.initializeMedicines();
+        private _http: HttpClient,
+    ) {
+        // this._medicines = this.initializeMedicines();
+        this._medicinesBehaviorSubject$ = new BehaviorSubject<Medicine[] | undefined>(undefined);
     }
 
     private initializeMedicines(): Medicine[] {
@@ -32,17 +40,37 @@ export class MedicineService {
         ];
     }
 
-    public getMedicines(): Medicine[] {
-        return this._medicines ?? [];
+    public get medicines$(): Observable<Medicine[] | undefined> {
+        return this._medicinesBehaviorSubject$.asObservable();
     }
 
-    public postMedicine(medicine: ICreateMedicine): string {
-        if(!this._medicines) this._medicines = [];
-        const stock = 0; // Default.
-        const isActive = false; // Default.
-        const medicineToAdd = new Medicine(medicine.code, medicine.name, medicine.symtomps, medicine.presentation, medicine.quantity, medicine.unit, medicine.price, stock, medicine.prescription, isActive);
-        this._medicines.push(medicineToAdd);
-        return medicine.code;
+    public getMedicines(): Observable<Medicine[]> {
+        let headers = new HttpHeaders();
+        // Hay que traerse el 'token'.
+        let params = new HttpParams();
+        params = params.append('employeeName', 'Paolo');
+        // headers.append('clave', 'valor');
+        // headers.append('employeeName', 'Pedro');
+        // return this._http.get<Medicine[]>(`${environment.API_HOST_URL}/medicine`, { headers }).pipe(
+            return this._http.get<Medicine[]>(`${environment.API_HOST_URL}/medicine`, { params }).pipe(
+            tap((medicines: Medicine[]) => this._medicinesBehaviorSubject$.next(medicines)),
+        );
+    }
+
+    public getMedicineByCode(medicineCode: string): Observable<Medicine> {
+        return this._http.get<Medicine>(`${environment.API_HOST_URL}/medicine/${medicineCode}`);
+    }
+
+    public postMedicine(medicineToAdd: ICreateMedicine): Observable<Medicine> {
+        return this._http.post<Medicine>(`${environment.API_HOST_URL}/medicine`, medicineToAdd);
+    }
+
+    public putMedicine(medicineToUpdate: Medicine): Observable<Medicine> {
+        return this._http.put<Medicine>(`${environment.API_HOST_URL}/medicine/${medicineToUpdate.code}`, medicineToUpdate);
+    }
+
+    public deleteMedicine(medicineCode: string): Observable<IDeleteResponse> {
+        return this._http.delete<IDeleteResponse>(`${environment.API_HOST_URL}/medicine/${medicineCode}`);
     }
 
 }

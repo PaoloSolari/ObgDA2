@@ -20,7 +20,7 @@ namespace obg.WebApi.Controllers
             this.medicineService = medicineService;
         }
 
-        [ServiceFilter(typeof(EmployeeAuthorizationAttributeFilter))]
+        //[ServiceFilter(typeof(EmployeeAuthorizationAttributeFilter))]
         [HttpGet]
         public IActionResult GetMedicines([FromQuery] string employeeName)
         {

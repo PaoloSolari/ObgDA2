@@ -70,28 +70,28 @@ export class MedicineFormComponent implements OnInit {
     public ngOnInit(): void {
         Globals.selectTab = 2;
     }
-    public createMedicine(): void {
-        if (this.medicineForm.valid) {
-            const medicineFromForm: ICreateMedicine = {
-                code: this.codeForm,
-                name: this.nameForm,
-                symtomps: this.symtompsForm,
-                presentation: this.presentationForm,
-                quantity: this.quantityForm,
-                unit: this.unitForm,
-                price: this.priceForm,
-                prescription: this.prescriptionForm,
-            };
-            const medicineCode = this._medicineService.postMedicine(medicineFromForm);
-            if (medicineCode) {
-                alert('Presentación: ' + medicineFromForm.presentation + '. Receta: ' + medicineFromForm.prescription);
-                this.clearForm();
-                // this._router.navigateByUrl(MEDICINE_FORM_URL);
-            }
-        } else {
-            alert('Debe ingresar todos los datos solicitados');
-        }
-    }
+    // public createMedicine(): void {
+    //     if (this.medicineForm.valid) {
+    //         const medicineFromForm: ICreateMedicine = {
+    //             code: this.codeForm,
+    //             name: this.nameForm,
+    //             symtomps: this.symtompsForm,
+    //             presentation: this.presentationForm,
+    //             quantity: this.quantityForm,
+    //             unit: this.unitForm,
+    //             price: this.priceForm,
+    //             prescription: this.prescriptionForm,
+    //         };
+    //         const medicineCode = this._medicineService.postMedicine(medicineFromForm);
+    //         if (medicineCode) {
+    //             alert('Presentación: ' + medicineFromForm.presentation + '. Receta: ' + medicineFromForm.prescription);
+    //             this.clearForm();
+    //             // this._router.navigateByUrl(MEDICINE_FORM_URL);
+    //         }
+    //     } else {
+    //         alert('Debe ingresar todos los datos solicitados');
+    //     }
+    // }
 
     public clearForm() {
         this.medicineForm.reset();

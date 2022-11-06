@@ -1,18 +1,30 @@
+.header {
+    background-color: rgb(89, 149, 189);
+    min-width: fit-content;
+}
+
 #toolBar {
     background-color: rgb(89, 149, 189);
+    min-width: fit-content;
 }
 
-#loginIcon {
-    color: rgb(230, 230, 230);
+.mat-raised-button{
+    color: rgb(240, 240, 240) !important;
+    background-color: rgb(80, 129, 161) !important;
+    width: 150px;
+    margin-left: 10px;
+    margin-right: auto;
 }
 
-#logoutIcon {
-    color: rgb(230, 230, 230);
+.mat-raised-button:hover{
+    background: rgb(196, 195, 195) !important;
 }
 
 .spacer {
     flex: 1 1 auto;
 }
+
+/* -------------------------------------------------------- */
 
 .loader {
     display: flex;
@@ -67,5 +79,3 @@
       transform: rotate(360deg);
     }
 }
-
-/* --------------------[SINCE ZERO]--------------------------- */

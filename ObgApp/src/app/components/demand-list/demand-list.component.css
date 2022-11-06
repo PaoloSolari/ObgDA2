@@ -1,0 +1,20 @@
+
+/* Cuando no hay elementos */
+
+.mat-icon {
+    color: rgb(177, 76, 76) !important;
+    margin-top: 100px;
+    width: 100%;
+    height: auto;
+    font-size: 100px;
+    text-align: center;
+}
+
+.NoDemand {
+    color: rgb(177, 76, 76) !important;
+    font-family: Bahnschrift;
+    font-size: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}

@@ -44,6 +44,11 @@ import {MatSelectModule} from '@angular/material/select';
 import { PharmacyService } from './services/pharmacy.service';
 import { MedicineService } from './services/medicine.service';
 import { LoadingService } from './services/loading.service';
+import { InvitationService } from './services/invitation.service';
+
+// Conexión con el BackEnd:
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
     schemas: [CUSTOM_ELEMENTS_SCHEMA], // Para solucionar el tema de Angular Material
@@ -83,8 +88,10 @@ import { LoadingService } from './services/loading.service';
         MatCardModule,
         MatChipsModule,
         MatTableModule,
+        // Conexión con BackEnd:
+        HttpClientModule,
     ],
-    providers: [PharmacyService, MedicineService, LoadingService],
+    providers: [PharmacyService, MedicineService, LoadingService, InvitationService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

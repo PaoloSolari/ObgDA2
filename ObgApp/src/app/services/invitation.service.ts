@@ -1,4 +1,7 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { ICreateInvitation } from '../interfaces/create-invitation';
 import { Invitation } from '../models/invitation';
 import { Pharmacy } from '../models/pharmacy';
@@ -8,48 +11,39 @@ import { Pharmacy } from '../models/pharmacy';
 })
 export class InvitationService {
 
-    private _invitations: Invitation[] | undefined;
+    // private _invitations: Invitation[] | undefined;
+    private _invitationsBehaviorSubject$: BehaviorSubject<Invitation[] | undefined>;
 
     constructor(
-        // De momento nada...
+        private _http: HttpClient,
     ) {
-        this._invitations = this.initializeInvitations();
+        // this._invitations = this.initializeInvitations();
+        this._invitationsBehaviorSubject$ = new BehaviorSubject<Invitation[] | undefined>(undefined);
     }
 
-    private initializeInvitations(): Invitation[] {
-        return [
-            new Invitation('ABCDEF', 'FarmaShop', 'Empleado', 'José', 123456, false),
-            new Invitation('ABCDEF', 'San Roque', 'Dueño', 'José', 123456, true),
-        ]
+    public get invitations$(): Observable<Invitation[] | undefined> {
+        return this._invitationsBehaviorSubject$.asObservable();
     }
 
-    public getInvitations(): Invitation[] {
-        return this._invitations ?? [];
+    public getInvitations(): Observable<Invitation[]> {
+        console.log('Entró al Get invitations');
+        const headers = new HttpHeaders();
+        headers.append('clave', 'valor');
+        return this._http.get<Invitation[]>(`${environment.API_HOST_URL}/invitation`, { headers }).pipe(
+            tap((invitations: Invitation[]) => this._invitationsBehaviorSubject$.next(invitations)),
+        );
     }
 
-    public postInvitation(invitation: ICreateInvitation): string {
-        if (!this._invitations) this._invitations = [];
-        const idInvitation = this.makeString(); // Default.
-        const userCode = 123456; // Default (en función de 'invitation.userName').
-        const wasUsed = false; // Default.
-        const invitationToAdd = new Invitation(idInvitation, invitation.pharmacy, invitation.userRole, invitation.userName, userCode, wasUsed);
-        this._invitations.push(invitationToAdd);
-        return idInvitation;
+    public getInvitationById(invitationId: string): Observable<Invitation> {
+        return this._http.get<Invitation>(`${environment.API_HOST_URL}/invitation/${invitationId}`);
     }
 
-    makeString(): string {
-        let outString: string = '';
-        let inOptions: string = 'abcdefghijklmnopqrstuvwxyz0123456789';
-
-        for (let i = 0; i < 32; i++) {
-
-            outString += inOptions.charAt(Math.floor(Math.random() * inOptions.length));
-
-        }
-
-        return outString;
+    public postInvitation(invitationToAdd: ICreateInvitation): Observable<Invitation> {
+        return this._http.post<Invitation>(`${environment.API_HOST_URL}/invitation`, invitationToAdd);
     }
 
-    result: string = this.makeString();
+    public putInvitation(invitationToUpdate: Invitation): Observable<Invitation> {
+        return this._http.put<Invitation>(`${environment.API_HOST_URL}/invitation/${invitationToUpdate.idInvitation}`, invitationToUpdate);
+    }
 
 }
