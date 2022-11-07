@@ -1,11 +1,11 @@
-import { PrescriptionMedicine, PresentationMedicine } from "../models/medicine";
+import { Pharmacy } from "../models/pharmacy";
 
 export interface ICreateInvitation {
-    // idInvitation: string; (Default)
-    pharmacy: string;
-    userRole: string;
-    userName: string;
-    // userCode: number; (Default = en función del 'userName')
-    // wasUsed: boolean; (Default = false)
+    // IdInvitation: string | null; (Default = desde BackEnd)
+    Pharmacy: Pharmacy | null;
+    UserRole: string | null;
+    UserName: string | null;
+    // UserCode: number | null; (Default = desde BackEnd)
+    // WasUsed: boolean | null; (Default = false)
 }
 

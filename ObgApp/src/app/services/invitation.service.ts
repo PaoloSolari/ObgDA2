@@ -26,9 +26,7 @@ export class InvitationService {
     }
 
     public getInvitations(): Observable<Invitation[]> {
-        console.log('Entró al Get invitations');
         const headers = new HttpHeaders();
-        headers.append('clave', 'valor');
         return this._http.get<Invitation[]>(`${environment.API_HOST_URL}/invitation`, { headers }).pipe(
             tap((invitations: Invitation[]) => this._invitationsBehaviorSubject$.next(invitations)),
         );
@@ -43,7 +41,7 @@ export class InvitationService {
     }
 
     public putInvitation(invitationToUpdate: Invitation): Observable<Invitation> {
-        return this._http.put<Invitation>(`${environment.API_HOST_URL}/invitation/${invitationToUpdate.idInvitation}`, invitationToUpdate);
+        return this._http.put<Invitation>(`${environment.API_HOST_URL}/invitation/${invitationToUpdate.IdInvitation}`, invitationToUpdate);
     }
 
 }

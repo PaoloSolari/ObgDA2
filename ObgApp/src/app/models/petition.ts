@@ -1,12 +1,12 @@
 export class Petition {
 
-    idPetition: string;
-    medicineCode: string;
-    newQuantity: number;
+    IdPetition: string | null;
+    MedicineCode: string | null;
+    NewQuantity: number | null;
 
-    constructor(idPetition: string, medicineCode:string, newQuantity: number) {
-        this.idPetition = idPetition;
-        this.medicineCode = medicineCode;
-        this.newQuantity = newQuantity;
+    constructor(IdPetition: string | null, MedicineCode: string | null, NewQuantity: number | null) {
+        this.IdPetition = IdPetition;
+        this.MedicineCode = MedicineCode;
+        this.NewQuantity = NewQuantity;
     }
 }

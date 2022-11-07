@@ -1,20 +1,20 @@
 import { Petition } from "./petition";
 
 export enum DemandStatus {
-    accepted,
-    rejected,
-    inProgress
+    Accepted,
+    Rejected,
+    InProgress
 }
 
 export class Demand {
 
-    idDemand: string;
-    status: DemandStatus;
-    petitions: Petition[] | undefined;
+    IdDemand: string | null;
+    Status: DemandStatus | null;
+    Petitions: Petition[] | null;
 
-    constructor(idDemand: string, status: DemandStatus, petitions: Petition[] | undefined) {
-        this.idDemand = idDemand;
-        this.status = status;
-        this.petitions = petitions;
+    constructor(IdDemand: string | null, Status: DemandStatus | null, Petitions: Petition[] | null) {
+        this.IdDemand = IdDemand;
+        this.Status = Status;
+        this.Petitions = Petitions;
     }
 }

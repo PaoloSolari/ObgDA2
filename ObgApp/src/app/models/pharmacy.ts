@@ -4,18 +4,17 @@ import { Purchase } from "./purchase";
 
 export class Pharmacy {
 
-    name: string;
-    address: string;
-    medicines: Medicine[] | undefined;
-    demands: Demand[] | undefined;
-    purhases: Purchase[] | undefined;
+    Name: string | null;
+    Address: string | null;
+    Medicines: Medicine[] | null;
+    Demands: Demand[] | null;
+    Purchases: Purchase[] | null;
 
-    // constructor(name: string, address:string, medicines: Medicine[] | undefined, demands: Demand[] | undefined, purhases: Purchase[] | undefined) {
-    constructor(name: string, address:string) {
-        this.name = name;
-        this.address = address;
-        this.medicines = <Medicine[]>[];
-        this.demands = <Demand[]>[];
-        this.purhases = <Purchase[]>[];
+    constructor(Name: string | null, Address: string | null, Medicines: Medicine[] | null, Demands: Demand[] | null, Purchases: Purchase[] | null) {
+        this.Name = Name;
+        this.Address = Address;
+        this.Medicines = Medicines;
+        this.Demands = Demands;
+        this.Purchases = Purchases;
     }
 }
