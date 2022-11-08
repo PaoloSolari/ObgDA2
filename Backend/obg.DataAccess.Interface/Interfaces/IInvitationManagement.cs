@@ -11,6 +11,7 @@ namespace obg.DataAccess.Interface.Interfaces
         IEnumerable<Invitation> GetInvitations();
         Invitation GetInvitationById(string id);
         Invitation GetInvitationByCode(int code);
+        Invitation GetInvitationByUserName(string userName);
         void UpdateInvitation(Invitation invitation);
         void DeleteInvitation(Invitation invitation);
         bool IsIdInvitationRegistered(string idInvitation);

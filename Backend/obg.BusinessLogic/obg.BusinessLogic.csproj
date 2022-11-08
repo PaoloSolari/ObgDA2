@@ -9,6 +9,7 @@
     <ProjectReference Include="..\obg.DataAccess.Interface\obg.DataAccess.Interface.csproj" />
     <ProjectReference Include="..\obg.Domain\obg.Domain.csproj" />
     <ProjectReference Include="..\obg.Exceptions\obg.Exceptions.csproj" />
+    <ProjectReference Include="..\obg.ExporterInterface\obg.ExporterInterface.csproj" />
   </ItemGroup>
 
 </Project>

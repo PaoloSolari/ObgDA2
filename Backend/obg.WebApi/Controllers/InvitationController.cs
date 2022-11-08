@@ -23,15 +23,20 @@ namespace obg.WebApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult PostInvitation([FromBody] Invitation invitation, [FromHeader] string pharmacyName)
+        public IActionResult PostInvitation([FromBody] Invitation invitation, [FromHeader] string pharmacyName, string token)
         {
-            return StatusCode(200, invitationService.InsertInvitation(invitation, pharmacyName));
+            return StatusCode(200, invitationService.InsertInvitation(invitation, pharmacyName, token));
         }
 
         [HttpGet]
-        public IActionResult GetInvitations()
+        public IActionResult GetInvitations([FromHeader] string token)
         {
-            return StatusCode(200, invitationService.GetInvitations());
+            return StatusCode(200, invitationService.GetInvitations(token));
+        }
+
+        public IActionResult PutInvitation([FromRoute] string idInvitation, [FromBody] Invitation invitation, [FromHeader] string token)
+        {
+            return StatusCode(200, "Modificación de la solicitud: " + invitationService.UpdateInvitation(idInvitation, invitation, token) + " exitosa.");
         }
     }
 }
