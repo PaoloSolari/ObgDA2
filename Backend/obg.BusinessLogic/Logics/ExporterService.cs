@@ -71,20 +71,24 @@ namespace obg.BusinessLogic.Logics
                     implementationLoaded = true;
                     Employee employee = GetEmployeeBySession(token);
                     Pharmacy employeePharmacy = employee.Pharmacy;
-                    List<Medicine> medicinesToExport = new List<Medicine>();
-                    foreach(string medicineCode in medicinesCodes)
+                    //List<Medicine> medicinesToExport = new List<Medicine>();
+                    //foreach(string medicineCode in medicinesCodes)
+                    //{
+                    //    Medicine medicine = _medicineManagement.GetMedicineByCode(medicineCode);
+                    //    if (employeePharmacy.Medicines.Contains(medicine))
+                    //    {
+                    //        medicinesToExport.Add(medicine);
+                    //    } 
+                    //    else
+                    //    {
+                    //        throw new ExportException("Solo puedes exportar medicamentos pertenecientes a tu farmacia.");
+                    //    }
+                    //}
+                    if(employeePharmacy.Medicines.Count == 0)
                     {
-                        Medicine medicine = _medicineManagement.GetMedicineByCode(medicineCode);
-                        if (employeePharmacy.Medicines.Contains(medicine))
-                        {
-                            medicinesToExport.Add(medicine);
-                        } 
-                        else
-                        {
-                            throw new ExportException("Solo puedes exportar medicamentos pertenecientes a tu farmacia.");
-                        }
+                        throw new ExportException("La farmacia no tiene medicamentos.");
                     }
-                    implementation.ExportData(medicinesToExport, path);
+                    implementation.ExportData(employeePharmacy.Medicines, path);
                 }
             }
             if (!implementationLoaded)

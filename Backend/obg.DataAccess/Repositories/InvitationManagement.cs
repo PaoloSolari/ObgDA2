@@ -49,6 +49,11 @@ namespace obg.DataAccess.Repositories
         {
             return ObgContext.Invitations.Where<Invitation>(i => i.UserName.Equals(userName)).FirstOrDefault();
         }
+
+        public Invitation GetInvitationByAdministratorName(string administratorName)
+        {
+            return ObgContext.Invitations.Where<Invitation>(i => i.AdministratorName.Equals(administratorName)).Include("Pharmacy").FirstOrDefault();
+        }
         public void UpdateInvitation(Invitation invitation)
         {
             ObgContext.Invitations.Attach(invitation);

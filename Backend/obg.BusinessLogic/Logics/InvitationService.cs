@@ -28,9 +28,24 @@ namespace obg.BusinessLogic.Logics
 
         public string UpdateInvitation(string idInvitation, Invitation invitation, string token)
         {
-            Session session = _sessionManagement.GetSessionByToken(token);
-            List<Invitation> invitations = GetInvitations(token).ToList();
-
+            if (!invitation.WasUsed)
+            {
+                Session session = _sessionManagement.GetSessionByToken(token);
+                string administratorName = session.UserName;
+                Invitation invitationFromDB = _invitationManagement.GetInvitationByAdministratorName(administratorName);
+                invitationFromDB.IdInvitation = invitation.IdInvitation;
+                invitationFromDB.UserName = invitation.UserName;
+                invitationFromDB.UserCode = invitation.UserCode;
+                invitationFromDB.UserRole = invitation.UserRole;
+                invitationFromDB.WasUsed = invitation.WasUsed;
+                invitationFromDB.Pharmacy = invitation.Pharmacy;
+                if (IsInvitationValid(invitation))
+                {
+                    _invitationManagement.UpdateInvitation(invitationFromDB);
+                }
+                return invitationFromDB.IdInvitation.ToString();
+            }
+            throw new InvitationException("No se puede modificar una invitación que fue usada.");
         }
 
         public IEnumerable<Invitation> GetInvitations(string token)
@@ -54,19 +69,6 @@ namespace obg.BusinessLogic.Logics
             {
                 throw new NotFoundException("No hay invitaciones enviadas.");
             }
-
-            //List<Invitation> invitationsUsed = new List<Invitation>();
-            //foreach (Invitation invitation in invitations)
-            //{
-            //    if (invitation.WasUsed)
-            //    {
-            //        invitationsUsed.Add(invitation);
-            //    }
-            //}
-            //if(invitationsUsed.Count == 0)
-            //{
-            //    throw new NotFoundException("No hay invitaciones enviadas.");
-            //}
             return invitationsFromAdministrator;
         }
 
