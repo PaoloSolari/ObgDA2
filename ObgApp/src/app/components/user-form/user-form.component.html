@@ -1,0 +1,24 @@
+<app-back-button [url]="backUrl"></app-back-button>
+
+<form [formGroup]="userForm">
+    
+    <mat-form-field appearance="outline">
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="name" #name required> 
+        <!-- Errores de entrada -->
+            <mat-error *ngIf="name.value.length==0">{{"Debe ingresar un nombre"}}</mat-error>
+            <!-- Luego agregar el de nombre existente -->
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Código</mat-label>
+        <input matInput formControlName="code" #code type="number" required>
+            <!-- Errores de entrada -->
+            <mat-error *ngIf="code.value.length==0">{{"Debe ingresar un código"}}</mat-error>
+    </mat-form-field>
+
+    <div class="buttonOk">
+        <button mat-raised-button (click)="createUser()">Registrar</button>
+    </div>
+
+</form>

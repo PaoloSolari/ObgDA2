@@ -1,11 +1,19 @@
-export const getInvitationFormUrl = (id: string | number): string => {
+export const getInvitationFormUrl = (id: string | number | null): string => {
     let url = INVITATION_FORM_URL;
-    return url.replace(idParam, id?.toString());
+    return url.replace(idParam, id!.toString());
+    // return url.replace(idParam, id?.toString());
+};
+
+export const getUserFormUrl = (name: string | number | null): string => {
+    let url = USER_UPDATE_URL;
+    return url.replace(idParam, name!.toString());
+    // return url.replace(idParam, id?.toString());
 };
 
 export const INIT = '';
 
 export enum PATHS {
+    USER = 'user',
     MEDICINE = 'medicine',
     PHARMACY = 'pharmacy',
     INVITATION = 'invitation',
@@ -18,6 +26,10 @@ export enum SEGMENTS {
 }
 
 const idParam = ':id'
+
+// Register User
+export const USER_FORM_URL = `${PATHS.USER}/${SEGMENTS.NEW}`
+export const USER_UPDATE_URL = `${PATHS.USER}/${idParam}`;
 
 // Admnistrator:
 export const PHARMACY_FORM_URL = `${PATHS.PHARMACY}/${SEGMENTS.NEW}`;

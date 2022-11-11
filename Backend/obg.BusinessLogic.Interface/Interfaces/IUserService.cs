@@ -8,6 +8,6 @@ namespace obg.BusinessLogic.Interface.Interfaces
     public interface IUserService
     {
         string InsertUser(User user);
-        string UpdateUser(User user);
+        string UpdateUser(User user, string userName);
     }
 }

@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MedicineService } from '../../services/medicine.service';
 import { Medicine } from '../../models/medicine';
 import { Router } from '@angular/router';
-import { INIT } from '../../utils/routes';
+import { INIT, MEDICINE_LIST_URL } from '../../utils/routes';
 import { Globals } from '../../utils/globals';
 import { catchError, take, filter, of} from 'rxjs';
 import { IDeleteResponse } from '../../interfaces/delete-response.interface';
@@ -49,27 +49,27 @@ export class MedicineListComponent implements OnInit {
         else this.medicines = medicines;
     }
 
-    public deleteMedicine(medicineToDelete: Medicine): void {
-        this._medicineService.deleteMedicine(medicineToDelete?.code).pipe(
-          take(1),
-          catchError((err) => {
-            console.log({err});
-            return of(err);
-          }),
-          filter((response: IDeleteResponse) => response.success === true),
-        ).subscribe((response: IDeleteResponse) => {
-          this._medicineService.getMedicines()
-          .pipe(
+    public deleteMedicine(medicineCode: string): void {
+        this._medicineService.deleteMedicine(medicineCode).pipe(
             take(1),
             catchError((err) => {
-              console.log({err});
-              return of(err);
+                console.log({ err });
+                return of(err);
             }),
-          ).subscribe((medicines: Medicine[] | undefined) => {
-            this.setMedicines(medicines);
-          });
+            filter((response: IDeleteResponse) => response.success === true),
+        ).subscribe((response: IDeleteResponse) => {
+            this._medicineService.getMedicines()
+                .pipe(
+                    take(1),
+                    catchError((err) => {
+                        console.log({ err });
+                        return of(err);
+                    }),
+                ).subscribe((medicines: Medicine[] | undefined) => {
+                    this.setMedicines(medicines);
+                });
         });
-      }
+    }
 
 
 }

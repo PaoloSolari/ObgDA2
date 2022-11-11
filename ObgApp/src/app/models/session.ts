@@ -1,11 +1,11 @@
 export class Session {
-    IdSession: string | null;
-    UserName: string | null;
-    Token: string | null;
+    idSession: string | null;
+    userName: string | null;
+    token: string | null;
 
-    constructor(IdSession: string | null, UserName: string | null, Token: string | null) {
-        this.IdSession = IdSession;
-        this.UserName = UserName;
-        this.Token = Token;
+    constructor(idSession: string | null, userName: string | null, token: string | null) {
+        this.idSession = idSession;
+        this.userName = userName;
+        this.token = token;
     }
 }

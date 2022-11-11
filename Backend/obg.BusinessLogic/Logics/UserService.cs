@@ -72,6 +72,9 @@ namespace obg.BusinessLogic.Logics
             {
                 throw new NotFoundException("No existe una invitación para el usuario");
             }
+            Invitation invitationToUse = _invitationManagement.GetInvitationByCode(user.Code);
+            invitationToUse.WasUsed = true;
+            _invitationManagement.UpdateInvitation(invitationToUse); // Hago que la invitación fue utilizada.
             return user.Name;
         }
 
@@ -103,9 +106,10 @@ namespace obg.BusinessLogic.Logics
             user.RegisterDate = "Default RegisterDate";
         }
 
-        public string UpdateUser(User user)
+        public string UpdateUser(User user, string userName)
         {
-            User userFromDB = _userManagement.GetUserByName(user.Name);
+            //User userFromDB = _userManagement.GetUserByName(user.Name);
+            User userFromDB = _userManagement.GetUserByName(userName);
             if (userFromDB == null)
             {
                 throw new NotFoundException("El usuario no existe.");
@@ -122,7 +126,7 @@ namespace obg.BusinessLogic.Logics
                 }
             }
 
-            return user.Name;
+            return userName;
         }
 
         protected bool IsUserValid(User user)

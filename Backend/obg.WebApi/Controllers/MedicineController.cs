@@ -33,14 +33,14 @@ namespace obg.WebApi.Controllers
             return StatusCode(200, medicineService.GetMedicinesWithStock(Name));
         }
 
-        [ServiceFilter(typeof(EmployeeAuthorizationAttributeFilter))]
+        //[ServiceFilter(typeof(EmployeeAuthorizationAttributeFilter))]
         [HttpPost]
         public IActionResult PostMedicine([FromBody] Medicine medicine, [FromHeader] string token)
         {
             return StatusCode(200, "Código del medicamento: " + medicineService.InsertMedicine(medicine, token));
         }
 
-        [ServiceFilter(typeof(EmployeeAuthorizationAttributeFilter))]
+        //[ServiceFilter(typeof(EmployeeAuthorizationAttributeFilter))]
         [HttpDelete("{medicineCode}")]
         public IActionResult DeleteMedicine(string medicineCode)
         {

@@ -12,7 +12,7 @@ namespace obg.WebApi.Controllers
     [ApiController]
     [Route("[controller]")]
     [ExceptionFilter]
-    [ServiceFilter(typeof(AdministratorAuthorizationAttributeFilter))]
+    //[ServiceFilter(typeof(AdministratorAuthorizationAttributeFilter))]
     public class InvitationController : ControllerBase
     {
 
@@ -33,5 +33,19 @@ namespace obg.WebApi.Controllers
         {
             return StatusCode(200, invitationService.GetInvitations());
         }
+
+        [HttpGet("{idInvitation}")]
+        public IActionResult GetInvitations([FromRoute] string idInvitation)
+        {
+            return StatusCode(200, invitationService.GetInvitationById(idInvitation));
+        }
+
+        [HttpPut("{idInvitation}")]
+        public IActionResult PuInvitation([FromBody] Invitation invitation, [FromHeader] string token)
+        {
+            invitationService.UpdateInvitation(invitation);
+            return StatusCode(200, "Modificación exitosa");
+        }
+
     }
 }

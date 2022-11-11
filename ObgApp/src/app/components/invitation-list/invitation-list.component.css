@@ -20,6 +20,12 @@ table {
     background-color: rgb(89, 149, 189) !important;
 }
 
+.NoModify {
+    color: rgb(215, 215, 215) !important;
+    background-color: rgb(176, 176, 176) !important;
+    cursor: default;
+}
+
 tr.element-row:hover {
     background: whitesmoke;
     cursor: default;

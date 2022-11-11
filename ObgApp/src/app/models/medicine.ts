@@ -1,33 +1,33 @@
 export enum PresentationMedicine {
-    Capsulas,
-    Comprimidos,
-    SolucionSoluble,
-    StickPack,
-    Liquido
+    capsulas,
+    comprimidos,
+    solucionSoluble,
+    stickPack,
+    liquido
 }
 
 export class Medicine {
-    Code: string | null;
-    Name: string | null;
-    SymtompsItTreats: string | null;
-    Presentation: PresentationMedicine | null;
-    Quantity: number | null;
-    Unit: string | null;
-    Price: number | null;
-    Stock: number | null;
-    Prescription: boolean | null;
-    IsActive: boolean | null;
+    code: string | null;
+    name: string | null;
+    symtompsItTreats: string | null;
+    presentation: PresentationMedicine | null;
+    quantity: number | null;
+    unit: string | null;
+    price: number | null;
+    stock: number | null;
+    prescription: boolean | null;
+    isActive: boolean | null;
 
-    constructor(Code: string | null, Name: string | null, SymtompsItTreats: string | null, Presentation: PresentationMedicine | null, Quantity: number | null, Unit: string | null, Price: number | null, Stock: number | null, Prescription: boolean | null, IsActive: boolean | null) {
-        this.Code = Code;
-        this.Name = Name;
-        this.SymtompsItTreats = SymtompsItTreats;
-        this.Presentation = Presentation;
-        this.Quantity = Quantity;
-        this.Unit = Unit;
-        this.Price = Price;
-        this.Stock = Stock;
-        this.Prescription = Prescription;
-        this.IsActive = IsActive;
+    constructor(code: string | null, name: string | null, symtompsItTreats: string | null, presentation: PresentationMedicine | null, quantity: number | null, unit: string | null, price: number | null, stock: number | null, prescription: boolean | null, isActive: boolean | null) {
+        this.code = code;
+        this.name = name;
+        this.symtompsItTreats = symtompsItTreats;
+        this.presentation = presentation;
+        this.quantity = quantity;
+        this.unit = unit;
+        this.price = price;
+        this.stock = stock;
+        this.prescription = prescription;
+        this.isActive = isActive;
     }
 }

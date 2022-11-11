@@ -7,6 +7,8 @@ namespace obg.BusinessLogic.Interface.Interfaces
 {
     public interface IPharmacyService
     {
+        IEnumerable<Pharmacy> GetPharmacies();
+        Pharmacy GetPharmacyByName(string Name);
         string InsertPharmacy(Pharmacy pharmacy, string token);
     }
 }

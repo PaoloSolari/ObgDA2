@@ -6,21 +6,21 @@ export enum RoleUser {
 
 export class User {
 
-    Name: string | null;
-    Code: number | null;
-    Email: string | null;
-    Password: string | null;
-    Address: string | null;
-    Role: RoleUser | null;
-    RegisterDate: string | null;
+    name: string | null;
+    code: number | null;
+    email: string | null;
+    password: string | null;
+    address: string | null;
+    role: RoleUser | null;
+    registerDate: string | null;
 
-    constructor(Name: string | null, Code: number | null, Email: string | null, Password: string | null, Address: string | null, Role: RoleUser | null, RegisterDate: string | null) {
-        this.Name = Name;
-        this.Code = Code;
-        this.Email = Email;
-        this.Password = Password;
-        this.Address = Address;
-        this.Role = Role;
-        this.RegisterDate = RegisterDate;
+    constructor(name: string | null, code: number | null, email: string | null, password: string | null, address: string | null, role: RoleUser | null, registerDate: string | null) {
+        this.name = name;
+        this.code = code;
+        this.email = email;
+        this.password = password;
+        this.address = address;
+        this.role = role;
+        this.registerDate = registerDate;
     }
 }

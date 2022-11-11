@@ -1,19 +1,20 @@
 import { Pharmacy } from "./pharmacy";
+import { RoleUser } from "./user";
 
 export class Invitation {
-    IdInvitation: string | null;
-    Pharmacy: Pharmacy | null;
-    UserRole: string | null;
-    UserName: string | null;
-    UserCode: number | null;
-    WasUsed: boolean | null;
+    idInvitation: string | null;
+    pharmacy: Pharmacy | null;
+    userRole: RoleUser | null;
+    userName: string | null;
+    userCode: number | null;
+    wasUsed: boolean | null;
 
-    constructor(IdInvitation: string | null, Pharmacy: Pharmacy | null, UserRole: string | null, UserName: string | null, UserCode: number | null, WasUsed: boolean | null) {
-        this.IdInvitation = IdInvitation;
-        this.Pharmacy = Pharmacy;
-        this.UserRole = UserRole;
-        this.UserName = UserName;
-        this.UserCode = UserCode;
-        this.WasUsed = WasUsed;
+    constructor(idInvitation: string | null, pharmacy: Pharmacy | null, userRole: RoleUser | null, userName: string | null, userCode: number | null, wasUsed: boolean | null) {
+        this.idInvitation = idInvitation;
+        this.pharmacy = pharmacy;
+        this.userRole = userRole;
+        this.userName = userName;
+        this.userCode = userCode;
+        this.wasUsed = wasUsed;
     }
 }

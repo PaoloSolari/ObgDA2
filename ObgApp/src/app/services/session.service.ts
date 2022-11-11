@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -30,15 +30,15 @@ export class SessionService {
     }
 
     public getSessionByToken(token: string): Observable<Session> {
-        return this._http.get<Session>(`${environment.API_HOST_URL}/session/${token}`);
+        return this._http.get<Session>(`${environment.API_HOST_URL}/Session/${token}`);
     }
-
+    
     public postSession(sessionToAdd: ICreateSession): Observable<Session> {
         return this._http.post<Session>(`${environment.API_HOST_URL}/session`, sessionToAdd);
     }
 
     public putSession(sessionToUpdate: Session): Observable<Session> {
-        return this._http.put<Session>(`${environment.API_HOST_URL}/session/${sessionToUpdate.IdSession}`, sessionToUpdate);
+        return this._http.put<Session>(`${environment.API_HOST_URL}/session/${sessionToUpdate.idSession}`, sessionToUpdate);
     }
 
     public deleteSession(IdSession: string): Observable<IDeleteResponse> {

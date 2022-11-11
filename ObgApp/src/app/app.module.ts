@@ -48,6 +48,8 @@ import { InvitationService } from './services/invitation.service';
 
 // Conexión con el BackEnd:
 import { HttpClientModule } from '@angular/common/http';
+import { UserFormComponent } from './components/user-form/user-form.component';
+import { UserUpdateComponent } from './components/user-update/user-update.component';
 
 
 @NgModule({
@@ -68,7 +70,9 @@ import { HttpClientModule } from '@angular/common/http';
         PharmacyFormComponent,
         InvitationFormComponent,
         InvitationListComponent,
-        DemandListComponent
+        DemandListComponent,
+        UserFormComponent,
+        UserUpdateComponent
     ],
     imports: [
         BrowserModule,

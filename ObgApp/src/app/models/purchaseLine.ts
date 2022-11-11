@@ -1,20 +1,20 @@
 export enum PurchaseLineStatus {
-    Accepted,
-    Rejected,
-    UnResolved
+    accepted,
+    rejected,
+    unResolved
 }
 
 export class PurchaseLine {
 
-    IdPurchaseLine: string | null;
+    idPurchaseLine: string | null;
     medicineCode: string | null;
-    MedicineQuantity: number | null;
-    Status: PurchaseLineStatus | null;
+    medicineQuantity: number | null;
+    tatus: PurchaseLineStatus | null;
 
-    constructor(IdPurchaseLine: string | null, medicineCode: string | null, MedicineQuantity: number | null, Status: PurchaseLineStatus | null) {
-        this.IdPurchaseLine = IdPurchaseLine;
+    constructor(idPurchaseLine: string | null, medicineCode: string | null, medicineQuantity: number | null, status: PurchaseLineStatus | null) {
+        this.idPurchaseLine = idPurchaseLine;
         this.medicineCode = medicineCode;
-        this.MedicineQuantity = MedicineQuantity;
-        this.Status = Status;
+        this.medicineQuantity = medicineQuantity;
+        this.tatus = status;
     }
 }

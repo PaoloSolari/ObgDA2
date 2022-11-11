@@ -22,6 +22,16 @@ namespace obg.BusinessLogic.Logics
             _sessionManagement = sessionManagement;
         }
 
+        public IEnumerable<Pharmacy> GetPharmacies()
+        {
+            return _pharmacyManagement.GetPharmacies();
+        }
+        
+        public Pharmacy GetPharmacyByName(string name)
+        {
+            return _pharmacyManagement.GetPharmacyByName(name);
+        }
+
         public string InsertPharmacy(Pharmacy pharmacy, string token)
         {
             if (IsPharmacyValid(pharmacy))

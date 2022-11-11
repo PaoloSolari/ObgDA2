@@ -3,10 +3,10 @@ import { RoleUser, User } from "./user";
 
 export class Employee extends User {
 
-    Pharmacy: Pharmacy | null;
+    pharmacy: Pharmacy | null;
 
-    constructor(Name: string | null, Code: number | null, Email: string | null, Password: string | null, Address: string | null, Role: RoleUser | null, RegisterDate: string | null, Pharmacy: Pharmacy | null) {
-        super(Name, Code, Email, Password, Address, Role, RegisterDate);
-        this.Pharmacy = Pharmacy;
+    constructor(name: string | null, code: number | null, email: string | null, password: string | null, address: string | null, role: RoleUser | null, registerDate: string | null, pharmacy: Pharmacy | null) {
+        super(name, code, email, password, address, role, registerDate);
+        this.pharmacy = pharmacy;
     }
 }

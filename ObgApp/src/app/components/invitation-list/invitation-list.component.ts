@@ -26,30 +26,29 @@ export class InvitationListComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
+
         Globals.selectTab = 0;
 
         this._invitationService.getInvitations().pipe(
             take(1),
             catchError((err) => {
-                console.log({err});
+                console.log({ err });
                 return of(err);
             }),
         )
-        .subscribe((invitations: Invitation[]) => {
-            this.setInvitations(invitations);
-        })
-
-        console.log(this.invitations);
+            .subscribe((invitations: Invitation[]) => {
+                this.setInvitations(invitations);
+            })
 
     }
 
     private setInvitations = (invitations: Invitation[] | undefined) => {
-        if(!invitations) this.invitations = [];
+        if (!invitations) this.invitations = [];
         else this.invitations = invitations;
     };
 
-    public navigateToEditInvitation(invitation: Invitation): void {
-        this._router.navigateByUrl(`/${getInvitationFormUrl(invitation.idInvitation)}`)
+    public navigateToEditInvitation(idInvitation: string): void {
+        this._router.navigateByUrl(`/${getInvitationFormUrl(idInvitation)}`)
     }
 
 }
