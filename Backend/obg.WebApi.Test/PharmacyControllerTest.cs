@@ -34,6 +34,7 @@ namespace obg.WebApi.Test
             session = new Session("123456", "Lucas", "XXYYZZ");
         }
 
+        [ExpectedException(typeof(PharmacyException))]
         [TestMethod]
         public void PostPharmacyBadRequest()
         {
@@ -46,6 +47,7 @@ namespace obg.WebApi.Test
             Assert.AreEqual(400, statusCode);
         }
 
+        [ExpectedException(typeof(Exception))]
         [TestMethod]
         public void PostPharmacyFail()
         {

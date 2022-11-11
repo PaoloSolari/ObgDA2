@@ -30,6 +30,7 @@ namespace obg.WebApi.Test
             users = new List<User>() { validUser };
         }
 
+        [ExpectedException(typeof(UserException))]
         [TestMethod]
         public void PostUserBadRequest()
         {
@@ -42,6 +43,7 @@ namespace obg.WebApi.Test
             Assert.AreEqual(400, statusCode);
         }
 
+        [ExpectedException(typeof(Exception))]
         [TestMethod]
         public void PostUserFail()
         {
@@ -67,6 +69,7 @@ namespace obg.WebApi.Test
             Assert.IsTrue(("Usuario " + validUser.Name + " identificado. Ingrese email, contraseña y dirección.").Equals(body));
         }
 
+        [ExpectedException(typeof(UserException))]
         [TestMethod]
         public void PutUserBadRequest()
         {
@@ -79,6 +82,7 @@ namespace obg.WebApi.Test
             Assert.AreEqual(400, statusCode);
         }
 
+        [ExpectedException(typeof(NotFoundException))]
         [TestMethod]
         public void PutUserNotFound()
         {
@@ -91,6 +95,7 @@ namespace obg.WebApi.Test
             Assert.AreEqual(404, statusCode);
         }
 
+        [ExpectedException(typeof(Exception))]
         [TestMethod]
         public void PutUserFail()
         {

@@ -64,6 +64,7 @@ namespace obg.WebApi.Test
             Assert.IsTrue(body.SequenceEqual(demands));
         }
 
+        [ExpectedException(typeof(Exception))]
         [TestMethod]
         public void GetDemandsFail()
         {
@@ -77,6 +78,7 @@ namespace obg.WebApi.Test
             Assert.AreEqual(500, statusCode);
         }
 
+        [ExpectedException(typeof(DemandException))]
         [TestMethod]
         public void PostDemandBadRequest()
         {
@@ -89,6 +91,7 @@ namespace obg.WebApi.Test
             Assert.AreEqual(400, statusCode);
         }
 
+        [ExpectedException(typeof(Exception))]
         [TestMethod]
         public void PostDemandFail()
         {
@@ -115,11 +118,12 @@ namespace obg.WebApi.Test
             Assert.IsTrue(("Solicitud " + validDemand.IdDemand + " exitosa.").Equals(body));
         }
 
+        [ExpectedException(typeof(DemandException))]
         [TestMethod]
         public void PutDemandBadRequest()
         {
-            mock.Setup(x => x.UpdateDemand(validDemand.IdDemand, validDemand)).Throws(new DemandException());
-            var result = api.PutDemand(validDemand.IdDemand, validDemand);
+            mock.Setup(x => x.UpdateDemand(validDemand.IdDemand, validDemand, validSession1.Token)).Throws(new DemandException());
+            var result = api.PutDemand(validDemand.IdDemand, validDemand, validSession1.Token);
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
 
@@ -127,11 +131,12 @@ namespace obg.WebApi.Test
             Assert.AreEqual(400, statusCode);
         }
 
+        [ExpectedException(typeof(NotFoundException))]
         [TestMethod]
         public void PutDemandNotFound()
         {
-            mock.Setup(x => x.UpdateDemand(validDemand.IdDemand, validDemand)).Throws(new NotFoundException());
-            var result = api.PutDemand(validDemand.IdDemand, validDemand);
+            mock.Setup(x => x.UpdateDemand(validDemand.IdDemand, validDemand, validSession1.Token)).Throws(new NotFoundException());
+            var result = api.PutDemand(validDemand.IdDemand, validDemand, validSession1.Token);
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
 
@@ -139,11 +144,12 @@ namespace obg.WebApi.Test
             Assert.AreEqual(404, statusCode);
         }
 
+        [ExpectedException(typeof(Exception))]
         [TestMethod]
         public void PutDemandFail()
         {
-            mock.Setup(x => x.UpdateDemand(validDemand.IdDemand, validDemand)).Throws(new Exception());
-            var result = api.PutDemand(validDemand.IdDemand, validDemand);
+            mock.Setup(x => x.UpdateDemand(validDemand.IdDemand, validDemand, validSession1.Token)).Throws(new Exception());
+            var result = api.PutDemand(validDemand.IdDemand, validDemand, validSession1.Token);
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
 
@@ -156,8 +162,8 @@ namespace obg.WebApi.Test
         {
             var validDemandModified = validDemand;
             validDemandModified.Status = DemandStatus.Accepted;
-            mock.Setup(x => x.UpdateDemand(validDemandModified.IdDemand, validDemandModified)).Returns(validDemandModified.IdDemand);
-            var result = api.PutDemand(validDemand.IdDemand, validDemandModified);
+            mock.Setup(x => x.UpdateDemand(validDemandModified.IdDemand, validDemandModified, validSession1.Token)).Returns(validDemandModified.IdDemand);
+            var result = api.PutDemand(validDemand.IdDemand, validDemandModified, validSession1.Token);
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
             var body = objectResult.Value;

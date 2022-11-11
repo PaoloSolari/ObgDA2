@@ -8,6 +8,7 @@ namespace obg.ExporterInterface
     public interface IExporter
     {
         public string GetName();
-        public void ExportData(List<Medicine> medicinesToExport, string path);
+        public void ExportData(Dictionary<string, string> parametersMap, List<Medicine> medicinesToExport);
+        public List<string>99 ListParameters();
     }
 }

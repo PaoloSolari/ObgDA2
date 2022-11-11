@@ -18,16 +18,37 @@ namespace obg.XMLExporter
             return "XML";
         }
 
-        public void ExportData(List<Medicine> medicinesToExport, string path)
+        public List<string> ListParameters()
         {
-            FileInfo file = new FileInfo(path);
-            StreamWriter sw = file.AppendText();
-            System.Xml.Serialization.XmlSerializer writer = new System.Xml.Serialization.XmlSerializer(typeof(Medicine));
-            foreach (Medicine medicine in medicinesToExport)
+            List<string> parameters = new List<string>();
+            parameters.Add("path");
+            return parameters;
+        }
+
+        public void ExportData(Dictionary<string, string> parametersMap, List<Medicine> medicinesToExport)
+        {
+            if(parametersMap != null && parametersMap.Count > 0)
             {
-                writer.Serialize(sw, medicine as Medicine);
+                if (parametersMap.ContainsKey("path"))
+                {
+                    FileInfo file = new FileInfo(parametersMap["path"]);
+                    StreamWriter sw = file.AppendText();
+                    System.Xml.Serialization.XmlSerializer writer = new System.Xml.Serialization.XmlSerializer(typeof(Medicine));
+                    foreach (Medicine medicine in medicinesToExport)
+                    {
+                        writer.Serialize(sw, medicine as Medicine);
+                    }
+                    sw.Close();
+                }
+                else
+                {
+                    throw new System.Exception("Debes especificar el path donde quieres exportar el archivo");
+                }
             }
-            sw.Close();
+            else
+            {
+                throw new System.Exception("Faltan datos para poder exportar el archivo.");
+            }
         }
     }
 }

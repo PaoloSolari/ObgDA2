@@ -44,8 +44,8 @@ namespace obg.BusinessLogic.Test
             service = new UserService(mock.Object, mockAdministrator.Object, mockOwner.Object, mockEmployee.Object, mockInvitation.Object);
             validPharmacy1 = new Pharmacy("San Roque", "Ejido");
 
-            validInvitation1 = new Invitation("GGHHJJ", validPharmacy1, RoleUser.Administrator, "Lucas", 789099);
-            validInvitation2 = new Invitation("GGZZJJ", validPharmacy1, RoleUser.Administrator, "Rodrigo", 123456);
+            validInvitation1 = new Invitation("GGHHJJ", validPharmacy1, RoleUser.Administrator, "Lucas", 789099, "aa");
+            validInvitation2 = new Invitation("GGZZJJ", validPharmacy1, RoleUser.Administrator, "Rodrigo", 123456, "aa");
             validUser2 = new User("Rodrigo", 123456, "rp@gmail.com", "$$$aaa123.", "addressPS", RoleUser.Employee, "13/09/2022");
             validUser1 = new User("Lucas", 789099, "lr@gmail.com", "###bbb123.", "address", RoleUser.Administrator, "13/09/2022");
             nullUser = null;

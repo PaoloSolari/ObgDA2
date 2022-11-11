@@ -17,12 +17,10 @@ namespace obg.BusinessLogic.Logics
 {
     public class ExporterService : IExporterService
     {
-        private readonly IMedicineManagement _medicineManagement;
         private readonly ISessionManagement _sessionManagement;
         private readonly IEmployeeManagement _employeeManagement;
-        public ExporterService(IMedicineManagement medicineManagement, ISessionManagement sessionManagement, IEmployeeManagement employeeManagement)
+        public ExporterService(ISessionManagement sessionManagement, IEmployeeManagement employeeManagement)
         {
-            _medicineManagement = medicineManagement;
             _sessionManagement = sessionManagement;
             _employeeManagement = employeeManagement;
         }
@@ -52,14 +50,15 @@ namespace obg.BusinessLogic.Logics
             }
         }
 
-        public List<string> ExportMedicine(List<string> medicinesCodes, string typeOfExporter, string token, string path)
+        public List<string> ExportMedicine(List<string> medicinesCodes, string typeOfExporter, string token, Dictionary<string,string> parametersMap)
         {
             bool implementationLoaded = false;
             if(medicinesCodes == null || medicinesCodes.Count == 0)
             {
                 throw new ExportException("Debes seleccionar algun medicamento a exportar.");
             }
-            string currentPath = Directory.GetCurrentDirectory();
+            //string currentPath = Directory.GetCurrentDirectory();
+            string currentPath = @"C:\Users\oloap\OneDrive\Escritorio\OBG DA2\237912_238855\Backend\obg.WebApi";
             string[] files = Directory.GetFiles(currentPath + "\\Exporters", "*.dll");
             foreach (string file in files)
             {
@@ -88,7 +87,7 @@ namespace obg.BusinessLogic.Logics
                     {
                         throw new ExportException("La farmacia no tiene medicamentos.");
                     }
-                    implementation.ExportData(employeePharmacy.Medicines, path);
+                    implementation.ExportData(parametersMap, employeePharmacy.Medicines);
                 }
             }
             if (!implementationLoaded)

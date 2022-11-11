@@ -17,6 +17,8 @@ namespace obg.BusinessLogic.Test
         private Mock<IPurchaseManagement> mock;
         private Mock<IPharmacyManagement> mockPharmacy;
         private Mock<IMedicineManagement> mockMedicine;
+        private Mock<ISessionManagement> mockSession;
+        private Mock<IEmployeeManagement> mockEmployee;
         private PurchaseService service;
 
         private List<PurchaseLine> purchaseLinesFromValidPurchase1;
@@ -38,7 +40,9 @@ namespace obg.BusinessLogic.Test
             mock = new Mock<IPurchaseManagement>(MockBehavior.Strict);
             mockPharmacy = new Mock<IPharmacyManagement>(MockBehavior.Strict);
             mockMedicine = new Mock<IMedicineManagement>(MockBehavior.Strict);
-            service = new PurchaseService(mock.Object, mockMedicine.Object, mockPharmacy.Object);
+            mockSession = new Mock<ISessionManagement>(MockBehavior.Strict);
+            mockEmployee = new Mock<IEmployeeManagement>(MockBehavior.Strict);
+            service = new PurchaseService(mock.Object, mockMedicine.Object, mockPharmacy.Object, mockSession.Object, mockEmployee.Object);
 
             purchaseLinesFromValidPurchase1 = new List<PurchaseLine>();
             purchaseLinesFromValidPurchase2 = new List<PurchaseLine>();
@@ -65,7 +69,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.IsIdPurchaseRegistered(It.IsAny<string>())).Returns(false);
             mockPharmacy.Setup(x => x.GetPharmacies()).Returns(pharmacies);
             mockMedicine.Setup(x => x.GetMedicineByCode(validMedicine1.Code)).Returns(validMedicine1);
-            mockMedicine.Setup(x => x.UpdateMedicine(validMedicine1));
             mock.Setup(x => x.InsertPurchase(validPurchase1));
 
             service.InsertPurchase(validPurchase1);
@@ -89,7 +92,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.IsIdPurchaseRegistered(It.IsAny<string>())).Returns(false);
             mockPharmacy.Setup(x => x.GetPharmacies()).Returns(pharmacies);
             mockMedicine.Setup(x => x.GetMedicineByCode(validMedicine1.Code)).Returns(validMedicine1);
-            mockMedicine.Setup(x => x.UpdateMedicine(validMedicine1));
             mock.Setup(x => x.InsertPurchase(validPurchase1));
 
             service.InsertPurchase(validPurchase1);

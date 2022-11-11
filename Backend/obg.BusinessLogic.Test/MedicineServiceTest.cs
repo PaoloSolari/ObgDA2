@@ -17,6 +17,8 @@ namespace obg.BusinessLogic.Test
     {
         private Mock<IMedicineManagement> mock;
         private Mock<ISessionManagement> mockSession;
+        private Mock<IEmployeeManagement> mockEmployee;
+
         private MedicineService service;
 
         private Pharmacy validPharmacy1;
@@ -36,7 +38,8 @@ namespace obg.BusinessLogic.Test
         {
             mock = new Mock<IMedicineManagement>(MockBehavior.Strict);
             mockSession = new Mock<ISessionManagement>(MockBehavior.Strict);
-            service = new MedicineService(mock.Object, mockSession.Object);
+            mockEmployee = new Mock<IEmployeeManagement>(MockBehavior.Strict);
+            service = new MedicineService(mock.Object, mockSession.Object, mockEmployee.Object);
 
             validPharmacy1 = new Pharmacy("San Roque", "Ejido");
 
@@ -46,6 +49,8 @@ namespace obg.BusinessLogic.Test
 
             medicines = new List <Medicine> ();
             medicinesTest = new List<Medicine> { validMedicine1};
+
+            validPharmacy1.Medicines = medicinesTest;
 
             employee = new Employee("Lucas", 000102, "l@gmail.com", "###bbb123.", "addressL", RoleUser.Employee, "13/09/2022", validPharmacy1);
             session = new Session("123456", "Lucas", "XXYYZZ");
@@ -286,22 +291,23 @@ namespace obg.BusinessLogic.Test
         [TestMethod]
         public void GetMedicines_Ok()
         {
-            mock.Setup(x => x.GetMedicines()).Returns(medicinesTest);
+            mockEmployee.Setup(x => x.GetEmployeeByName(employee.Name)).Returns(employee);
 
-            service.GetMedicines();
+            service.GetMedicines(employee.Name);
 
-            mock.VerifyAll();
+            mockEmployee.VerifyAll();
         }
 
         [ExpectedException(typeof(NotFoundException))]
         [TestMethod]
         public void GetMedicinesFail_EmptyMedicines()
         {
-            mock.Setup(x => x.GetMedicines()).Returns(new List<Medicine> { });
+            employee.Pharmacy.Medicines = medicines;
+            mockEmployee.Setup(x => x.GetEmployeeByName(employee.Name)).Returns(employee);
 
-            service.GetMedicines();
+            service.GetMedicines(employee.Name);
 
-            mock.VerifyAll();
+            mockEmployee.VerifyAll();
         }
 
         [TestMethod]

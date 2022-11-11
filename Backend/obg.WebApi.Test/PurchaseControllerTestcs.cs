@@ -22,6 +22,9 @@ namespace obg.WebApi.Test
         private PurchaseLine validPurchaseLine;
         private IEnumerable<Purchase> purchases;
         private List<PurchaseLine> purchaseLines;
+        private Employee employee;
+        private Session validSession;
+        private Pharmacy validPharmacy;
 
 
         [TestInitialize]
@@ -31,10 +34,14 @@ namespace obg.WebApi.Test
             api = new PurchaseController(mock.Object);
             validPurchaseLine = new PurchaseLine("bbbbb", "aaaaa", 2);
             validPurchase = new Purchase("111111", 100, "email@email.com");
+            validPharmacy = new Pharmacy("San Roque", "aaaa");
             validPurchase.PurchaseLines.Add(validPurchaseLine);
+            employee = new Employee("Rodrigo", 123456, "rp@gmail.com", "$$$aaa123.", "addressPS", RoleUser.Employee, "13/09/2022", validPharmacy);
+            validSession = new Session("DDIQDS", employee.Name, "4de12a");
             purchases = new List<Purchase>() { validPurchase };
         }
 
+        [ExpectedException(typeof(PurchaseException))]
         [TestMethod]
         public void PostPurchaseBadRequest()
         {
@@ -47,6 +54,7 @@ namespace obg.WebApi.Test
             Assert.AreEqual(400, statusCode);
         }
 
+        [ExpectedException(typeof(Exception))]
         [TestMethod]
         public void PostPurchaseFail()
         {
@@ -73,6 +81,7 @@ namespace obg.WebApi.Test
             Assert.IsTrue(("Compra " + validPurchase.IdPurchase + " exitosa.").Equals(body));
         }
 
+        [ExpectedException(typeof(NotFoundException))]
         [TestMethod]
         public void PostPurchaseMedicineNotFound()
         {
@@ -83,6 +92,60 @@ namespace obg.WebApi.Test
 
             mock.VerifyAll();
             Assert.AreEqual(404, statusCode);
+        }
+        [ExpectedException(typeof(PurchaseException))]
+        [TestMethod]
+        public void PutPurchaseBadRequest()
+        {
+            mock.Setup(x => x.UpdatePurchase(It.IsAny<string>(), It.IsAny<Purchase>(), It.IsAny<string>())).Throws(new PurchaseException());
+            var result = api.PutPurchase(It.IsAny<string>(), It.IsAny<Purchase>(), It.IsAny<string>());
+            var objectResult = result as ObjectResult;
+            var statusCode = objectResult.StatusCode;
+
+            mock.VerifyAll();
+            Assert.AreEqual(400, statusCode);
+        }
+
+        [ExpectedException(typeof(NotFoundException))]
+        [TestMethod]
+        public void PutPurchaseNotFound()
+        {
+            mock.Setup(x => x.UpdatePurchase(It.IsAny<string>(), It.IsAny<Purchase>(), It.IsAny<string>())).Throws(new NotFoundException());
+            var result = api.PutPurchase(It.IsAny<string>(), It.IsAny<Purchase>(), It.IsAny<string>());
+            var objectResult = result as ObjectResult;
+            var statusCode = objectResult.StatusCode;
+
+            mock.VerifyAll();
+            Assert.AreEqual(404, statusCode);
+        }
+
+        [ExpectedException(typeof(Exception))]
+        [TestMethod]
+        public void PutPurchaseFail()
+        {
+            mock.Setup(x => x.UpdatePurchase(It.IsAny<string>(), It.IsAny<Purchase>(), It.IsAny<string>())).Throws(new Exception());
+            var result = api.PutPurchase(It.IsAny<string>(), It.IsAny<Purchase>(), It.IsAny<string>());
+            var objectResult = result as ObjectResult;
+            var statusCode = objectResult.StatusCode;
+
+            mock.VerifyAll();
+            Assert.AreEqual(500, statusCode);
+        }
+
+        [TestMethod]
+        public void PutDemandOk()
+        {
+            var validPurchaseModified = validPurchase;
+            validPurchaseModified.IsConfirmed = true;
+            mock.Setup(x => x.UpdatePurchase(validPurchaseModified.IdPurchase, validPurchaseModified, validSession.Token)).Returns(validPurchaseModified);
+            var result = api.PutPurchase(validPurchaseModified.IdPurchase, validPurchaseModified, validSession.Token);
+            var objectResult = result as ObjectResult;
+            var statusCode = objectResult.StatusCode;
+            var body = objectResult.Value;
+
+            mock.VerifyAll();
+            Assert.AreEqual(200, statusCode);
+            Assert.IsTrue(validPurchaseModified.Equals(body));
         }
     }
 }

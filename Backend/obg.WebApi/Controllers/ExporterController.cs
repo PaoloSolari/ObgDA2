@@ -27,9 +27,9 @@ namespace obg.WebApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult exportMedicine([FromHeader] List<string> medicinesCodes, [FromHeader] string typeOfExporter, [FromHeader] string token, [FromHeader] string path)
+        public IActionResult ExportMedicine([FromHeader] List<string> medicinesCodes, [FromHeader] string typeOfExporter, [FromHeader] string token, [FromBody] Dictionary<string,string> parametersMap)
         {
-            return StatusCode(200, _exporterService.ExportMedicine(medicinesCodes, typeOfExporter, token, path));
+            return StatusCode(200, _exporterService.ExportMedicine(medicinesCodes, typeOfExporter, token, parametersMap));
         }
     }
 }

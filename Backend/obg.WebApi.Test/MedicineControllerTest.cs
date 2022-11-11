@@ -39,9 +39,9 @@ namespace obg.WebApi.Test
         [TestMethod]
         public void GetMedicinesOk()
         {
-            mock.Setup(x => x.GetMedicines()).Returns(medicines);
+            mock.Setup(x => x.GetMedicines(employee.Name)).Returns(medicines);
 
-            var result = api.GetMedicines();
+            var result = api.GetMedicines(employee.Name);
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
             var body = objectResult.Value as IEnumerable<Medicine>;
@@ -51,12 +51,13 @@ namespace obg.WebApi.Test
             Assert.IsTrue(body.SequenceEqual(medicines));
         }
 
+        [ExpectedException(typeof(Exception))]
         [TestMethod]
         public void GetMedicinesFail()
         {
-            mock.Setup(x => x.GetMedicines()).Throws(new Exception());
+            mock.Setup(x => x.GetMedicines(It.IsAny<string>())).Throws(new Exception());
 
-            var result = api.GetMedicines();
+            var result = api.GetMedicines(It.IsAny<string>());
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
 
@@ -64,6 +65,7 @@ namespace obg.WebApi.Test
             Assert.AreEqual(500, statusCode);
         }
 
+        [ExpectedException(typeof(MedicineException))]
         [TestMethod]
         public void PostMedicineBadRequest()
         {
@@ -76,6 +78,7 @@ namespace obg.WebApi.Test
             Assert.AreEqual(400, statusCode);
         }
 
+        [ExpectedException(typeof(Exception))]
         [TestMethod]
         public void PostMedicineFail()
         {
