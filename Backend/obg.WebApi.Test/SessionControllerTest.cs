@@ -31,6 +31,7 @@ namespace obg.WebApi.Test
 
         }
 
+        [ExpectedException(typeof(SessionException))]
         [TestMethod]
         public void PostSessionBadRequest()
         {
@@ -43,6 +44,7 @@ namespace obg.WebApi.Test
             Assert.AreEqual(400, statusCode);
         }
 
+        [ExpectedException(typeof(Exception))]
         [TestMethod]
         public void PostSessionFail()
         {

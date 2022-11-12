@@ -15,15 +15,43 @@ namespace obg.BusinessLogic.Logics
     {
         private readonly IInvitationManagement _invitationManagement;
         private readonly IPharmacyManagement _pharmacyManagement;
+        private readonly ISessionManagement _sessionManagement;
+        private readonly IAdministratorManagement _administratorManagement;
 
-        public InvitationService(IInvitationManagement invitationManagement, IPharmacyManagement pharmacyManagement)
+        public InvitationService(IInvitationManagement invitationManagement, IPharmacyManagement pharmacyManagement, ISessionManagement sessionManagement, IAdministratorManagement administratorManagement)
         {
             _invitationManagement = invitationManagement;
             _pharmacyManagement = pharmacyManagement;
+            _sessionManagement = sessionManagement;
+            _administratorManagement = administratorManagement;
         }
 
-        public IEnumerable<Invitation> GetInvitations()
+        public string UpdateInvitation(string idInvitation, Invitation invitation, string token)
         {
+            if (!invitation.WasUsed)
+            {
+                Session session = _sessionManagement.GetSessionByToken(token);
+                string administratorName = session.UserName;
+                Invitation invitationFromDB = _invitationManagement.GetInvitationByAdministratorName(administratorName);
+                invitationFromDB.IdInvitation = invitation.IdInvitation;
+                invitationFromDB.UserName = invitation.UserName;
+                invitationFromDB.UserCode = invitation.UserCode;
+                invitationFromDB.UserRole = invitation.UserRole;
+                invitationFromDB.WasUsed = invitation.WasUsed;
+                invitationFromDB.Pharmacy = invitation.Pharmacy;
+                if (IsInvitationValid(invitation))
+                {
+                    _invitationManagement.UpdateInvitation(invitationFromDB);
+                }
+                return invitationFromDB.IdInvitation.ToString();
+            }
+            throw new InvitationException("No se puede modificar una invitación que fue usada.");
+        }
+
+        public IEnumerable<Invitation> GetInvitations(string token)
+        {
+            Session session = _sessionManagement.GetSessionByToken(token);
+            string administratorName = session.UserName;
             IEnumerable<Invitation> invitations = _invitationManagement.GetInvitations();
             if(invitations.ToList().Count == 0 || invitations == null)
             {
@@ -51,14 +79,33 @@ namespace obg.BusinessLogic.Logics
             return _invitationManagement.GetInvitationById(id);
         }
 
-        public void UpdateInvitation(Invitation invitation)
-        {
-            _invitationManagement.UpdateInvitation(invitation);
-        }
+        // public void UpdateInvitation(Invitation invitation)
+        // {
+        //     _invitationManagement.UpdateInvitation(invitation);
+        // }
 
         public int InsertInvitation(Invitation invitation, string pharmacyName)
         {
+            IEnumerable<Invitation> invitationsFromAdministrator = new List<Invitation>();
+            foreach(Invitation invitation in invitations)
+            {
+                if (invitation.AdministratorName.Equals(administratorName))
+                {
+                    invitationsFromAdministrator.ToList().Add(invitation);
+                }
+            }
+            if (invitationsFromAdministrator.ToList().Count == 0 || invitationsFromAdministrator == null)
+            {
+                throw new NotFoundException("No hay invitaciones enviadas.");
+            }
+            return invitationsFromAdministrator;
+        }
+
+        public int InsertInvitation(Invitation invitation, string pharmacyName, string token)
+        {
             Pharmacy pharmacy = _pharmacyManagement.GetPharmacyByName(pharmacyName);
+            Session session = _sessionManagement.GetSessionByToken(token);
+            string administratorName = session.UserName;
             bool noAdministrator = invitation.UserRole != 0;
             if (noAdministrator && pharmacy == null)
             {
@@ -69,12 +116,21 @@ namespace obg.BusinessLogic.Logics
             invitation.IdInvitation = CreateId();
             invitation.Pharmacy = pharmacy;
             invitation.UserCode = CreateCode();
+            invitation.AdministratorName = administratorName;
 
             if (IsInvitationValid(invitation))
             {
                 _invitationManagement.InsertInvitation(invitation);
             }
             return invitation.UserCode;
+        }
+
+        public Administrator GetInvitationAdministrator(string token)
+        {
+            Session session = _sessionManagement.GetSessionByToken(token);
+            string administratorName = session.UserName;
+            Administrator administrator = _administratorManagement.GetAdministratorByName(administratorName);
+            return administrator;
         }
 
         private string CreateId()

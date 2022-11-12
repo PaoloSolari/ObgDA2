@@ -79,8 +79,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.IsNameLogged(validSession2)).Returns(true);
             mock.Setup(x => x.InsertSession(validSession2));
             service.InsertSession(validSession2, validAdministrator1.Password);
-            mock.VerifyAll();
-            mockUser.VerifyAll();
         }
 
         [ExpectedException(typeof(SessionException))]
@@ -93,8 +91,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.IsNameLogged(validSession1)).Returns(false);
             mock.Setup(x => x.InsertSession(validSession1));
             service.InsertSession(validSession1, validAdministrator1.Password);
-            mock.VerifyAll();
-            mockUser.VerifyAll();
         }
 
         [ExpectedException(typeof(SessionException))]
@@ -107,8 +103,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.IsNameLogged(validSession1)).Returns(false);
             mock.Setup(x => x.InsertSession(validSession1));
             service.InsertSession(validSession1, validAdministrator1.Password);
-            mock.VerifyAll();
-            mockUser.VerifyAll();
         }
 
         [ExpectedException(typeof(SessionException))]
@@ -121,8 +115,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.IsNameLogged(validSession1)).Returns(false);
             mock.Setup(x => x.InsertSession(validSession1));
             service.InsertSession(validSession1, validAdministrator1.Password);
-            mock.VerifyAll();
-            mockUser.VerifyAll();
         }
 
 
@@ -136,8 +128,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.IsNameLogged(validSession1)).Returns(true);
             mock.Setup(x => x.InsertSession(validSession1));
             service.InsertSession(validSession1, validAdministrator1.Password);
-            mock.VerifyAll();
-            mockUser.VerifyAll();
         }
 
     }

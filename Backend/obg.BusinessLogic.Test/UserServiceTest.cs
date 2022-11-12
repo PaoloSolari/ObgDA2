@@ -44,8 +44,8 @@ namespace obg.BusinessLogic.Test
             service = new UserService(mock.Object, mockAdministrator.Object, mockOwner.Object, mockEmployee.Object, mockInvitation.Object);
             validPharmacy1 = new Pharmacy("San Roque", "Ejido");
 
-            validInvitation1 = new Invitation("GGHHJJ", validPharmacy1, RoleUser.Administrator, "Lucas", 789099);
-            validInvitation2 = new Invitation("GGZZJJ", validPharmacy1, RoleUser.Administrator, "Rodrigo", 123456);
+            validInvitation1 = new Invitation("GGHHJJ", validPharmacy1, RoleUser.Administrator, "Lucas", 789099, "aa");
+            validInvitation2 = new Invitation("GGZZJJ", validPharmacy1, RoleUser.Administrator, "Rodrigo", 123456, "aa");
             validUser2 = new User("Rodrigo", 123456, "rp@gmail.com", "$$$aaa123.", "addressPS", RoleUser.Employee, "13/09/2022");
             validUser1 = new User("Lucas", 789099, "lr@gmail.com", "###bbb123.", "address", RoleUser.Administrator, "13/09/2022");
             nullUser = null;
@@ -79,10 +79,6 @@ namespace obg.BusinessLogic.Test
             mockAdministrator.Setup(x => x.InsertAdministrator(It.IsAny<Administrator>()));
 
             service.InsertUser(validUser1);
-
-            mockInvitation.VerifyAll();
-            mock.VerifyAll();
-            mockAdministrator.VerifyAll();
         }
 
         [ExpectedException(typeof(NullReferenceException))]
@@ -97,10 +93,6 @@ namespace obg.BusinessLogic.Test
             mockAdministrator.Setup(x => x.InsertAdministrator(It.IsAny<Administrator>()));
 
             service.InsertUser(validUser1);
-
-            mockInvitation.VerifyAll();
-            mock.VerifyAll();
-            mockAdministrator.VerifyAll();
         }
 
         [ExpectedException(typeof(UserException))]
@@ -115,10 +107,6 @@ namespace obg.BusinessLogic.Test
             mockAdministrator.Setup(x => x.InsertAdministrator(It.IsAny<Administrator>()));
 
             service.InsertUser(validUser1);
-
-            mockInvitation.VerifyAll();
-            mock.VerifyAll();
-            mockAdministrator.VerifyAll();
         }
 
         [ExpectedException(typeof(UserException))]
@@ -144,10 +132,6 @@ namespace obg.BusinessLogic.Test
             mockAdministrator.Setup(x => x.InsertAdministrator(It.IsAny<Administrator>()));
 
             service.InsertUser(validUser2);
-
-            mockInvitation.VerifyAll();
-            mock.VerifyAll();
-            mockAdministrator.VerifyAll();
         }
 
         [ExpectedException(typeof(UserException))]
@@ -162,10 +146,6 @@ namespace obg.BusinessLogic.Test
             mockAdministrator.Setup(x => x.InsertAdministrator(It.IsAny<Administrator>()));
 
             service.InsertUser(validUser1);
-
-            mockInvitation.VerifyAll();
-            mock.VerifyAll();
-            mockAdministrator.VerifyAll();
         }
 
         [ExpectedException(typeof(UserException))]
@@ -176,7 +156,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.GetUserByName(validInvitation1.UserName)).Returns(validUser1);
             mock.Setup(x => x.UpdateUser(validUser1));
             service.UpdateUser(validUser1);
-            mock.VerifyAll();
         }
 
         [ExpectedException(typeof(UserException))]
@@ -187,7 +166,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.GetUserByName(validInvitation1.UserName)).Returns(validUser1);
             mock.Setup(x => x.UpdateUser(validUser1));
             service.UpdateUser(validUser1);
-            mock.VerifyAll();
         }
 
         [ExpectedException(typeof(UserException))]
@@ -198,7 +176,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.GetUserByName(validInvitation1.UserName)).Returns(validUser1);
             mock.Setup(x => x.UpdateUser(validUser1));
             service.UpdateUser(validUser1);
-            mock.VerifyAll();
         }
 
         [ExpectedException(typeof(UserException))]
@@ -209,7 +186,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.GetUserByName(validInvitation1.UserName)).Returns(validUser1);
             mock.Setup(x => x.UpdateUser(validUser1));
             service.UpdateUser(validUser1);
-            mock.VerifyAll();
         }
 
     }

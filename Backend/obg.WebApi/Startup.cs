@@ -51,6 +51,7 @@ namespace obg.WebApi
             services.AddScoped<IInvitationManagement, InvitationManagement>();
             services.AddScoped<ISessionService, SessionService>();
             services.AddScoped<ISessionManagement, SessionManagement>();
+            services.AddScoped<IExporterService, ExporterService>();
             services.AddScoped<AdministratorAuthorizationAttributeFilter>();
             services.AddScoped<OwnerAuthorizationAttributeFilter>();
             services.AddScoped<EmployeeAuthorizationAttributeFilter>();

@@ -71,8 +71,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.InsertPharmacy(validPharmacy1, session));
 
             service.InsertPharmacy(validPharmacy1, session.Token);
-            mock.VerifyAll();
-            mockSession.VerifyAll();
         }
 
         [ExpectedException(typeof(PharmacyException))]
@@ -85,8 +83,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.InsertPharmacy(validPharmacy1, session));
 
             service.InsertPharmacy(validPharmacy1, session.Token);
-            mock.VerifyAll();
-            mockSession.VerifyAll();
         }
 
         [ExpectedException(typeof(PharmacyException))]
@@ -108,8 +104,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.InsertPharmacy(validPharmacy2, session));
 
             service.InsertPharmacy(validPharmacy2, session.Token);
-            mock.VerifyAll();
-            mockSession.VerifyAll();
         }
 
         [ExpectedException(typeof(PharmacyException))]
@@ -122,8 +116,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.InsertPharmacy(validPharmacy1, session));
 
             service.InsertPharmacy(validPharmacy1, session.Token);
-            mock.VerifyAll();
-            mockSession.VerifyAll();
         }
 
         [ExpectedException(typeof(PharmacyException))]
@@ -136,8 +128,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.InsertPharmacy(validPharmacy1, session));
 
             service.InsertPharmacy(validPharmacy1, session.Token);
-            mock.VerifyAll();
-            mockSession.VerifyAll();
         }
 
         [ExpectedException(typeof(PharmacyException))]
@@ -150,8 +140,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.InsertPharmacy(validPharmacy1, session));
 
             service.InsertPharmacy(validPharmacy1, session.Token);
-            mock.VerifyAll();
-            mockSession.VerifyAll();
         }
 
     }

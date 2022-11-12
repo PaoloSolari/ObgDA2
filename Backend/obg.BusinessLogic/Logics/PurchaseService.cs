@@ -170,39 +170,39 @@ namespace obg.BusinessLogic.Logics
             }
         }
 
-        private bool MedicinesOfTheSamePharmacy(List<PurchaseLine> lines)
-        {
-            List<Medicine> medicinesToBuy = GetMedicinesOfPurchase(lines);
-            List<Pharmacy> pharmaciesOfDataBase = _pharmacyManagement.GetPharmacies().ToList();
-            int quantityOfMedicinesToBuy = medicinesToBuy.Count;
-            if(quantityOfMedicinesToBuy > 0)
-            {
-                foreach (Pharmacy pharmacy in pharmaciesOfDataBase)
-                {
-                    int coincidences = 0;
-                    foreach (Medicine medicineOfPharamacy in pharmacy.Medicines)
-                    {
-                        foreach (Medicine medicineToBuy in medicinesToBuy)
-                        {
-                            if (medicineToBuy.Code.Equals(medicineOfPharamacy.Code))
-                            {
-                                coincidences++;
-                            }
-                        }
-                    }
-                    bool areNotInSamePharmacy = 0 < coincidences && coincidences < quantityOfMedicinesToBuy;
-                    if (areNotInSamePharmacy)
-                    {
-                        return false;
-                    }
-                }
-            }
-            else
-            {
-                throw new PurchaseException("Compra inválida, debe elegir al menos un medicamento a comprar.");
-            }
-            return true;
-        }
+        //private bool MedicinesOfTheSamePharmacy(List<PurchaseLine> lines)
+        //{
+        //    List<Medicine> medicinesToBuy = GetMedicinesOfPurchase(lines);
+        //    List<Pharmacy> pharmaciesOfDataBase = _pharmacyManagement.GetPharmacies().ToList();
+        //    int quantityOfMedicinesToBuy = medicinesToBuy.Count;
+        //    if(quantityOfMedicinesToBuy > 0)
+        //    {
+        //        foreach (Pharmacy pharmacy in pharmaciesOfDataBase)
+        //        {
+        //            int coincidences = 0;
+        //            foreach (Medicine medicineOfPharamacy in pharmacy.Medicines)
+        //            {
+        //                foreach (Medicine medicineToBuy in medicinesToBuy)
+        //                {
+        //                    if (medicineToBuy.Code.Equals(medicineOfPharamacy.Code))
+        //                    {
+        //                        coincidences++;
+        //                    }
+        //                }
+        //            }
+        //            bool areNotInSamePharmacy = 0 < coincidences && coincidences < quantityOfMedicinesToBuy;
+        //            if (areNotInSamePharmacy)
+        //            {
+        //                return false;
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        throw new PurchaseException("Compra inválida, debe elegir al menos un medicamento a comprar.");
+        //    }
+        //    return true;
+        //}
 
         private bool ThereIsStock(List<PurchaseLine> lines)
         {
