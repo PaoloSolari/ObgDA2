@@ -2,8 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MedicineService } from '../../services/medicine.service';
 import { Medicine } from '../../models/medicine';
 import { Router } from '@angular/router';
-import { INIT } from '../../utils/routes';
+import { INIT, MEDICINE_LIST_URL } from '../../utils/routes';
 import { Globals } from '../../utils/globals';
+import { catchError, take, filter, of} from 'rxjs';
+import { IDeleteResponse } from '../../interfaces/delete-response.interface';
+import { Employee } from 'src/app/models/employee';
 
 @Component({
     selector: 'app-medicine-list',
@@ -14,10 +17,12 @@ export class MedicineListComponent implements OnInit {
 
     public backUrl = `/${INIT}`;
     public medicines: Medicine[] = [];
+    public actualEmployee: Employee = new Employee(null, null, null, null, null, null, null, null);
     // public medicines: Medicine[] = this._medicineService.getMedicines();
     
     displayedColumns: string[] = ['code', 'name', 'price', 'presentation', 'delete'];
-    dataSource = this._medicineService.getMedicines();;
+    // dataSource = this._medicineService.getMedicines(); // (#)
+    public dataSource = this.medicines;
 
     constructor(
         private _medicineService: MedicineService,
@@ -25,14 +30,55 @@ export class MedicineListComponent implements OnInit {
     ) { }
 
     public ngOnInit(): void {
-        // cuando inicia el componente llamo al servicio para obtener los medicamentos
-        // this.medicines = this._medicineService.getMedicines();
+
         Globals.selectTab = 2;
+        
+        // [Obtengo el empleado actual]
+        this.actualEmployee.name = 'Paolo';
+
+        // [Me traigo los medicamentos de la farmacia del empleado]
+        this._medicineService.getMedicines(this.actualEmployee.name)
+            .pipe(
+                take(1),
+                catchError((err) => {
+                    console.log({ err });
+                    return of(err);
+                }),
+            )
+            .subscribe((medicines: Medicine[]) => {
+                this.setMedicines(medicines);
+                this.dataSource = medicines; // (#)
+
+            })
+
     }
 
-    // Cuando el empleado le da click al botón de "Alta de medicamento".
-    public navigateToAddMedicine() {
-        this._router.navigateByUrl('/medicine/new');
+    private setMedicines = (medicines: Medicine[] | undefined) => {
+        if(!medicines) this.medicines = [];
+        else this.medicines = medicines;
     }
+
+    public deleteMedicine(medicineCode: string): void {
+        this._medicineService.deleteMedicine(medicineCode).pipe(
+            take(1),
+            catchError((err) => {
+                console.log({ err });
+                return of(err);
+            }),
+            filter((response: IDeleteResponse) => response.success === true),
+        ).subscribe((response: IDeleteResponse) => {
+            this._medicineService.getMedicines(this.actualEmployee.name!)
+                .pipe(
+                    take(1),
+                    catchError((err) => {
+                        console.log({ err });
+                        return of(err);
+                    }),
+                ).subscribe((medicines: Medicine[] | undefined) => {
+                    this.setMedicines(medicines);
+                });
+        });
+    }
+
 
 }

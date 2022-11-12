@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Globals } from './utils/globals';
+import { USER_FORM_URL } from './utils/routes';
 
 @Component({
     selector: 'app-root',
@@ -8,9 +9,12 @@ import { Globals } from './utils/globals';
 })
 export class AppComponent {
     title = 'ObgApp';
-    constructor(){}
-    ngOnInit(){}
-    get selectTab(){
+
+    public addUser = `/${USER_FORM_URL}`;
+
+    constructor() { }
+    ngOnInit() { }
+    get selectTab() {
         return Globals.selectTab;
     }
 }

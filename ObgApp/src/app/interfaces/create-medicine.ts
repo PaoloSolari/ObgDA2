@@ -1,14 +1,14 @@
-import { PrescriptionMedicine, PresentationMedicine } from "../models/medicine";
+import { PresentationMedicine } from "../models/medicine";
 
 export interface ICreateMedicine {
-    code: string;
-    name: string;
-    symtomps: string;
-    presentation: string;
-    quantity: number;
-    unit: string;
-    price: number;
-    // stock: number; (Default = 0)
-    prescription: string;
-    // isActive = boolean; (Default = false)
+    Code: string | null;
+    Name: string | null;
+    SymtompsItTreats: string | null;
+    Presentation: PresentationMedicine | null;
+    Quantity: number | null;
+    Unit: string | null;
+    Price: number | null;
+    // Stock: number | null; (Default = 0)
+    Prescription: boolean | null;
+    // IsActive: boolean | null; (Default = false)
 }

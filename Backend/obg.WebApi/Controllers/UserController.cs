@@ -9,8 +9,8 @@ using System.Collections.Generic;
 
 namespace obg.WebApi.Controllers
 {
-    [Route("[controller]")]
     [ApiController]
+    [Route("[controller]")]
     [ExceptionFilter]
     public class UserController : ControllerBase
     {
@@ -26,10 +26,10 @@ namespace obg.WebApi.Controllers
             return StatusCode(200, "Usuario " + _userService.InsertUser(user) + " identificado. Ingrese email, contraseña y dirección.");
         }
         
-        [HttpPut]
-        public IActionResult PutUser([FromBody] User user)
+        [HttpPut("{userName}")]
+        public IActionResult PutUser([FromBody] User user, [FromRoute] string userName)
         {
-            return StatusCode(200, "Registro del usuario " + _userService.UpdateUser(user) + " exitoso.");
+            return StatusCode(200, "Registro del usuario " + _userService.UpdateUser(user, userName) + " exitoso.");
         }
 
     }

@@ -26,23 +26,22 @@ tr.element-row:hover {
     color: rgb(89, 149, 189) ;
 }
 
-.icon-display {
+
+/* Cuando no hay elementos */
+
+.mat-icon {
     color: rgb(177, 76, 76) !important;
-    transform: scale(3);
     margin-top: 100px;
-    /* Centrar */
     width: 100%;
-    margin-left: auto;
-    margin-right: auto;
+    height: auto;
+    font-size: 100px;
     text-align: center;
 }
 
 .NoMedicine {
     color: rgb(177, 76, 76) !important;
     font-family: Bahnschrift;
-    transform: scale(1.5);
-    /* Centrar */
-    width: 100%;
+    font-size: 25px;
     margin-left: auto;
     margin-right: auto;
     text-align: center;

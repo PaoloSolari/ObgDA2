@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { InvitationService } from '../../services/invitation.service';
 import { Invitation } from '../../models/invitation';
 import { Globals } from '../../utils/globals';
-import { INIT } from '../../utils/routes';
+import { getInvitationFormUrl, INIT } from '../../utils/routes';
 import { Router } from '@angular/router';
+import { catchError, of, take } from 'rxjs';
 
 @Component({
     selector: 'app-invitation-list',
@@ -25,7 +26,29 @@ export class InvitationListComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
+
         Globals.selectTab = 0;
+
+        this._invitationService.getInvitations().pipe(
+            take(1),
+            catchError((err) => {
+                console.log({ err });
+                return of(err);
+            }),
+        )
+            .subscribe((invitations: Invitation[]) => {
+                this.setInvitations(invitations);
+            })
+
+    }
+
+    private setInvitations = (invitations: Invitation[] | undefined) => {
+        if (!invitations) this.invitations = [];
+        else this.invitations = invitations;
+    };
+
+    public navigateToEditInvitation(idInvitation: string): void {
+        this._router.navigateByUrl(`/${getInvitationFormUrl(idInvitation)}`)
     }
 
 }

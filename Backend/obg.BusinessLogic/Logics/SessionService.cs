@@ -20,6 +20,11 @@ namespace obg.BusinessLogic.Logics
             _userManagement = userManagement;
         }
 
+        public Session GetSessionByToken(string token)
+        {
+            return _sessionManagement.GetSessionByToken(token);
+        }
+
         public string InsertSession(Session session, string password)
         {
             if (IsSessionValid(session, password))

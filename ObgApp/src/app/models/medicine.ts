@@ -6,27 +6,22 @@ export enum PresentationMedicine {
     liquido
 }
 
-export enum PrescriptionMedicine {
-    si,
-    no
-}
-
 export class Medicine {
-    code: string;
-    name: string;
-    symtomps: string;
-    presentation: string;
-    quantity: number;
-    unit: string;
-    price: number;
-    stock: number;
-    prescription: string;
-    isActive: boolean;
+    code: string | null;
+    name: string | null;
+    symtompsItTreats: string | null;
+    presentation: PresentationMedicine | null;
+    quantity: number | null;
+    unit: string | null;
+    price: number | null;
+    stock: number | null;
+    prescription: boolean | null;
+    isActive: boolean | null;
 
-    constructor(code: string, name:string, symtomps: string, presentation: string, quantity: number, unit: string, price: number, stock: number, prescription: string, isActive: boolean){
+    constructor(code: string | null, name: string | null, symtompsItTreats: string | null, presentation: PresentationMedicine | null, quantity: number | null, unit: string | null, price: number | null, stock: number | null, prescription: boolean | null, isActive: boolean | null) {
         this.code = code;
         this.name = name;
-        this.symtomps = symtomps;
+        this.symtompsItTreats = symtompsItTreats;
         this.presentation = presentation;
         this.quantity = quantity;
         this.unit = unit;

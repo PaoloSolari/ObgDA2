@@ -44,6 +44,13 @@ import {MatSelectModule} from '@angular/material/select';
 import { PharmacyService } from './services/pharmacy.service';
 import { MedicineService } from './services/medicine.service';
 import { LoadingService } from './services/loading.service';
+import { InvitationService } from './services/invitation.service';
+
+// Conexión con el BackEnd:
+import { HttpClientModule } from '@angular/common/http';
+import { UserFormComponent } from './components/user-form/user-form.component';
+import { UserUpdateComponent } from './components/user-update/user-update.component';
+
 
 @NgModule({
     schemas: [CUSTOM_ELEMENTS_SCHEMA], // Para solucionar el tema de Angular Material
@@ -63,7 +70,9 @@ import { LoadingService } from './services/loading.service';
         PharmacyFormComponent,
         InvitationFormComponent,
         InvitationListComponent,
-        DemandListComponent
+        DemandListComponent,
+        UserFormComponent,
+        UserUpdateComponent
     ],
     imports: [
         BrowserModule,
@@ -83,8 +92,10 @@ import { LoadingService } from './services/loading.service';
         MatCardModule,
         MatChipsModule,
         MatTableModule,
+        // Conexión con BackEnd:
+        HttpClientModule,
     ],
-    providers: [PharmacyService, MedicineService, LoadingService],
+    providers: [PharmacyService, MedicineService, LoadingService, InvitationService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

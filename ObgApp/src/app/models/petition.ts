@@ -1,10 +1,10 @@
 export class Petition {
 
-    idPetition: string;
-    medicineCode: string;
-    newQuantity: number;
+    idPetition: string | null;
+    medicineCode: string | null;
+    newQuantity: number | null;
 
-    constructor(idPetition: string, medicineCode:string, newQuantity: number) {
+    constructor(idPetition: string | null, medicineCode: string | null, newQuantity: number | null) {
         this.idPetition = idPetition;
         this.medicineCode = medicineCode;
         this.newQuantity = newQuantity;

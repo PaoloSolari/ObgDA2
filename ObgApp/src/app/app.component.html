@@ -1,24 +1,12 @@
 <div class="header">
     <mat-toolbar id="toolBar">
-        <span class="spacer"></span>
-        <div class="login">
-            <button mat-icon-button>
-                <mat-icon id="loginIcon">account_circle</mat-icon>
-            </button>
-        </div>
-        <div class="logout">
-            <button mat-icon-button>
-                <mat-icon id="logoutIcon">logout</mat-icon>
-            </button>
-        </div>
+        <div class="spacer"></div>
+        <button mat-raised-button [routerLink]="addUser"><mat-icon>person_add_alt_1</mat-icon>  Registar</button>
+        <button mat-raised-button><mat-icon>account_circle</mat-icon>  Ingresar</button>
+        <button mat-raised-button><mat-icon>logout</mat-icon>  Salir</button>
     </mat-toolbar>
 </div>
-
-<div class="body">
+<div class="container">
     <app-loader></app-loader> <!-- Para que me muestre un spinner mientras carga -->
     <router-outlet></router-outlet>
-</div>
-
-<div class="footer">
-
 </div>

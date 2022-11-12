@@ -6,15 +6,15 @@ export enum PurchaseLineStatus {
 
 export class PurchaseLine {
 
-    idPurchaseLine: string;
-    medicineCode: string;
-    medicineQuantity: number;
-    status: PurchaseLineStatus;
+    idPurchaseLine: string | null;
+    medicineCode: string | null;
+    medicineQuantity: number | null;
+    tatus: PurchaseLineStatus | null;
 
-    constructor(idPurchaseLine: string, medicineCode:string, medicineQuantity: number, status: PurchaseLineStatus) {
+    constructor(idPurchaseLine: string | null, medicineCode: string | null, medicineQuantity: number | null, status: PurchaseLineStatus | null) {
         this.idPurchaseLine = idPurchaseLine;
         this.medicineCode = medicineCode;
         this.medicineQuantity = medicineQuantity;
-        this.status = status;
+        this.tatus = status;
     }
 }

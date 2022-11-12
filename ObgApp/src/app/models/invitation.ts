@@ -1,12 +1,15 @@
-export class Invitation {
-    idInvitation: string;
-    pharmacy: string;
-    userRole: string;
-    userName: string;
-    userCode: number;
-    wasUsed: boolean;
+import { Pharmacy } from "./pharmacy";
+import { RoleUser } from "./user";
 
-    constructor(idInvitation: string, pharmacy: string, userRole: string, userName: string, userCode: number, wasUsed: boolean){
+export class Invitation {
+    idInvitation: string | null;
+    pharmacy: Pharmacy | null;
+    userRole: RoleUser | null;
+    userName: string | null;
+    userCode: number | null;
+    wasUsed: boolean | null;
+
+    constructor(idInvitation: string | null, pharmacy: Pharmacy | null, userRole: RoleUser | null, userName: string | null, userCode: number | null, wasUsed: boolean | null) {
         this.idInvitation = idInvitation;
         this.pharmacy = pharmacy;
         this.userRole = userRole;

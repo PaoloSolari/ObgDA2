@@ -30,19 +30,30 @@ namespace obg.BusinessLogic.Logics
                 throw new NotFoundException("No hay invitaciones enviadas.");
             }
 
-            List<Invitation> invitationsUsed = new List<Invitation>();
-            foreach (Invitation invitation in invitations)
-            {
-                if (invitation.WasUsed)
-                {
-                    invitationsUsed.Add(invitation);
-                }
-            }
-            if(invitationsUsed.Count == 0)
-            {
-                throw new NotFoundException("No hay invitaciones enviadas.");
-            }
-            return invitationsUsed;
+            //List<Invitation> invitationsUsed = new List<Invitation>();
+            //foreach (Invitation invitation in invitations)
+            //{
+            //    if (invitation.WasUsed)
+            //    {
+            //        invitationsUsed.Add(invitation);
+            //    }
+            //}
+            //if(invitationsUsed.Count == 0)
+            //{
+            //    throw new NotFoundException("No hay invitaciones enviadas.");
+            //}
+            //return invitationsUsed;
+            return invitations;
+        }
+
+        public Invitation GetInvitationById(string id)
+        {
+            return _invitationManagement.GetInvitationById(id);
+        }
+
+        public void UpdateInvitation(Invitation invitation)
+        {
+            _invitationManagement.UpdateInvitation(invitation);
         }
 
         public int InsertInvitation(Invitation invitation, string pharmacyName)
@@ -53,7 +64,8 @@ namespace obg.BusinessLogic.Logics
             {
                 throw new NotFoundException("No existe la farmacia.");
             }
-
+            Console.WriteLine("Llegó hasta aquí.");
+            Console.WriteLine(pharmacy);
             invitation.IdInvitation = CreateId();
             invitation.Pharmacy = pharmacy;
             invitation.UserCode = CreateCode();

@@ -6,7 +6,8 @@ import { ICreateMedicine } from '../../interfaces/create-medicine';
 import { MedicineService } from '../../services/medicine.service';
 import { Globals } from '../../utils/globals';
 import { NoSpace } from '../../validators/noEmptyString.validator';
-import { PrescriptionMedicine, PresentationMedicine } from '../../models/medicine';
+import { Medicine, PresentationMedicine } from '../../models/medicine';
+import { catchError, of, take } from 'rxjs';
 
 @Component({
     selector: 'app-medicine-form',
@@ -20,26 +21,13 @@ export class MedicineFormComponent implements OnInit {
 
     public medicineForm = new FormGroup({
         
-        // code: new FormControl(undefined, [Validators.required, NoSpace]),
-        // name: new FormControl(undefined, [Validators.required, NoSpace]),
-        // symtomps: new FormControl(undefined, [Validators.required, NoSpace]),
-        // presentation: new FormControl(undefined, [Validators.required]),
-        // quantity: new FormControl(undefined, [Validators.required, Validators.min(0)]),
-        // unit: new FormControl(undefined, [Validators.required, NoSpace]),
-        // price: new FormControl(undefined, [Validators.required, Validators.min(0)]),
-        // stock: new FormControl(undefined, [Validators.required, Validators.min(0)]),
-        // prescription: new FormControl(undefined, [Validators.required]),
-        // isActive: new FormControl(undefined, [Validators.required])
-
         code: new FormControl(),
         name: new FormControl(),
         symtomps: new FormControl(),
-        // presentation: new FormControl(),
         presentationControl: new FormControl<string | null>(null, Validators.required),
         quantity: new FormControl(),
         unit: new FormControl(),
         price: new FormControl(),
-        // prescription: new FormControl()
         prescriptionControl: new FormControl<string | null>(null, Validators.required),
     })
 
@@ -73,27 +61,46 @@ export class MedicineFormComponent implements OnInit {
     public createMedicine(): void {
         if (this.medicineForm.valid) {
             const medicineFromForm: ICreateMedicine = {
-                code: this.codeForm,
-                name: this.nameForm,
-                symtomps: this.symtompsForm,
-                presentation: this.presentationForm,
-                quantity: this.quantityForm,
-                unit: this.unitForm,
-                price: this.priceForm,
-                prescription: this.prescriptionForm,
+                Code: this.codeForm,
+                Name: this.nameForm,
+                SymtompsItTreats: this.symtompsForm,
+                Presentation: this.getPresentation(this.presentationForm),
+                Quantity: this.quantityForm,
+                Unit: this.unitForm,
+                Price: this.priceForm,
+                Prescription: this.getPrescription(this.prescriptionForm),
             };
-            const medicineCode = this._medicineService.postMedicine(medicineFromForm);
-            if (medicineCode) {
-                alert('Presentación: ' + medicineFromForm.presentation + '. Receta: ' + medicineFromForm.prescription);
-                this.clearForm();
-                // this._router.navigateByUrl(MEDICINE_FORM_URL);
-            }
-        } else {
-            alert('Debe ingresar todos los datos solicitados');
+            this._medicineService.postMedicine(medicineFromForm)
+            .pipe(
+                take(1),
+                catchError((err => {
+                    console.log({err});
+                    return of(err);
+                }))
+            )
+            .subscribe((medicine: Medicine) => {
+                if(medicine) {
+                    alert('Medicamento creado');
+                    this.cleanForm();
+                }
+            })
         }
     }
 
-    public clearForm() {
+    private getPresentation(presentation: string): PresentationMedicine {
+        if(presentation == 'Cápsulas') return PresentationMedicine.capsulas;
+        if(presentation == 'Comprimidos') return PresentationMedicine.comprimidos;
+        if(presentation == 'Solución soluble') return PresentationMedicine.solucionSoluble;
+        if(presentation == 'Stick Pack') return PresentationMedicine.stickPack;
+        return PresentationMedicine.liquido;
+    }
+
+    private getPrescription(prescription: string): boolean {
+        if(prescription == 'Sí') return true;
+        else return false;
+    } 
+
+    public cleanForm() {
         this.medicineForm.reset();
     }
 

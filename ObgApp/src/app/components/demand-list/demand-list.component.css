@@ -1,0 +1,65 @@
+table {
+    /* Centrar */
+    width:auto;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.mat-header-cell {
+    text-align: center;
+    color: rgb(89, 149, 189) ;
+}
+
+.petitionsList {
+    margin: 10px 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.acceptColumn {
+    width: 75px;
+}
+
+.rejectColumn {
+    width: 75px;
+}
+
+.rejectButton {
+    color: rgb(240, 240, 240) !important;
+    background-color: rgb(210, 100, 100) !important;
+    margin: 3px 3px 3px 3px;
+}
+
+.acceptButton {
+    color: rgb(240, 240, 240) !important;
+    background-color: rgb(126, 159, 102) !important;
+    margin: 3px 3px 3px 3px;
+}
+
+tr.element-row:hover {
+    background: whitesmoke;
+    cursor: default;
+    color: rgb(89, 149, 189) ;
+}
+
+
+/* Cuando no hay elementos */
+
+.mat-icon {
+    color: rgb(177, 76, 76) !important;
+    margin-top: 100px;
+    width: 100%;
+    height: auto;
+    font-size: 100px;
+    text-align: center;
+}
+
+.NoDemand {
+    color: rgb(177, 76, 76) !important;
+    font-family: Bahnschrift;
+    font-size: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}

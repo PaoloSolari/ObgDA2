@@ -1,0 +1,36 @@
+<!-- <app-back-button [url]="backUrl"></app-back-button> -->
+
+<form [formGroup]="userUpdateForm">
+    
+    <!-- <mat-form-field appearance="outline">
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="name" #name required> 
+            <mat-error *ngIf="name.value.length==0">{{"Debe ingresar un nombre"}}</mat-error>
+    </mat-form-field> -->
+
+    <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" #email required>
+            <!-- Errores de entrada -->
+            <mat-error *ngIf="email.value.length==0">{{"Debe ingresar un código"}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Contraseña</mat-label>
+        <input matInput formControlName="password" #password required>
+            <!-- Errores de entrada -->
+            <mat-error *ngIf="password.value.length==0">{{"Debe ingresar un código"}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Dirección</mat-label>
+        <input matInput formControlName="address" #address required>
+            <!-- Errores de entrada -->
+            <mat-error *ngIf="address.value.length==0">{{"Debe ingresar un código"}}</mat-error>
+    </mat-form-field>
+
+    <div class="buttonOk">
+        <button mat-raised-button (click)="updateUser()">Registrar</button>
+    </div>
+
+</form>
