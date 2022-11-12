@@ -84,22 +84,22 @@ namespace obg.BusinessLogic.Logics
         //     _invitationManagement.UpdateInvitation(invitation);
         // }
 
-        public int InsertInvitation(Invitation invitation, string pharmacyName)
-        {
-            IEnumerable<Invitation> invitationsFromAdministrator = new List<Invitation>();
-            foreach(Invitation invitation in invitations)
-            {
-                if (invitation.AdministratorName.Equals(administratorName))
-                {
-                    invitationsFromAdministrator.ToList().Add(invitation);
-                }
-            }
-            if (invitationsFromAdministrator.ToList().Count == 0 || invitationsFromAdministrator == null)
-            {
-                throw new NotFoundException("No hay invitaciones enviadas.");
-            }
-            return invitationsFromAdministrator;
-        }
+        //public int InsertInvitation(Invitation invitation, string pharmacyName)
+        //{
+        //    IEnumerable<Invitation> invitationsFromAdministrator = new List<Invitation>();
+        //    foreach(Invitation invitation in invitations)
+        //    {
+        //        if (invitation.AdministratorName.Equals(administratorName))
+        //        {
+        //            invitationsFromAdministrator.ToList().Add(invitation);
+        //        }
+        //    }
+        //    if (invitationsFromAdministrator.ToList().Count == 0 || invitationsFromAdministrator == null)
+        //    {
+        //        throw new NotFoundException("No hay invitaciones enviadas.");
+        //    }
+        //    return invitationsFromAdministrator;
+        //}
 
         public int InsertInvitation(Invitation invitation, string pharmacyName, string token)
         {

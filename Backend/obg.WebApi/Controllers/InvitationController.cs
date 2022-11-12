@@ -31,11 +31,11 @@ namespace obg.WebApi.Controllers
         [HttpGet]
         public IActionResult GetInvitations([FromHeader] string token)
         {
-            return StatusCode(200, invitationService.GetInvitations());
+            return StatusCode(200, invitationService.GetInvitations(token));
         }
 
         [HttpGet("{idInvitation}")]
-        public IActionResult GetInvitations([FromRoute] string idInvitation)
+        public IActionResult GetInvitationById([FromRoute] string idInvitation)
         {
             return StatusCode(200, invitationService.GetInvitationById(idInvitation));
         }
@@ -43,9 +43,10 @@ namespace obg.WebApi.Controllers
         [HttpPut("{idInvitation}")]
         public IActionResult PutInvitation([FromRoute] string idInvitation, [FromBody] Invitation invitation, [FromHeader] string token)
         {
-            return StatusCode(200, "Modificación de la solicitud: " + invitationService.UpdateInvitation(idInvitation, invitation, token) + " exitosa.");
+            return StatusCode(200, "Modificación de la invitación: " + invitationService.UpdateInvitation(idInvitation, invitation, token) + " exitosa.");
         }
 
+        //[HttpPut("{idInvitation}")]
         // public IActionResult PuInvitation([FromBody] Invitation invitation, [FromHeader] string token)
         // {
         //     invitationService.UpdateInvitation(invitation);
