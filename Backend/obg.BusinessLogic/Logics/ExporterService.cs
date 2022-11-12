@@ -58,7 +58,7 @@ namespace obg.BusinessLogic.Logics
                 throw new ExportException("Debes seleccionar algun medicamento a exportar.");
             }
             //string currentPath = Directory.GetCurrentDirectory();
-            string currentPath = @"C:\Users\oloap\OneDrive\Escritorio\OBG DA2\237912_238855\Backend\obg.WebApi";
+            string currentPath = @"C:\Users\User\Desktop\DA2 OBG\237912_238855\Backend\obg.WebApi";
             string[] files = Directory.GetFiles(currentPath + "\\Exporters", "*.dll");
             foreach (string file in files)
             {

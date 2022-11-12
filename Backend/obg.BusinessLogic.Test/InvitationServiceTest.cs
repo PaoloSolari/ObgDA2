@@ -72,10 +72,6 @@ namespace obg.BusinessLogic.Test
             mockSession.Setup(x => x.GetSessionByToken(validSession.Token)).Returns(validSession);
 
             service.InsertInvitation(nullInvitation, validPharmacy1.Name, validSession.Token);
-
-            mockPharmacy.VerifyAll();
-            mockSession.VerifyAll();
-            mock.VerifyAll();
         }
 
         [ExpectedException(typeof(InvitationException))]
@@ -107,10 +103,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.InsertInvitation(validInvitation2));
 
             service.InsertInvitation(validInvitation2, validPharmacy1.Name, validSession.Token);
-     
-            mockPharmacy.VerifyAll();
-            mockSession.VerifyAll();
-            mock.VerifyAll();
         }
 
         [ExpectedException(typeof(InvitationException))]
@@ -127,10 +119,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.InsertInvitation(validInvitation1));
 
             service.InsertInvitation(validInvitation1, validPharmacy1.Name, validSession.Token);
-
-            mockPharmacy.VerifyAll();
-            mockSession.VerifyAll();
-            mock.VerifyAll();
         }
 
         [ExpectedException(typeof(InvitationException))]
@@ -147,10 +135,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.InsertInvitation(validInvitation1));
 
             service.InsertInvitation(validInvitation1, validPharmacy1.Name, validSession.Token);
- 
-            mockPharmacy.VerifyAll();
-            mockSession.VerifyAll();
-            mock.VerifyAll();
         }
 
         [ExpectedException(typeof(InvitationException))]
@@ -181,10 +165,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.InsertInvitation(validInvitation2));
 
             service.InsertInvitation(validInvitation2, validPharmacy1.Name, validSession.Token);
-
-            mockPharmacy.VerifyAll();
-            mockSession.VerifyAll();
-            mock.VerifyAll();
         }
 
         [ExpectedException(typeof(InvitationException))]
@@ -201,10 +181,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.InsertInvitation(validInvitation1));
 
             service.InsertInvitation(validInvitation1, validPharmacy1.Name, validSession.Token);
-
-            mockPharmacy.VerifyAll();
-            mockSession.VerifyAll();
-            mock.VerifyAll();
         }
 
         [ExpectedException(typeof(InvitationException))]
@@ -235,10 +211,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.InsertInvitation(validInvitation2));
 
             service.InsertInvitation(validInvitation2, validPharmacy1.Name, validSession.Token);
-
-            mockPharmacy.VerifyAll();
-            mockSession.VerifyAll();
-            mock.VerifyAll();
         }
     }
 }

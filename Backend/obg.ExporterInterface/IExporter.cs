@@ -9,6 +9,6 @@ namespace obg.ExporterInterface
     {
         public string GetName();
         public void ExportData(Dictionary<string, string> parametersMap, List<Medicine> medicinesToExport);
-        public List<string>99 ListParameters();
+        public List<string> ListParameters();
     }
 }

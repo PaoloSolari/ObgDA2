@@ -107,9 +107,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.InsertPurchase(validPurchase2));
 
             service.InsertPurchase(validPurchase2);
-            mock.VerifyAll();
-            mockPharmacy.VerifyAll();
-            mockMedicine.VerifyAll();
         }
 
         [ExpectedException(typeof(NullReferenceException))]
@@ -124,9 +121,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.InsertPurchase(validPurchase1));
 
             service.InsertPurchase(validPurchase1);
-            mock.VerifyAll();
-            mockPharmacy.VerifyAll();
-            mockMedicine.VerifyAll();
         }
 
         [ExpectedException(typeof(PurchaseException))]
@@ -141,9 +135,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.InsertPurchase(validPurchase1));
 
             service.InsertPurchase(validPurchase1);
-            mock.VerifyAll();
-            mockPharmacy.VerifyAll();
-            mockMedicine.VerifyAll();
         }
 
         [ExpectedException(typeof(PurchaseException))]
@@ -158,9 +149,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.InsertPurchase(validPurchase1));
 
             service.InsertPurchase(validPurchase1);
-            mock.VerifyAll();
-            mockPharmacy.VerifyAll();
-            mockMedicine.VerifyAll();
         }
 
         [ExpectedException(typeof(PurchaseException))]
@@ -175,9 +163,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.InsertPurchase(validPurchase1));
 
             service.InsertPurchase(validPurchase1);
-            mock.VerifyAll();
-            mockPharmacy.VerifyAll();
-            mockMedicine.VerifyAll();
         }
 
         [ExpectedException(typeof(PurchaseException))]
@@ -192,9 +177,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.InsertPurchase(validPurchase1));
 
             service.InsertPurchase(validPurchase1);
-            mock.VerifyAll();
-            mockPharmacy.VerifyAll();
-            mockMedicine.VerifyAll();
         }
 
         [ExpectedException(typeof(PurchaseException))]
@@ -209,9 +191,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.InsertPurchase(validPurchase1));
 
             service.InsertPurchase(validPurchase1);
-            mock.VerifyAll();
-            mockPharmacy.VerifyAll();
-            mockMedicine.VerifyAll();
         }
 
     }

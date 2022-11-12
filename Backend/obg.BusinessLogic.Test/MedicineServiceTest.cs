@@ -83,9 +83,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.InsertMedicine(nullMedicine, session));
 
             service.InsertMedicine(nullMedicine, session.Token);
-
-            mock.VerifyAll();
-            mockSession.VerifyAll();
         }
 
         [ExpectedException(typeof(MedicineException))]
@@ -100,9 +97,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.InsertMedicine(nullMedicine, session));
 
             service.InsertMedicine(nullMedicine, session.Token);
-
-            mock.VerifyAll();
-            mockSession.VerifyAll();
         }
 
         [ExpectedException(typeof(MedicineException))]
@@ -117,9 +111,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.InsertMedicine(nullMedicine, session));
 
             service.InsertMedicine(nullMedicine, session.Token);
-
-            mock.VerifyAll();
-            mockSession.VerifyAll();
         }
 
         [ExpectedException(typeof(MedicineException))]
@@ -147,9 +138,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.InsertMedicine(validMedicine2, session));
 
             service.InsertMedicine(validMedicine2, session.Token);
-
-            mock.VerifyAll();
-            mockSession.VerifyAll();
         }
 
         [ExpectedException(typeof(MedicineException))]
@@ -164,9 +152,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.InsertMedicine(validMedicine1, session));
 
             service.InsertMedicine(validMedicine1, session.Token);
-
-            mock.VerifyAll();
-            mockSession.VerifyAll();
         }
 
         [ExpectedException(typeof(MedicineException))]
@@ -181,9 +166,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.InsertMedicine(validMedicine1, session));
 
             service.InsertMedicine(validMedicine1, session.Token);
-
-            mock.VerifyAll();
-            mockSession.VerifyAll();
         }
 
         [ExpectedException(typeof(MedicineException))]
@@ -198,9 +180,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.InsertMedicine(validMedicine1, session));
 
             service.InsertMedicine(validMedicine1, session.Token);
-
-            mock.VerifyAll();
-            mockSession.VerifyAll();
         }
 
         [ExpectedException(typeof(MedicineException))]
@@ -215,9 +194,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.InsertMedicine(validMedicine1, session));
 
             service.InsertMedicine(validMedicine1, session.Token);
-
-            mock.VerifyAll();
-            mockSession.VerifyAll();
         }
 
         [ExpectedException(typeof(MedicineException))]
@@ -232,9 +208,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.InsertMedicine(validMedicine1, session));
 
             service.InsertMedicine(validMedicine1, session.Token);
-
-            mock.VerifyAll();
-            mockSession.VerifyAll();
         }
 
         [ExpectedException(typeof(MedicineException))]
@@ -249,9 +222,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.InsertMedicine(validMedicine1, session));
 
             service.InsertMedicine(validMedicine1, session.Token);
-
-            mock.VerifyAll();
-            mockSession.VerifyAll();
         }
 
         [ExpectedException(typeof(MedicineException))]
@@ -266,9 +236,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.InsertMedicine(validMedicine1, session));
 
             service.InsertMedicine(validMedicine1, session.Token);
-
-            mock.VerifyAll();
-            mockSession.VerifyAll();
         }
 
         [ExpectedException(typeof(MedicineException))]
@@ -283,9 +250,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.InsertMedicine(validMedicine1, session));
 
             service.InsertMedicine(validMedicine1, session.Token);
-
-            mock.VerifyAll();
-            mockSession.VerifyAll();
         }
 
         [TestMethod]
@@ -306,8 +270,6 @@ namespace obg.BusinessLogic.Test
             mockEmployee.Setup(x => x.GetEmployeeByName(employee.Name)).Returns(employee);
 
             service.GetMedicines(employee.Name);
-
-            mockEmployee.VerifyAll();
         }
 
         [TestMethod]
@@ -328,8 +290,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.GetMedicinesByName(validMedicine2.Name)).Returns(new List<Medicine> { });
 
             service.GetMedicinesWithStock(validMedicine2.Name);
-
-            mock.VerifyAll();
         }        
 
         [TestMethod]
@@ -349,8 +309,6 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.GetMedicinesByName(validMedicine2.Name)).Returns(new List<Medicine> { });
 
             service.GetMedicinesByName(validMedicine2.Name);
-
-            mock.VerifyAll();
         }
     }
 }

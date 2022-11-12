@@ -33,6 +33,7 @@ namespace obg.BusinessLogic.Test
         private Session validSession1;
         private Employee validEmployee;
         private Pharmacy validPharmacy1;
+        private List<Demand> demands;
 
 
 
@@ -56,12 +57,14 @@ namespace obg.BusinessLogic.Test
             petitionsFromValidDemand1.Add(validPetition);
             petitionsFromValidDemand2.Add(validPetition);
 
-            validDemand1 = new Demand("AAHHGG", DemandStatus.Accepted);
+            validDemand1 = new Demand("AAHHGG", DemandStatus.InProgress);
             validDemand1.Petitions = petitionsFromValidDemand1;
 
             validDemand2 = new Demand("4HIGUF", DemandStatus.InProgress);
             validDemand2.Petitions = petitionsFromValidDemand2;
             nullDemand = null;
+
+            demands = new List<Demand> { validDemand1 };
 
             validPharmacy1 = new Pharmacy("FarmaUy", "Gaboto");
             validPharmacy1.Medicines.Add(medicine);
@@ -116,10 +119,6 @@ namespace obg.BusinessLogic.Test
             mockEmployee.Setup(x => x.GetEmployeeByName(validSession1.UserName)).Returns(validEmployee);
             mock.Setup(x => x.InsertDemand(validDemand1, validSession1));
             service.InsertDemand(validDemand1, validSession1.Token);
-
-            mock.VerifyAll();
-            mockMedicine.VerifyAll();
-            mockSession.VerifyAll();
         }
 
         [ExpectedException(typeof(NullReferenceException))]
@@ -135,10 +134,6 @@ namespace obg.BusinessLogic.Test
 
             validDemand1.Petitions = nullPetitions;
             service.InsertDemand(validDemand1, validSession1.Token);
-
-            mock.VerifyAll();
-            mockMedicine.VerifyAll();
-            mockSession.VerifyAll();
         }
 
         [ExpectedException(typeof(DemandException))]
@@ -154,10 +149,92 @@ namespace obg.BusinessLogic.Test
 
             validDemand1.Petitions =  new List<Petition>();
             service.InsertDemand(validDemand1, validSession1.Token);
-            validDemand1.Petitions = emptyPetitions;
+        }
+
+        [TestMethod]
+        public void GetDemandsOk()
+        {
+            mockSession.Setup(x => x.GetSessionByToken(validSession1.Token)).Returns(validSession1);
+            mock.Setup(x => x.GetDemands(validSession1)).Returns(demands);
+
+            service.GetDemands(validSession1.Token);
+
+            mockSession.VerifyAll();
+            mock.VerifyAll();
+        }
+
+        [ExpectedException(typeof(NotFoundException))]
+        [TestMethod]
+        public void GetDemandsWrong_NullDemands()
+        {
+            mockSession.Setup(x => x.GetSessionByToken(validSession1.Token)).Returns(validSession1);
+            mock.Setup(x => x.GetDemands(validSession1)).Returns(It.IsAny<IEnumerable<Demand>>);
+
+            service.GetDemands(validSession1.Token);
+        }
+
+        [TestMethod]
+        public void UpdateDemandOk()
+        {
+            mockSession.Setup(x => x.GetSessionByToken(validSession1.Token)).Returns(validSession1);
+            mock.Setup(x => x.GetDemands(validSession1)).Returns(demands);
+            mockMedicine.Setup(x => x.GetMedicineByCode(medicine.Code)).Returns(medicine);
+            mock.Setup(x => x.UpdateDemand(validDemand1));
+
+            Demand newDemand = new Demand(validDemand1.IdDemand, validDemand1.Status);
+            newDemand.Petitions = petitionsFromValidDemand1;
+            newDemand.Status = DemandStatus.Accepted;
+
+            service.UpdateDemand(validDemand1.IdDemand, newDemand, validSession1.Token);
+            mockSession.VerifyAll();
             mock.VerifyAll();
             mockMedicine.VerifyAll();
-            mockSession.VerifyAll();
+        }
+
+        [ExpectedException(typeof(NotFoundException))]
+        [TestMethod]
+        public void UpdateDemandWrong_NullDemands()
+        {
+            mockSession.Setup(x => x.GetSessionByToken(validSession1.Token)).Returns(validSession1);
+            mock.Setup(x => x.GetDemands(validSession1)).Returns(It.IsAny<List<Demand>>);
+            mockMedicine.Setup(x => x.GetMedicineByCode(medicine.Code)).Returns(medicine);
+            mock.Setup(x => x.UpdateDemand(validDemand1));
+
+            Demand newDemand = new Demand(validDemand1.IdDemand, validDemand1.Status);
+            newDemand.Petitions = petitionsFromValidDemand1;
+            newDemand.Status = DemandStatus.Accepted;
+            service.UpdateDemand(validDemand1.IdDemand, newDemand, validSession1.Token);
+        }
+
+        [ExpectedException(typeof(MedicineException))]
+        [TestMethod]
+        public void UpdateDemandWrong_NullMedicine()
+        {
+            mockSession.Setup(x => x.GetSessionByToken(validSession1.Token)).Returns(validSession1);
+            mock.Setup(x => x.GetDemands(validSession1)).Returns(demands);
+            mockMedicine.Setup(x => x.GetMedicineByCode(medicine.Code)).Returns(It.IsAny<Medicine>);
+            mock.Setup(x => x.UpdateDemand(validDemand1));
+
+            Demand newDemand = new Demand(validDemand1.IdDemand, validDemand1.Status);
+            newDemand.Petitions = petitionsFromValidDemand1;
+            newDemand.Status = DemandStatus.Accepted;
+            service.UpdateDemand(validDemand1.IdDemand, newDemand, validSession1.Token);
+        }
+
+        [TestMethod]
+        public void MedicineExistsOk()
+        {
+            mockMedicine.Setup(x => x.GetMedicineByCode(medicine.Code)).Returns(medicine);
+
+            service.MedicineExists(validDemand1);
+        }
+
+        [TestMethod]
+        public void GetDemandByIdOk()
+        {
+            mock.Setup(x => x.GetDemandById(validDemand1.IdDemand)).Returns(validDemand1);
+
+            service.GetDemandById(validDemand1.IdDemand);
         }
     }
 }
