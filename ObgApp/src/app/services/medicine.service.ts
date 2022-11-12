@@ -27,10 +27,10 @@ export class MedicineService {
         return this._medicinesBehaviorSubject$.asObservable();
     }
 
-    public getMedicines(): Observable<Medicine[]> {
+    public getMedicines(employeeName: string): Observable<Medicine[]> {
         let headers = new HttpHeaders();
         let params = new HttpParams();
-        params = params.append('employeeName', 'Paolo');
+        params = params.append('employeeName', employeeName);
         // headers.append('clave', 'valor');
         // headers.append('employeeName', 'Pedro');
         // return this._http.get<Medicine[]>(`${environment.API_HOST_URL}/medicine`, { headers }).pipe(
@@ -46,7 +46,7 @@ export class MedicineService {
     public postMedicine(medicineToAdd: ICreateMedicine): Observable<Medicine> {
         console.log(medicineToAdd);
         let headers = new HttpHeaders();
-        headers = headers.append('token', 'ZZYYXX'); // Sería el del empleado 'Paolo'.
+        headers = headers.append('token', 'AABBCC'); // Sería el del empleado 'Paolo'.
         return this._http.post<Medicine>(`${environment.API_HOST_URL}/medicine`, medicineToAdd, { headers });
     }
 

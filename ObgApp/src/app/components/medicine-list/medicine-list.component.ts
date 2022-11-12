@@ -6,6 +6,7 @@ import { INIT, MEDICINE_LIST_URL } from '../../utils/routes';
 import { Globals } from '../../utils/globals';
 import { catchError, take, filter, of} from 'rxjs';
 import { IDeleteResponse } from '../../interfaces/delete-response.interface';
+import { Employee } from 'src/app/models/employee';
 
 @Component({
     selector: 'app-medicine-list',
@@ -16,10 +17,12 @@ export class MedicineListComponent implements OnInit {
 
     public backUrl = `/${INIT}`;
     public medicines: Medicine[] = [];
+    public actualEmployee: Employee = new Employee(null, null, null, null, null, null, null, null);
     // public medicines: Medicine[] = this._medicineService.getMedicines();
     
     displayedColumns: string[] = ['code', 'name', 'price', 'presentation', 'delete'];
-    dataSource = this._medicineService.getMedicines();;
+    // dataSource = this._medicineService.getMedicines(); // (#)
+    public dataSource = this.medicines;
 
     constructor(
         private _medicineService: MedicineService,
@@ -30,7 +33,11 @@ export class MedicineListComponent implements OnInit {
 
         Globals.selectTab = 2;
         
-        this._medicineService.getMedicines()
+        // [Obtengo el empleado actual]
+        this.actualEmployee.name = 'Paolo';
+
+        // [Me traigo los medicamentos de la farmacia del empleado]
+        this._medicineService.getMedicines(this.actualEmployee.name)
             .pipe(
                 take(1),
                 catchError((err) => {
@@ -40,6 +47,8 @@ export class MedicineListComponent implements OnInit {
             )
             .subscribe((medicines: Medicine[]) => {
                 this.setMedicines(medicines);
+                this.dataSource = medicines; // (#)
+
             })
 
     }
@@ -58,7 +67,7 @@ export class MedicineListComponent implements OnInit {
             }),
             filter((response: IDeleteResponse) => response.success === true),
         ).subscribe((response: IDeleteResponse) => {
-            this._medicineService.getMedicines()
+            this._medicineService.getMedicines(this.actualEmployee.name!)
                 .pipe(
                     take(1),
                     catchError((err) => {

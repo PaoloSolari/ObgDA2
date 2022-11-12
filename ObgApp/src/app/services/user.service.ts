@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { ICreateEmployee, ICreateUser } from '../interfaces/create-user';
+import { ICreateUser } from '../interfaces/create-user';
 import { IDeleteResponse } from '../interfaces/delete-response.interface';
 import { IUpdateUser } from '../interfaces/update-user';
 import { Employee } from '../models/employee';

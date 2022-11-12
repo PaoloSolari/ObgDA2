@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { catchError, of, take } from 'rxjs';
-import { ICreateEmployee, ICreateUser } from 'src/app/interfaces/create-user';
+import { ICreateUser } from 'src/app/interfaces/create-user';
 import { Employee } from 'src/app/models/employee';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';

@@ -1,1 +1,50 @@
 <app-back-button [url]="backUrl"></app-back-button>
+
+<div *ngIf="demands.length > 0; else elseBlock">
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="pharmacy">
+            <th mat-header-cell *matHeaderCellDef> Farmacia </th>
+            <td mat-cell *matCellDef="let element"> {{element.pharmacyName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="petition">
+            <th mat-header-cell *matHeaderCellDef> Peticiones </th>
+            <td mat-cell *matCellDef="let element"> 
+                <div *ngFor="let pet of element.petitions" class="petitionsList">
+                    Código: <b>{{pet.medicineCode}}</b> - Cantidad: <b>{{pet.newQuantity}}</b>
+                </div>
+            </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="accept">
+            <th mat-header-cell *matHeaderCellDef class="acceptColumn"></th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-raised-button class="acceptButton">Aceptar</button>
+                <!-- {{element.code}} -->
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="reject">
+            <th mat-header-cell *matHeaderCellDef class="rejectColumn"></th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-raised-button class="rejectButton">Denegar</button>
+                <!-- {{element.code}} -->
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <div class="rowInTable">
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="element-row"></tr>
+        </div>
+    </table>
+
+</div>
+
+<ng-template #elseBlock>
+    <span><mat-icon>error_outline</mat-icon></span>
+    <br><br>
+    <span><p class="NoDemand"><B>NO HAY SOLICITUDES DE STOCK</B></p></span>
+</ng-template>
+    
