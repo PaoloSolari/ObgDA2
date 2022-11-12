@@ -26,93 +26,56 @@ namespace obg.BusinessLogic.Logics
             _administratorManagement = administratorManagement;
         }
 
-        public string UpdateInvitation(string idInvitation, Invitation invitation, string token)
-        {
-            if (!invitation.WasUsed)
-            {
-                Session session = _sessionManagement.GetSessionByToken(token);
-                string administratorName = session.UserName;
-                Invitation invitationFromDB = _invitationManagement.GetInvitationByAdministratorName(administratorName);
-                invitationFromDB.IdInvitation = invitation.IdInvitation;
-                invitationFromDB.UserName = invitation.UserName;
-                invitationFromDB.UserCode = invitation.UserCode;
-                invitationFromDB.UserRole = invitation.UserRole;
-                invitationFromDB.WasUsed = invitation.WasUsed;
-                invitationFromDB.Pharmacy = invitation.Pharmacy;
-                if (IsInvitationValid(invitation))
-                {
-                    _invitationManagement.UpdateInvitation(invitationFromDB);
-                }
-                return invitationFromDB.IdInvitation.ToString();
-            }
-            throw new InvitationException("No se puede modificar una invitación que fue usada.");
-        }
-
         public IEnumerable<Invitation> GetInvitations(string token)
         {
             Session session = _sessionManagement.GetSessionByToken(token);
             string administratorName = session.UserName;
             IEnumerable<Invitation> invitations = _invitationManagement.GetInvitations();
-            if(invitations.ToList().Count == 0 || invitations == null)
+            if (invitations.ToList().Count == 0 || invitations == null)
             {
                 throw new NotFoundException("No hay invitaciones enviadas.");
             }
-
-            //List<Invitation> invitationsUsed = new List<Invitation>();
-            //foreach (Invitation invitation in invitations)
-            //{
-            //    if (invitation.WasUsed)
-            //    {
-            //        invitationsUsed.Add(invitation);
-            //    }
-            //}
-            //if(invitationsUsed.Count == 0)
-            //{
-            //    throw new NotFoundException("No hay invitaciones enviadas.");
-            //}
-            //return invitationsUsed;
-            return invitations;
+            List<Invitation> invitationsFromAdministrator = new List<Invitation>();
+            foreach (Invitation invitation in invitations)
+            {
+                if (invitation.AdministratorName.Equals(administratorName))
+                {
+                    invitationsFromAdministrator.Add(invitation);
+                }
+            }
+            if (invitationsFromAdministrator.Count == 0 || invitationsFromAdministrator == null)
+            {
+                throw new NotFoundException("No hay invitaciones enviadas.");
+            }
+            return invitationsFromAdministrator;
         }
+
 
         public Invitation GetInvitationById(string id)
         {
             return _invitationManagement.GetInvitationById(id);
         }
 
-        // public void UpdateInvitation(Invitation invitation)
-        // {
-        //     _invitationManagement.UpdateInvitation(invitation);
-        // }
-
-        //public int InsertInvitation(Invitation invitation, string pharmacyName)
-        //{
-        //    IEnumerable<Invitation> invitationsFromAdministrator = new List<Invitation>();
-        //    foreach(Invitation invitation in invitations)
-        //    {
-        //        if (invitation.AdministratorName.Equals(administratorName))
-        //        {
-        //            invitationsFromAdministrator.ToList().Add(invitation);
-        //        }
-        //    }
-        //    if (invitationsFromAdministrator.ToList().Count == 0 || invitationsFromAdministrator == null)
-        //    {
-        //        throw new NotFoundException("No hay invitaciones enviadas.");
-        //    }
-        //    return invitationsFromAdministrator;
-        //}
+        public void UpdateInvitation(Invitation invitation, string token)
+        {
+            if (IsInvitationValid(invitation))
+            {
+                Session session = _sessionManagement.GetSessionByToken(token);
+                string administratorName = session.UserName;
+                invitation.AdministratorName = administratorName;
+                _invitationManagement.UpdateInvitation(invitation);
+            }
+        }
 
         public int InsertInvitation(Invitation invitation, string pharmacyName, string token)
         {
             Pharmacy pharmacy = _pharmacyManagement.GetPharmacyByName(pharmacyName);
             Session session = _sessionManagement.GetSessionByToken(token);
             string administratorName = session.UserName;
-            bool noAdministrator = invitation.UserRole != 0;
-            if (noAdministrator && pharmacy == null)
+            if (pharmacy == null)
             {
                 throw new NotFoundException("No existe la farmacia.");
             }
-            Console.WriteLine("Llegó hasta aquí.");
-            Console.WriteLine(pharmacy);
             invitation.IdInvitation = CreateId();
             invitation.Pharmacy = pharmacy;
             invitation.UserCode = CreateCode();
@@ -156,11 +119,7 @@ namespace obg.BusinessLogic.Logics
             {
                 throw new InvitationException("Identificador inválido.");
             }
-            if (IsIdInvitationRegistered(invitation.IdInvitation))
-            {
-                throw new InvitationException("Ya existe una invitación con el mismo identificador");
-            }
-            if (invitation.UserRole != 0 && invitation.Pharmacy == null)
+            if (invitation.Pharmacy == null)
             {
                 throw new InvitationException("Farmacia inválida.");
             }
@@ -178,7 +137,7 @@ namespace obg.BusinessLogic.Logics
             }
             if (IsCodeRegistered(invitation.UserCode))
             {
-                throw new InvitationException("El nombre ya fue registrado.");
+                throw new InvitationException("El código de usuario ya fue registrado.");
             }
             return true;
         }

@@ -23,7 +23,7 @@ namespace obg.WebApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult PostInvitation([FromBody] Invitation invitation, [FromHeader] string pharmacyName, string token)
+        public IActionResult PostInvitation([FromBody] Invitation invitation, [FromHeader] string pharmacyName, [FromHeader] string token)
         {
             return StatusCode(200, invitationService.InsertInvitation(invitation, pharmacyName, token));
         }
@@ -41,17 +41,11 @@ namespace obg.WebApi.Controllers
         }
 
         [HttpPut("{idInvitation}")]
-        public IActionResult PutInvitation([FromRoute] string idInvitation, [FromBody] Invitation invitation, [FromHeader] string token)
+        public IActionResult PuInvitation([FromBody] Invitation invitation, [FromHeader] string token)
         {
-            return StatusCode(200, "Modificación de la invitación: " + invitationService.UpdateInvitation(idInvitation, invitation, token) + " exitosa.");
+            invitationService.UpdateInvitation(invitation, token);
+            return StatusCode(200, "Modificación exitosa");
         }
-
-        //[HttpPut("{idInvitation}")]
-        // public IActionResult PuInvitation([FromBody] Invitation invitation, [FromHeader] string token)
-        // {
-        //     invitationService.UpdateInvitation(invitation);
-        //     return StatusCode(200, "Modificación exitosa");
-        // }
 
     }
 }

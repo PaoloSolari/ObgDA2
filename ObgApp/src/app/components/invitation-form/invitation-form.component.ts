@@ -165,7 +165,7 @@ export class InvitationFormComponent implements OnInit {
     }
 
     private updateInvitation(): void {
-        // [Me traigo desde la BD la farmacia de la invitación]
+        // [Me traigo desde la BD la nueva farmacia para la invitación]
         this._pharmacyService.getPharmacyByName(this.pharmacyForm.name!).subscribe((pharmacy: Pharmacy) => {
             this.pharmacyDB = pharmacy;
             // [Obtenida la farmacia, procedo a modificar la invitación]
@@ -177,11 +177,11 @@ export class InvitationFormComponent implements OnInit {
         if(!!this.invitationId) {
             const invitation = new Invitation(
                 this.invitationId as string,
-                this.pharmacyDB, // (#)
+                this.pharmacyDB,
                 this.getRole(this.userRoleForm),
                 this.userNameForm,
                 this.userCodeForm,
-                false, // (#) Tal vez aquí me debería de traer la invitación de la BD para setearle el que tenía.
+                false,
             );
             this._invitationService.putInvitation(invitation)
             .pipe(

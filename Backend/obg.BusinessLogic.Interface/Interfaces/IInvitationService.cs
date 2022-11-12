@@ -10,9 +10,9 @@ namespace obg.BusinessLogic.Interface.Interfaces
         //int InsertInvitation(Invitation invitation, string pharamacyName);
         //IEnumerable<Invitation> GetInvitations();
         Invitation GetInvitationById(string id);
-        //void UpdateInvitation(Invitation invitation);
+        void UpdateInvitation(Invitation invitation, string token);
         int InsertInvitation(Invitation invitation, string pharamacyName, string token);
         IEnumerable<Invitation> GetInvitations(string token);
-        string UpdateInvitation(string idInvitation, Invitation invitation, string token);
+        //string UpdateInvitation(string idInvitation, Invitation invitation, string token);
     }
 }

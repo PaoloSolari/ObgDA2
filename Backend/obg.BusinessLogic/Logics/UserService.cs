@@ -122,9 +122,9 @@ namespace obg.BusinessLogic.Logics
                 userFromDB.RegisterDate = DateTime.Now.ToShortDateString();
                 if (IsUpdateUserValid(userFromDB))
                 {
-                    Invitation invitationFromDB = _invitationManagement.GetInvitationByUserName(user.Name);
-                    invitationFromDB.WasUsed = true;
-                    _invitationManagement.UpdateInvitation(invitationFromDB);
+                    //Invitation invitationFromDB = _invitationManagement.GetInvitationByUserName(user.Name);
+                    //invitationFromDB.WasUsed = true;
+                    //_invitationManagement.UpdateInvitation(invitationFromDB);
                     _userManagement.UpdateUser(userFromDB);
                 }
             }

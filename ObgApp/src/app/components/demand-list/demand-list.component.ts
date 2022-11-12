@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { catchError, of, take } from 'rxjs';
 import { Demand } from 'src/app/models/demand';
-import { Owner } from 'src/app/models/owner';
+import { Owner } from '../../models/owner';
 import { DemandService } from 'src/app/services/demand.service';
 import { Globals } from '../../utils/globals';
 import { INIT } from '../../utils/routes';
