@@ -38,6 +38,11 @@ namespace obg.DataAccess.Repositories
             return ObgContext.Sessions.Where<Session>(s => s.Token.Equals(token)).FirstOrDefault();
         }
 
+        public Session GetSessionByName(string userName)
+        {
+            return ObgContext.Sessions.Where<Session>(s => s.UserName.Equals(userName)).FirstOrDefault();
+        }
+
         public void UpdateSession(Session session)
         {
             ObgContext.Sessions.Attach(session);

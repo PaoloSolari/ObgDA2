@@ -31,6 +31,11 @@ namespace obg.BusinessLogic.Logics
             _invitationManagement = invitationManagement;
         }
 
+        public User GetUserByName(string userName)
+        {
+            return _userManagement.GetUserByName(userName);
+        }
+
         public string InsertUser(User user)
         {
             if (ExistsInvitation(user.Name, user.Code))

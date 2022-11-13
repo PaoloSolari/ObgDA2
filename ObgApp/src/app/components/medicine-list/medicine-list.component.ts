@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MedicineService } from '../../services/medicine.service';
-import { Medicine } from '../../models/medicine';
+import { Medicine, PresentationMedicine } from '../../models/medicine';
 import { Router } from '@angular/router';
 import { INIT, MEDICINE_LIST_URL } from '../../utils/routes';
 import { Globals } from '../../utils/globals';
@@ -20,7 +20,7 @@ export class MedicineListComponent implements OnInit {
     public actualEmployee: Employee = new Employee(null, null, null, null, null, null, null, null);
     // public medicines: Medicine[] = this._medicineService.getMedicines();
     
-    displayedColumns: string[] = ['code', 'name', 'price', 'presentation', 'delete'];
+    displayedColumns: string[] = ['code', 'name', 'price', 'presentation', 'stock', 'delete'];
     // dataSource = this._medicineService.getMedicines(); // (#)
     public dataSource = this.medicines;
 
@@ -78,6 +78,14 @@ export class MedicineListComponent implements OnInit {
                     this.setMedicines(medicines);
                 });
         });
+    }
+
+    public getPresentation(presentation: PresentationMedicine){
+        if(presentation == PresentationMedicine.capsulas) return 'Cápsulas';
+        if(presentation == PresentationMedicine.comprimidos) return 'Comprimidos';
+        if(presentation == PresentationMedicine.liquido) return 'Líquido';
+        if(presentation == PresentationMedicine.solucionSoluble) return 'Solución soluble';
+        return 'Stick Pack';
     }
 
 

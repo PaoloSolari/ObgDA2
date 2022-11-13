@@ -4,6 +4,12 @@ export const getInvitationFormUrl = (id: string | number | null): string => {
     // return url.replace(idParam, id?.toString());
 };
 
+export const getDemandFormUrl = (id: string | number | null): string => {
+    let url = DEMAND_UPDATE_URL;
+    return url.replace(idParam, id!.toString());
+    // return url.replace(idParam, id?.toString());
+};
+
 export const getUserFormUrl = (name: string | number | null): string => {
     let url = USER_UPDATE_URL;
     return url.replace(idParam, name!.toString());
@@ -19,6 +25,7 @@ export enum PATHS {
     INVITATION = 'invitation',
     DEMAND = 'demand',
     PURCHASE = 'purchase',
+    SESSION = 'session',
 }
 
 export enum SEGMENTS {
@@ -27,8 +34,11 @@ export enum SEGMENTS {
 
 const idParam = ':id'
 
+// Login
+export const LOGIN = `${PATHS.SESSION}`;
+
 // Register User
-export const USER_FORM_URL = `${PATHS.USER}/${SEGMENTS.NEW}`
+export const USER_FORM_URL = `${PATHS.USER}/${SEGMENTS.NEW}`;
 export const USER_UPDATE_URL = `${PATHS.USER}/${idParam}`;
 
 // Admnistrator:
@@ -40,6 +50,7 @@ export const INVITATION_LIST_URL = PATHS.INVITATION;
 
 // Owner:
 export const DEMAND_LIST_URL = PATHS.DEMAND;
+export const DEMAND_UPDATE_URL = `${PATHS.DEMAND}/${idParam}`; // No es un componente ni SPA nueva, solo se usa para el endpoint de actualización.
 
 // Employee:
 export const MEDICINE_FORM_URL = `${PATHS.MEDICINE}/${SEGMENTS.NEW}`;

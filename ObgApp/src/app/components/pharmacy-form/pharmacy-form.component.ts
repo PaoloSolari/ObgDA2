@@ -31,6 +31,7 @@ export class PharmacyFormComponent implements OnInit {
     public get addressForm() { return this.pharmacyForm.value.address; }
     
     ngOnInit(): void {
+        alert('probando loading.');
         Globals.selectTab = 0;
     }
 

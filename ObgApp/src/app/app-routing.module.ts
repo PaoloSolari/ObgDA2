@@ -6,22 +6,26 @@ import { DemandListComponent } from './components/demand-list/demand-list.compon
 import { InitComponent } from './components/init/init.component';
 import { InvitationFormComponent } from './components/invitation-form/invitation-form.component';
 import { InvitationListComponent } from './components/invitation-list/invitation-list.component';
+import { LoginComponent } from './components/login/login.component';
 import { MedicineFormComponent } from './components/medicine-form/medicine-form.component';
 import { MedicineListComponent } from './components/medicine-list/medicine-list.component';
 import { PharmacyFormComponent } from './components/pharmacy-form/pharmacy-form.component';
 import { PurchaseListComponent } from './components/purchase-list/purchase-list.component';
 import { UserFormComponent } from './components/user-form/user-form.component';
 import { UserUpdateComponent } from './components/user-update/user-update.component';
-import { DEMAND_FORM_URL, DEMAND_LIST_URL, INIT, INVITATION_FORM_URL, INVITATION_LIST_URL, MEDICINE_FORM_URL, MEDICINE_LIST_URL, PHARMACY_FORM_URL, PURCHASE_LIST_URL, USER_FORM_URL, USER_UPDATE_URL } from './utils/routes';
+import { DEMAND_FORM_URL, DEMAND_LIST_URL, INIT, INVITATION_FORM_URL, INVITATION_LIST_URL, LOGIN, MEDICINE_FORM_URL, MEDICINE_LIST_URL, PHARMACY_FORM_URL, PURCHASE_LIST_URL, USER_FORM_URL, USER_UPDATE_URL } from './utils/routes';
 
 const routes: Routes = [
     
-    { path: INIT, component: InitComponent },
+    // Login:
+    { path: LOGIN, component: LoginComponent },
 
     // Register User:
     { path: USER_FORM_URL, component: UserFormComponent },
     { path: USER_UPDATE_URL, component: UserUpdateComponent },
-
+    
+    // Menu principal:
+    { path: INIT, component: InitComponent },
 
     // Administrator:
     { path: PHARMACY_FORM_URL, component: PharmacyFormComponent },

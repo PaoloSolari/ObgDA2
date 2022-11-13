@@ -3,7 +3,9 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ICreateDemand } from '../interfaces/create-demand';
+import { IUpdateDemand } from '../interfaces/update-demand';
 import { Demand } from '../models/demand';
+import { getDemandFormUrl } from '../utils/routes';
 
 @Injectable({
     providedIn: 'root'
@@ -32,10 +34,18 @@ export class DemandService {
     }
 
     public postDemand(demandToAdd: ICreateDemand): Observable<Demand> {
-        console.log(demandToAdd);
         let headers = new HttpHeaders();
         headers = headers.append('token', 'AABBCC'); // Sería el del empleado 'Paolo'.
         return this._http.post<Demand>(`${environment.API_HOST_URL}/demand`, demandToAdd, { headers });
+    }
+
+    public putDemand(demandToUpdate: IUpdateDemand): Observable<Demand> {
+        let headers = new HttpHeaders();
+        headers = headers.append('token', 'GGHHII'); // Sería el del dueño 'Juan'.
+        console.log(getDemandFormUrl(demandToUpdate.IdDemand));
+        let idDemand = getDemandFormUrl(demandToUpdate.IdDemand);
+        console.log(`${environment.API_HOST_URL}/`+idDemand);
+        return this._http.put<Demand>(`${environment.API_HOST_URL}/`+idDemand, demandToUpdate, { headers }); // (#)
     }
 
 }

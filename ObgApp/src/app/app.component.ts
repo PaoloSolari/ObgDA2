@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Globals } from './utils/globals';
-import { USER_FORM_URL } from './utils/routes';
+import { LOGIN, USER_FORM_URL } from './utils/routes';
 
 @Component({
     selector: 'app-root',
@@ -11,6 +11,7 @@ export class AppComponent {
     title = 'ObgApp';
 
     public addUser = `/${USER_FORM_URL}`;
+    public login = `/${LOGIN}`;
 
     constructor() { }
     ngOnInit() { }
