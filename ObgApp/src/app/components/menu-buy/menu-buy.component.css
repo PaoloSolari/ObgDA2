@@ -1,0 +1,14 @@
+.mat-raised-button{
+    display: block;
+    color: rgb(240, 240, 240) !important;
+    background-color: rgb(80, 129, 161) !important;
+    width: 400px;
+    min-width: auto;
+    height: 50px;
+    min-height: auto;
+    margin: 8px 8px 15px 8px;
+}
+
+.mat-raised-button:hover{
+    background: rgb(196, 195, 195) !important;
+}

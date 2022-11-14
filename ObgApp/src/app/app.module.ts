@@ -60,6 +60,8 @@ import { AuthGuard } from './guards/auth.guard';
 import { RoleGuard } from './guards/role.guard';
 import { LoginComponent } from './components/login/login.component';
 import { BuyComponent } from './components/buy/buy.component';
+import { MenuBuyComponent } from './components/menu-buy/menu-buy.component';
+import { BuyListComponent } from './components/buy-list/buy-list.component';
 
 
 @NgModule({
@@ -84,7 +86,9 @@ import { BuyComponent } from './components/buy/buy.component';
         UserFormComponent,
         UserUpdateComponent,
         LoginComponent,
-        BuyComponent
+        BuyComponent,
+        MenuBuyComponent,
+        BuyListComponent
     ],
     imports: [
         BrowserModule,

@@ -16,6 +16,12 @@ export const getUserFormUrl = (name: string | number | null): string => {
     // return url.replace(idParam, id?.toString());
 };
 
+export const getPurchaseFormUrl = (name: string | number | null): string => {
+    let url = BUY_LIST_URL;
+    return url.replace(idParam, name!.toString());
+    // return url.replace(idParam, id?.toString());
+};
+
 export const INIT = '';
 
 export enum PATHS {
@@ -41,8 +47,9 @@ export const LOGIN = `${PATHS.SESSION}`;
 export const USER_FORM_URL = `${PATHS.USER}/${SEGMENTS.NEW}`;
 export const USER_UPDATE_URL = `${PATHS.USER}/${idParam}`;
 
-// User (Purchase)
-export const BUY = `${PATHS.PURCHASE}`;
+// Purchase (Anonymous User)
+export const BUY_FORM_URL = `${PATHS.PURCHASE}`;
+export const BUY_LIST_URL = `${PATHS.PURCHASE}/${idParam}`;
 
 // Admnistrator:
 export const PHARMACY_FORM_URL = `${PATHS.PHARMACY}/${SEGMENTS.NEW}`;

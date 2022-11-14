@@ -134,7 +134,7 @@ export class InvitationFormComponent implements OnInit {
 
     public createInvitation(): void {
         // [Me traigo desde la BD la farmacia elegida por el administrador]
-        this._pharmacyService.getPharmacyByName(this.pharmacyForm.name!).subscribe((pharmacy: Pharmacy) => {
+        this._pharmacyService.getPharmacyByName(this.pharmacyForm.name!, this._authService.getToken()!).subscribe((pharmacy: Pharmacy) => {
             this.pharmacyDB = pharmacy;
             // [Obtenida la farmacia, creo la invitación]
             this.sendInvitation(this.pharmacyDB);
@@ -185,7 +185,7 @@ export class InvitationFormComponent implements OnInit {
 
     private updateInvitation(): void {
         // [Me traigo desde la BD la nueva farmacia para la invitación]
-        this._pharmacyService.getPharmacyByName(this.pharmacyForm.name!).subscribe((pharmacy: Pharmacy) => {
+        this._pharmacyService.getPharmacyByName(this.pharmacyForm.name!, this._authService.getToken()!).subscribe((pharmacy: Pharmacy) => {
             this.pharmacyDB = pharmacy;
             // [Obtenida la farmacia, procedo a modificar la invitación]
             this.modifyInvitation();

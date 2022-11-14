@@ -5,8 +5,10 @@ import { ICreateDemand } from 'src/app/interfaces/create-demand';
 import { ICreatePetition } from 'src/app/interfaces/create-petition';
 import { Demand } from 'src/app/models/demand';
 import { Medicine } from 'src/app/models/medicine';
+import { Session } from 'src/app/models/session';
 import { AuthService } from 'src/app/services/auth.service';
 import { DemandService } from 'src/app/services/demand.service';
+import { SessionService } from 'src/app/services/session.service';
 import { Employee } from '../../models/employee';
 import { MedicineService } from '../../services/medicine.service';
 import { Globals } from '../../utils/globals';
@@ -32,7 +34,6 @@ export class DemandFormComponent implements OnInit {
     // dataSource = this._medicineService.getMedicines(); // (#)
     // public dataSource: Medicine[] = [];
     public dataSource = this.medicines;
-    public noMedicines: boolean = false;
 
     public demandForm = new FormGroup({
         newQuantityInput: new FormControl<number | null>(null, [Validators.required, Validators.min(1)]),
@@ -45,6 +46,7 @@ export class DemandFormComponent implements OnInit {
         private _medicineService: MedicineService,
         private _demandService: DemandService,
         private _authService: AuthService,
+        private _sessionService: SessionService,
     ) { }
 
     ngOnInit(): void {
@@ -52,17 +54,37 @@ export class DemandFormComponent implements OnInit {
         Globals.selectTab = 2;
 
         // [Obtengo el empleado actual]
-        this.actualEmployee.name = 'Paolo'; // (#) Cambiar
+        this._sessionService.getSessionByToken(this._authService.getToken()!)
+        .pipe(
+            take(1),
+            catchError((err => {
+                if (err.status != 200) {
+                    alert(`${err.error.errorMessage}`);
+                    console.log(`Error: ${err.error.errorMessage}`)
+                } else {
+                    console.log(`Ok: ${err.error.text}`);
+                }
+                return of(err);
+            }))
+        )
+        .subscribe((session: Session) => {            
+            // [Obtenido el nombre del empleado, traigo desde el backend los medicamentos de su farmacia]
+            this.actualEmployee.name = session.userName!;
+            this.getMedicinesFromDB(this.actualEmployee.name);
+        })  
 
-        // [Me traigo los medicamentos de la farmacia del empleado]
-        this._medicineService.getMedicines(this.actualEmployee.name)
+        // (#) Aquí debería de hacer algo con la lista de 'ICreateDemand'.
+        this.demand.Petitions = [];
+    }
+
+    private getMedicinesFromDB(userName: string): void {
+        this._medicineService.getMedicines(userName)
             .pipe(
                 take(1),
                 catchError((err => {
                     if (err.status != 200) {
-                        alert(`${err.error.errorMessage}`);
+                        // alert(`${err.error.errorMessage}`); // [Ya la pantalla principal me indica que no hay más medicamentos]
                         console.log(`Error: ${err.error.errorMessage}`)
-                        this.noMedicines = true;
                     } else {
                         console.log(`Ok: ${err.error.text}`);
                     }
@@ -70,23 +92,18 @@ export class DemandFormComponent implements OnInit {
                 }))
             )
             .subscribe((medicines: Medicine[]) => {
-                // console.log(medicines);
                 this.setMedicines(medicines);
-                if (!this.noMedicines) {
-                    this.dataSource = this.medicines; // (#)
-                }
+                // this.dataSource = medicines;
             })
-
-        // (#) Aquí debería de hacer algo con la lista de 'ICreateDemand'.
-        this.demand.Petitions = [];
-
     }
 
     private setMedicines = (medicines: Medicine[] | undefined) => {
         if (!medicines) {
             this.medicines = [];
-        } else {
+        }
+        else {
             this.medicines = medicines;
+            this.dataSource = medicines;
         }
     }
 
@@ -127,6 +144,7 @@ export class DemandFormComponent implements OnInit {
             .subscribe((d: Demand) => {
                 if (d) {
                     this.demandForm.reset();
+                    this.demand.Petitions = [];
                 }
             });
     }

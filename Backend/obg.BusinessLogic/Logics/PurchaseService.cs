@@ -52,7 +52,7 @@ namespace obg.BusinessLogic.Logics
                 Medicine medicine = _medicineManagement.GetMedicineByCode(purchaseLine.MedicineCode);
                 if (employeePharmacy.Medicines.Contains(medicine))
                 {
-                    if(purchaseLine.Status.Equals(PurchaseLineStatus.Accepted) || purchaseLine.Status.Equals(PurchaseLineStatus.Rejected))
+                    if (purchaseLine.Status.Equals(PurchaseLineStatus.Accepted) || purchaseLine.Status.Equals(PurchaseLineStatus.Rejected))
                     {
                         throw new PurchaseException("No se puede modificar el estado del medicamento luego de haber sido aceptado o rechazado.");
                     }

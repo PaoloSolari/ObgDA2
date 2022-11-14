@@ -9,6 +9,7 @@ import { Purchase } from 'src/app/models/purchase';
 import { AuthService } from 'src/app/services/auth.service';
 import { MedicineService } from 'src/app/services/medicine.service';
 import { PurchaseService } from 'src/app/services/purchase.service';
+import { INIT } from 'src/app/utils/routes';
 
 @Component({
     selector: 'app-buy',
@@ -16,6 +17,8 @@ import { PurchaseService } from 'src/app/services/purchase.service';
     styleUrls: ['./buy.component.css']
 })
 export class BuyComponent implements OnInit {
+
+    public backUrl = `/${INIT}`;
 
     public medicines: Medicine[] = [];
     public purchase: ICreatePurchase = {

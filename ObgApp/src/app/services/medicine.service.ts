@@ -53,8 +53,10 @@ export class MedicineService {
         return this._http.put<Medicine>(`${environment.API_HOST_URL}/medicine/${medicineToUpdate.code}`, medicineToUpdate);
     }
 
-    public deleteMedicine(medicineCode: string | null): Observable<IDeleteResponse> {
-        return this._http.delete<IDeleteResponse>(`${environment.API_HOST_URL}/medicine/${medicineCode}`);
+    public deleteMedicine(medicineCode: string | null, token: string): Observable<IDeleteResponse> {
+        let headers = new HttpHeaders();
+        headers = headers.append('token', token);
+        return this._http.delete<IDeleteResponse>(`${environment.API_HOST_URL}/medicine/${medicineCode}`, { headers });
     }
 
 }
