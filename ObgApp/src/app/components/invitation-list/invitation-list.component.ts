@@ -5,6 +5,7 @@ import { Globals } from '../../utils/globals';
 import { getInvitationFormUrl, INIT } from '../../utils/routes';
 import { Router } from '@angular/router';
 import { catchError, of, take } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
     selector: 'app-invitation-list',
@@ -18,24 +19,31 @@ export class InvitationListComponent implements OnInit {
     // public invitations: Invitation[] = this._invitationService.getInvitations();
 
     displayedColumns: string[] = ['pharmacy', 'userName', 'userRole', 'userCode', 'wasUsed', 'modify'];
-    dataSource = this._invitationService.getInvitations();;
+    dataSource = this._invitationService.getInvitations(this._authService.getToken()!);;
 
     constructor(
         private _invitationService: InvitationService,
         private _router: Router,
+        private _authService: AuthService,
     ) { }
 
     ngOnInit(): void {
 
         Globals.selectTab = 0;
 
-        this._invitationService.getInvitations().pipe(
-            take(1),
-            catchError((err) => {
-                console.log({ err });
-                return of(err);
-            }),
-        )
+        this._invitationService.getInvitations(this._authService.getToken()!)
+            .pipe(
+                take(1),
+                catchError((err => {
+                    if (err.status != 200) {
+                        alert(`${err.error.errorMessage}`);
+                        console.log(`Error: ${err.error.errorMessage}`)
+                    } else {
+                        console.log(`Ok: ${err.error.text}`);
+                    }
+                    return of(err);
+                }))
+            )
             .subscribe((invitations: Invitation[]) => {
                 this.setInvitations(invitations);
             })

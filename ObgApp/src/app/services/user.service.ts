@@ -25,8 +25,10 @@ export class UserService {
         return this._usersBehaviorSubject$.asObservable();
     }
 
-    public getUsers(): Observable<User[]> {
-        const headers = new HttpHeaders();
+    // (#) ¿Lo uso?
+    public getUsers(token: string): Observable<User[]> {
+        let headers = new HttpHeaders();
+        headers = headers.append('token', token); // (#) Corroborar.
         return this._http.get<User[]>(`${environment.API_HOST_URL}/user`, { headers }).pipe(
             tap((users: User[]) => this._usersBehaviorSubject$.next(users)),
         );

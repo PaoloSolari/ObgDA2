@@ -41,6 +41,9 @@ export const LOGIN = `${PATHS.SESSION}`;
 export const USER_FORM_URL = `${PATHS.USER}/${SEGMENTS.NEW}`;
 export const USER_UPDATE_URL = `${PATHS.USER}/${idParam}`;
 
+// User (Purchase)
+export const BUY = `${PATHS.PURCHASE}`;
+
 // Admnistrator:
 export const PHARMACY_FORM_URL = `${PATHS.PHARMACY}/${SEGMENTS.NEW}`;
 export const INVITATION_FORM_URL = `${PATHS.INVITATION}/${idParam}`; // Editar invitación

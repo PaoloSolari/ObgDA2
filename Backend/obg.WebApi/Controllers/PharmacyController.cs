@@ -12,7 +12,7 @@ namespace obg.WebApi.Controllers
     [ApiController]
     [Route("[controller]")]
     [ExceptionFilter]
-    //[ServiceFilter(typeof(AdministratorAuthorizationAttributeFilter))]
+    [ServiceFilter(typeof(AdministratorAuthorizationAttributeFilter))]
     public class PharmacyController : ControllerBase
     {
         private readonly IPharmacyService _pharmacyService;
@@ -24,16 +24,12 @@ namespace obg.WebApi.Controllers
         [HttpGet]
         public IActionResult GetPharmacies([FromHeader] string token)
         {
-            //return StatusCode(200, _sessionService.GetSessionByToken(token));
-
             return StatusCode(200, _pharmacyService.GetPharmacies());
         }
 
         [HttpGet("{name}")]
         public IActionResult GetPharmacyByName([FromHeader] string token, [FromRoute] string name)
         {
-            //return StatusCode(200, _sessionService.GetSessionByToken(token));
-
             return StatusCode(200, _pharmacyService.GetPharmacyByName(name));
         }
 

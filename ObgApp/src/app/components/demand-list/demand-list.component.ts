@@ -6,6 +6,7 @@ import { DemandService } from 'src/app/services/demand.service';
 import { Globals } from '../../utils/globals';
 import { INIT } from '../../utils/routes';
 import { IUpdateDemand } from 'src/app/interfaces/update-demand';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
     selector: 'app-demand-list',
@@ -22,6 +23,7 @@ export class DemandListComponent implements OnInit {
 
     constructor(
         private _demandService: DemandService,
+        private _authService: AuthService,
     ) { }
 
     ngOnInit(): void {
@@ -30,16 +32,21 @@ export class DemandListComponent implements OnInit {
 
         // [Obtengo el dueño actual]
         this.actualOwner.name = 'Juan';
-        const token = 'GGHHII';
+        // const token = 'GGHHII';
 
         // [Me traigo las demandas de la farmacia del dueño]
-        this._demandService.getDemands(token)
+        this._demandService.getDemands(this._authService.getToken()!)
         .pipe(
             take(1),
-            catchError((err) => {
-                console.log({ err });
+            catchError((err => {
+                if(err.status != 200){
+                    alert(`${err.error.errorMessage}`);
+                    console.log(`Error: ${err.error.errorMessage}`)
+                } else {
+                    console.log(`Ok: ${err.error.text}`);
+                }
                 return of(err);
-            }),
+            }))
         )
         .subscribe((demands: Demand[]) => {
             this.setDemands(demands);
@@ -59,13 +66,18 @@ export class DemandListComponent implements OnInit {
             Status: this.getStatus(status), // (#) Capaz que aquí hay que obtener el status.
         }
         console.log(demand);
-        this._demandService.putDemand(demand)
+        this._demandService.putDemand(demand, this._authService.getToken()!)
         .pipe(
             take(1),
-            catchError((err) => {
-                console.log({err});
+            catchError((err => {
+                if(err.status != 200){
+                    alert(`${err.error.errorMessage}`);
+                    console.log(`Error: ${err.error.errorMessage}`)
+                } else {
+                    console.log(`Ok: ${err.error.text}`);
+                }
                 return of(err);
-            }),
+            }))
         )
         .subscribe((demand: Demand) => {
             if(demand) {

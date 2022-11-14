@@ -77,14 +77,19 @@ export class UserUpdateComponent implements OnInit {
             .pipe(
                 take(1),
                 catchError((err => {
-                    console.log({err});
+                    if(err.status != 200){
+                        alert(`${err.error.errorMessage}`);
+                        console.log(`Error: ${err.error.errorMessage}`)
+                    } else {
+                        console.log(`Ok: ${err.error.text}`);
+                    }
                     return of(err);
                 }))
             )
             .subscribe((user: User) => {
                 // [El endpoint devuelve el nombre del usuairo actualizado]
                 if(user) {
-                    alert('El usuario ' + user + 'ha sido registrado correctamente.');
+                    alert('El usuario ' + user + ' ha sido registrado correctamente.');
                     this._router.navigateByUrl(INIT);
                 }
             })

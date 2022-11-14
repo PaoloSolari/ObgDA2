@@ -23,15 +23,12 @@ namespace obg.WebApi.Controllers
         [HttpGet("{token}")]
         public IActionResult GetSession([FromRoute] string token)
         {
-            //return StatusCode(200, _sessionService.GetSessionByToken(token));
-
             return Ok(_sessionService.GetSessionByToken(token));
         }
 
         [HttpGet]
         public IActionResult GetSessionByNameCtr([FromHeader] string userName)
         {
-            //return StatusCode(200, _sessionService.GetSessionByToken(token));
             Session s = _sessionService.GetSessionByName(userName);
             return StatusCode(200, s);
         }

@@ -6,6 +6,7 @@ import { ICreateSession } from 'src/app/interfaces/create-session';
 import { Session } from 'src/app/models/session';
 import { AuthService } from 'src/app/services/auth.service';
 import { SessionService } from 'src/app/services/session.service';
+import { Globals } from 'src/app/utils/globals';
 import { INIT } from 'src/app/utils/routes';
 
 @Component({
@@ -16,6 +17,7 @@ import { INIT } from 'src/app/utils/routes';
 export class LoginComponent implements OnInit {
 
     public backUrl = `/${INIT}`;
+    private continue: boolean = false;
 
     public loginForm = new FormGroup({
         userName: new FormControl(),
@@ -32,6 +34,7 @@ export class LoginComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
+        this.continue = false;
     }
 
     public login(): void {
@@ -44,28 +47,40 @@ export class LoginComponent implements OnInit {
             .pipe(
                 take(1),
                 catchError((err => {
-                    console.log({err});
+                    if(err.status != 200){
+                        alert(`${err.error.errorMessage}`);
+                        console.log(`Error: ${err.error.errorMessage}`)
+                    } else {
+                        console.log(`Ok: ${err.error.text}`);
+                        this.continue = true;
+                    }
                     return of(err);
                 }))
             )
             .subscribe((session: Session) => {
-                // [El endpoint retorna el Token]
                 if (session) {
-                    this._sessionService.getSessionByName(this.userNameForm)
-                        .pipe(
-                            take(1),
-                            catchError((err => {
-                                console.log({ err });
-                                return of(err);
-                            }))
-                        )
-                        .subscribe((session: Session) => {
-                            if(session) {
-                                console.log(session.token);
-                                this._authService.setToken(session.token!);
-                                this._router.navigateByUrl(INIT);
-                            }
-                        })
+                    if(this.continue){
+                        this._sessionService.getSessionByName(this.userNameForm)
+                            .pipe(
+                                take(1),
+                                catchError((err => {
+                                    if(err.status != 200){
+                                        alert(`${err.error.errorMessage}`);
+                                        console.log(`Error: ${err.error.errorMessage}`)
+                                    } else {
+                                        console.log(`Ok: ${err.error.text}`);
+                                    }
+                                    return of(err);
+                                }))
+                            )
+                            .subscribe((session: Session) => {
+                                if(session) {
+                                    Globals.alreadyLogin = true; // [Ahora, ya hay un usuario logeado]
+                                    this._authService.setToken(session.token!);
+                                    this._router.navigateByUrl(INIT);
+                                }
+                            })
+                    }
                 }
             })
         }

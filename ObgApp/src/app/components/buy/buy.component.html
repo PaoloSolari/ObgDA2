@@ -1,5 +1,3 @@
-<app-back-button [url]="backUrl"></app-back-button>
-
 <div *ngIf="medicines.length > 0; else elseBlock">
 
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -33,11 +31,11 @@
         </ng-container> -->
         
         <ng-container matColumnDef="add">
-            <th mat-header-cell *matHeaderCellDef class="addColumn"> Reponer </th>
+            <th mat-header-cell *matHeaderCellDef class="addColumn"> Comprar </th>
             <td mat-cell *matCellDef="let element">
-                <div class="newStock" [formGroup]="demandForm">
-                    <input matInput formControlName="newQuantityInput" #quantity type="number" min="1" required>
-                    <button mat-raised-button (click)="addMedicineInDemand(element.code, toNumber(quantity.value))">Solicitar</button>
+                <div class="quantity" [formGroup]="purchaseForm">
+                    <input matInput formControlName="quantityInput" #quantity type="number" min="1" required>
+                    <button mat-raised-button (click)="addMedicineInPurchase(element.code, toNumber(quantity.value))">Agregar</button>
                 </div>
             </td>
         </ng-container>
@@ -48,12 +46,25 @@
         </div>
     </table>
 
-    <button mat-raised-button (click)="sendDemand()" class="sendButton">Enviar</button>
+    <div>
 
+        <form [formGroup]="emailForm" class="emailForm">
+            <mat-form-field appearance="outline">
+                <mat-label>Email de usuario</mat-label>
+                <input matInput formControlName="email" #email required> 
+                    <!-- Errores de entrada -->
+                    <mat-error *ngIf="email.value.length==0; else OnlySpace">{{"Debe ingresar un email para concretar la compra"}}</mat-error>
+                    <ng-template #OnlySpace><mat-error *ngIf="onlySpace(email.value)">{{"Debe ingresar un email correctamente"}}</mat-error></ng-template>
+            </mat-form-field>
+            <button mat-raised-button (click)="sendPurchase()" class="sendButton">Comprar</button>
+        </form>
+        
+        <!-- <button mat-raised-button class="sendButton">Comprar</button> -->
+    </div>  
 </div>
 
 <ng-template #elseBlock>
-    <span><mat-icon>error_outline</mat-icon></span>
+    <span><mat-icon>vaccines</mat-icon></span>
     <br><br>
-    <span><p class="NoMedicine"><B>NO HAY MEDICAMENTOS</B></p></span>
+    <span><p class="NoMedicine"><B>COMPRA NO DISPONIBLE</B></p></span>
 </ng-template>

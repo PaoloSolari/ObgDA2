@@ -5,6 +5,7 @@ import { ICreateDemand } from 'src/app/interfaces/create-demand';
 import { ICreatePetition } from 'src/app/interfaces/create-petition';
 import { Demand } from 'src/app/models/demand';
 import { Medicine } from 'src/app/models/medicine';
+import { AuthService } from 'src/app/services/auth.service';
 import { DemandService } from 'src/app/services/demand.service';
 import { Employee } from '../../models/employee';
 import { MedicineService } from '../../services/medicine.service';
@@ -29,7 +30,9 @@ export class DemandFormComponent implements OnInit {
     // displayedColumns: string[] = ['code', 'name', 'stock', 'newQuantity', 'add'];
     displayedColumns: string[] = ['code', 'name', 'stock', 'add'];
     // dataSource = this._medicineService.getMedicines(); // (#)
+    // public dataSource: Medicine[] = [];
     public dataSource = this.medicines;
+    public noMedicines: boolean = false;
 
     public demandForm = new FormGroup({
         newQuantityInput: new FormControl<number | null>(null, [Validators.required, Validators.min(1)]),
@@ -41,6 +44,7 @@ export class DemandFormComponent implements OnInit {
     constructor(
         private _medicineService: MedicineService,
         private _demandService: DemandService,
+        private _authService: AuthService,
     ) { }
 
     ngOnInit(): void {
@@ -48,21 +52,30 @@ export class DemandFormComponent implements OnInit {
         Globals.selectTab = 2;
 
         // [Obtengo el empleado actual]
-        this.actualEmployee.name = 'Paolo';
-    
+        this.actualEmployee.name = 'Paolo'; // (#) Cambiar
+
         // [Me traigo los medicamentos de la farmacia del empleado]
         this._medicineService.getMedicines(this.actualEmployee.name)
-        .pipe(
-            take(1),
-            catchError((err) => {
-                console.log({ err });
-                return of(err);
-            }),
-        )
-        .subscribe((medicines: Medicine[]) => {
-            this.setMedicines(medicines);
-            this.dataSource = medicines; // (#)
-        })
+            .pipe(
+                take(1),
+                catchError((err => {
+                    if (err.status != 200) {
+                        alert(`${err.error.errorMessage}`);
+                        console.log(`Error: ${err.error.errorMessage}`)
+                        this.noMedicines = true;
+                    } else {
+                        console.log(`Ok: ${err.error.text}`);
+                    }
+                    return of(err);
+                }))
+            )
+            .subscribe((medicines: Medicine[]) => {
+                // console.log(medicines);
+                this.setMedicines(medicines);
+                if (!this.noMedicines) {
+                    this.dataSource = this.medicines; // (#)
+                }
+            })
 
         // (#) Aquí debería de hacer algo con la lista de 'ICreateDemand'.
         this.demand.Petitions = [];
@@ -70,8 +83,11 @@ export class DemandFormComponent implements OnInit {
     }
 
     private setMedicines = (medicines: Medicine[] | undefined) => {
-        if(!medicines) this.medicines = [];
-        else this.medicines = medicines;
+        if (!medicines) {
+            this.medicines = [];
+        } else {
+            this.medicines = medicines;
+        }
     }
 
     public addMedicineInDemand(medicineCode: string, newQuantity: number): void {
@@ -85,23 +101,28 @@ export class DemandFormComponent implements OnInit {
         this.showChangedMedicine();
     }
 
-    public toNumber(str: string): number{
+    public toNumber(str: string): number {
         return Number(str);
     }
 
-    public showChangedMedicine(){
+    public showChangedMedicine() {
         // Bloquear medicamento, o poner algo gris.
         // Aunque hay que tener en cuenta, que se puede repetir un medicamente en dos peticiones distintas para una misma demanda.
     }
 
     public sendDemand() {
-        this._demandService.postDemand(this.demand)
+        this._demandService.postDemand(this.demand, this._authService.getToken()!)
             .pipe(
                 take(1),
-                catchError((err) => {
-                    console.log({ err });
+                catchError((err => {
+                    if (err.status != 200) {
+                        alert(`${err.error.errorMessage}`);
+                        console.log(`Error: ${err.error.errorMessage}`)
+                    } else {
+                        console.log(`Ok: ${err.error.text}`);
+                    }
                     return of(err);
-                }),
+                }))
             )
             .subscribe((d: Demand) => {
                 if (d) {

@@ -1,17 +1,22 @@
 <mat-tab-group mat-align-tabs="center" animationDuration="0ms" [selectedIndex]="selectTab">
-    <mat-tab label="Administrador">
+    <mat-tab label="Administrador" *ngIf="isLogin() && actualRole('Administrator')">
         <div class="container">
             <app-menu-administrator></app-menu-administrator>
         </div>
     </mat-tab>
-    <mat-tab label="Dueño">
+    <mat-tab label="Dueño" *ngIf="isLogin() && actualRole('Owner')">
         <div class="container">
             <app-menu-owner></app-menu-owner>
         </div>
     </mat-tab>
-    <mat-tab label="Empleado">
+    <mat-tab label="Empleado" *ngIf="isLogin() && actualRole('Employee')">
         <div class="container">
             <app-menu-employee></app-menu-employee>
         </div>
+    </mat-tab>
+    <mat-tab label="Compra" class="buy">
+        <!-- <div class="container"> -->
+            <app-buy></app-buy>
+        <!-- </div> -->
     </mat-tab>
 </mat-tab-group>

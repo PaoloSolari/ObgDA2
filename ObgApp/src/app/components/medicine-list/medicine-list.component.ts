@@ -34,17 +34,22 @@ export class MedicineListComponent implements OnInit {
         Globals.selectTab = 2;
         
         // [Obtengo el empleado actual]
-        this.actualEmployee.name = 'Paolo';
+        this.actualEmployee.name = 'Paolo'; // (#)
 
         // [Me traigo los medicamentos de la farmacia del empleado]
         this._medicineService.getMedicines(this.actualEmployee.name)
-            .pipe(
-                take(1),
-                catchError((err) => {
-                    console.log({ err });
-                    return of(err);
-                }),
-            )
+        .pipe(
+            take(1),
+            catchError((err => {
+                if(err.status != 200){
+                    alert(`${err.error.errorMessage}`);
+                    console.log(`Error: ${err.error.errorMessage}`)
+                } else {
+                    console.log(`Ok: ${err.error.text}`);
+                }
+                return of(err);
+            }))
+        )
             .subscribe((medicines: Medicine[]) => {
                 this.setMedicines(medicines);
                 this.dataSource = medicines; // (#)
@@ -59,25 +64,38 @@ export class MedicineListComponent implements OnInit {
     }
 
     public deleteMedicine(medicineCode: string): void {
-        this._medicineService.deleteMedicine(medicineCode).pipe(
-            take(1),
-            catchError((err) => {
-                console.log({ err });
-                return of(err);
-            }),
-            filter((response: IDeleteResponse) => response.success === true),
-        ).subscribe((response: IDeleteResponse) => {
-            this._medicineService.getMedicines(this.actualEmployee.name!)
-                .pipe(
-                    take(1),
-                    catchError((err) => {
-                        console.log({ err });
-                        return of(err);
-                    }),
-                ).subscribe((medicines: Medicine[] | undefined) => {
-                    this.setMedicines(medicines);
-                });
-        });
+        this._medicineService.deleteMedicine(medicineCode)
+            .pipe(
+                take(1),
+                catchError((err => {
+                    if (err.status != 200) {
+                        alert(`${err.error.errorMessage}`);
+                        console.log(`Error: ${err.error.errorMessage}`)
+                    } else {
+                        console.log(`Ok: ${err.error.text}`);
+                    }
+                    return of(err);
+                })),
+                filter((response: IDeleteResponse) => response.success === true), // (#) ¿Cómo funca?
+            )
+            .subscribe((response: IDeleteResponse) => {
+                this._medicineService.getMedicines(this.actualEmployee.name!)
+                    .pipe(
+                        take(1),
+                        catchError((err => {
+                            if (err.status != 200) {
+                                alert(`${err.error.errorMessage}`);
+                                console.log(`Error: ${err.error.errorMessage}`)
+                            } else {
+                                console.log(`Ok: ${err.error.text}`);
+                            }
+                            return of(err);
+                        }))
+                    )
+                    .subscribe((medicines: Medicine[] | undefined) => {
+                        this.setMedicines(medicines);
+                    });
+            });
     }
 
     public getPresentation(presentation: PresentationMedicine){

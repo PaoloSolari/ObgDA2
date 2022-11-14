@@ -8,6 +8,7 @@ import { Globals } from '../../utils/globals';
 import { NoSpace } from '../../validators/noEmptyString.validator';
 import { Medicine, PresentationMedicine } from '../../models/medicine';
 import { catchError, of, take } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
     selector: 'app-medicine-form',
@@ -41,6 +42,7 @@ export class MedicineFormComponent implements OnInit {
     constructor(
         private _medicineService: MedicineService,
         private _router: Router,
+        private _authService: AuthService,
     ) { }
 
     public get codeForm() { return this.medicineForm.value.code!; }
@@ -70,11 +72,16 @@ export class MedicineFormComponent implements OnInit {
                 Price: this.priceForm,
                 Prescription: this.getPrescription(this.prescriptionForm),
             };
-            this._medicineService.postMedicine(medicineFromForm)
+            this._medicineService.postMedicine(medicineFromForm, this._authService.getToken()!)
             .pipe(
                 take(1),
                 catchError((err => {
-                    console.log({err});
+                    if(err.status != 200){
+                        alert(`${err.error.errorMessage}`);
+                        console.log(`Error: ${err.error.errorMessage}`)
+                    } else {
+                        console.log(`Ok: ${err.error.text}`);
+                    }
                     return of(err);
                 }))
             )

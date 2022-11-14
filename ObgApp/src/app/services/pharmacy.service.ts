@@ -33,8 +33,9 @@ export class PharmacyService {
         return this._pharmacyBehaviorSubject$.asObservable();
     }
 
-    public getPharmacies(): Observable<Pharmacy[]> {
-        const headers = new HttpHeaders();
+    public getPharmacies(token: string): Observable<Pharmacy[]> {
+        let headers = new HttpHeaders();
+        headers = headers.append('token', token); // (#) Corroborar.
         return this._http.get<Pharmacy[]>(`${environment.API_HOST_URL}/pharmacy`, { headers }).pipe(
             tap((pharmacies: Pharmacy[]) => this._pharmaciesBehaviorSubject$.next(pharmacies)),
         );
@@ -44,9 +45,9 @@ export class PharmacyService {
         return this._http.get<Pharmacy>(`${environment.API_HOST_URL}/pharmacy/${name}`);
     }
 
-    public postPharmacy(pharmacyToAdd: ICreatePharmacy): Observable<Pharmacy> {
+    public postPharmacy(pharmacyToAdd: ICreatePharmacy, token: string): Observable<Pharmacy> {
         let headers = new HttpHeaders();
-        headers = headers.append('token', 'XXYYZZ');
+        headers = headers.append('token', token);
         return this._http.post<Pharmacy>(`${environment.API_HOST_URL}/pharmacy`, pharmacyToAdd, { headers });
     }
 

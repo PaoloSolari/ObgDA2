@@ -59,6 +59,7 @@ import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { RoleGuard } from './guards/role.guard';
 import { LoginComponent } from './components/login/login.component';
+import { BuyComponent } from './components/buy/buy.component';
 
 
 @NgModule({
@@ -82,7 +83,8 @@ import { LoginComponent } from './components/login/login.component';
         DemandListComponent,
         UserFormComponent,
         UserUpdateComponent,
-        LoginComponent
+        LoginComponent,
+        BuyComponent
     ],
     imports: [
         BrowserModule,
@@ -119,11 +121,11 @@ import { LoginComponent } from './components/login/login.component';
             useClass: AuthInterceptor,
             multi: true,
         },
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: LoadingInterceptor,
-            multi: true,
-        },
+        // {
+        //     provide: HTTP_INTERCEPTORS,
+        //     useClass: LoadingInterceptor,
+        //     multi: true,
+        // },
         AuthGuard,
         RoleGuard,
     ],

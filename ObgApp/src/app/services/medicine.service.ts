@@ -43,10 +43,9 @@ export class MedicineService {
         return this._http.get<Medicine>(`${environment.API_HOST_URL}/medicine/${medicineCode}`);
     }
 
-    public postMedicine(medicineToAdd: ICreateMedicine): Observable<Medicine> {
-        console.log(medicineToAdd);
+    public postMedicine(medicineToAdd: ICreateMedicine, token: string): Observable<Medicine> {
         let headers = new HttpHeaders();
-        headers = headers.append('token', 'AABBCC'); // Sería el del empleado 'Paolo'.
+        headers = headers.append('token', token);
         return this._http.post<Medicine>(`${environment.API_HOST_URL}/medicine`, medicineToAdd, { headers });
     }
 

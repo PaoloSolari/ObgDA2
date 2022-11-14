@@ -7,6 +7,7 @@ import { Invitation } from 'src/app/models/invitation';
 import { Pharmacy } from 'src/app/models/pharmacy';
 import { Session } from 'src/app/models/session';
 import { RoleUser } from 'src/app/models/user';
+import { AuthService } from 'src/app/services/auth.service';
 import { SessionService } from 'src/app/services/session.service';
 import { ICreateInvitation } from '../../interfaces/create-invitation';
 import { InvitationService } from '../../services/invitation.service';
@@ -51,6 +52,7 @@ export class InvitationFormComponent implements OnInit {
         private _sessionService : SessionService,
         private _route: ActivatedRoute,
         private _router: Router,
+        private _authService: AuthService,
     ) { }
 
 
@@ -69,13 +71,20 @@ export class InvitationFormComponent implements OnInit {
             this.isEditing = true;
             this.invitationId = id;
             this.backUrl = `/${INVITATION_LIST_URL}`; // [Para volver correctamente atrás]
-            this._invitationService.getInvitationByName(id).pipe(
+            this._invitationService.getInvitationByName(id)
+            .pipe(
                 take(1),
-                catchError((err) => {
-                    console.log({ err });
+                catchError((err => {
+                    if(err.status != 200){
+                        alert(`${err.error.errorMessage}`);
+                        console.log(`Error: ${err.error.errorMessage}`)
+                    } else {
+                        console.log(`Ok: ${err.error.text}`);
+                    }
                     return of(err);
-                }),
-            ).subscribe((invitation: Invitation) => {
+                }))
+            )
+            .subscribe((invitation: Invitation) => {
                 this.setInvitation(invitation);
             });
         }
@@ -93,13 +102,18 @@ export class InvitationFormComponent implements OnInit {
         // })
 
         // [Obtener las farmacias de la BD para colocar en el selector de farmacias]
-        this._pharmacyService.getPharmacies()
+        this._pharmacyService.getPharmacies(this._authService.getToken()!)
         .pipe(
             take(1),
-            catchError((err) => {
-                console.log({err});
+            catchError((err => {
+                if(err.status != 200){
+                    alert(`${err.error.errorMessage}`);
+                    console.log(`Error: ${err.error.errorMessage}`)
+                } else {
+                    console.log(`Ok: ${err.error.text}`);
+                }
                 return of(err);
-            }),
+            }))
         )
         .subscribe((pharmaciesDB: Pharmacy[] | undefined) => {
             this.pharmacies = pharmaciesDB!;
@@ -135,13 +149,18 @@ export class InvitationFormComponent implements OnInit {
             UserName: this.userNameForm,
         };
 
-        this._invitationService.postInvitation(invitationToAdd)
+        this._invitationService.postInvitation(invitationToAdd, this._authService.getToken()!)
         .pipe(
             take(1),
-            catchError((err) => {
-                console.log({err});
+            catchError((err => {
+                if(err.status != 200){
+                    alert(`${err.error.errorMessage}`);
+                    console.log(`Error: ${err.error.errorMessage}`)
+                } else {
+                    console.log(`Ok: ${err.error.text}`);
+                }
                 return of(err);
-            }),
+            }))
         )
         .subscribe((userCode: any) => {
             // [El endpoint devuelve el código de usuario]
@@ -183,13 +202,18 @@ export class InvitationFormComponent implements OnInit {
                 this.userCodeForm,
                 false,
             );
-            this._invitationService.putInvitation(invitation)
+            this._invitationService.putInvitation(invitation, this._authService.getToken()!)
             .pipe(
                 take(1),
-                catchError((err) => {
-                    console.log({err});
+                catchError((err => {
+                    if(err.status != 200){
+                        alert(`${err.error.errorMessage}`);
+                        console.log(`Error: ${err.error.errorMessage}`)
+                    } else {
+                        console.log(`Ok: ${err.error.text}`);
+                    }
                     return of(err);
-                }),
+                }))
             )
             .subscribe((invitation: Invitation) => {
                 if(invitation) {

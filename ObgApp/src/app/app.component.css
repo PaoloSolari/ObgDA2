@@ -11,9 +11,25 @@
 .mat-raised-button{
     color: rgb(240, 240, 240) !important;
     background-color: rgb(80, 129, 161) !important;
-    width: 150px;
+    width: 200px;
     margin-left: 10px;
     margin-right: auto;
+}
+
+.logoutBtn {
+    background-color: rgb(159, 81, 81) !important;
+}
+
+.addTxt {
+    margin-left: 7px;
+}
+
+.loginTxt {
+    margin-left: 7px;
+}
+
+.logoutTxt {
+    margin-left: 7px;
 }
 
 .mat-raised-button:hover{
