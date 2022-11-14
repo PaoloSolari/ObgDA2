@@ -29,6 +29,55 @@ namespace obg.BusinessLogic.Logics
             _employeeManagement = employeeManagement;
         }
 
+        //public Purchase UpdatePurchase(string idPurchase, Purchase purchaseToUpdate, string token)
+        //{
+        //    Session session = _sessionManagement.GetSessionByToken(token);
+        //    Employee employee = _employeeManagement.GetEmployeeByName(session.UserName);
+        //    Pharmacy employeePharmacy = employee.Pharmacy;
+        //    List<Purchase> pharmacyPurchases = employeePharmacy.Purchases;
+        //    if(pharmacyPurchases.Count == 0 || pharmacyPurchases == null)
+        //    {
+        //        throw new NotFoundException("No existen compras para esta farmacia.");
+        //    }
+        //    Purchase purchaseFromDB = _purchaseManagement.GetPurchaseById(idPurchase);
+        //    if(purchaseFromDB == null)
+        //    {
+        //        throw new NotFoundException("La compra no existe.");
+        //    }
+        //    int counter = 0;
+        //    bool allLinesConfirmed = true;
+        //    List<PurchaseLine> purchasesLinesBuyed = new List<PurchaseLine>();
+        //    foreach(PurchaseLine purchaseLine in purchaseFromDB.PurchaseLines)
+        //    {
+        //        Medicine medicine = _medicineManagement.GetMedicineByCode(purchaseLine.MedicineCode);
+        //        if (employeePharmacy.Medicines.Contains(medicine))
+        //        {
+        //            if(purchaseLine.Status.Equals(PurchaseLineStatus.Accepted) || purchaseLine.Status.Equals(PurchaseLineStatus.Rejected))
+        //            {
+        //                throw new PurchaseException("No se puede modificar el estado del medicamento luego de haber sido aceptado o rechazado.");
+        //            }
+        //            purchasesLinesBuyed.Add(purchaseLine);
+        //            purchaseLine.Status = purchaseToUpdate.PurchaseLines.ElementAt(counter).Status;
+        //            if (purchaseLine.Status.Equals(PurchaseLineStatus.UnResolved))
+        //            {
+        //                allLinesConfirmed = false;
+        //            }
+        //        }
+        //        counter++;
+        //    }
+        //    if (allLinesConfirmed)
+        //    {
+        //        purchaseFromDB.IsConfirmed = true;
+        //        UpdateMedicinesBought(purchasesLinesBuyed);
+        //        purchaseFromDB.Amount = CalculateAmountOfBuy(purchasesLinesBuyed);
+        //    } 
+        //    else
+        //    {
+        //        throw new PurchaseException("No puedes confirmar la compra si existe al menos un medicamento pendiente.");
+        //    }
+        //    _purchaseManagement.UpdatePurchase(purchaseFromDB);
+        //    return purchaseFromDB;
+        //}        
         public Purchase UpdatePurchase(string idPurchase, Purchase purchaseToUpdate, string token)
         {
             Session session = _sessionManagement.GetSessionByToken(token);
@@ -46,7 +95,7 @@ namespace obg.BusinessLogic.Logics
             }
             int counter = 0;
             bool allLinesConfirmed = true;
-            List<PurchaseLine> purchasesLinesBuyed = new List<PurchaseLine>();
+            List<PurchaseLine> purchasesLinesBought = new List<PurchaseLine>();
             foreach(PurchaseLine purchaseLine in purchaseFromDB.PurchaseLines)
             {
                 Medicine medicine = _medicineManagement.GetMedicineByCode(purchaseLine.MedicineCode);
@@ -56,20 +105,20 @@ namespace obg.BusinessLogic.Logics
                     {
                         throw new PurchaseException("No se puede modificar el estado del medicamento luego de haber sido aceptado o rechazado.");
                     }
-                    purchasesLinesBuyed.Add(purchaseLine);
+                    purchasesLinesBought.Add(purchaseLine);
                     purchaseLine.Status = purchaseToUpdate.PurchaseLines.ElementAt(counter).Status;
-                    if (purchaseLine.Status.Equals(PurchaseLineStatus.UnResolved))
-                    {
-                        allLinesConfirmed = false;
-                    }
+                }
+                if (purchaseLine.Status.Equals(PurchaseLineStatus.UnResolved))
+                {
+                    allLinesConfirmed = false;
                 }
                 counter++;
             }
+            UpdateMedicinesBought(purchasesLinesBought);
             if (allLinesConfirmed)
             {
                 purchaseFromDB.IsConfirmed = true;
-                UpdateMedicinesBuyed(purchasesLinesBuyed);
-                purchaseFromDB.Amount = CalculateAmountOfBuy(purchasesLinesBuyed);
+                purchaseFromDB.Amount = CalculateAmountOfBuy(purchasesLinesBought);
             } 
             else
             {
@@ -233,7 +282,7 @@ namespace obg.BusinessLogic.Logics
             return medicines;
         }
 
-        private void UpdateMedicinesBuyed(List<PurchaseLine> lines)
+        private void UpdateMedicinesBought(List<PurchaseLine> lines)
         {
             List<Medicine> medicines = new List<Medicine>();
             foreach (PurchaseLine line in lines)
