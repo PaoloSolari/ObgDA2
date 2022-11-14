@@ -10,5 +10,6 @@ namespace obg.BusinessLogic.Interface.Interfaces
         IEnumerable<Purchase> GetPurchases(string token);
         string InsertPurchase(Purchase purchase);
         Purchase UpdatePurchase(string idPurchase, Purchase purchase, string token);
+        Purchase GetPurchaseById(string idPurchase);
     }
 }

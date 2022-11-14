@@ -29,6 +29,16 @@ namespace obg.BusinessLogic.Logics
             _employeeManagement = employeeManagement;
         }
 
+        public Purchase GetPurchaseById(string idPurchase)
+        {
+            Purchase purchase = _purchaseManagement.GetPurchaseById(idPurchase);
+            if(purchase == null)
+            {
+                throw new PurchaseException("No existe compra correspondiente a dicho código.");
+            }
+            return purchase;
+        }
+
         //public Purchase UpdatePurchase(string idPurchase, Purchase purchaseToUpdate, string token)
         //{
         //    Session session = _sessionManagement.GetSessionByToken(token);
@@ -292,7 +302,8 @@ namespace obg.BusinessLogic.Logics
                 medicineFromDataBase.Stock -= line.MedicineQuantity;
                 if(medicineFromDataBase.Stock < 0)
                 {
-                    medicineFromDataBase.Stock = 0;
+                    throw new MedicineException("No hay stock suficiente del medicamento " + medicineFromDataBase.Name);
+                    //medicineFromDataBase.Stock = 0;
                 }
                 _medicineManagement.UpdateMedicine(medicineFromDataBase);
             }
