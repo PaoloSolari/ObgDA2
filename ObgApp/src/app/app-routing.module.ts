@@ -16,7 +16,7 @@ import { PurchaseListComponent } from './components/purchase-list/purchase-list.
 import { UserFormComponent } from './components/user-form/user-form.component';
 import { UserUpdateComponent } from './components/user-update/user-update.component';
 import { RoleGuard } from './guards/role.guard';
-import { DEMAND_FORM_URL, DEMAND_LIST_URL, INIT, INVITATION_FORM_URL, INVITATION_LIST_URL, LOGIN, MEDICINE_FORM_URL, MEDICINE_LIST_URL, PHARMACY_FORM_URL, BUY_FORM_URL, BUY_LIST_URL, USER_FORM_URL, USER_UPDATE_URL } from './utils/routes';
+import { DEMAND_FORM_URL, DEMAND_LIST_URL, INIT, INVITATION_FORM_URL, INVITATION_LIST_URL, LOGIN, MEDICINE_FORM_URL, MEDICINE_LIST_URL, PHARMACY_FORM_URL, BUY_FORM_URL, BUY_LIST_URL, USER_FORM_URL, USER_UPDATE_URL, PURCHASE_LIST_URL } from './utils/routes';
 
 const routes: Routes = [
     
@@ -27,7 +27,7 @@ const routes: Routes = [
     { path: USER_FORM_URL, component: UserFormComponent },
     { path: USER_UPDATE_URL, component: UserUpdateComponent },
 
-    // Purchase (Anonymous User)
+    // Buy (Anonymous User)
     { path: BUY_FORM_URL, component: BuyComponent },
     { path: BUY_LIST_URL, component: BuyListComponent },
 
@@ -68,7 +68,7 @@ const routes: Routes = [
         data: { expectedRole: 'Employee' },
     },
     {
-        path: BUY_LIST_URL, component: PurchaseListComponent, canActivate: [RoleGuard],
+        path: PURCHASE_LIST_URL, component: PurchaseListComponent, canActivate: [RoleGuard],
         data: { expectedRole: 'Employee' },
     },
     

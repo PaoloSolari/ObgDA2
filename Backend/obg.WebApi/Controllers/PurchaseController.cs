@@ -30,7 +30,7 @@ namespace obg.WebApi.Controllers
         }
 
         [HttpGet("{idPurchase}")]
-        public IActionResult GetPurchaseById([FromQuery] string idPurchase)
+        public IActionResult GetPurchaseById([FromRoute] string idPurchase)
         {
             return StatusCode(200, _purchaseService.GetPurchaseById(idPurchase));
         }

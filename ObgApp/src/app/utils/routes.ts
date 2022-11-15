@@ -32,6 +32,7 @@ export enum PATHS {
     DEMAND = 'demand',
     PURCHASE = 'purchase',
     SESSION = 'session',
+    BUY = 'buy',
 }
 
 export enum SEGMENTS {
@@ -47,24 +48,24 @@ export const LOGIN = `${PATHS.SESSION}`;
 export const USER_FORM_URL = `${PATHS.USER}/${SEGMENTS.NEW}`;
 export const USER_UPDATE_URL = `${PATHS.USER}/${idParam}`;
 
-// Purchase (Anonymous User)
-export const BUY_FORM_URL = `${PATHS.PURCHASE}`;
-export const BUY_LIST_URL = `${PATHS.PURCHASE}/${idParam}`;
+// Buy (Anonymous User)
+export const BUY_FORM_URL = `${PATHS.BUY}`;
+export const BUY_LIST_URL = `${PATHS.BUY}/${idParam}`;
 
 // Admnistrator:
 export const PHARMACY_FORM_URL = `${PATHS.PHARMACY}/${SEGMENTS.NEW}`;
 export const INVITATION_FORM_URL = `${PATHS.INVITATION}/${idParam}`; // Editar invitación
 export const ADD_INVITATION_URL = getInvitationFormUrl(SEGMENTS.NEW); // Crear invitación
 // export const INVITATION_FORM_URL = `${PATHS.INVITATION}/${SEGMENTS.NEW}`; // Cómo estaba antes.
-export const INVITATION_LIST_URL = PATHS.INVITATION;
+export const INVITATION_LIST_URL = `${PATHS.INVITATION}`;
 
 // Owner:
-export const DEMAND_LIST_URL = PATHS.DEMAND;
+export const DEMAND_LIST_URL = `${PATHS.DEMAND}`;
 export const DEMAND_UPDATE_URL = `${PATHS.DEMAND}/${idParam}`; // No es un componente ni SPA nueva, solo se usa para el endpoint de actualización.
 
 // Employee:
 export const MEDICINE_FORM_URL = `${PATHS.MEDICINE}/${SEGMENTS.NEW}`;
-export const MEDICINE_LIST_URL = PATHS.MEDICINE;
+export const MEDICINE_LIST_URL = `${PATHS.MEDICINE}`;
 export const DEMAND_FORM_URL = `${PATHS.DEMAND}/${SEGMENTS.NEW}`;
-export const PURCHASE_LIST_URL = PATHS.PURCHASE;
+export const PURCHASE_LIST_URL = `${PATHS.PURCHASE}`;
 

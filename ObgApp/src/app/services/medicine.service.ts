@@ -31,9 +31,6 @@ export class MedicineService {
         let headers = new HttpHeaders();
         let params = new HttpParams();
         params = params.append('employeeName', employeeName);
-        // headers.append('clave', 'valor');
-        // headers.append('employeeName', 'Pedro');
-        // return this._http.get<Medicine[]>(`${environment.API_HOST_URL}/medicine`, { headers }).pipe(
         return this._http.get<Medicine[]>(`${environment.API_HOST_URL}/medicine`, { params }).pipe(
             tap((medicines: Medicine[]) => this._medicinesBehaviorSubject$.next(medicines)),
         );

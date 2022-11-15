@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ICreatePurchase } from '../interfaces/create-purchase';
 import { Purchase } from '../models/purchase';
@@ -20,6 +20,14 @@ export class PurchaseService {
 
     public get purchases$(): Observable<Purchase[] | undefined> {
         return this._purchasessBehaviorSubject$.asObservable();
+    }
+
+    public getPurchases(userToken: string): Observable<Purchase[]> {
+        let headers = new HttpHeaders();
+        headers = headers.append('token', userToken);
+        return this._http.get<Purchase[]>(`${environment.API_HOST_URL}/purchase`, { headers }).pipe(
+            tap((purchases: Purchase[]) => this._purchasessBehaviorSubject$.next(purchases)),
+        );
     }
 
     public postPurchase(purchaseToAdd: ICreatePurchase, email: string): Observable<Purchase> {

@@ -52,6 +52,8 @@ namespace obg.WebApi
             services.AddScoped<ISessionService, SessionService>();
             services.AddScoped<ISessionManagement, SessionManagement>();
             services.AddScoped<IExporterService, ExporterService>();
+            services.AddScoped<IPurchaseLineService, PurchaseLineService>();
+            services.AddScoped<IPurchaseLineManagement, PurchaseLineManagement>();
             services.AddScoped<AdministratorAuthorizationAttributeFilter>();
             services.AddScoped<OwnerAuthorizationAttributeFilter>();
             services.AddScoped<EmployeeAuthorizationAttributeFilter>();

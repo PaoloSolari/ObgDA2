@@ -151,23 +151,34 @@ namespace obg.BusinessLogic.Logics
             } 
             List<Purchase> purchasesFromEmployeePharmacy = new List<Purchase>();
             bool purchaseIsFromPharmacy = false;
-            foreach(Purchase purchase in purchases)
+            bool allLinesConfirmed = true;
+            foreach (Purchase purchase in purchases)
             {
-                foreach(PurchaseLine purchaseLine in purchase.PurchaseLines)
+                foreach (PurchaseLine purchaseLine in purchase.PurchaseLines)
                 {
+                    if (purchaseLine.Status.Equals(PurchaseLineStatus.UnResolved))
+                    {
+                        allLinesConfirmed = false;
+                    }
                     Medicine medicine = _medicineManagement.GetMedicineByCode(purchaseLine.MedicineCode);
                     if (pharmacyFromEmployee.Medicines.Contains(medicine))
                     {
                         purchaseIsFromPharmacy = true;
                     }
                 }
+                if (allLinesConfirmed)
+                {
+                    purchase.IsConfirmed = true;
+                    _purchaseManagement.UpdatePurchase(purchase);
+                }
                 if (purchaseIsFromPharmacy)
                 {
                     purchasesFromEmployeePharmacy.Add(purchase);
                 }
                 purchaseIsFromPharmacy = false;
+                allLinesConfirmed = true;
             }
-            if(purchasesFromEmployeePharmacy.Count == 0 || purchasesFromEmployeePharmacy == null)
+            if (purchasesFromEmployeePharmacy.Count == 0 || purchasesFromEmployeePharmacy == null)
             {
                 throw new NotFoundException("No existen compras para esta farmacia.");
             }

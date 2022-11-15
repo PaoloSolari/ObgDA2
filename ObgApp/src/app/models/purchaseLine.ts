@@ -9,12 +9,12 @@ export class PurchaseLine {
     idPurchaseLine: string | null;
     medicineCode: string | null;
     medicineQuantity: number | null;
-    tatus: PurchaseLineStatus | null;
+    status: PurchaseLineStatus | null;
 
     constructor(idPurchaseLine: string | null, medicineCode: string | null, medicineQuantity: number | null, status: PurchaseLineStatus | null) {
         this.idPurchaseLine = idPurchaseLine;
         this.medicineCode = medicineCode;
         this.medicineQuantity = medicineQuantity;
-        this.tatus = status;
+        this.status = status;
     }
 }
