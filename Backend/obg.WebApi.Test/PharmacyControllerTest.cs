@@ -30,7 +30,6 @@ namespace obg.WebApi.Test
             api = new PharmacyController(mock.Object);
             validPharmacy = new Pharmacy("FarmaShop", "San Roque");
             administrator = new Administrator("Lucas", 000102, "l@gmail.com", "###bbb123.", "addressL", RoleUser.Employee, "13/09/2022");
-            //administrator.Pharmacies.Add(pharmacy);
             session = new Session("123456", "Lucas", "XXYYZZ");
         }
 

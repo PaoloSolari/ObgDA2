@@ -33,7 +33,6 @@ namespace obg.DataAccess.Test
             pharmacy = new Pharmacy("FarmaShop", "18 de Julio");
 
             administrator = new Administrator("Lucas", 000102, "l@gmail.com", "###bbb123.", "addressL", RoleUser.Employee, "13/09/2022");
-            //administrator.Pharmacies.Add(pharmacy);
             session = new Session("123456", "Lucas", "XXYYZZ");
 
             pharmacies = new List<Pharmacy>() { pharmacy };

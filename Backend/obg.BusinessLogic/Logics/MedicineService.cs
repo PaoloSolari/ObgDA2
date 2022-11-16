@@ -111,7 +111,6 @@ namespace obg.BusinessLogic.Logics
             Employee employee = _employeeManagement.GetEmployeeByName(employeeName);
             Pharmacy employeePharmacy = employee.Pharmacy;
             IEnumerable<Medicine> medicines = employeePharmacy.Medicines;
-            //IEnumerable<Medicine> medicines = _medicineManagement.GetMedicines();
             if (GetLengthOfList(medicines) == 0)
             {
                 throw new NotFoundException("No hay medicamentos.");

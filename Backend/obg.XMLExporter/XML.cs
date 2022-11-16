@@ -22,7 +22,6 @@ namespace obg.XMLExporter
         {
             List<string> parameters = new List<string>();
             parameters.Add("path");
-            parameters.Add("other");
             return parameters;
         }
 

@@ -37,7 +37,6 @@ namespace obg.WebApi.Test
             mock = new Mock<IDemandService>(MockBehavior.Strict);
             api = new DemandController(mock.Object);
             validPetition = new Petition("AAAAAA", "aaaaa", 5);
-            //petitions.Add(validPetition);
             validPharmacy1 = new Pharmacy("FarmaUy", "Gaboto");
             validEmployee = new Employee("Rodrigo", 000101, "r@gmail.com", "$$$aaa123.", "addressR", RoleUser.Employee, "13/09/2022", validPharmacy1);
             validOwner = new Owner("Paolo", 000111, "rasdas@gmail.com", "$$$aaa123.", "addressR", RoleUser.Owner, "13/09/2022", validPharmacy1);

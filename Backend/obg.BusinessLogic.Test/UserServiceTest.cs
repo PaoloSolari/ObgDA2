@@ -50,7 +50,6 @@ namespace obg.BusinessLogic.Test
             validUser1 = new User("Lucas", 789099, "lr@gmail.com", "###bbb123.", "address", RoleUser.Administrator, "13/09/2022");
             nullUser = null;
             users = new List<User> { validUser2};
-            //administrator = new Administrator("Lucas", 789099, "lr@gmail.com", "###bbb123.", "address", RoleUser.Administrator, "13/09/2022");
         }
 
         [TestMethod]

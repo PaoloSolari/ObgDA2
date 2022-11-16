@@ -20,7 +20,6 @@ namespace obg.DataAccess.Repositories
 
         public void InsertDemand(Demand demand, Session session)
         {
-            // Hay que cambiar el estado de los medicamentos?
             string employeeName = session.UserName;
             Employee employeeCreatingDemand = ObgContext.Employees.Where<Employee>(a => a.Name.Equals(employeeName)).Include("Pharmacy").FirstOrDefault();
             if (employeeCreatingDemand != null)

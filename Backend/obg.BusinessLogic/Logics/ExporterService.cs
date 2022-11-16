@@ -72,7 +72,6 @@ namespace obg.BusinessLogic.Logics
         {
             bool implementationLoaded = false;
             string currentPath = Directory.GetCurrentDirectory();
-            //string currentPath = @"C:\Users\User\Desktop\DA2 OBG\237912_238855\Backend\obg.WebApi";
             string[] files = Directory.GetFiles(currentPath + "\\Exporters", "*.dll");
             foreach (string file in files)
             {
@@ -84,19 +83,6 @@ namespace obg.BusinessLogic.Logics
                     implementationLoaded = true;
                     Employee employee = GetEmployeeBySession(token);
                     Pharmacy employeePharmacy = employee.Pharmacy;
-                    //List<Medicine> medicinesToExport = new List<Medicine>();
-                    //foreach(string medicineCode in medicinesCodes)
-                    //{
-                    //    Medicine medicine = _medicineManagement.GetMedicineByCode(medicineCode);
-                    //    if (employeePharmacy.Medicines.Contains(medicine))
-                    //    {
-                    //        medicinesToExport.Add(medicine);
-                    //    } 
-                    //    else
-                    //    {
-                    //        throw new ExportException("Solo puedes exportar medicamentos pertenecientes a tu farmacia.");
-                    //    }
-                    //}
                     if(employeePharmacy.Medicines.Count == 0)
                     {
                         throw new ExportException("La farmacia no tiene medicamentos.");

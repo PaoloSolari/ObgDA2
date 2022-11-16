@@ -20,7 +20,6 @@ namespace obg.WebApi.Controllers
             this.medicineService = medicineService;
         }
 
-        //[ServiceFilter(typeof(EmployeeAuthorizationAttributeFilter))]
         [HttpGet]
         public IActionResult GetMedicines([FromQuery] string employeeName)
         {
@@ -30,12 +29,6 @@ namespace obg.WebApi.Controllers
             }
             return StatusCode(200, medicineService.GetMedicines(employeeName));
         }
-
-        //[HttpGet("stock")]
-        //public IActionResult GetMedicinesWithStock([FromQuery] string Name)
-        //{
-        //    return StatusCode(200, medicineService.GetMedicinesWithStock(Name));
-        //}
         
         [HttpGet("stock")]
         public IActionResult GetMedicinesWithStock([FromQuery] string pharmacyName)

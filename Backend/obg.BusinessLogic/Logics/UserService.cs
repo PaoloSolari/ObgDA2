@@ -113,7 +113,6 @@ namespace obg.BusinessLogic.Logics
 
         public string UpdateUser(User user, string userName)
         {
-            //User userFromDB = _userManagement.GetUserByName(user.Name);
             User userFromDB = _userManagement.GetUserByName(userName);
             if (userFromDB == null)
             {
@@ -127,9 +126,6 @@ namespace obg.BusinessLogic.Logics
                 userFromDB.RegisterDate = DateTime.Now.ToShortDateString();
                 if (IsUpdateUserValid(userFromDB))
                 {
-                    //Invitation invitationFromDB = _invitationManagement.GetInvitationByUserName(user.Name);
-                    //invitationFromDB.WasUsed = true;
-                    //_invitationManagement.UpdateInvitation(invitationFromDB);
                     _userManagement.UpdateUser(userFromDB);
                 }
             }

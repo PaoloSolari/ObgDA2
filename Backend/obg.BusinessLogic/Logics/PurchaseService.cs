@@ -38,56 +38,7 @@ namespace obg.BusinessLogic.Logics
             }
             return purchase;
         }
-
-        //public Purchase UpdatePurchase(string idPurchase, Purchase purchaseToUpdate, string token)
-        //{
-        //    Session session = _sessionManagement.GetSessionByToken(token);
-        //    Employee employee = _employeeManagement.GetEmployeeByName(session.UserName);
-        //    Pharmacy employeePharmacy = employee.Pharmacy;
-        //    List<Purchase> pharmacyPurchases = employeePharmacy.Purchases;
-        //    if(pharmacyPurchases.Count == 0 || pharmacyPurchases == null)
-        //    {
-        //        throw new NotFoundException("No existen compras para esta farmacia.");
-        //    }
-        //    Purchase purchaseFromDB = _purchaseManagement.GetPurchaseById(idPurchase);
-        //    if(purchaseFromDB == null)
-        //    {
-        //        throw new NotFoundException("La compra no existe.");
-        //    }
-        //    int counter = 0;
-        //    bool allLinesConfirmed = true;
-        //    List<PurchaseLine> purchasesLinesBuyed = new List<PurchaseLine>();
-        //    foreach(PurchaseLine purchaseLine in purchaseFromDB.PurchaseLines)
-        //    {
-        //        Medicine medicine = _medicineManagement.GetMedicineByCode(purchaseLine.MedicineCode);
-        //        if (employeePharmacy.Medicines.Contains(medicine))
-        //        {
-        //            if(purchaseLine.Status.Equals(PurchaseLineStatus.Accepted) || purchaseLine.Status.Equals(PurchaseLineStatus.Rejected))
-        //            {
-        //                throw new PurchaseException("No se puede modificar el estado del medicamento luego de haber sido aceptado o rechazado.");
-        //            }
-        //            purchasesLinesBuyed.Add(purchaseLine);
-        //            purchaseLine.Status = purchaseToUpdate.PurchaseLines.ElementAt(counter).Status;
-        //            if (purchaseLine.Status.Equals(PurchaseLineStatus.UnResolved))
-        //            {
-        //                allLinesConfirmed = false;
-        //            }
-        //        }
-        //        counter++;
-        //    }
-        //    if (allLinesConfirmed)
-        //    {
-        //        purchaseFromDB.IsConfirmed = true;
-        //        UpdateMedicinesBought(purchasesLinesBuyed);
-        //        purchaseFromDB.Amount = CalculateAmountOfBuy(purchasesLinesBuyed);
-        //    } 
-        //    else
-        //    {
-        //        throw new PurchaseException("No puedes confirmar la compra si existe al menos un medicamento pendiente.");
-        //    }
-        //    _purchaseManagement.UpdatePurchase(purchaseFromDB);
-        //    return purchaseFromDB;
-        //}        
+        
         public Purchase UpdatePurchase(string idPurchase, Purchase purchaseToUpdate, string token)
         {
             Session session = _sessionManagement.GetSessionByToken(token);
@@ -189,14 +140,10 @@ namespace obg.BusinessLogic.Logics
         {
             purchase.IdPurchase = CreateId();
             SetIdsLinesOfPurchase(purchase.PurchaseLines);
-            //if (MedicinesOfTheSamePharmacy(purchase.PurchaseLines))
-            //{
                 if (ThereIsStock(purchase.PurchaseLines))
                 {
                     if (IsPurchaseValid(purchase))
                     {
-                    //UpdateMedicinesBuyed(purchase.PurchaseLines);
-                    //purchase.Amount = CalculateAmountOfBuy(purchase.PurchaseLines);
                         purchase.Amount = 1;
                         foreach(PurchaseLine purchaseLine in purchase.PurchaseLines)
                         {
@@ -218,11 +165,6 @@ namespace obg.BusinessLogic.Logics
                 {
                     throw new PurchaseException("No hay stock para los medicamentos elegidos.");
                 }
-            //}
-            //else
-            //{
-            //    throw new PurchaseException("Los medicamentos no pertenecen a la misma farmacia.");
-            //}
             return purchase.IdPurchase;
         }
 
@@ -239,40 +181,6 @@ namespace obg.BusinessLogic.Logics
                 line.Status = PurchaseLineStatus.UnResolved;
             }
         }
-
-        //private bool MedicinesOfTheSamePharmacy(List<PurchaseLine> lines)
-        //{
-        //    List<Medicine> medicinesToBuy = GetMedicinesOfPurchase(lines);
-        //    List<Pharmacy> pharmaciesOfDataBase = _pharmacyManagement.GetPharmacies().ToList();
-        //    int quantityOfMedicinesToBuy = medicinesToBuy.Count;
-        //    if(quantityOfMedicinesToBuy > 0)
-        //    {
-        //        foreach (Pharmacy pharmacy in pharmaciesOfDataBase)
-        //        {
-        //            int coincidences = 0;
-        //            foreach (Medicine medicineOfPharamacy in pharmacy.Medicines)
-        //            {
-        //                foreach (Medicine medicineToBuy in medicinesToBuy)
-        //                {
-        //                    if (medicineToBuy.Code.Equals(medicineOfPharamacy.Code))
-        //                    {
-        //                        coincidences++;
-        //                    }
-        //                }
-        //            }
-        //            bool areNotInSamePharmacy = 0 < coincidences && coincidences < quantityOfMedicinesToBuy;
-        //            if (areNotInSamePharmacy)
-        //            {
-        //                return false;
-        //            }
-        //        }
-        //    }
-        //    else
-        //    {
-        //        throw new PurchaseException("Compra inválida, debe elegir al menos un medicamento a comprar.");
-        //    }
-        //    return true;
-        //}
 
         private bool ThereIsStock(List<PurchaseLine> lines)
         {
@@ -314,7 +222,6 @@ namespace obg.BusinessLogic.Logics
                 if(medicineFromDataBase.Stock < 0)
                 {
                     throw new MedicineException("No hay stock suficiente del medicamento " + medicineFromDataBase.Name);
-                    //medicineFromDataBase.Stock = 0;
                 }
                 _medicineManagement.UpdateMedicine(medicineFromDataBase);
             }

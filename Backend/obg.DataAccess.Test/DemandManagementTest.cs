@@ -60,7 +60,6 @@ namespace obg.DataAccess.Test
             context.Demands.Add(demand);
             context.Owners.Add(validOwner);
             context.SaveChanges();
-            //IDemandManagement demandManagement = CreateDemandManagement();
             IEnumerable<Demand> demandsInDatabase = demandManagement.GetDemands(validSession1);
 
             Assert.AreEqual(demandsInDatabase.ToList().Count, demands.Count);

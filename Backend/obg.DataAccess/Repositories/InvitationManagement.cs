@@ -18,14 +18,11 @@ namespace obg.DataAccess.Repositories
 
         public void InsertInvitation(Invitation invitation)
         {
-            //if (invitation.UserRole != 0)
-            //{
-                Pharmacy pharmacyOfInvitation = ObgContext.Pharmacies.Where<Pharmacy>(p => p.Name.Equals(invitation.Pharmacy.Name)).FirstOrDefault();
-                if (pharmacyOfInvitation != null)
-                {
-                    ObgContext.Attach(invitation.Pharmacy);
-                }
-            //}
+            Pharmacy pharmacyOfInvitation = ObgContext.Pharmacies.Where<Pharmacy>(p => p.Name.Equals(invitation.Pharmacy.Name)).FirstOrDefault();
+            if (pharmacyOfInvitation != null)
+            {
+                ObgContext.Attach(invitation.Pharmacy);
+            }
             ObgContext.Invitations.Add(invitation);
             ObgContext.SaveChanges();
         }
@@ -34,14 +31,12 @@ namespace obg.DataAccess.Repositories
         {
             IEnumerable<Invitation> list = ObgContext.Invitations.ToList();
             List<Invitation> ret = new List<Invitation>();
-            //List<string> tagsList = new List<string>();
             foreach (Invitation inv in list)
             {
                 Invitation invAdd = ObgContext.Invitations.Where<Invitation>(i => i.IdInvitation.Equals(inv.IdInvitation)).Include("Pharmacy").FirstOrDefault();
                 ret.Add(invAdd);
             }
 
-            //return ObgContext.Invitations.ToList();
             return ret;
 
         }
@@ -63,7 +58,6 @@ namespace obg.DataAccess.Repositories
 
         public Invitation GetInvitationByAdministratorName(string administratorName)
         {
-            //return ObgContext.Invitations.Where<Invitation>(i => i.AdministratorName.Equals(administratorName)).Include("Pharmacy").FirstOrDefault();
             return ObgContext.Invitations.Where<Invitation>(i => i.AdministratorName.Equals(administratorName)).FirstOrDefault();
         }
         public void UpdateInvitation(Invitation invitation)

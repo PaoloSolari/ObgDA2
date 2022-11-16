@@ -19,17 +19,6 @@ namespace obg.DataAccess.Repositories
 
         public void InsertAdministrator(Administrator administrator)
         {
-            //IEnumerable<Pharmacy> pharmacies = ObgContext.Pharmacies.ToList();
-            //administrator.Pharmacies = new List<Pharmacy>();
-            //foreach (Pharmacy pharmacy in pharmacies)
-            //{
-            //    administrator.Pharmacies.Add(pharmacy);
-            //}
-            //foreach (Pharmacy pharmacy in pharmacies)
-            //{
-            //    //administrator.Pharmacies.Add(pharmacy);
-            //    ObgContext.Attach(pharmacy);
-            //}
             ObgContext.Administrators.Add(administrator);
             ObgContext.SaveChanges();
         }
