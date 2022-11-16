@@ -33,6 +33,7 @@ export enum PATHS {
     PURCHASE = 'purchase',
     SESSION = 'session',
     BUY = 'buy',
+    EXPORTER = 'exporter',
 }
 
 export enum SEGMENTS {
@@ -68,4 +69,5 @@ export const MEDICINE_FORM_URL = `${PATHS.MEDICINE}/${SEGMENTS.NEW}`;
 export const MEDICINE_LIST_URL = `${PATHS.MEDICINE}`;
 export const DEMAND_FORM_URL = `${PATHS.DEMAND}/${SEGMENTS.NEW}`;
 export const PURCHASE_LIST_URL = `${PATHS.PURCHASE}`;
+export const EXPORTER_FORM_URL = `${PATHS.EXPORTER}`;
 

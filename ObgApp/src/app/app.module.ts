@@ -62,6 +62,7 @@ import { LoginComponent } from './components/login/login.component';
 import { BuyComponent } from './components/buy/buy.component';
 import { MenuBuyComponent } from './components/menu-buy/menu-buy.component';
 import { BuyListComponent } from './components/buy-list/buy-list.component';
+import { ExporterFormComponent } from './components/exporter-form/exporter-form.component';
 
 
 @NgModule({
@@ -88,7 +89,8 @@ import { BuyListComponent } from './components/buy-list/buy-list.component';
         LoginComponent,
         BuyComponent,
         MenuBuyComponent,
-        BuyListComponent
+        BuyListComponent,
+        ExporterFormComponent
     ],
     imports: [
         BrowserModule,

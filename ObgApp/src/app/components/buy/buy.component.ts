@@ -44,7 +44,7 @@ export class BuyComponent implements OnInit {
 
     ngOnInit(): void {
 
-        // [Me traigo TODOS los medicamentos del sistema]
+        // [Me traigo TODOS los medicamentos (que tienen stock > 0) del sistema]
         this._medicineService.getMedicines('allMedicines') // [Seteamos 'allMedicines' como un nombre de usuario reservado para tener todos los medicamentos]
             .pipe(
                 take(1),

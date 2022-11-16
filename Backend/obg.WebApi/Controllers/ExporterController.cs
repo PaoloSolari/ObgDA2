@@ -26,10 +26,16 @@ namespace obg.WebApi.Controllers
             return StatusCode(200, _exporterService.GetExporters());
         }
 
-        [HttpPost]
-        public IActionResult ExportMedicine([FromHeader] List<string> medicinesCodes, [FromHeader] string typeOfExporter, [FromHeader] string token, [FromBody] Dictionary<string,string> parametersMap)
+        [HttpGet("parameters")]
+        public IActionResult GetParameters([FromHeader] string typeOfExporter)
         {
-            return StatusCode(200, _exporterService.ExportMedicine(medicinesCodes, typeOfExporter, token, parametersMap));
+            return StatusCode(200, _exporterService.GetParameters(typeOfExporter));
+        }
+
+        [HttpPost]
+        public IActionResult ExportMedicine([FromHeader] string typeOfExporter, [FromHeader] string token, [FromBody] Dictionary<string,string> parametersMap)
+        {
+            return StatusCode(200, _exporterService.ExportMedicine(typeOfExporter, token, parametersMap));
         }
     }
 }

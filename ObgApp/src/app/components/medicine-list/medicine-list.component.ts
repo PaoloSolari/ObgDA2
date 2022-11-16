@@ -36,7 +36,7 @@ export class MedicineListComponent implements OnInit {
 
     public ngOnInit(): void {
 
-        Globals.selectTab = 2;
+        Globals.selectTab = 0;
 
         // [Obtengo el empleado actual]
         this._sessionService.getSessionByToken(this._authService.getToken()!)

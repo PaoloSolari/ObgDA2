@@ -5,6 +5,7 @@ import { BuyListComponent } from './components/buy-list/buy-list.component';
 import { BuyComponent } from './components/buy/buy.component';
 import { DemandFormComponent } from './components/demand-form/demand-form.component';
 import { DemandListComponent } from './components/demand-list/demand-list.component';
+import { ExporterFormComponent } from './components/exporter-form/exporter-form.component';
 import { InitComponent } from './components/init/init.component';
 import { InvitationFormComponent } from './components/invitation-form/invitation-form.component';
 import { InvitationListComponent } from './components/invitation-list/invitation-list.component';
@@ -16,7 +17,7 @@ import { PurchaseListComponent } from './components/purchase-list/purchase-list.
 import { UserFormComponent } from './components/user-form/user-form.component';
 import { UserUpdateComponent } from './components/user-update/user-update.component';
 import { RoleGuard } from './guards/role.guard';
-import { DEMAND_FORM_URL, DEMAND_LIST_URL, INIT, INVITATION_FORM_URL, INVITATION_LIST_URL, LOGIN, MEDICINE_FORM_URL, MEDICINE_LIST_URL, PHARMACY_FORM_URL, BUY_FORM_URL, BUY_LIST_URL, USER_FORM_URL, USER_UPDATE_URL, PURCHASE_LIST_URL } from './utils/routes';
+import { DEMAND_FORM_URL, DEMAND_LIST_URL, INIT, INVITATION_FORM_URL, INVITATION_LIST_URL, LOGIN, MEDICINE_FORM_URL, MEDICINE_LIST_URL, PHARMACY_FORM_URL, BUY_FORM_URL, BUY_LIST_URL, USER_FORM_URL, USER_UPDATE_URL, PURCHASE_LIST_URL, EXPORTER_FORM_URL } from './utils/routes';
 
 const routes: Routes = [
     
@@ -69,6 +70,10 @@ const routes: Routes = [
     },
     {
         path: PURCHASE_LIST_URL, component: PurchaseListComponent, canActivate: [RoleGuard],
+        data: { expectedRole: 'Employee' },
+    },
+    {
+        path: EXPORTER_FORM_URL, component: ExporterFormComponent, canActivate: [RoleGuard],
         data: { expectedRole: 'Employee' },
     },
     

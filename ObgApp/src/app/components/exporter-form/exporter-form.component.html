@@ -1,0 +1,43 @@
+<app-back-button [url]="backUrl"></app-back-button>
+
+<!-- <form [formGroup]="exporterForm" (ngSubmit)="onSubmit()">
+    Number of books: 
+    <input type="number" min="0" formControlName="number_of_books" />
+    <div *ngFor="let num in number_of_books"/>
+      <input type="text" formControlName="{{num}}"/>
+    </div> 
+  </form> -->
+<form [formGroup]="exporterForm">
+    <mat-select formControlName="exporterSelect" required (selectionChange)="getParameters()">
+        <mat-option>--</mat-option>
+        <mat-option *ngFor="let exporter of exporters" [value]="exporter">
+            {{exporter}}
+        </mat-option>
+    </mat-select>
+</form>
+
+<form [formGroup]="parametersForm">
+
+</form>
+
+<form [formGroup]="parametersForm" (ngSubmit)="onSubmit()">
+    <div *ngFor="let parameter of parameters" class="form-group">
+        <mat-form-field appearance="outline">
+            <mat-label> {{ parameter }}</mat-label>
+            <input matInput class="form-control" type="{{ parameter }}" value="{{ parameter }}" [required]="parameter" formControlName="{{ parameter }}" id="{{ parameter }}" />
+        </mat-form-field>
+    </div>
+    <!-- <button type="submit" class="btn btn-primary" [disabled]="this.parametersForm.invalid">Submit</button> -->
+    <button mat-raised-button type="submit" class="btn btn-primary">Exportar</button>
+</form>
+
+
+<!-- <form [formGroup]="parametersForm" (ngSubmit)="onSubmit()">
+    <div *ngFor="let parameter of parameters" class="form-group">
+        <label> {{ parameter }}</label>
+        <input class="form-control" type="{{ parameter }}" value="{{ parameter }}" [required]="parameter"
+            formControlName="{{ parameter }}" />
+        <br>
+    </div>
+    <button type="submit" class="btn btn-primary">Exportar</button>
+</form> -->
