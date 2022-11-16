@@ -133,7 +133,7 @@ namespace obg.WebApi.Test
         }
 
         [TestMethod]
-        public void PutDemandOk()
+        public void PutPurchaseOk()
         {
             var validPurchaseModified = validPurchase;
             validPurchaseModified.IsConfirmed = true;

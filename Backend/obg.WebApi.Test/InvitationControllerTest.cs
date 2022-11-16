@@ -111,8 +111,8 @@ namespace obg.WebApi.Test
         [TestMethod]
         public void PutInvitationBadRequest()
         {
-            mock.Setup(x => x.UpdateInvitation(It.IsAny<string>(), It.IsAny<Invitation>(), It.IsAny<string>())).Throws(new InvitationException());
-            var result = api.PutInvitation(It.IsAny<string>(), It.IsAny<Invitation>(), It.IsAny<string>());
+            mock.Setup(x => x.UpdateInvitation(It.IsAny<Invitation>(), It.IsAny<string>())).Throws(new InvitationException());
+            var result = api.PutInvitation(It.IsAny<Invitation>(), It.IsAny<string>());
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
 
@@ -124,8 +124,8 @@ namespace obg.WebApi.Test
         [TestMethod]
         public void PutInvitationNotFound()
         {
-            mock.Setup(x => x.UpdateInvitation(It.IsAny<string>(), It.IsAny<Invitation>(), It.IsAny<string>())).Throws(new NotFoundException());
-            var result = api.PutInvitation(It.IsAny<string>(), It.IsAny<Invitation>(), It.IsAny<string>());
+            mock.Setup(x => x.UpdateInvitation(It.IsAny<Invitation>(), It.IsAny<string>())).Throws(new NotFoundException());
+            var result = api.PutInvitation(It.IsAny<Invitation>(), It.IsAny<string>());
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
 
@@ -137,8 +137,8 @@ namespace obg.WebApi.Test
         [TestMethod]
         public void PutInvitationFail()
         {
-            mock.Setup(x => x.UpdateInvitation(It.IsAny<string>(), It.IsAny<Invitation>(), It.IsAny<string>())).Throws(new Exception());
-            var result = api.PutInvitation(It.IsAny<string>(), It.IsAny<Invitation>(), It.IsAny<string>());
+            mock.Setup(x => x.UpdateInvitation(It.IsAny<Invitation>(), It.IsAny<string>())).Throws(new Exception());
+            var result = api.PutInvitation(It.IsAny<Invitation>(), It.IsAny<string>());
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
 
@@ -147,19 +147,19 @@ namespace obg.WebApi.Test
         }
 
         [TestMethod]
-        public void PutDemandOk()
+        public void PutInvitationOk()
         {
             var validInvitationModified = validInvitation;
             validInvitationModified.UserRole = RoleUser.Owner;
-            mock.Setup(x => x.UpdateInvitation(validInvitationModified.IdInvitation, validInvitationModified, validSession.Token)).Returns(validInvitationModified.IdInvitation);
-            var result = api.PutInvitation(validInvitationModified.IdInvitation, validInvitationModified, validSession.Token);
+            mock.Setup(x => x.UpdateInvitation(validInvitationModified, validSession.Token));
+            var result = api.PutInvitation(validInvitationModified, validSession.Token);
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
             var body = objectResult.Value;
 
             mock.VerifyAll();
             Assert.AreEqual(200, statusCode);
-            Assert.IsTrue(("Modificación de la solicitud: " + validInvitationModified.IdInvitation + " exitosa.").Equals(body));
+            Assert.IsTrue(("Modificación exitosa").Equals(body));
         }
     }
 }

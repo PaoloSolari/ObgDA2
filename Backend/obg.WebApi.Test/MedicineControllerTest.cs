@@ -57,7 +57,7 @@ namespace obg.WebApi.Test
         {
             mock.Setup(x => x.GetMedicines(It.IsAny<string>())).Throws(new Exception());
 
-            var result = api.GetMedicines(It.IsAny<string>());
+            var result = api.GetMedicines(employee.Name);
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
 

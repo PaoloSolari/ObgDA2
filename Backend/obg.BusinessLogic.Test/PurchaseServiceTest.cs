@@ -21,6 +21,8 @@ namespace obg.BusinessLogic.Test
         private Mock<IEmployeeManagement> mockEmployee;
         private PurchaseService service;
 
+        private Employee validEmployee;
+        private Session validSession;
         private List<PurchaseLine> purchaseLinesFromValidPurchase1;
         private List<PurchaseLine> purchaseLinesFromValidPurchase2;
         private List<PurchaseLine> emptyPurchaseLines;
@@ -32,6 +34,7 @@ namespace obg.BusinessLogic.Test
         private Pharmacy validPharmacy1;
         private List<Pharmacy> pharmacies;
         private Medicine validMedicine1;
+        private List<Purchase> purchases;
 
 
         [TestInitialize]
@@ -56,11 +59,15 @@ namespace obg.BusinessLogic.Test
             validPharmacy1 = new Pharmacy("FarmaUy", "Gaboto");
             validMedicine1 = new Medicine("XXCCAA", "Paracetamol", "Dolor de cabeza", PresentationMedicine.Capsulas, 0, "1mg", 200, false, true);
             validMedicine1.Stock = 100;
+            validPharmacy1.Medicines.Add(validMedicine1);
             pharmacies = new List<Pharmacy> { validPharmacy1 };
-
+            validPharmacy1.Purchases.Add(validPurchase1);
+            validEmployee = new Employee("Rodrigo", 000101, "r@gmail.com", "$$$aaa123.", "addressR", RoleUser.Employee, "13/09/2022", validPharmacy1);
+            validSession = new Session("DDIQDS", validEmployee.Name, "4de12a");
             validPurchase1.PurchaseLines = purchaseLinesFromValidPurchase1;
             validPurchase2.PurchaseLines = purchaseLinesFromValidPurchase2;
             nullPurchase = null;
+            purchases = new List<Purchase> { validPurchase1 };
         }
 
         [TestMethod]
@@ -191,6 +198,18 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.InsertPurchase(validPurchase1));
 
             service.InsertPurchase(validPurchase1);
+        }
+
+        [TestMethod]
+        public void GetPurchasesOk()
+        {
+            mockSession.Setup(x => x.GetSessionByToken(validSession.Token)).Returns(validSession);
+            mockEmployee.Setup(x => x.GetEmployeeByName(validSession.UserName)).Returns(validEmployee);
+            mock.Setup(x => x.GetPurchases()).Returns(purchases);
+            mockMedicine.Setup(x => x.GetMedicineByCode(validMedicine1.Code)).Returns(validMedicine1);
+            mock.Setup(x => x.UpdatePurchase(validPurchase1));
+
+            service.GetPurchases(validSession.Token);
         }
 
     }

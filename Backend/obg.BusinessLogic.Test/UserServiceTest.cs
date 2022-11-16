@@ -59,6 +59,7 @@ namespace obg.BusinessLogic.Test
             mockInvitation.Setup(x => x.GetInvitationByCode(validInvitation1.UserCode)).Returns(validInvitation1);
             mock.Setup(x => x.GetUserByName(validInvitation1.UserName)).Returns(nullUser);
             mock.Setup(x => x.GetUsers()).Returns(users);
+            mockInvitation.Setup(x => x.UpdateInvitation(validInvitation1));
             mockAdministrator.Setup(x => x.InsertAdministrator(It.IsAny<Administrator>()));
 
             service.InsertUser(validUser1);
@@ -116,6 +117,7 @@ namespace obg.BusinessLogic.Test
             mockInvitation.Setup(x => x.GetInvitationByCode(validInvitation1.UserCode)).Returns(validInvitation1);
             mock.Setup(x => x.GetUserByName(validInvitation1.UserName)).Returns(nullUser);
             mock.Setup(x => x.GetUsers()).Returns(users);
+            mockInvitation.Setup(x => x.UpdateInvitation(validInvitation1));
             mockAdministrator.Setup(x => x.InsertAdministrator(It.IsAny<Administrator>()));
 
             service.InsertUser(validUser1);
@@ -129,6 +131,7 @@ namespace obg.BusinessLogic.Test
             mockInvitation.Setup(x => x.GetInvitationByCode(validInvitation2.UserCode)).Returns(validInvitation1);
             mock.Setup(x => x.GetUserByName(validInvitation2.UserName)).Returns(nullUser);
             mock.Setup(x => x.GetUsers()).Returns(users);
+            mockInvitation.Setup(x => x.UpdateInvitation(validInvitation1));
             mockAdministrator.Setup(x => x.InsertAdministrator(It.IsAny<Administrator>()));
 
             service.InsertUser(validUser2);
@@ -155,7 +158,7 @@ namespace obg.BusinessLogic.Test
             validUser1.Email = "psgmail.com";
             mock.Setup(x => x.GetUserByName(validInvitation1.UserName)).Returns(validUser1);
             mock.Setup(x => x.UpdateUser(validUser1));
-            service.UpdateUser(validUser1);
+            service.UpdateUser(validUser1, validUser1.Name);
         }
 
         [ExpectedException(typeof(UserException))]
@@ -165,7 +168,7 @@ namespace obg.BusinessLogic.Test
             validUser1.Password = "aab#bcc";
             mock.Setup(x => x.GetUserByName(validInvitation1.UserName)).Returns(validUser1);
             mock.Setup(x => x.UpdateUser(validUser1));
-            service.UpdateUser(validUser1);
+            service.UpdateUser(validUser1, validUser1.Name);
         }
 
         [ExpectedException(typeof(UserException))]
@@ -175,7 +178,7 @@ namespace obg.BusinessLogic.Test
             validUser1.Password = "aabbccdd";
             mock.Setup(x => x.GetUserByName(validInvitation1.UserName)).Returns(validUser1);
             mock.Setup(x => x.UpdateUser(validUser1));
-            service.UpdateUser(validUser1);
+            service.UpdateUser(validUser1, validUser1.Name);
         }
 
         [ExpectedException(typeof(UserException))]
@@ -185,7 +188,7 @@ namespace obg.BusinessLogic.Test
             validUser1.Address = null;
             mock.Setup(x => x.GetUserByName(validInvitation1.UserName)).Returns(validUser1);
             mock.Setup(x => x.UpdateUser(validUser1));
-            service.UpdateUser(validUser1);
+            service.UpdateUser(validUser1, validUser1.Name);
         }
 
     }
