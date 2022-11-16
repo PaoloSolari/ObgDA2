@@ -73,8 +73,8 @@ namespace obg.WebApi.Test
         [TestMethod]
         public void PutUserBadRequest()
         {
-            mock.Setup(x => x.UpdateUser(validUser)).Throws(new UserException());
-            var result = api.PutUser(validUser);
+            mock.Setup(x => x.UpdateUser(validUser, validUser.Name)).Throws(new UserException());
+            var result = api.PutUser(validUser, validUser.Name);
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
 
@@ -86,8 +86,8 @@ namespace obg.WebApi.Test
         [TestMethod]
         public void PutUserNotFound()
         {
-            mock.Setup(x => x.UpdateUser(validUser)).Throws(new NotFoundException());
-            var result = api.PutUser(validUser);
+            mock.Setup(x => x.UpdateUser(validUser, validUser.Name)).Throws(new NotFoundException());
+            var result = api.PutUser(validUser, validUser.Name);
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
 
@@ -99,8 +99,8 @@ namespace obg.WebApi.Test
         [TestMethod]
         public void PutUserFail()
         {
-            mock.Setup(x => x.UpdateUser(validUser)).Throws(new Exception());
-            var result = api.PutUser(validUser);
+            mock.Setup(x => x.UpdateUser(validUser, validUser.Name)).Throws(new Exception());
+            var result = api.PutUser(validUser, validUser.Name);
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
 
@@ -113,8 +113,8 @@ namespace obg.WebApi.Test
         {
             var validUserModified = validUser;
             validUserModified.Password = "new password";
-            mock.Setup(x => x.UpdateUser(validUserModified)).Returns(validUserModified.Name);
-            var result = api.PutUser(validUserModified);
+            mock.Setup(x => x.UpdateUser(validUserModified, validUser.Name)).Returns(validUserModified.Name);
+            var result = api.PutUser(validUserModified, validUser.Name);
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
             var body = objectResult.Value;

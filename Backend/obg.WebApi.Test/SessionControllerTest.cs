@@ -68,7 +68,7 @@ namespace obg.WebApi.Test
 
             mock.VerifyAll();
             Assert.AreEqual(200, statusCode);
-            Assert.IsTrue(("Token: " + (validSession.Token)).Equals(body));
+            Assert.IsTrue((validSession.Token).Equals(body));
         }
     }
 }

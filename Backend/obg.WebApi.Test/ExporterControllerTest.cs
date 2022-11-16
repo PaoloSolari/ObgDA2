@@ -67,8 +67,8 @@ namespace obg.WebApi.Test
         [TestMethod]
         public void ExportMedicineBadRequest()
         {
-            mock.Setup(x => x.ExportMedicine(It.IsAny<List<string>>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Dictionary<string,string>>())).Throws(new ExportException());
-            var result = api.ExportMedicine(It.IsAny<List<string>>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Dictionary<string, string>>());
+            mock.Setup(x => x.ExportMedicine(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Dictionary<string,string>>())).Throws(new ExportException());
+            var result = api.ExportMedicine(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Dictionary<string, string>>());
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
 
@@ -80,8 +80,8 @@ namespace obg.WebApi.Test
         [TestMethod]
         public void PostInvitationFail()
         {
-            mock.Setup(x => x.ExportMedicine(It.IsAny<List<string>>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Dictionary<string, string>>())).Throws(new Exception());
-            var result = api.ExportMedicine(It.IsAny<List<string>>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Dictionary<string, string>>());
+            mock.Setup(x => x.ExportMedicine(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Dictionary<string, string>>())).Throws(new Exception());
+            var result = api.ExportMedicine(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Dictionary<string, string>>());
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
 
@@ -92,15 +92,15 @@ namespace obg.WebApi.Test
         [TestMethod]
         public void ExportMedicineOk()
         {
-            mock.Setup(x => x.ExportMedicine(medicineCodes, "JSON", It.IsAny<string>(), It.IsAny<Dictionary<string, string>>())).Returns(medicineCodes);
-            var result = api.ExportMedicine(medicineCodes, "JSON", It.IsAny<string>(), It.IsAny<Dictionary<string, string>>());
+            mock.Setup(x => x.ExportMedicine("JSON", It.IsAny<string>(), It.IsAny<Dictionary<string, string>>())).Returns("JSON");
+            var result = api.ExportMedicine("JSON", It.IsAny<string>(), It.IsAny<Dictionary<string, string>>());
             var objectResult = result as ObjectResult;
             var statusCode = objectResult.StatusCode;
             var body = objectResult.Value;
 
             mock.VerifyAll();
             Assert.AreEqual(200, statusCode);
-            Assert.IsTrue(medicineCodes.Equals(body));
+            Assert.IsTrue("JSON".Equals(body));
         }
     }
 }

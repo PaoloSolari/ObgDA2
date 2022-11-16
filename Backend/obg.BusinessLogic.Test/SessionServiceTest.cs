@@ -43,9 +43,7 @@ namespace obg.BusinessLogic.Test
         [TestMethod]
         public void InsertSessiondOK()
         {
-            mock.Setup(x => x.IsIdSessionRegistered(It.IsAny<string>())).Returns(false);
             mockUser.Setup(x => x.GetUserByName(validAdministrator1.Name)).Returns(validAdministrator1);
-            mock.Setup(x => x.IsNameLogged(validSession1)).Returns(false);
             mock.Setup(x => x.InsertSession(validSession1));
             service.InsertSession(validSession1, validAdministrator1.Password);
             mock.VerifyAll();
@@ -57,28 +55,6 @@ namespace obg.BusinessLogic.Test
         public void InsertSessionWrong_NullSession()
         {
             service.InsertSession(nullSession, validAdministrator1.Password);
-        }
-
-        
-
-        [ExpectedException(typeof(SessionException))]
-        [TestMethod]
-        public void InsertSessionWrong_RepeatedIdSession()
-        {
-            mock.Setup(x => x.IsIdSessionRegistered(It.IsAny<string>())).Returns(false);
-            mockUser.Setup(x => x.GetUserByName(validAdministrator1.Name)).Returns(validAdministrator1);
-            mock.Setup(x => x.IsNameLogged(validSession1)).Returns(false);
-            mock.Setup(x => x.InsertSession(validSession1));
-            service.InsertSession(validSession1, validAdministrator1.Password);
-            mock.VerifyAll();
-            mockUser.VerifyAll();
-
-            validSession2.IdSession = "DDIQDS"; 
-            mock.Setup(x => x.IsIdSessionRegistered(It.IsAny<string>())).Returns(true);
-            mockUser.Setup(x => x.GetUserByName(validAdministrator1.Name)).Returns(validAdministrator1);
-            mock.Setup(x => x.IsNameLogged(validSession2)).Returns(true);
-            mock.Setup(x => x.InsertSession(validSession2));
-            service.InsertSession(validSession2, validAdministrator1.Password);
         }
 
         [ExpectedException(typeof(SessionException))]
@@ -116,19 +92,5 @@ namespace obg.BusinessLogic.Test
             mock.Setup(x => x.InsertSession(validSession1));
             service.InsertSession(validSession1, validAdministrator1.Password);
         }
-
-
-
-        [ExpectedException(typeof(SessionException))]
-        [TestMethod]
-        public void InsertSessionWrong_LoggedToken()
-        {
-            mock.Setup(x => x.IsIdSessionRegistered(It.IsAny<string>())).Returns(false);
-            mockUser.Setup(x => x.GetUserByName(validAdministrator1.Name)).Returns(validAdministrator1);
-            mock.Setup(x => x.IsNameLogged(validSession1)).Returns(true);
-            mock.Setup(x => x.InsertSession(validSession1));
-            service.InsertSession(validSession1, validAdministrator1.Password);
-        }
-
     }
 }

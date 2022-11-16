@@ -52,7 +52,7 @@ namespace obg.BusinessLogic.Test
         {
             mockSession.Setup(x => x.GetSessionByToken(validSession1.Token)).Returns(validSession1);
             mockEmployee.Setup(x => x.GetEmployeeByName(validSession1.UserName)).Returns(validEmployee);
-            service.ExportMedicine(medicineCodes, "JSON", validSession1.Token, parametersMap);
+            service.ExportMedicine("JSON", validSession1.Token, parametersMap);
 
             mockSession.VerifyAll();
             mockEmployee.VerifyAll();
@@ -64,7 +64,7 @@ namespace obg.BusinessLogic.Test
         {
             mockSession.Setup(x => x.GetSessionByToken(validSession1.Token)).Returns(validSession1);
             mockEmployee.Setup(x => x.GetEmployeeByName(validSession1.UserName)).Returns(validEmployee);
-            service.ExportMedicine(null, "JSON", validSession1.Token, parametersMap);
+            service.ExportMedicine("JSON", validSession1.Token, parametersMap);
         }        
         
         [ExpectedException(typeof(System.Exception))]
@@ -73,7 +73,7 @@ namespace obg.BusinessLogic.Test
         {
             mockSession.Setup(x => x.GetSessionByToken(validSession1.Token)).Returns(validSession1);
             mockEmployee.Setup(x => x.GetEmployeeByName(validSession1.UserName)).Returns(validEmployee);
-            service.ExportMedicine(medicineCodes, "JSON", validSession1.Token, null);
+            service.ExportMedicine("JSON", validSession1.Token, null);
         }
     }
 }

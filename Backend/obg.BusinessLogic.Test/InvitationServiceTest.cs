@@ -52,7 +52,6 @@ namespace obg.BusinessLogic.Test
         {
             mockPharmacy.Setup(x => x.GetPharmacyByName(validPharmacy1.Name)).Returns(validPharmacy1);
             mockSession.Setup(x => x.GetSessionByToken(validSession.Token)).Returns(validSession);
-            mock.Setup(x => x.IsIdInvitationRegistered(It.IsAny<string>())).Returns(false);
             mock.Setup(x => x.IsNameRegistered(validInvitation1.UserName)).Returns(false);
             mock.Setup(x => x.IsCodeRegistered(It.IsAny<int>())).Returns(false);
             mock.Setup(x => x.InsertInvitation(validInvitation1));
@@ -74,36 +73,6 @@ namespace obg.BusinessLogic.Test
             service.InsertInvitation(nullInvitation, validPharmacy1.Name, validSession.Token);
         }
 
-        [ExpectedException(typeof(InvitationException))]
-        [TestMethod]
-        public void InsertInvitationWrong_RepeatedIdInvitation()
-        {
-            mockPharmacy.Setup(x => x.GetPharmacyByName(validPharmacy1.Name)).Returns(validPharmacy1);
-            mockSession.Setup(x => x.GetSessionByToken(validSession.Token)).Returns(validSession);
-
-            mock.Setup(x => x.IsIdInvitationRegistered(It.IsAny<string>())).Returns(false);
-            mock.Setup(x => x.IsNameRegistered(validInvitation1.UserName)).Returns(false);
-            mock.Setup(x => x.IsCodeRegistered(It.IsAny<int>())).Returns(false);
-            mock.Setup(x => x.InsertInvitation(validInvitation1));
-
-            service.InsertInvitation(validInvitation1, validPharmacy1.Name, validSession.Token);
-
-            mockPharmacy.VerifyAll();
-            mockSession.VerifyAll();
-            mock.VerifyAll();
-
-            validInvitation2.IdInvitation = "GGHHJJ";
-
-            mockPharmacy.Setup(x => x.GetPharmacyByName(validPharmacy1.Name)).Returns(validPharmacy1);
-            mockSession.Setup(x => x.GetSessionByToken(validSession.Token)).Returns(validSession);
-
-            mock.Setup(x => x.IsIdInvitationRegistered(It.IsAny<string>())).Returns(true);
-            mock.Setup(x => x.IsNameRegistered(validInvitation2.UserName)).Returns(false);
-            mock.Setup(x => x.IsCodeRegistered(It.IsAny<int>())).Returns(false);
-            mock.Setup(x => x.InsertInvitation(validInvitation2));
-
-            service.InsertInvitation(validInvitation2, validPharmacy1.Name, validSession.Token);
-        }
 
         [ExpectedException(typeof(InvitationException))]
         [TestMethod]
@@ -144,7 +113,6 @@ namespace obg.BusinessLogic.Test
             mockPharmacy.Setup(x => x.GetPharmacyByName(validPharmacy1.Name)).Returns(validPharmacy1);
             mockSession.Setup(x => x.GetSessionByToken(validSession.Token)).Returns(validSession);
 
-            mock.Setup(x => x.IsIdInvitationRegistered(It.IsAny<string>())).Returns(false);
             mock.Setup(x => x.IsNameRegistered(validInvitation1.UserName)).Returns(false);
             mock.Setup(x => x.IsCodeRegistered(It.IsAny<int>())).Returns(false);
             mock.Setup(x => x.InsertInvitation(validInvitation1));
@@ -190,7 +158,6 @@ namespace obg.BusinessLogic.Test
             mockPharmacy.Setup(x => x.GetPharmacyByName(validPharmacy1.Name)).Returns(validPharmacy1);
             mockSession.Setup(x => x.GetSessionByToken(validSession.Token)).Returns(validSession);
 
-            mock.Setup(x => x.IsIdInvitationRegistered(It.IsAny<string>())).Returns(false);
             mock.Setup(x => x.IsNameRegistered(validInvitation1.UserName)).Returns(false);
             mock.Setup(x => x.IsCodeRegistered(It.IsAny<int>())).Returns(false);
             mock.Setup(x => x.InsertInvitation(validInvitation1));

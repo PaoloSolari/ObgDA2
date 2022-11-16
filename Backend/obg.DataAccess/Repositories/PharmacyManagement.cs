@@ -45,6 +45,17 @@ namespace obg.DataAccess.Repositories
         {
             return ObgContext.Pharmacies.Include("Medicines").Include("Purchases");
         }
+        //public IEnumerable<Pharmacy> GetPharmacies()
+        //{
+        //    List<Pharmacy> pharmaciesReturn = new List<Pharmacy>();
+        //    List<Pharmacy> pharmacies = ObgContext.Pharmacies.ToList();
+        //    foreach(Pharmacy pharmacy in pharmacies)
+        //    {
+        //        pharmaciesReturn.Add(ObgContext.Pharmacies.Where<Pharmacy>(p => p.Name.Equals(pharmacy.Name)).Include("Medicines").Include("Purchases").FirstOrDefault());
+        //    }
+        //    return pharmaciesReturn;
+
+        //}
 
         public Pharmacy GetPharmacyByName(string name)
         {

@@ -41,7 +41,7 @@ namespace obg.WebApi.Controllers
         }
 
         [HttpPut("{idInvitation}")]
-        public IActionResult PuInvitation([FromBody] Invitation invitation, [FromHeader] string token)
+        public IActionResult PutInvitation([FromBody] Invitation invitation, [FromHeader] string token)
         {
             invitationService.UpdateInvitation(invitation, token);
             return StatusCode(200, "Modificación exitosa");
