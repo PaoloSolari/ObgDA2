@@ -1,0 +1,93 @@
+table {
+    /* Centrar */
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.mat-header-cell {
+    text-align: center;
+    color: rgb(89, 149, 189) ;
+}
+
+.addColumn{
+    width: 75px;
+}
+
+.newStock{
+    margin-top: 6px;
+    margin-bottom: 3px;
+}
+
+.mat-raised-button {
+    color: rgb(240, 240, 240) !important;
+    background-color: rgb(89, 149, 189) !important;
+    margin-top: 3px;
+    margin-bottom: 6px;
+}
+
+.quantity {
+    margin: 0 auto;
+    display: block;
+    width: 100px;
+    color: rgb(89, 149, 189) !important;
+}
+
+.emailForm {
+    width: 300px;
+    margin: 25px auto;
+    padding-bottom: 0px;
+    display:block;
+}
+
+.sendButton {
+    background-color: rgb(80, 129, 161) !important;
+    width: 150px;
+    margin: 0px auto;
+    display:block;
+}
+
+.mat-form-field {
+    margin-top: 5px !important;
+    margin-bottom: 5px !important;
+    display:block;
+}
+
+
+/* Color para el 'label' de los inputs */
+::ng-deep .mat-focused .mat-form-field-label {
+    color: rgb(89, 149, 189) !important;
+}
+
+/* Color para el borde de los inputs */
+::ng-deep.mat-form-field-outline-thick {
+    color: rgb(89, 149, 189) !important;
+}
+
+tr.element-row:hover {
+    background: whitesmoke;
+    cursor: default;
+    color: rgb(89, 149, 189) ;
+}
+
+
+/* Cuando no hay elementos */
+
+.mat-icon {
+    color: rgb(128, 128, 128) !important;
+    margin-top: 50px;
+    width: 100%;
+    height: auto;
+    font-size: 100px;
+    text-align: center;
+}
+
+.NoMedicine {
+    color: rgb(128, 128, 128) !important;
+    font-family: Bahnschrift;
+    font-size: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}

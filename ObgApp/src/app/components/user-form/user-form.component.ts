@@ -6,6 +6,7 @@ import { ICreateUser } from 'src/app/interfaces/create-user';
 import { Employee } from 'src/app/models/employee';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
+import { Globals } from 'src/app/utils/globals';
 import { getUserFormUrl, INIT, USER_FORM_URL, USER_UPDATE_URL } from 'src/app/utils/routes';
 
 @Component({
@@ -31,6 +32,7 @@ export class UserFormComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
+        Globals.userOk = true; // [Dejamos listo para el correcto registro de usuario]
     }
 
     public createUser(): void{
@@ -43,20 +45,32 @@ export class UserFormComponent implements OnInit {
             .pipe(
                 take(1),
                 catchError((err => {
-                    console.log({err});
+                    if(err.status != 200){
+                        alert(`${err.error.errorMessage}`);
+                        console.log(`Error: ${err.error.errorMessage}`)
+                        Globals.userOk = false; // [Hacemos que el registro no siga avanzando]
+                        this.cleanForm(); // [Limpiamos el formulario]
+                    } else {
+                        console.log(`Ok: ${err.error.text}`);
+                    }
                     return of(err);
                 }))
             )
             .subscribe((user: User) => {
                 // [El endpoint nos devuelve el nombre del usuario registrado]
                 if(user) {
-                    // this._router.navigateByUrl(USER_UPDATE_URL);
-                    this.navigateToConfirmUser(this.nameForm);
+                    if(Globals.userOk){
+                        // this._router.navigateByUrl(USER_UPDATE_URL);
+                        this.navigateToConfirmUser(this.nameForm);
+                    }
                 }
             })
         }
     }
 
+    public cleanForm(): void{
+        this.userForm.reset();
+    }
     
     public navigateToConfirmUser(name: string): void {
         this._router.navigateByUrl(`/${getUserFormUrl(name)}`)

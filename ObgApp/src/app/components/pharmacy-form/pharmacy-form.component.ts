@@ -8,6 +8,7 @@ import { ICreatePharmacy } from 'src/app/interfaces/create-pharmacy';
 import { NoSpace } from 'src/app/validators/noEmptyString.validator';
 import { catchError, of, take } from 'rxjs';
 import { Pharmacy } from 'src/app/models/pharmacy';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
     selector: 'app-pharmacy-form',
@@ -25,6 +26,7 @@ export class PharmacyFormComponent implements OnInit {
 
     constructor(
         private _pharmacyService: PharmacyService,
+        private _authService: AuthService,
     ) { }
 
     public get nameForm() { return this.pharmacyForm.value.name; }
@@ -40,11 +42,16 @@ export class PharmacyFormComponent implements OnInit {
                 Name: this.nameForm!,
                 Address: this.addressForm!,
             };
-            this._pharmacyService.postPharmacy(pharmacyToAdd)
+            this._pharmacyService.postPharmacy(pharmacyToAdd, this._authService.getToken()!)
             .pipe(
                 take(1),
                 catchError((err => {
-                    console.log({err});
+                    if(err.status != 200){
+                        alert(`${err.error.errorMessage}`);
+                        console.log(`Error: ${err.error.errorMessage}`)
+                    } else {
+                        console.log(`Ok: ${err.error.text}`);
+                    }
                     return of(err);
                 }))
             )

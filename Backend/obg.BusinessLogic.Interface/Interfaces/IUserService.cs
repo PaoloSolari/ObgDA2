@@ -9,5 +9,6 @@ namespace obg.BusinessLogic.Interface.Interfaces
     {
         string InsertUser(User user);
         string UpdateUser(User user, string userName);
+        User GetUserByName(string userName);
     }
 }

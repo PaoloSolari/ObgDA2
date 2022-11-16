@@ -12,7 +12,7 @@ namespace obg.WebApi.Controllers
     [ApiController]
     [Route("[controller]")]
     [ExceptionFilter]
-    //[ServiceFilter(typeof(AdministratorAuthorizationAttributeFilter))]
+    [ServiceFilter(typeof(AdministratorAuthorizationAttributeFilter))]
     public class InvitationController : ControllerBase
     {
 

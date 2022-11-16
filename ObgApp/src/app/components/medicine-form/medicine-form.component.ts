@@ -8,6 +8,7 @@ import { Globals } from '../../utils/globals';
 import { NoSpace } from '../../validators/noEmptyString.validator';
 import { Medicine, PresentationMedicine } from '../../models/medicine';
 import { catchError, of, take } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
     selector: 'app-medicine-form',
@@ -17,10 +18,11 @@ import { catchError, of, take } from 'rxjs';
 })
 export class MedicineFormComponent implements OnInit {
 
+
     public backUrl = `/${INIT}`;
 
     public medicineForm = new FormGroup({
-        
+
         code: new FormControl(),
         name: new FormControl(),
         symtomps: new FormControl(),
@@ -41,6 +43,7 @@ export class MedicineFormComponent implements OnInit {
     constructor(
         private _medicineService: MedicineService,
         private _router: Router,
+        private _authService: AuthService,
     ) { }
 
     public get codeForm() { return this.medicineForm.value.code!; }
@@ -70,38 +73,43 @@ export class MedicineFormComponent implements OnInit {
                 Price: this.priceForm,
                 Prescription: this.getPrescription(this.prescriptionForm),
             };
-            this._medicineService.postMedicine(medicineFromForm)
-            .pipe(
-                take(1),
-                catchError((err => {
-                    console.log({err});
-                    return of(err);
-                }))
-            )
-            .subscribe((medicine: Medicine) => {
-                if(medicine) {
-                    alert('Medicamento creado');
-                    this.cleanForm();
-                }
-            })
+            this._medicineService.postMedicine(medicineFromForm, this._authService.getToken()!)
+                .pipe(
+                    take(1),
+                    catchError((err => {
+                        if (err.status != 200) {
+                            alert(`${err.error.errorMessage}`);
+                            console.log(`Error: ${err.error.errorMessage}`)
+                        } else {
+                            console.log(`Ok: ${err.error.text}`);
+                        }
+                        return of(err);
+                    }))
+                )
+                .subscribe((medicine: Medicine) => {
+                    if (medicine) {
+                        this.cleanForm();
+                    }
+                })
         }
     }
 
     private getPresentation(presentation: string): PresentationMedicine {
-        if(presentation == 'Cápsulas') return PresentationMedicine.capsulas;
-        if(presentation == 'Comprimidos') return PresentationMedicine.comprimidos;
-        if(presentation == 'Solución soluble') return PresentationMedicine.solucionSoluble;
-        if(presentation == 'Stick Pack') return PresentationMedicine.stickPack;
+        if (presentation == 'Cápsulas') return PresentationMedicine.capsulas;
+        if (presentation == 'Comprimidos') return PresentationMedicine.comprimidos;
+        if (presentation == 'Solución soluble') return PresentationMedicine.solucionSoluble;
+        if (presentation == 'Stick Pack') return PresentationMedicine.stickPack;
         return PresentationMedicine.liquido;
     }
 
     private getPrescription(prescription: string): boolean {
-        if(prescription == 'Sí') return true;
+        if (prescription == 'Sí') return true;
         else return false;
-    } 
+    }
 
     public cleanForm() {
-        this.medicineForm.reset();
+        // this.medicineForm.reset();
+        // this.codeForm?.setValue('');
     }
 
     public onlySpace(input: string): boolean {
@@ -112,4 +120,5 @@ export class MedicineFormComponent implements OnInit {
     }
 
 }
+
 

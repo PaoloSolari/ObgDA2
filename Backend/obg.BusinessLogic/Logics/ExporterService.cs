@@ -50,15 +50,29 @@ namespace obg.BusinessLogic.Logics
             }
         }
 
-        public List<string> ExportMedicine(List<string> medicinesCodes, string typeOfExporter, string token, Dictionary<string,string> parametersMap)
+        public List<string> GetParameters(string typeOfExporter)
+        {
+            string currentPath = Directory.GetCurrentDirectory();
+            string[] files = Directory.GetFiles(currentPath + "\\Exporters", "*.dll");
+            List<string> parameters = new List<string>();
+            foreach (string file in files)
+            {
+                Assembly dll = Assembly.LoadFile(file);
+                var loadedImplementation = dll.GetTypes().Where(t => typeof(IExporter).IsAssignableFrom(t) && t.IsClass).FirstOrDefault();
+                var implementation = Activator.CreateInstance(loadedImplementation) as IExporter;
+                if (implementation.GetName().Equals(typeOfExporter))
+                {
+                    parameters = implementation.ListParameters();
+                }
+            }
+            return parameters;
+        }
+
+        public string ExportMedicine(string typeOfExporter, string token, Dictionary<string,string> parametersMap)
         {
             bool implementationLoaded = false;
-            if(medicinesCodes == null || medicinesCodes.Count == 0)
-            {
-                throw new ExportException("Debes seleccionar algun medicamento a exportar.");
-            }
-            //string currentPath = Directory.GetCurrentDirectory();
-            string currentPath = @"C:\Users\User\Desktop\DA2 OBG\237912_238855\Backend\obg.WebApi";
+            string currentPath = Directory.GetCurrentDirectory();
+            //string currentPath = @"C:\Users\User\Desktop\DA2 OBG\237912_238855\Backend\obg.WebApi";
             string[] files = Directory.GetFiles(currentPath + "\\Exporters", "*.dll");
             foreach (string file in files)
             {
@@ -94,7 +108,7 @@ namespace obg.BusinessLogic.Logics
             {
                 throw new ExportException("El formato a exportar no existe.");
             }
-            return medicinesCodes;
+            return typeOfExporter;
         }
 
         public Employee GetEmployeeBySession(string token)

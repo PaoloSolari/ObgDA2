@@ -1,5 +1,6 @@
 export interface ICreateSession {
-    IdSession: string | null;
+    // IdSession: string | null;
     UserName: string | null;
-    Token: string | null;
+    // Password: string | null;
+    // Token: string | null;
 }

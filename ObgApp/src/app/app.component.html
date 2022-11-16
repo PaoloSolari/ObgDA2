@@ -1,9 +1,9 @@
 <div class="header">
     <mat-toolbar id="toolBar">
         <div class="spacer"></div>
-        <button mat-raised-button [routerLink]="addUser"><mat-icon>person_add_alt_1</mat-icon>  Registar</button>
-        <button mat-raised-button><mat-icon>account_circle</mat-icon>  Ingresar</button>
-        <button mat-raised-button><mat-icon>logout</mat-icon>  Salir</button>
+        <button mat-raised-button [routerLink]="addUser"><mat-icon>person_add</mat-icon><p style="display: inline" class="addTxt">Registar usuario</p></button>
+        <button mat-raised-button [routerLink]="login" *ngIf="!isLogin()"><mat-icon>account_circle</mat-icon><p style="display: inline" class="loginTxt">Iniciar sesión</p></button>
+        <button mat-raised-button (click)="logout()" *ngIf="isLogin()" class="logoutBtn"><mat-icon>logout</mat-icon><p style="display: inline" class="logoutTxt">Cerrar sesión</p></button>
     </mat-toolbar>
 </div>
 <div class="container">

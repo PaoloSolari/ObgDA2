@@ -25,6 +25,11 @@ namespace obg.BusinessLogic.Logics
             return _sessionManagement.GetSessionByToken(token);
         }
 
+        public Session GetSessionByName(string userName)
+        {
+            return _sessionManagement.GetSessionByName(userName);
+        }
+
         public string InsertSession(Session session, string password)
         {
             if (IsSessionValid(session, password))
@@ -47,10 +52,10 @@ namespace obg.BusinessLogic.Logics
             {
                 throw new SessionException("Sesión inválida.");
             }
-            if (IsIdSessionRegistered(session.IdSession))
-            {
-                throw new SessionException("Ya existe una sesión activa con el mismo identificador");
-            }
+            //if (IsIdSessionRegistered(session.IdSession))
+            //{
+            //    throw new SessionException("Ya existe una sesión activa con el mismo identificador");
+            //}
             if (session.UserName == null || session.UserName.Length == 0 || session.UserName.Length > 20)
             {
                 throw new SessionException("Nombre de usuario inválido.");
@@ -59,10 +64,10 @@ namespace obg.BusinessLogic.Logics
             {
                 throw new SessionException("Contraseña incorrecta.");
             }
-            if (IsNameLogged(session))
-            {
-                throw new SessionException("El usuario ya fue logueado.");
-            }
+            //if (IsNameLogged(session))
+            //{
+            //    throw new SessionException("El usuario ya fue logueado.");
+            //}
             return true;
         }
 

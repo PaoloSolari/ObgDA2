@@ -1,0 +1,43 @@
+form {
+    /* margin-top: 5%; */
+    /* position: absolute; */
+    /* top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%); */
+    margin-top: 5%;
+    margin-left: auto;
+    margin-right: auto;
+    display: table;
+}
+
+.mat-form-field {
+    display:block;
+    margin-bottom: 30px;
+    width: 300px;
+    min-width: auto;
+    height: 50px;
+    min-height: auto;
+}
+
+.mat-raised-button {
+    color: rgb(240, 240, 240) !important;
+    background-color: rgb(89, 149, 189) !important;
+    margin: 0 auto;
+    display: block;
+}
+
+.mat-raised-button:hover{
+    background: rgb(196, 195, 195) !important;
+}
+
+/* Color para el 'label' de los inputs */
+::ng-deep .mat-focused .mat-form-field-label {
+    color: rgb(89, 149, 189) !important;
+}
+
+/* Color para el borde de los inputs */
+::ng-deep.mat-form-field-outline-thick {
+    color: rgb(89, 149, 189) !important;
+}
+

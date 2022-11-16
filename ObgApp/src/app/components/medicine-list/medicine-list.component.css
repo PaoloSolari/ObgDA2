@@ -11,9 +11,9 @@ table {
     color: rgb(89, 149, 189) ;
 }
 
-.deleteColumn{
+/* .deleteColumn{
     width: 75px;
-}
+} */
 
 .mat-raised-button {
     color: rgb(240, 240, 240) !important;

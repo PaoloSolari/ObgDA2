@@ -30,11 +30,19 @@ export class SessionService {
     }
 
     public getSessionByToken(token: string): Observable<Session> {
-        return this._http.get<Session>(`${environment.API_HOST_URL}/Session/${token}`);
+        return this._http.get<Session>(`${environment.API_HOST_URL}/session/${token}`);
+    }
+
+    public getSessionByName(userName: string): Observable<Session> {
+        let headers = new HttpHeaders();
+        headers = headers.append('userName', userName);
+        return this._http.get<Session>(`${environment.API_HOST_URL}/session`, { headers });
     }
     
-    public postSession(sessionToAdd: ICreateSession): Observable<Session> {
-        return this._http.post<Session>(`${environment.API_HOST_URL}/session`, sessionToAdd);
+    public postSession(sessionToAdd: ICreateSession, password: string): Observable<Session> {
+        let headers = new HttpHeaders();
+        headers = headers.append('password', password);
+        return this._http.post<Session>(`${environment.API_HOST_URL}/session`, sessionToAdd, { headers });
     }
 
     public putSession(sessionToUpdate: Session): Observable<Session> {

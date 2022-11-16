@@ -25,6 +25,8 @@ form {
     background-color: rgb(89, 149, 189) !important;
     margin: 0 auto;
     display: block;
+    margin-bottom: 20px;
+    width: 150px;
 }
 
 .mat-raised-button:hover{

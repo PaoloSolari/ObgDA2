@@ -11,6 +11,7 @@ namespace obg.DataAccess.Interface.Interfaces
         IEnumerable<Session> GetSessions();
         Session GetSessionById(string id);
         Session GetSessionByToken(string token);
+        Session GetSessionByName(string userName);
         void UpdateSession(Session session);
         void DeleteSession(Session session);
         bool IsIdSessionRegistered(string idSession);

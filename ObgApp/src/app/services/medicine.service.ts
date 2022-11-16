@@ -31,9 +31,6 @@ export class MedicineService {
         let headers = new HttpHeaders();
         let params = new HttpParams();
         params = params.append('employeeName', employeeName);
-        // headers.append('clave', 'valor');
-        // headers.append('employeeName', 'Pedro');
-        // return this._http.get<Medicine[]>(`${environment.API_HOST_URL}/medicine`, { headers }).pipe(
         return this._http.get<Medicine[]>(`${environment.API_HOST_URL}/medicine`, { params }).pipe(
             tap((medicines: Medicine[]) => this._medicinesBehaviorSubject$.next(medicines)),
         );
@@ -43,10 +40,9 @@ export class MedicineService {
         return this._http.get<Medicine>(`${environment.API_HOST_URL}/medicine/${medicineCode}`);
     }
 
-    public postMedicine(medicineToAdd: ICreateMedicine): Observable<Medicine> {
-        console.log(medicineToAdd);
+    public postMedicine(medicineToAdd: ICreateMedicine, token: string): Observable<Medicine> {
         let headers = new HttpHeaders();
-        headers = headers.append('token', 'AABBCC'); // Sería el del empleado 'Paolo'.
+        headers = headers.append('token', token);
         return this._http.post<Medicine>(`${environment.API_HOST_URL}/medicine`, medicineToAdd, { headers });
     }
 
@@ -54,8 +50,10 @@ export class MedicineService {
         return this._http.put<Medicine>(`${environment.API_HOST_URL}/medicine/${medicineToUpdate.code}`, medicineToUpdate);
     }
 
-    public deleteMedicine(medicineCode: string | null): Observable<IDeleteResponse> {
-        return this._http.delete<IDeleteResponse>(`${environment.API_HOST_URL}/medicine/${medicineCode}`);
+    public deleteMedicine(medicineCode: string | null, token: string): Observable<IDeleteResponse> {
+        let headers = new HttpHeaders();
+        headers = headers.append('token', token);
+        return this._http.delete<IDeleteResponse>(`${environment.API_HOST_URL}/medicine/${medicineCode}`, { headers });
     }
 
 }

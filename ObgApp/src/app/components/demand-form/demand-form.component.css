@@ -27,6 +27,25 @@ table {
     margin-bottom: 6px;
 }
 
+.inputQuantity {
+    margin: 0 auto;
+    display: block;
+    width: 50px;
+    color: rgb(89, 149, 189) !important;
+}
+
+.sendButton {
+    /* width: auto;
+    margin-top: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center; */
+    background-color: rgb(80, 129, 161) !important;
+    width: 150px;
+    margin: 25px auto;
+    display:block;
+}
+
 .mat-form-field {
     margin-top: 5px !important;
     margin-bottom: 5px !important;

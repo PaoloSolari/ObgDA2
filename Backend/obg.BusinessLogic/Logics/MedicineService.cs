@@ -24,6 +24,23 @@ namespace obg.BusinessLogic.Logics
             _employeeManagement = employeeManagement;
         }
 
+        public IEnumerable<Medicine> GetAllMedicines()
+        {
+            IEnumerable<Medicine> medicinesFromDB = _medicineManagement.GetMedicines();
+            List<Medicine> medicineWithStock = new List<Medicine>();
+            if(medicinesFromDB != null)
+            {
+                foreach (Medicine m in medicinesFromDB)
+                {
+                    if(m.Stock > 0)
+                    {
+                        medicineWithStock.Add(m);
+                    }
+                }
+            }
+            return medicineWithStock;
+        }
+
         public string InsertMedicine(Medicine medicine, string token)
         {
             if (IsMedicineValid(medicine))

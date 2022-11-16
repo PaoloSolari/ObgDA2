@@ -47,9 +47,22 @@ import { LoadingService } from './services/loading.service';
 import { InvitationService } from './services/invitation.service';
 
 // Conexión con el BackEnd:
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UserFormComponent } from './components/user-form/user-form.component';
 import { UserUpdateComponent } from './components/user-update/user-update.component';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { DemandService } from './services/demand.service';
+import { SessionService } from './services/session.service';
+import { UserService } from './services/user.service';
+import { LoadingInterceptor } from './interceptors/loading.interceptor';
+import { AuthService } from './services/auth.service';
+import { AuthGuard } from './guards/auth.guard';
+import { RoleGuard } from './guards/role.guard';
+import { LoginComponent } from './components/login/login.component';
+import { BuyComponent } from './components/buy/buy.component';
+import { MenuBuyComponent } from './components/menu-buy/menu-buy.component';
+import { BuyListComponent } from './components/buy-list/buy-list.component';
+import { ExporterFormComponent } from './components/exporter-form/exporter-form.component';
 
 
 @NgModule({
@@ -72,7 +85,12 @@ import { UserUpdateComponent } from './components/user-update/user-update.compon
         InvitationListComponent,
         DemandListComponent,
         UserFormComponent,
-        UserUpdateComponent
+        UserUpdateComponent,
+        LoginComponent,
+        BuyComponent,
+        MenuBuyComponent,
+        BuyListComponent,
+        ExporterFormComponent
     ],
     imports: [
         BrowserModule,
@@ -95,7 +113,28 @@ import { UserUpdateComponent } from './components/user-update/user-update.compon
         // Conexión con BackEnd:
         HttpClientModule,
     ],
-    providers: [PharmacyService, MedicineService, LoadingService, InvitationService],
+    providers: [
+        AuthService,
+        DemandService,
+        InvitationService,
+        LoadingService, 
+        MedicineService, 
+        PharmacyService,
+        SessionService,
+        UserService, 
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
+            multi: true,
+        },
+        // {
+        //     provide: HTTP_INTERCEPTORS,
+        //     useClass: LoadingInterceptor,
+        //     multi: true,
+        // },
+        AuthGuard,
+        RoleGuard,
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

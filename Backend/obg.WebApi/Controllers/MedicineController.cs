@@ -24,6 +24,10 @@ namespace obg.WebApi.Controllers
         [HttpGet]
         public IActionResult GetMedicines([FromQuery] string employeeName)
         {
+            if (employeeName.Equals("allMedicines"))
+            {
+                return StatusCode(200, medicineService.GetAllMedicines());
+            }
             return StatusCode(200, medicineService.GetMedicines(employeeName));
         }
 
@@ -33,14 +37,14 @@ namespace obg.WebApi.Controllers
             return StatusCode(200, medicineService.GetMedicinesWithStock(Name));
         }
 
-        //[ServiceFilter(typeof(EmployeeAuthorizationAttributeFilter))]
+        [ServiceFilter(typeof(EmployeeAuthorizationAttributeFilter))]
         [HttpPost]
         public IActionResult PostMedicine([FromBody] Medicine medicine, [FromHeader] string token)
         {
             return StatusCode(200, "Código del medicamento: " + medicineService.InsertMedicine(medicine, token));
         }
 
-        //[ServiceFilter(typeof(EmployeeAuthorizationAttributeFilter))]
+        [ServiceFilter(typeof(EmployeeAuthorizationAttributeFilter))]
         [HttpDelete("{medicineCode}")]
         public IActionResult DeleteMedicine(string medicineCode)
         {

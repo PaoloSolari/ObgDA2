@@ -29,6 +29,12 @@ namespace obg.WebApi.Controllers
             return StatusCode(200, _purchaseService.GetPurchases(token));
         }
 
+        [HttpGet("{idPurchase}")]
+        public IActionResult GetPurchaseById([FromRoute] string idPurchase)
+        {
+            return StatusCode(200, _purchaseService.GetPurchaseById(idPurchase));
+        }
+
         [ServiceFilter(typeof(EmployeeAuthorizationAttributeFilter))]
         [HttpPut("{idPurchase}")]
         public IActionResult PutPurchase([FromRoute] string idPurchase, [FromBody] Purchase purchase, [FromHeader] string token)

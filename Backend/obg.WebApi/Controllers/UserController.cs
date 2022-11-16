@@ -20,6 +20,12 @@ namespace obg.WebApi.Controllers
             _userService = userService;
         }
 
+        [HttpGet("{userName}")]
+        public IActionResult GetUser([FromRoute] string userName)
+        {
+            return StatusCode(200, _userService.GetUserByName(userName));
+        }
+
         [HttpPost]
         public IActionResult PostUser([FromBody] User user)
         {
