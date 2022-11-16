@@ -1,1 +1,42 @@
 <app-back-button [url]="backUrl"></app-back-button>
+
+<form [formGroup]="purchaseForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline">
+            <mat-label> Código de seguimiento </mat-label>
+            <input matInput class="form-control" formControlName="idPurchase" id="idPurchase" #idPurchase required>
+        </mat-form-field>
+    <button mat-raised-button type="submit" class="btn btn-primary">Ver estado</button>
+</form>
+
+<div *ngIf="lines.length > 0; else elseBlock">
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="medicineCode">
+            <th mat-header-cell *matHeaderCellDef> Código de medicamento </th>
+            <td mat-cell *matCellDef="let element"> {{element.medicineCode}} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="quantity">
+            <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+            <td mat-cell *matCellDef="let element"> {{element.medicineQuantity}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef> Estado </th>
+            <td mat-cell *matCellDef="let element"> {{getStatus(element.status)}} </td>
+        </ng-container>
+        
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <div class="rowInTable">
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="element-row"></tr>
+        </div>
+    </table>
+
+</div>
+
+<ng-template #elseBlock>
+    <span><mat-icon>error_outline</mat-icon></span>
+    <br><br>
+    <span><p class="NoPurchase"><B>NO EXISTE UNA COMPRA CON EL CÓDIGO INGRESADO</B></p></span>
+</ng-template>

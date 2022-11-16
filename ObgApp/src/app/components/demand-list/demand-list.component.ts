@@ -7,6 +7,8 @@ import { Globals } from '../../utils/globals';
 import { INIT } from '../../utils/routes';
 import { IUpdateDemand } from 'src/app/interfaces/update-demand';
 import { AuthService } from 'src/app/services/auth.service';
+import { SessionService } from 'src/app/services/session.service';
+import { Session } from 'src/app/models/session';
 
 @Component({
     selector: 'app-demand-list',
@@ -23,6 +25,7 @@ export class DemandListComponent implements OnInit {
 
     constructor(
         private _demandService: DemandService,
+        private _sessionService: SessionService,
         private _authService: AuthService,
     ) { }
 
@@ -30,11 +33,7 @@ export class DemandListComponent implements OnInit {
 
         Globals.selectTab = 1;
 
-        // [Obtengo el dueño actual]
-        this.actualOwner.name = 'Juan';
-        // const token = 'GGHHII';
-
-        // [Me traigo las demandas de la farmacia del dueño]
+        // [A través del token del dueño, traigo desde el backend las solicitudes de stock de su farmacia]
         this._demandService.getDemands(this._authService.getToken()!)
         .pipe(
             take(1),
@@ -52,7 +51,29 @@ export class DemandListComponent implements OnInit {
             this.setDemands(demands);
             this.dataSource = demands; // (#)
         })
+
+        // [Obtengo el dueño actual]
+        // this._sessionService.getSessionByToken(this._authService.getToken()!)
+        // .pipe(
+        //     take(1),
+        //     catchError((err => {
+        //         if (err.status != 200) {
+        //             alert(`${err.error.errorMessage}`);
+        //             console.log(`Error: ${err.error.errorMessage}`)
+        //         } else {
+        //             console.log(`Ok: ${err.error.text}`);
+        //         }
+        //         return of(err);
+        //     }))
+        // )
+        // .subscribe((session: Session) => {            
+        //     this.actualOwner.name = session.userName!;
+        //     this.getDemandsFromDB(this.actualOwner.name);
+        // }) 
+    
     }
+
+    // private getDemandsFromDB(userName: string): void { }
 
     private setDemands = (demands: Demand[] | undefined) => {
         if(!demands) this.demands = [];

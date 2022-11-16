@@ -56,7 +56,7 @@ export class MedicineListComponent implements OnInit {
             // [Obtenido el nombre del empleado, traigo desde el backend los medicamentos de su farmacia]
             this.actualEmployee.name = session.userName!;
             this.getMedicinesFromDB(this.actualEmployee.name);
-        })        
+        })
     }
 
     private getMedicinesFromDB(userName: string): void{

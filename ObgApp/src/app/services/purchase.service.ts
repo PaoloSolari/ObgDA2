@@ -30,6 +30,11 @@ export class PurchaseService {
         );
     }
 
+    public getPurchaseById(idPurchase: string): Observable<Purchase> {
+        let headers = new HttpHeaders();
+        return this._http.get<Purchase>(`${environment.API_HOST_URL}/purchase/${idPurchase}`);
+    }
+
     public postPurchase(purchaseToAdd: ICreatePurchase, email: string): Observable<Purchase> {
         console.log(purchaseToAdd);
         console.log(email);

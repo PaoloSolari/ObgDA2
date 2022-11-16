@@ -63,6 +63,7 @@ import { BuyComponent } from './components/buy/buy.component';
 import { MenuBuyComponent } from './components/menu-buy/menu-buy.component';
 import { BuyListComponent } from './components/buy-list/buy-list.component';
 import { ExporterFormComponent } from './components/exporter-form/exporter-form.component';
+import { MedicinesFilterPipe } from './components/buy/pipes/medicines-filter.pipe';
 
 
 @NgModule({
@@ -90,7 +91,8 @@ import { ExporterFormComponent } from './components/exporter-form/exporter-form.
         BuyComponent,
         MenuBuyComponent,
         BuyListComponent,
-        ExporterFormComponent
+        ExporterFormComponent,
+        MedicinesFilterPipe
     ],
     imports: [
         BrowserModule,
