@@ -26,6 +26,8 @@ export class InvitationFormComponent implements OnInit {
     // public actualSession: Session = new Session(null, null, null);
     public pharmacyDB: Pharmacy = new Pharmacy(null, null, null, null, null);
 
+    public hasError: boolean = false;
+
     // [En caso de modificación de invitación]
     public name: string = '';
     public code: number = 0;
@@ -64,6 +66,7 @@ export class InvitationFormComponent implements OnInit {
     ngOnInit(): void {
         
         Globals.selectTab = 0;
+        this.hasError = false;
 
         // [En caso de haber entrado a la SPA de modificar una invitación]
         const id = this._route.snapshot.params?.['id'];
@@ -71,7 +74,7 @@ export class InvitationFormComponent implements OnInit {
             this.isEditing = true;
             this.invitationId = id;
             this.backUrl = `/${INVITATION_LIST_URL}`; // [Para volver correctamente atrás]
-            this._invitationService.getInvitationByName(id)
+            this._invitationService.getInvitationByName(id, this._authService.getToken()!)
             .pipe(
                 take(1),
                 catchError((err => {
@@ -85,7 +88,7 @@ export class InvitationFormComponent implements OnInit {
                 }))
             )
             .subscribe((invitation: Invitation) => {
-                this.setInvitation(invitation);
+                // this.setInvitation(invitation);
             });
         }
         
@@ -121,10 +124,10 @@ export class InvitationFormComponent implements OnInit {
 
     }
 
-    private setInvitation(invitation: Invitation): void {
-        this.invitationForm.value.nameUser = invitation.userName!;
-        this.code = invitation.userCode!;
-    }
+    // private setInvitation(invitation: Invitation): void {
+    //     this.invitationForm.value.nameUser = invitation.userName!;
+    //     this.code = invitation.userCode!;
+    // }
 
     // private setSession = (session: Session) => {
     //     this.actualSession.idSession = session.idSession;
@@ -156,18 +159,20 @@ export class InvitationFormComponent implements OnInit {
                 if(err.status != 200){
                     alert(`${err.error.errorMessage}`);
                     console.log(`Error: ${err.error.errorMessage}`)
+                    this.hasError = true;
                 } else {
                     console.log(`Ok: ${err.error.text}`);
                 }
                 return of(err);
             }))
         )
-        .subscribe((userCode: any) => {
+        .subscribe((userCode: string) => {
             // [El endpoint devuelve el código de usuario]
-            if(userCode) {
+            if(!this.hasError) {
                 alert('El código de usuario es: ' + userCode);
                 this.cleanForm();
             }
+            this.hasError = false;
         });
     }
 
@@ -209,6 +214,7 @@ export class InvitationFormComponent implements OnInit {
                     if(err.status != 200){
                         alert(`${err.error.errorMessage}`);
                         console.log(`Error: ${err.error.errorMessage}`)
+                        this.hasError = true;
                     } else {
                         console.log(`Ok: ${err.error.text}`);
                     }
@@ -216,9 +222,10 @@ export class InvitationFormComponent implements OnInit {
                 }))
             )
             .subscribe((invitation: Invitation) => {
-                if(invitation) {
-                    alert('Invitación modificada');
+                if(!this.hasError) {
+                    this.cleanForm();
                 }
+                this.hasError = false;
             });
         }
     }
@@ -234,7 +241,16 @@ export class InvitationFormComponent implements OnInit {
     }
 
     public cleanForm(): void{
-        this.invitationForm.reset();
+        this.formReset(this.invitationForm);
+    }
+
+    formReset(form: FormGroup) {
+
+        form.reset();
+    
+        Object.keys(form.controls).forEach(key => {
+          form.get(key)!.setErrors(null) ; // [El '!' no estaba, me lo exigía]
+        });
     }
 
 }

@@ -1,5 +1,13 @@
 <app-back-button [url]="backUrl"></app-back-button>
 
+<form [formGroup]="filterForm" (ngSubmit)="filterMedicines()" class="filterForm">
+    <mat-form-field appearance="outline">
+        <mat-label> Nombre de farmacia </mat-label>
+        <input matInput class="pharmacyName" formControlName="pharmacyName" id="pharmacyName" #pharmacyName required>
+    </mat-form-field>
+<button mat-raised-button type="submit" class="filterButton">Filtrar</button>
+</form>
+
 <div *ngIf="medicines.length > 0; else elseBlock">
 
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">

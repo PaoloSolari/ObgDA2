@@ -38,8 +38,10 @@ export class InvitationService {
     //     return this._http.get<Invitation>(`${environment.API_HOST_URL}/invitation/${invitationId}`);
     // }
 
-    public getInvitationByName(name: string): Observable<Invitation> {
-        return this._http.get<Invitation>(`${environment.API_HOST_URL}/invitation/${name}`);
+    public getInvitationByName(name: string, userToken: string): Observable<Invitation> {
+        let headers = new HttpHeaders();
+        headers = headers.append('token', userToken);
+        return this._http.get<Invitation>(`${environment.API_HOST_URL}/invitation/${name}`, { headers });
     }
 
     public postInvitation(invitationToAdd: ICreateInvitation, userToken: string): Observable<Invitation> {

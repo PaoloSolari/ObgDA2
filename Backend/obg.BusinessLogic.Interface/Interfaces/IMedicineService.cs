@@ -12,6 +12,7 @@ namespace obg.BusinessLogic.Interface.Interfaces
         string InsertMedicine(Medicine medicine, string token);
         Medicine GetMedicineByCode(string code);
         IEnumerable<Medicine> GetMedicinesWithStock(string medicineName);
+        IEnumerable<Medicine> GetMedicinesWithStockFromPharmacy(string pharmacyName);
         void DeleteMedicine(string code);
         IEnumerable<Medicine> GetMedicinesByName(string medicineName);
     }

@@ -38,10 +38,25 @@ table {
     width: 300px;
     margin: 25px auto;
     padding-bottom: 0px;
+    margin-bottom: 20px;
     display:block;
 }
 
 .sendButton {
+    background-color: rgb(80, 129, 161) !important;
+    width: 150px;
+    margin: 0px auto;
+    display:block;
+}
+
+.filterForm {
+    width: 300px;
+    margin: 25px auto;
+    padding-bottom: 0px;
+    display:block;
+}
+
+.filterButton {
     background-color: rgb(80, 129, 161) !important;
     width: 150px;
     margin: 0px auto;

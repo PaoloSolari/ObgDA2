@@ -22,6 +22,7 @@ namespace obg.Domain.Entities
             Address = address;
             Medicines = new List<Medicine>();
             Demands = new List<Demand>();
+            Purchases = new List<Purchase>();
         }
 
         public override bool Equals(object obj)
