@@ -18,6 +18,7 @@ namespace obg.BusinessLogic.Test
         private Mock<IMedicineManagement> mock;
         private Mock<ISessionManagement> mockSession;
         private Mock<IEmployeeManagement> mockEmployee;
+        private Mock<IPharmacyManagement> mockPharmacy;
 
         private MedicineService service;
 
@@ -39,7 +40,8 @@ namespace obg.BusinessLogic.Test
             mock = new Mock<IMedicineManagement>(MockBehavior.Strict);
             mockSession = new Mock<ISessionManagement>(MockBehavior.Strict);
             mockEmployee = new Mock<IEmployeeManagement>(MockBehavior.Strict);
-            service = new MedicineService(mock.Object, mockSession.Object, mockEmployee.Object);
+            mockPharmacy = new Mock<IPharmacyManagement>(MockBehavior.Strict);
+            service = new MedicineService(mock.Object, mockSession.Object, mockEmployee.Object, mockPharmacy.Object);
 
             validPharmacy1 = new Pharmacy("San Roque", "Ejido");
 
