@@ -36,6 +36,16 @@ export class MedicineService {
         );
     }
 
+    public getMedicinesFilter(pharmacyName: string): Observable<Medicine[]> {
+        let headers = new HttpHeaders();
+        let params = new HttpParams();
+        params = params.append('pharmacyName', pharmacyName);
+        console.log(pharmacyName);
+        return this._http.get<Medicine[]>(`${environment.API_HOST_URL}/medicine/stock`, { params }).pipe(
+            tap((medicines: Medicine[]) => this._medicinesBehaviorSubject$.next(medicines)),
+        );
+    }
+
     public getMedicineByCode(medicineCode: string): Observable<Medicine> {
         return this._http.get<Medicine>(`${environment.API_HOST_URL}/medicine/${medicineCode}`);
     }

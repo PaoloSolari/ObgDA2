@@ -19,6 +19,8 @@ export class PharmacyFormComponent implements OnInit {
 
     public backUrl = `/${INIT}`;
 
+    public hasError: boolean = false;
+
     public pharmacyForm = new FormGroup({
         name: new FormControl(),
         address: new FormControl(),
@@ -34,6 +36,7 @@ export class PharmacyFormComponent implements OnInit {
     
     ngOnInit(): void {
         Globals.selectTab = 0;
+        this.hasError = false;
     }
 
     public createPharmacy(): void {
@@ -49,6 +52,7 @@ export class PharmacyFormComponent implements OnInit {
                     if(err.status != 200){
                         alert(`${err.error.errorMessage}`);
                         console.log(`Error: ${err.error.errorMessage}`)
+                        this.hasError = true;
                     } else {
                         console.log(`Ok: ${err.error.text}`);
                     }
@@ -57,16 +61,25 @@ export class PharmacyFormComponent implements OnInit {
             )
             .subscribe((pharmacy: Pharmacy) => {
                 // [El endpoint devuelve el nombre de la farmacia recién creada]
-                if(pharmacy) {
-                    alert('Farmacia creada');
+                if(!this.hasError) {
                     this.cleanForm();
                 }
+                this.hasError = false;
             })
         }
     }
 
     public cleanForm(): void{
-        this.pharmacyForm.reset();
+        this.formReset(this.pharmacyForm);
+    }
+
+    formReset(form: FormGroup) {
+
+        form.reset();
+    
+        Object.keys(form.controls).forEach(key => {
+          form.get(key)!.setErrors(null) ; // [El '!' no estaba, me lo exigía]
+        });
     }
 
 }

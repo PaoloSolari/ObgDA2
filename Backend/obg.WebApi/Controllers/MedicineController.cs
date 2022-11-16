@@ -31,10 +31,16 @@ namespace obg.WebApi.Controllers
             return StatusCode(200, medicineService.GetMedicines(employeeName));
         }
 
+        //[HttpGet("stock")]
+        //public IActionResult GetMedicinesWithStock([FromQuery] string Name)
+        //{
+        //    return StatusCode(200, medicineService.GetMedicinesWithStock(Name));
+        //}
+        
         [HttpGet("stock")]
-        public IActionResult GetMedicinesWithStock([FromQuery] string Name)
+        public IActionResult GetMedicinesWithStock([FromQuery] string pharmacyName)
         {
-            return StatusCode(200, medicineService.GetMedicinesWithStock(Name));
+            return StatusCode(200, medicineService.GetMedicinesWithStockFromPharmacy(pharmacyName));
         }
 
         [ServiceFilter(typeof(EmployeeAuthorizationAttributeFilter))]
