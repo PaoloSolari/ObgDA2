@@ -76,6 +76,7 @@ export class LoginComponent implements OnInit {
                             .subscribe((session: Session) => {
                                 if(session) {
                                     Globals.alreadyLogin = true; // [Ahora, ya hay un usuario logeado]
+                                    Globals.selectTab = 0; // [Para comenzar en la pestaña del usuario]
                                     this._authService.setToken(session.token!);
                                     this._router.navigateByUrl(INIT);
                                 }

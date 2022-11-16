@@ -108,7 +108,7 @@ export class MedicineFormComponent implements OnInit {
     }
 
     public cleanForm() {
-        // this.medicineForm.reset();
+        this.medicineForm.reset();
         // this.codeForm?.setValue('');
     }
 

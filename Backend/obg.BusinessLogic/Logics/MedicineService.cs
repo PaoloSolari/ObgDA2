@@ -15,13 +15,15 @@ namespace obg.BusinessLogic.Logics
         private readonly IMedicineManagement _medicineManagement;
         private readonly ISessionManagement _sessionManagement;
         private readonly IEmployeeManagement _employeeManagement;
+        private readonly IPharmacyManagement _pharmacyManagement;
 
         public MedicineService(){}
-        public MedicineService(IMedicineManagement medicineManagement, ISessionManagement sessionManagement, IEmployeeManagement employeeManagement)
+        public MedicineService(IMedicineManagement medicineManagement, ISessionManagement sessionManagement, IEmployeeManagement employeeManagement, IPharmacyManagement pharmacyManagement)
         {
             _medicineManagement = medicineManagement;
             _sessionManagement = sessionManagement;
             _employeeManagement = employeeManagement;
+            _pharmacyManagement = pharmacyManagement;
         }
 
         public IEnumerable<Medicine> GetAllMedicines()
@@ -168,6 +170,22 @@ namespace obg.BusinessLogic.Logics
                 throw new NotFoundException("El medicamento no existe.");
             }
             return medicines;
+        }
+
+        public IEnumerable<Medicine> GetMedicinesWithStockFromPharmacy(string pharmacyName)
+        {
+            Pharmacy pharmacy = _pharmacyManagement.GetPharmacyByName(pharmacyName);
+            IEnumerable<Medicine> medicines = pharmacy.Medicines;
+            if (GetLengthOfList(medicines) == 0)
+            {
+                throw new NotFoundException("No hay medicamentos.");
+            }
+            IEnumerable<Medicine> ActivesMedicines = GetActivesMedicines(medicines);
+            if (GetLengthOfList(ActivesMedicines) == 0)
+            {
+                throw new NotFoundException("No hay medicamentos.");
+            }
+            return ActivesMedicines;
         }
 
         public IEnumerable<Medicine> GetMedicinesWithStock(string medicineName)

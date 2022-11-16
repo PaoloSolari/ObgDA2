@@ -44,7 +44,7 @@
             <mat-label>Código de usuario</mat-label>
             <input matInput formControlName="codeUser" #codeUser type="number" required value="{{isEditing ? code : ''}}"> 
             <!-- Errores de entrada -->
-            <mat-error *ngIf="codeUser.value.length==0">{{"Debe ingresar un código"}}</mat-error>
+            <mat-error *ngIf="codeUser.value.length==0">{{"Debe ingresar un código correcto"}}</mat-error>
         </mat-form-field>
     </div>
 

@@ -59,7 +59,7 @@ namespace obg.DataAccess.Repositories
 
         public Pharmacy GetPharmacyByName(string name)
         {
-            return ObgContext.Pharmacies.Where<Pharmacy>(p => p.Name == name).FirstOrDefault();
+            return ObgContext.Pharmacies.Where<Pharmacy>(p => p.Name == name).Include("Medicines").Include("Purchases").FirstOrDefault();
         }
 
         public void UpdatePharmacy(Pharmacy pharmacy)

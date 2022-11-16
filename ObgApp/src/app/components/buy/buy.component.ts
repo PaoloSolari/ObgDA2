@@ -20,6 +20,11 @@ export class BuyComponent implements OnInit {
 
     public backUrl = `/${INIT}`;
 
+    public filterForm = new FormGroup({
+        pharmacyName: new FormControl<string | null>(null, Validators.required)
+    })
+    public get pharmacyName() { return this.filterForm.value.pharmacyName!; }
+
     public medicines: Medicine[] = [];
     public purchase: ICreatePurchase = {
         PurchaseLines: [],
@@ -130,6 +135,32 @@ export class BuyComponent implements OnInit {
             return true;
         }
         return false;
+    }
+
+    public filterMedicines(){
+        if(this.filterForm.valid) {
+            if(this.pharmacyName != undefined) {
+                this._medicineService.getMedicinesFilter(this.pharmacyName)
+                .pipe(
+                    take(1),
+                    catchError((err => {
+                        if (err.status != 200) {
+                            alert(`${err.error.errorMessage}`);
+                            console.log(`Error: ${err.error.errorMessage}`)
+                        } else {
+                            console.log(`Ok: ${err.error.text}`);
+                        }
+                        return of(err);
+                    }))
+                )
+                .subscribe((medicines: Medicine[]) => {
+                    console.log(medicines);
+                    this.setMedicines(medicines);
+                })
+            }
+        } else {
+            this.ngOnInit();
+        }
     }
 
 }

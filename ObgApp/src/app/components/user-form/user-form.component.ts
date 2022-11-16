@@ -17,6 +17,7 @@ import { getUserFormUrl, INIT, USER_FORM_URL, USER_UPDATE_URL } from 'src/app/ut
 export class UserFormComponent implements OnInit {
 
     public backUrl = `/${INIT}`;
+    public reset: boolean = false;
 
     public userForm = new FormGroup({
         name: new FormControl(),
@@ -69,9 +70,18 @@ export class UserFormComponent implements OnInit {
     }
 
     public cleanForm(): void{
-        this.userForm.reset();
+        this.formReset(this.userForm);
     }
+
+    formReset(form: FormGroup) {
+
+        form.reset();
     
+        Object.keys(form.controls).forEach(key => {
+          form.get(key)!.setErrors(null) ; // [El '!' no estaba, me lo exigía]
+        });
+    }
+
     public navigateToConfirmUser(name: string): void {
         this._router.navigateByUrl(`/${getUserFormUrl(name)}`)
     }
