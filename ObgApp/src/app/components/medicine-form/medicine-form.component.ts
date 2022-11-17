@@ -8,7 +8,7 @@ import { Globals } from '../../utils/globals';
 import { NoSpace } from '../../validators/noEmptyString.validator';
 import { Medicine, PresentationMedicine } from '../../models/medicine';
 import { catchError, of, take } from 'rxjs';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-medicine-form',

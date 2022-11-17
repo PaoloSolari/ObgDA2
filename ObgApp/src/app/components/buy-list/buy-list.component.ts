@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { catchError, of, take } from 'rxjs';
-import { Purchase } from 'src/app/models/purchase';
-import { PurchaseLine, PurchaseLineStatus } from 'src/app/models/purchaseLine';
-import { PurchaseLineService } from 'src/app/services/purchase-line.service';
-import { PurchaseService } from 'src/app/services/purchase.service';
-import { Globals } from 'src/app/utils/globals';
-import { INIT } from 'src/app/utils/routes';
+import { Purchase } from '../../models/purchase';
+import { PurchaseLine, PurchaseLineStatus } from '../../models/purchaseLine';
+import { PurchaseLineService } from '../../services/purchase-line.service';
+import { PurchaseService } from '../../services/purchase.service';
+import { Globals } from '../../utils/globals';
+import { INIT } from '../../utils/routes';
 
 @Component({
     selector: 'app-buy-list',

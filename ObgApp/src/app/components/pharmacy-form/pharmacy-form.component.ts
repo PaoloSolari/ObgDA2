@@ -4,11 +4,11 @@ import { Globals } from '../../utils/globals';
 import { INIT } from '../../utils/routes';
 import { PharmacyService } from '../../services/pharmacy.service';
 import { Router } from '@angular/router';
-import { ICreatePharmacy } from 'src/app/interfaces/create-pharmacy';
-import { NoSpace } from 'src/app/validators/noEmptyString.validator';
+import { ICreatePharmacy } from '../../interfaces/create-pharmacy';
+import { NoSpace } from '../../validators/noEmptyString.validator';
 import { catchError, of, take } from 'rxjs';
-import { Pharmacy } from 'src/app/models/pharmacy';
-import { AuthService } from 'src/app/services/auth.service';
+import { Pharmacy } from '../../models/pharmacy';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-pharmacy-form',

@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { catchError, of, take } from 'rxjs';
-import { ICreateSession } from 'src/app/interfaces/create-session';
-import { Session } from 'src/app/models/session';
-import { AuthService } from 'src/app/services/auth.service';
-import { SessionService } from 'src/app/services/session.service';
-import { Globals } from 'src/app/utils/globals';
-import { INIT } from 'src/app/utils/routes';
+import { ICreateSession } from '../../interfaces/create-session';
+import { Session } from '../../models/session';
+import { AuthService } from '../../services/auth.service';
+import { SessionService } from '../../services/session.service';
+import { Globals } from '../../utils/globals';
+import { INIT } from '../../utils/routes';
 
 @Component({
     selector: 'app-login',

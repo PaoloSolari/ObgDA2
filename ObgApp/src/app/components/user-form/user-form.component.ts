@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { catchError, of, take } from 'rxjs';
-import { ICreateUser } from 'src/app/interfaces/create-user';
-import { Employee } from 'src/app/models/employee';
-import { User } from 'src/app/models/user';
-import { UserService } from 'src/app/services/user.service';
-import { Globals } from 'src/app/utils/globals';
-import { getUserFormUrl, INIT, USER_FORM_URL, USER_UPDATE_URL } from 'src/app/utils/routes';
+import { ICreateUser } from '../../interfaces/create-user';
+import { Employee } from '../../models/employee';
+import { User } from '../../models/user';
+import { UserService } from '../../services/user.service';
+import { Globals } from '../../utils/globals';
+import { getUserFormUrl, INIT, USER_FORM_URL, USER_UPDATE_URL } from '../../utils/routes';
 
 @Component({
     selector: 'app-user-form',

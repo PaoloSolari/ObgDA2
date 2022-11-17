@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, of, take } from 'rxjs';
-import { IUpdateUser } from 'src/app/interfaces/update-user';
-import { Invitation } from 'src/app/models/invitation';
-import { RoleUser, User } from 'src/app/models/user';
-import { InvitationService } from 'src/app/services/invitation.service';
-import { UserService } from 'src/app/services/user.service';
-import { INIT, USER_FORM_URL } from 'src/app/utils/routes';
+import { IUpdateUser } from '../../interfaces/update-user';
+import { Invitation } from '../../models/invitation';
+import { RoleUser, User } from '../../models/user';
+import { InvitationService } from '../../services/invitation.service';
+import { UserService } from '../../services/user.service';
+import { INIT, USER_FORM_URL } from '../../utils/routes';
 
 @Component({
     selector: 'app-user-update',

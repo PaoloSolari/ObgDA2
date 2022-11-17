@@ -6,10 +6,10 @@ import { INIT, MEDICINE_LIST_URL } from '../../utils/routes';
 import { Globals } from '../../utils/globals';
 import { catchError, take, filter, of } from 'rxjs';
 import { IDeleteResponse } from '../../interfaces/delete-response.interface';
-import { Employee } from 'src/app/models/employee';
-import { AuthService } from 'src/app/services/auth.service';
-import { SessionService } from 'src/app/services/session.service';
-import { Session } from 'src/app/models/session';
+import { Employee } from '../../models/employee';
+import { AuthService } from '../../services/auth.service';
+import { SessionService } from '../../services/session.service';
+import { Session } from '../../models/session';
 
 @Component({
     selector: 'app-medicine-list',

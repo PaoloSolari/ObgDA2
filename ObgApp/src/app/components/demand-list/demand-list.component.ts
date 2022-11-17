@@ -1,14 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { catchError, of, take } from 'rxjs';
-import { Demand, DemandStatus } from 'src/app/models/demand';
+import { Demand, DemandStatus } from '../../models/demand';
 import { Owner } from '../../models/owner';
-import { DemandService } from 'src/app/services/demand.service';
+import { DemandService } from '../../services/demand.service';
 import { Globals } from '../../utils/globals';
 import { INIT } from '../../utils/routes';
-import { IUpdateDemand } from 'src/app/interfaces/update-demand';
-import { AuthService } from 'src/app/services/auth.service';
-import { SessionService } from 'src/app/services/session.service';
-import { Session } from 'src/app/models/session';
+import { IUpdateDemand } from '../../interfaces/update-demand';
+import { AuthService } from '../../services/auth.service';
+import { SessionService } from '../../services/session.service';
+import { Session } from '../../models/session';
 
 @Component({
     selector: 'app-demand-list',

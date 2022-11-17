@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { catchError, of, take } from 'rxjs';
-import { Session } from 'src/app/models/session';
-import { RoleUser, User } from 'src/app/models/user';
-import { AuthService } from 'src/app/services/auth.service';
-import { SessionService } from 'src/app/services/session.service';
-import { UserService } from 'src/app/services/user.service';
-import { Globals } from 'src/app/utils/globals';
+import { Session } from '../../models/session';
+import { RoleUser, User } from '../../models/user';
+import { AuthService } from '../../services/auth.service';
+import { SessionService } from '../../services/session.service';
+import { UserService } from '../../services/user.service';
+import { Globals } from '../../utils/globals';
 
 @Component({
     selector: 'app-init',

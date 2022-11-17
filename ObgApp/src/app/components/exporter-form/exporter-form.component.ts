@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { catchError, map, of, take } from 'rxjs';
-import { IExporter } from 'src/app/interfaces/exporter';
-import { Globals } from 'src/app/utils/globals';
-import { INIT } from 'src/app/utils/routes';
+import { IExporter } from '../../interfaces/exporter';
+import { Globals } from '../../utils/globals';
+import { INIT } from '../../utils/routes';
 import { AuthService } from '../../services/auth.service';
 import { ExporterService } from '../../services/exporter.service';
 

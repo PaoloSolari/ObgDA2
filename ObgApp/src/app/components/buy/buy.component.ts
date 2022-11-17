@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { catchError, of, take } from 'rxjs';
-import { ICreatePetition } from 'src/app/interfaces/create-petition';
-import { ICreatePurchase } from 'src/app/interfaces/create-purchase';
-import { ICreatePurchaseLine } from 'src/app/interfaces/create-purchase-line';
-import { Medicine } from 'src/app/models/medicine';
-import { Purchase } from 'src/app/models/purchase';
-import { AuthService } from 'src/app/services/auth.service';
-import { MedicineService } from 'src/app/services/medicine.service';
-import { PurchaseService } from 'src/app/services/purchase.service';
-import { INIT } from 'src/app/utils/routes';
+import { ICreatePetition } from '../../interfaces/create-petition';
+import { ICreatePurchase } from '../../interfaces/create-purchase';
+import { ICreatePurchaseLine } from '../../interfaces/create-purchase-line';
+import { Medicine } from '../../models/medicine';
+import { Purchase } from '../../models/purchase';
+import { AuthService } from '../../services/auth.service';
+import { MedicineService } from '../../services/medicine.service';
+import { PurchaseService } from '../../services/purchase.service';
+import { INIT } from '../../utils/routes';
 
 @Component({
     selector: 'app-buy',

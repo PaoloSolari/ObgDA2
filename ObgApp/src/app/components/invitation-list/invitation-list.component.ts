@@ -5,7 +5,7 @@ import { Globals } from '../../utils/globals';
 import { getInvitationFormUrl, INIT } from '../../utils/routes';
 import { Router } from '@angular/router';
 import { catchError, of, take } from 'rxjs';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-invitation-list',

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BUY_FORM_URL, BUY_LIST_URL } from 'src/app/utils/routes';
+import { BUY_FORM_URL, BUY_LIST_URL } from '../../utils/routes';
 
 @Component({
     selector: 'app-menu-buy',
