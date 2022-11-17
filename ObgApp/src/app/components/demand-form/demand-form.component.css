@@ -15,10 +15,21 @@ table {
     width: 75px;
 }
 
+
 .newStock{
     margin-top: 6px;
     margin-bottom: 3px;
 }
+
+.inputQuantity {
+    margin: 0 auto;
+    display: block;
+    width: 50px;
+    color: rgb(89, 149, 189) !important;
+    border: 1cm;
+    border-color: black;
+}
+
 
 .mat-raised-button {
     color: rgb(240, 240, 240) !important;
@@ -27,19 +38,8 @@ table {
     margin-bottom: 6px;
 }
 
-.inputQuantity {
-    margin: 0 auto;
-    display: block;
-    width: 50px;
-    color: rgb(89, 149, 189) !important;
-}
 
 .sendButton {
-    /* width: auto;
-    margin-top: 25px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center; */
     background-color: rgb(80, 129, 161) !important;
     width: 150px;
     margin: 25px auto;

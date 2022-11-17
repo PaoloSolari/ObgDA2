@@ -59,4 +59,8 @@ export class InvitationListComponent implements OnInit {
         this._router.navigateByUrl(`/${getInvitationFormUrl(idInvitation)}`)
     }
 
+    public addLeadingZeros(num: number, totalLength: number): string {
+        return String(num).padStart(totalLength, '0');
+    }
+
 }

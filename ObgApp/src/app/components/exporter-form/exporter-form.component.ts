@@ -32,7 +32,7 @@ export class ExporterFormComponent implements OnInit {
 
     ngOnInit(): void {
 
-        Globals.selectTab = 2;
+        Globals.selectTab = 0;
 
         // [Traemos los tipos de exportadores]
         this._exporterService.getExporters(this._authService.getToken()!)

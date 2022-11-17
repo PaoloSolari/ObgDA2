@@ -18,6 +18,8 @@ export class UserUpdateComponent implements OnInit {
 
     // public backUrl = `/${USER_FORM_URL}`;
     
+    public hasError: boolean = false;
+
     public userRole: RoleUser = RoleUser.Administrator;
     public userName: string = '';
 
@@ -43,6 +45,8 @@ export class UserUpdateComponent implements OnInit {
     ngOnInit(): void {
         // [Obtenemos el rol en función del nombre de usuario]
         // const name = this._route.snapshot.params?.['id'];
+        this.hasError = false;
+
         const name = this._route.snapshot.params?.['id']; // [Nos quedamos con el nombre del usuario a modificar]
         console.log(name); // Ok.
         this.userName = name;
@@ -80,6 +84,7 @@ export class UserUpdateComponent implements OnInit {
                     if(err.status != 200){
                         alert(`${err.error.errorMessage}`);
                         console.log(`Error: ${err.error.errorMessage}`)
+                        this.hasError = true;
                     } else {
                         console.log(`Ok: ${err.error.text}`);
                     }
@@ -88,10 +93,10 @@ export class UserUpdateComponent implements OnInit {
             )
             .subscribe((user: User) => {
                 // [El endpoint devuelve el nombre del usuairo actualizado]
-                if(user) {
-                    alert('El usuario ' + user + ' ha sido registrado correctamente.');
+                if(!this.hasError) {
                     this._router.navigateByUrl(INIT);
                 }
+                this.hasError = false;
             })
         }
     }

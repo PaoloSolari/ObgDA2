@@ -23,6 +23,8 @@ export class DemandListComponent implements OnInit {
     displayedColumns: string[] = ['petition', 'accept', 'reject'];
     public actualOwner: Owner = new Owner(null, null, null, null, null, null, null, null);
 
+    public hasError: boolean = false;
+
     constructor(
         private _demandService: DemandService,
         private _sessionService: SessionService,
@@ -31,7 +33,8 @@ export class DemandListComponent implements OnInit {
 
     ngOnInit(): void {
 
-        Globals.selectTab = 1;
+        Globals.selectTab = 0;
+        this.hasError = false;
 
         // [A través del token del dueño, traigo desde el backend las solicitudes de stock de su farmacia]
         this._demandService.getDemands(this._authService.getToken()!)
@@ -39,7 +42,7 @@ export class DemandListComponent implements OnInit {
             take(1),
             catchError((err => {
                 if(err.status != 200){
-                    alert(`${err.error.errorMessage}`);
+                    // alert(`${err.error.errorMessage}`);
                     console.log(`Error: ${err.error.errorMessage}`)
                 } else {
                     console.log(`Ok: ${err.error.text}`);
@@ -94,6 +97,7 @@ export class DemandListComponent implements OnInit {
                 if(err.status != 200){
                     alert(`${err.error.errorMessage}`);
                     console.log(`Error: ${err.error.errorMessage}`)
+                    this.hasError = true;
                 } else {
                     console.log(`Ok: ${err.error.text}`);
                 }
@@ -101,9 +105,11 @@ export class DemandListComponent implements OnInit {
             }))
         )
         .subscribe((demand: Demand) => {
-            if(demand) {
-                alert('Confirmación de solicitud de stock realizada.');
+            if(!this.hasError) {
+                console.log('Confirmación de solicitud de stock realizada.');
+                this.ngOnInit();
             }
+            this.hasError = false;
         });
     }
 

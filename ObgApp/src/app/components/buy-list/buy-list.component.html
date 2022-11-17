@@ -8,6 +8,7 @@
     <button mat-raised-button type="submit" class="btn btn-primary">Ver estado</button>
 </form>
 
+<!-- <div *ngIf="lines.length > 0; else elseBlock"> -->
 <div *ngIf="lines.length > 0; else elseBlock">
 
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -36,7 +37,9 @@
 </div>
 
 <ng-template #elseBlock>
-    <span><mat-icon>error_outline</mat-icon></span>
-    <br><br>
-    <span><p class="NoPurchase"><B>NO EXISTE UNA COMPRA CON EL CÓDIGO INGRESADO</B></p></span>
+    <div *ngIf="exist">
+        <span><mat-icon>error_outline</mat-icon></span>
+        <br><br>
+        <span><p class="NoPurchase"><B>NO EXISTE UNA COMPRA CON EL CÓDIGO INGRESADO</B></p></span>
+    </div>
 </ng-template>

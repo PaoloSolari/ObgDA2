@@ -20,6 +20,7 @@ export class MedicineFormComponent implements OnInit {
 
 
     public backUrl = `/${INIT}`;
+    public hasError: boolean = false;
 
     public medicineForm = new FormGroup({
 
@@ -59,7 +60,7 @@ export class MedicineFormComponent implements OnInit {
     // El '!' del final es para prometerle a TypeScript que no va a ser null.
 
     public ngOnInit(): void {
-        Globals.selectTab = 2;
+        Globals.selectTab = 0;
     }
     public createMedicine(): void {
         if (this.medicineForm.valid) {
@@ -78,8 +79,10 @@ export class MedicineFormComponent implements OnInit {
                     take(1),
                     catchError((err => {
                         if (err.status != 200) {
-                            alert(`${err.error.errorMessage}`);
+                            if(err.error.errorMessage != undefined)
+                                alert(`${err.error.errorMessage}`);
                             console.log(`Error: ${err.error.errorMessage}`)
+                            this.hasError = true;
                         } else {
                             console.log(`Ok: ${err.error.text}`);
                         }
@@ -87,9 +90,10 @@ export class MedicineFormComponent implements OnInit {
                     }))
                 )
                 .subscribe((medicine: Medicine) => {
-                    if (medicine) {
+                    if (!this.hasError) {
                         this.cleanForm();
                     }
+                    this.hasError = false;
                 })
         }
     }
@@ -107,9 +111,17 @@ export class MedicineFormComponent implements OnInit {
         else return false;
     }
 
-    public cleanForm() {
-        this.medicineForm.reset();
-        // this.codeForm?.setValue('');
+    public cleanForm(): void{
+        this.formReset(this.medicineForm);
+    }
+
+    formReset(form: FormGroup) {
+
+        form.reset();
+    
+        Object.keys(form.controls).forEach(key => {
+          form.get(key)!.setErrors(null) ; // [El '!' no estaba, me lo exigía]
+        });
     }
 
     public onlySpace(input: string): boolean {
