@@ -16,6 +16,7 @@ import { INIT } from 'src/app/utils/routes';
 export class BuyListComponent implements OnInit {
 
     public backUrl = `/${INIT}`;
+    public exist: boolean = false;
 
     public purchaseForm = new FormGroup({
         idPurchase: new FormControl<string | null>(null, Validators.required)
@@ -33,7 +34,7 @@ export class BuyListComponent implements OnInit {
     ngOnInit(): void {
         
         Globals.selectTab = 1;
-
+        this.exist = false;
     }
 
     public onSubmit() {
@@ -44,7 +45,7 @@ export class BuyListComponent implements OnInit {
                     take(1),
                     catchError((err => {
                         if (err.status != 200) {
-                            alert(`${err.error.errorMessage}`);
+                            // alert(`${err.error.errorMessage}`);
                             console.log(`Error: ${err.error.errorMessage}`)
                         } else {
                             console.log(`Ok: ${err.error.text}`);
@@ -53,6 +54,7 @@ export class BuyListComponent implements OnInit {
                     }))
                 )
                 .subscribe((purchase: Purchase) => {
+                    this.exist = true;
                     console.log(purchase);
                     this.showLines(purchase.purchaseLines!);
                 })

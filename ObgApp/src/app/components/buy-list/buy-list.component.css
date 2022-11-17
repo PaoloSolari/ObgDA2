@@ -1,3 +1,16 @@
+table {
+    /* Centrar */
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.mat-header-cell {
+    text-align: center;
+    color: rgb(89, 149, 189) ;
+}
+
 form {
     /* margin-top: 5%; */
     /* position: absolute; */
@@ -66,4 +79,24 @@ input[type=number] {
 /* Extra para los selectores */
 .mat-icon {
     color: rgb(89, 149, 189);
+}
+
+/* Cuando no hay elementos */
+
+.mat-icon {
+    color: rgb(128, 128, 128) !important;
+    margin-top: 50px;
+    width: 100%;
+    height: auto;
+    font-size: 100px;
+    text-align: center;
+}
+
+.NoPurchase {
+    color: rgb(128, 128, 128) !important;
+    font-family: Bahnschrift;
+    font-size: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
 }

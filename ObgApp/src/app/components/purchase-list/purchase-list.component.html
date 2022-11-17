@@ -17,18 +17,28 @@
         <ng-container matColumnDef="accept">
             <th mat-header-cell *matHeaderCellDef class="acceptColumn"></th>
             <td mat-cell *matCellDef="let element">
-                <button mat-raised-button class="acceptButton" (click)="updatePurchaseLine(element, 0)">Aceptar</button>
-                <!-- <button mat-raised-button class="acceptButton">Aceptar</button> -->
-                <!-- {{element.code}} -->
+                <div *ngIf="!checkStatus(element.status), else purchaseCheck">
+                    <button mat-raised-button class="acceptButton" (click)="updatePurchaseLine(element, 0)">Aceptar</button>
+                    <!-- <button mat-raised-button class="acceptButton">Aceptar</button> -->
+                    <!-- {{element.code}} -->
+                </div>
+                <ng-template #purchaseCheck>
+                    <button mat-raised-button class="NoModify">Aceptar</button>
+                </ng-template>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="reject">
             <th mat-header-cell *matHeaderCellDef class="rejectColumn"></th>
             <td mat-cell *matCellDef="let element">
-                <button mat-raised-button class="rejectButton" (click)="updatePurchaseLine(element, 1)">Denegar</button>
-                <!-- <button mat-raised-button class="rejectButton">Denegar</button> -->
-                <!-- {{element.code}} -->
+                <div *ngIf="!checkStatus(element.status), else purchaseCheck2">
+                    <button mat-raised-button class="rejectButton" (click)="updatePurchaseLine(element, 1)">Denegar</button>
+                    <!-- <button mat-raised-button class="rejectButton">Denegar</button> -->
+                    <!-- {{element.code}} -->
+                </div>
+                <ng-template #purchaseCheck2>
+                    <button mat-raised-button class="NoModify">Denegar</button>
+                </ng-template>
             </td>
         </ng-container>
         

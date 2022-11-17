@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { setLines } from '@angular/material/core';
+import { Router } from '@angular/router';
 import { catchError, of, take } from 'rxjs';
 import { IUpdateLine } from 'src/app/interfaces/update-line';
 import { Employee } from 'src/app/models/employee';
 import { Purchase } from 'src/app/models/purchase';
-import { PurchaseLine } from 'src/app/models/purchaseLine';
+import { PurchaseLine, PurchaseLineStatus } from 'src/app/models/purchaseLine';
 import { AuthService } from 'src/app/services/auth.service';
 import { PurchaseLineService } from 'src/app/services/purchase-line.service';
 import { PurchaseService } from 'src/app/services/purchase.service';
 import { SessionService } from 'src/app/services/session.service';
 import { Globals } from '../../utils/globals';
-import { INIT } from '../../utils/routes';
+import { INIT, PURCHASE_LIST_URL } from '../../utils/routes';
 
 @Component({
     selector: 'app-purchase-list',
@@ -32,11 +33,12 @@ export class PurchaseListComponent implements OnInit {
         private _sessionService: SessionService,
         private _purchaseService: PurchaseService,
         private _purchaseLineService: PurchaseLineService,
+        private _route: Router,
     ) { }
 
     ngOnInit(): void {
 
-        Globals.selectTab = 2;
+        Globals.selectTab = 0;
 
         // [Hago un GET PURCHASE que tenga todas las compras con al menos un medicamento de la farmacia del empleado]
         this._purchaseService.getPurchases(this._authService.getToken()!)
@@ -57,16 +59,6 @@ export class PurchaseListComponent implements OnInit {
                 this.setLines(purchases);
             })
     }
-
-    // private setLinesDefault = (lines: PurchaseLine[] | undefined) => {
-    //     if (!lines) {
-    //         this.lines = [];
-    //     }
-    //     else {
-    //         this.lines = lines;
-    //         this.dataSource = lines;
-    //     }
-    // }
 
     private setLines = (purchases: Purchase[] | undefined) => {
         if (!purchases) {
@@ -115,7 +107,7 @@ export class PurchaseListComponent implements OnInit {
             take(1),
             catchError((err => {
                 if(err.status != 200){
-                    alert(`${err.error.errorMessage}`);
+                    alert('No hay stock suficiente del medicamento');
                     console.log(`Error: ${err.error.errorMessage}`)
                 } else {
                     console.log(`Ok: ${err.error.text}`);
@@ -125,9 +117,18 @@ export class PurchaseListComponent implements OnInit {
         )
         .subscribe((line: PurchaseLine) => {
             if(line) {
-                alert('Confirmación de compra realizada.');
+                // alert('Confirmación de compra realizada.');
+                // this._route.navigateByUrl(PURCHASE_LIST_URL);
             }
         });
     }
+
+    public checkStatus(status: PurchaseLineStatus): boolean {
+        if(status == PurchaseLineStatus.accepted) return true;
+        if(status == PurchaseLineStatus.rejected) return true;
+        return false;
+    }
+
+
 
 }

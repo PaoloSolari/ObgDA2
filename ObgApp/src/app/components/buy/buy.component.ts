@@ -113,10 +113,11 @@ export class BuyComponent implements OnInit {
                 take(1),
                 catchError((err => {
                     if (err.status != 200) {
-                        // alert(`${err.error.errorMessage}`);
-                        // console.log(`Error: ${err.error.errorMessage}`)
+                        alert(`${err.error.errorMessage}`);
+                        console.log(`Error: ${err.error.errorMessage}`)
                     } else {
-                        // console.log(`Ok: ${err.error.text}`);
+                        alert(`${err.error.text}`);
+                        console.log(`Ok: ${err.error.text}`);
                     }
                     return of(err);
                 }))
@@ -124,10 +125,19 @@ export class BuyComponent implements OnInit {
             .subscribe((p: Purchase) => {
                 if (p) {
                     this.purchaseForm.reset();
-                    this.emailForm.reset();
+                    this.formReset(this.emailForm);
                     this.purchase.PurchaseLines = [];
                 }
             });
+    }
+
+    formReset(form: FormGroup) {
+
+        form.reset();
+    
+        Object.keys(form.controls).forEach(key => {
+          form.get(key)!.setErrors(null) ; // [El '!' no estaba, me lo exigía]
+        });
     }
 
     public onlySpace(input: string): boolean {
@@ -145,7 +155,7 @@ export class BuyComponent implements OnInit {
                     take(1),
                     catchError((err => {
                         if (err.status != 200) {
-                            alert(`${err.error.errorMessage}`);
+                            // alert(`${err.error.errorMessage}`);
                             console.log(`Error: ${err.error.errorMessage}`)
                         } else {
                             console.log(`Ok: ${err.error.text}`);

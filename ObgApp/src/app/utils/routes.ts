@@ -38,6 +38,7 @@ export enum PATHS {
 
 export enum SEGMENTS {
     NEW = 'new',
+    STATUS = 'state'
 }
 
 const idParam = ':id'
@@ -51,7 +52,7 @@ export const USER_UPDATE_URL = `${PATHS.USER}/${idParam}`;
 
 // Buy (Anonymous User)
 export const BUY_FORM_URL = `${PATHS.BUY}`;
-export const BUY_LIST_URL = `${PATHS.BUY}/${idParam}`;
+export const BUY_LIST_URL = `${PATHS.BUY}/${SEGMENTS.STATUS}`;
 
 // Admnistrator:
 export const PHARMACY_FORM_URL = `${PATHS.PHARMACY}/${SEGMENTS.NEW}`;
