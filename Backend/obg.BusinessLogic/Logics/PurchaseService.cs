@@ -149,7 +149,7 @@ namespace obg.BusinessLogic.Logics
                         {
                             string medicineCode = purchaseLine.MedicineCode;
                             Medicine medicine = _medicineManagement.GetMedicineByCode(medicineCode);
-                            List<Pharmacy> pharmacies = (List<Pharmacy>)_pharmacyManagement.GetPharmacies();
+                            List<Pharmacy> pharmacies = _pharmacyManagement.GetPharmacies().ToList();
                             foreach(Pharmacy pharmacy in pharmacies)
                             {
                                 if (pharmacy.Medicines.Contains(medicine))
